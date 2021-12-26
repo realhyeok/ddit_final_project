@@ -16,5 +16,11 @@
 |Video call API | https://www.agora.io/en/ | agora api |
 |Web design example 1 | http://pms.projectpoint.co.kr/DashBoardCompany | 아이디 : demouser@gmail.com <br/> 비밀번호 : passw0rd |
 |Web design example 2 | https://app.asana.com/ | asana |
+|Web design example 3 | https://www.collabee.co/welcome | collabee |
+|Web design example 4 | https://flow.team/index.act | flow |
+|Web design example 5 | https://monday.com/ | monday |
 |online chat API|||
 
+---
+요구사항 정의서 : https://docs.google.com/spreadsheets/d/16NR2qfUeSwqGQ5AIx--iqm2Y-Say0gU9XpilsdSFr3c/edit#gid=2056249936 <br/>
+레드마인 : http://112.220.114.130:83/redmine <br/>
