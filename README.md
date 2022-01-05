@@ -20,6 +20,9 @@
 |Web design example 4 | https://flow.team/index.act | flow |
 |Web design example 5 | https://monday.com/ | monday |
 |Web design example 6 | https://github.com/ColorlibHQ/gentelella | gentelella |
+|icon style 1 | https://www.w3schools.com/icons/icons_reference.asp | w3c |
+|icon style 2 | https://icons.getbootstrap.com/ | Bootstrap Icons |
+|icon style 3 | https://loading.io/ | loading.io |
 |online chat API|||
 
 ---
