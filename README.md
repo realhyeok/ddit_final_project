@@ -19,6 +19,7 @@
 |Web design example 3 | https://www.collabee.co/welcome | collabee |
 |Web design example 4 | https://flow.team/index.act | flow |
 |Web design example 5 | https://monday.com/ | monday |
+|Web design example 6 | https://github.com/ColorlibHQ/gentelella | gentelella |
 |online chat API|||
 
 ---
@@ -30,5 +31,6 @@
 용어사전 : https://docs.google.com/spreadsheets/d/14GOBGHTKsH78E_aQI_0zdRVbxD-vwvXfqyiOyEjwB2g/edit?usp=sharing <br/>
 자료사전 : https://docs.google.com/spreadsheets/d/1-wBfK6CHSu8NYxSICeyB0S715XiPSfgsDDEUx8zXfPo/edit?usp=sharing <br/>
 프로세스 흐름도 : https://docs.google.com/presentation/d/1p4LpkihozEun-7qB_ZrdmKRiF4vxAohsH_cYZHBaWbA/edit?usp=sharing <br/>
+메뉴 구조도 : https://docs.google.com/spreadsheets/d/1N_g-lOMHNPqPCNBQaBxt1AmfQgA79bJJNzbgRM2xY20/edit?usp=sharing <br/>
 
 ---
