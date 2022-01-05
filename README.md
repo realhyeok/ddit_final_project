@@ -26,14 +26,14 @@
 |online chat API|||
 
 ---
-요구사항 정의서 : https://docs.google.com/spreadsheets/d/16NR2qfUeSwqGQ5AIx--iqm2Y-Say0gU9XpilsdSFr3c/edit#gid=2056249936 <br/>
-레드마인 : http://112.220.114.130:83/redmine <br/>
-레드마인 svn 접속 소스 : http://112.220.114.130:10001/svn/projects/202107F/team3/src <br/>
-요구사항 정의서 : https://docs.google.com/spreadsheets/d/1M7sfU5UtSu8wE8dTvOMvFdRz6sY2kZl0T36kuHb4Noo/edit?usp=sharing <br/>
-단위업무 보고서 : https://docs.google.com/spreadsheets/d/1Xqap_gGWYlfQazgGqi4CkMA5TgERQ3Mm0B70tLG6s7A/edit?usp=sharing <br/>
-용어사전 : https://docs.google.com/spreadsheets/d/14GOBGHTKsH78E_aQI_0zdRVbxD-vwvXfqyiOyEjwB2g/edit?usp=sharing <br/>
-자료사전 : https://docs.google.com/spreadsheets/d/1-wBfK6CHSu8NYxSICeyB0S715XiPSfgsDDEUx8zXfPo/edit?usp=sharing <br/>
-프로세스 흐름도 : https://docs.google.com/presentation/d/1p4LpkihozEun-7qB_ZrdmKRiF4vxAohsH_cYZHBaWbA/edit?usp=sharing <br/>
-메뉴 구조도 : https://docs.google.com/spreadsheets/d/1N_g-lOMHNPqPCNBQaBxt1AmfQgA79bJJNzbgRM2xY20/edit?usp=sharing <br/>
+요구사항 정의서 :    https://docs.google.com/spreadsheets/d/16NR2qfUeSwqGQ5AIx--iqm2Y-Say0gU9XpilsdSFr3c/edit#gid=2056249936 <br/>
+레드마인 :    http://112.220.114.130:83/redmine <br/>
+레드마인 svn 접속 소스 :    http://112.220.114.130:10001/svn/projects/202107F/team3/src <br/>
+요구사항 정의서 :    https://docs.google.com/spreadsheets/d/1M7sfU5UtSu8wE8dTvOMvFdRz6sY2kZl0T36kuHb4Noo/edit?usp=sharing <br/>
+단위업무 보고서 :    https://docs.google.com/spreadsheets/d/1Xqap_gGWYlfQazgGqi4CkMA5TgERQ3Mm0B70tLG6s7A/edit?usp=sharing <br/>
+용어사전 :    https://docs.google.com/spreadsheets/d/14GOBGHTKsH78E_aQI_0zdRVbxD-vwvXfqyiOyEjwB2g/edit?usp=sharing <br/>
+자료사전 :    https://docs.google.com/spreadsheets/d/1-wBfK6CHSu8NYxSICeyB0S715XiPSfgsDDEUx8zXfPo/edit?usp=sharing <br/>
+프로세스 흐름도 :    https://docs.google.com/presentation/d/1p4LpkihozEun-7qB_ZrdmKRiF4vxAohsH_cYZHBaWbA/edit?usp=sharing <br/>
+메뉴 구조도 :    https://docs.google.com/spreadsheets/d/1N_g-lOMHNPqPCNBQaBxt1AmfQgA79bJJNzbgRM2xY20/edit?usp=sharing <br/>
 
 ---
