@@ -28,6 +28,7 @@
 요구사항 정의서 : https://docs.google.com/spreadsheets/d/1M7sfU5UtSu8wE8dTvOMvFdRz6sY2kZl0T36kuHb4Noo/edit?usp=sharing <br/>
 단위업무 보고서 : https://docs.google.com/spreadsheets/d/1Xqap_gGWYlfQazgGqi4CkMA5TgERQ3Mm0B70tLG6s7A/edit?usp=sharing <br/>
 용어사전 : https://docs.google.com/spreadsheets/d/14GOBGHTKsH78E_aQI_0zdRVbxD-vwvXfqyiOyEjwB2g/edit?usp=sharing <br/>
-자료사전 : https://docs.google.com/spreadsheets/d/1-wBfK6CHSu8NYxSICeyB0S715XiPSfgsDDEUx8zXfPo/edit?usp=sharing <br/> 
+자료사전 : https://docs.google.com/spreadsheets/d/1-wBfK6CHSu8NYxSICeyB0S715XiPSfgsDDEUx8zXfPo/edit?usp=sharing <br/>
 프로세스 흐름도 : https://docs.google.com/presentation/d/1p4LpkihozEun-7qB_ZrdmKRiF4vxAohsH_cYZHBaWbA/edit?usp=sharing <br/>
+
 ---
