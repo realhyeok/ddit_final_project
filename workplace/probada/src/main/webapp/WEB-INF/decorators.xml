@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<decorators defaultdir="/WEB-INF/decorators">
+	<decorator name="app-default" page="app-decorator.jsp">
+		<pattern>/app/*</pattern>
+	</decorator>
+	
+	<!-- <decorator name="probada-default" page="index-decorator.jsp">
+		<pattern>/home/*</pattern>
+	</decorator> -->
+	
+	<excludes>
+		<pattern>/resources/*</pattern>
+	</excludes>
+</decorators>

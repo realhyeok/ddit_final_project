@@ -1,0 +1,92 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<div class="x_content">
+	<!-- 제목 시작 -->
+	<div class="x_title">
+		<h2>
+			<i class="glyphicon glyphicon-book"></i>&nbsp;&nbsp;&nbsp;히스토리
+		</h2>
+		<div class="clearfix"></div>
+	</div>
+	<!-- 제목 끝 -->
+	<!-- 히스토리 정렬 시작 -->
+	<div class="row">
+		<div class="col-6">
+			<select class="form-control">
+				<option>프로젝트명</option>
+				<option>김진혁 괴롭히기</option>
+				<option>석기현 괴롭히기</option>
+				<option>둘모두 괴롭히기</option>
+			</select>
+		</div>
+		<div class="col-6">
+			<select class="form-control">
+				<option>진행 상태</option>
+				<option>진행 전</option>
+				<option>진행 중</option>
+				<option>진행 완료</option>
+			</select>
+		</div>
+	</div>
+	<!-- 히스토리 정렬 끝 -->
+	<!-- 히스토리 리스트 시작 -->
+	<div class="row"
+		style="padding: 10px; margin: 15px 5px; background: #f7f7f7; border: 1px solid #dfdfdf;">
+		<div class="col-1">
+			<img src="/webapp/resources/asserts/images/img.jpg" alt="img"
+				style="height: 50px; width: 50px; border-radius: 100%" />
+		</div>
+		<div class="col-9 vertical-align">
+			<div class="row" style="margin: 5px">작성자 : 이동근</div>
+			<div class="row" style="margin: 5px">내 용 : 3팀 협업 프로젝트가 추가되었습니다.
+			</div>
+		</div>
+		<div class="col-2" style="text-align: right; margin: 15px 0px">
+			2022-01-01</div>
+	</div>
+
+	<div class="row"
+		style="padding: 10px; margin: 15px 5px; background: #f7f7f7; border: 1px solid #dfdfdf;">
+		<div class="col-1">
+			<img src="/webapp/resources/asserts/images/img.jpg" alt="img"
+				style="height: 50px; width: 50px; border-radius: 100%" />
+		</div>
+		<div class="col-9 vertical-align">
+			<div class="row" style="margin: 5px">작성자 : 이동근</div>
+			<div class="row" style="margin: 5px">내 용 : 3팀 협업 프로젝트가 추가되었습니다.
+			</div>
+		</div>
+		<div class="col-2" style="text-align: right; margin: 15px 0px">
+			2022-01-01</div>
+	</div>
+
+	<div class="row"
+		style="padding: 10px; margin: 15px 5px; background: #f7f7f7; border: 1px solid #dfdfdf;">
+		<div class="col-1">
+			<img src="/webapp/resources/asserts/images/img.jpg" alt="img"
+				style="height: 50px; width: 50px; border-radius: 100%" />
+		</div>
+		<div class="col-9 vertical-align">
+			<div class="row" style="margin: 5px">작성자 : 이동근</div>
+			<div class="row" style="margin: 5px">내 용 : 3팀 협업 프로젝트가 추가되었습니다.
+			</div>
+		</div>
+		<div class="col-2" style="text-align: right; margin: 15px 0px">
+			2022-01-01</div>
+	</div>
+	<!-- 히스토리 리스트 끝 -->
+	<!-- 히스토리 페이징 시작 -->
+	<div class="row">
+		<div class="col-sm-12">
+			<ul class="pagination justify-content-center m-0">
+				<li class="page-item"><a class="page-link" href="#">이전</a></li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item active"><a class="page-link" href="#">2</a>
+				</li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item"><a class="page-link" href="#">다음</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- 히스토리 페이징 끝 -->
+</div>
