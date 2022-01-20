@@ -1,0 +1,336 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#popoverlay {
+	position: fixed;
+	display: none;
+	width: 500px;
+	height: 100%;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	border: 1px solid #ededed;
+	background-color: white;
+	z-index: 200;
+	cursor: pointer;
+}
+</style>
+</head>
+<body>
+<!-- 오버레이 시작 -->
+	<div id="popoverlay">
+		<div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h5 class="title">
+                      <i class="fa fa-clone"></i>
+                      <span class="task-bold task-sm">프로젝트 상세</span>
+                      <button
+                        onclick="off()"
+                        class="btn btn-primary float-right btn-xs"
+                      >
+                        X
+                      </button>
+                    </h5>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div>
+                    <div class="x_title header-title">
+                      <h5 class="title">
+                        <i class="fa fa-hashtag"></i> 불매운동 관련 공지사항
+                        올리기
+                      </h5>
+                      <div class="clearfix"></div>
+                    </div>
+                    <!-- 업무본문 시작 -->
+                    <p>
+                      &nbsp;현재 남양불매운동으로 이어지고있는 인터넷 커뮤니티에
+                      배포할 공지사항 페이지를 구현하는 업무입니다. 화면은
+                      첨부파일에 있는 양식을 참조하여 구성하고, DB는 JDBC를
+                      이용해 구성합니다. 남양유업은 공정거래위원회로부터
+                      공정거래협약 이행평가에서 공로를 인정받아 공정거래위원장
+                      표창을 수상했다고 28일 전했다. 공정거래협약 이행평가는
+                      동반성장지수에 반영되는 사항으로 매년 공정거래위원회
+                      평가를 시행한다. 남양유업은 선도적으로 상생 협력 문화
+                      구축에 힘쓰고 있는 공로를 인정받았다. 남양유업은 공정한
+                      거래질서 확립을 위해 표준하도급 계약서 사용 의무화, 전
+                      임직원 및 협력업체와 준법실천 서약서 작성, 불공정거래행위
+                      근절을 위한 제보 시스템 운영 및 계약서 명문화 등 상생 준법
+                      실천 프로그램 운영을 통해 공정한 거래 관계를 유지해 왔다.
+                      또한, 모범적인 상생관계 구축을 위해 2013년 이후 불공정
+                      거래행위, 부당이득 부정행위, 비윤리적 행위 등을 상시
+                      감시하는 클린센터를 정기적으로 운영 중에 있다.
+                      2018년부터는 협력업체 상생 결제 시스템을 전면 도입하여
+                      협력업체의 어음 유동화 금융비용 부담을 완화하고 매해
+                      명절마다 거래대금 조기 지급을 통해 협력사의 안정적 자금
+                      운용을 지원해오고 있다. 이외에도 동반성장 몰을 도입하여
+                      중소기업과의 상생과 임직원 복지 향상을 위해 노력하였으며
+                      협력사와의 성과 공유제를 통하여 안정적인 경영과 품질
+                      경쟁력을 높여왔다. 남양유업 관계자는 “어려운 시기인 만큼
+                      협력사와의 상생과 동행을 최우선 가치로 하여, 함께
+                      공정거래를 실천해 나가겠다.”라고 전했다. 한편 남양유업은
+                      대리점 영업 현장의 애로사항을 수렴하고 논의 안건들을 통해
+                      정책에 반영하는 ‘대리점 상생 회의’를 2013년에 도입해
+                      운영하고 있다. 지난달 23일에는 21년 3차 상생회의가 열린
+                      가운데, 코로나 위기 극복을 위한 대리점들의 경쟁력 강화와
+                      후생 증대를 위한 다양한 정책을 이야기하는 가졌다.
+                    </p>
+                    <div class="task_detail">
+                      <div class="col-sm-6">
+                        <h2 class="title">
+                          <i class="fa fa-calendar-o"></i> 시작일
+                        </h2>
+                        <p>2021-12-22</p>
+                        <h2 class="title">
+                          <i class="fa fa-exclamation-circle"></i> 중요도
+                        </h2>
+                        <p>높음</p>
+                      </div>
+                      <div class="col-sm-6">
+                        <h2 class="title">
+                          <i class="fa fa-calendar-check-o"></i> 마감일
+                        </h2>
+                        <p>2022-01-20</p>
+                        <h2 class="title">
+                          <i class="fa fa-question-circle-o"></i> 진행섹션
+                        </h2>
+                        <p>진행중</p>
+                      </div>
+                    </div>
+                    <!-- 업무본문 끝 -->
+                    <!-- hr -->
+                    <div class="x_title header-title">
+                      <h2 class="title"><i class="fa fa-users"></i> 구성원</h2>
+                      <div class="clearfix header-title">
+                        <a
+                          href=""
+                          data-toggle="modal"
+                          data-target="#project-member-add"
+                          ><i class="fa fa-user-plus fa-2x"></i
+                        ></a>
+                      </div>
+                    </div>
+                    <td>
+                      <ul class="list-inline" style="display: inline-flex">
+                        <!-- 구성원 단위 시작 -->
+                        <li class="project-member nav-item dropdown open">
+                          <span>PL</span><br />
+                          <a
+                            href="javascript:;"
+                            class="project-member"
+                            aria-haspopup="true"
+                            id="navbarDropdown"
+                            data-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <img
+                              src="/webapp/resources/asserts/images/img.jpg"
+                              class="img-circle"
+                              alt="Avatar"
+                            />
+                          </a>
+                          <div
+                            class="dropdown-menu dropdown-membermenu pull-right"
+                            aria-labelledby="navbarDropdown"
+                          >
+                            <a
+                              class="dropdown-item"
+                              href="javascript:;"
+                              data-toggle="modal"
+                              data-target="#project-member-modify"
+                            >
+                              권한부여</a
+                            >
+                            <a
+                              class="dropdown-item"
+                              href="javascript:;"
+                              data-toggle="modal"
+                              data-target="#project-member-delete"
+                            >
+                              <span class="text-danger">제명</span>
+                            </a>
+                          </div>
+                          <span>RealHyukPL</span>
+                        </li>
+                        <li class="project-member nav-item dropdown open">
+                          <span>TA</span><br />
+                          <a
+                            href="javascript:;"
+                            class="project-member"
+                            aria-haspopup="true"
+                            id="navbarDropdown"
+                            data-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <img
+                              src="/webapp/resources/asserts/images/img.jpg"
+                              class="img-circle"
+                              alt="Avatar"
+                            />
+                          </a>
+                          <div
+                            class="dropdown-menu dropdown-membermenu pull-right"
+                            aria-labelledby="navbarDropdown"
+                          >
+                            <a
+                              class="dropdown-item"
+                              href="javascript:;"
+                              data-toggle="modal"
+                              data-target="#project-member-modify"
+                            >
+                              권한부여</a
+                            >
+                            <a
+                              class="dropdown-item"
+                              href="javascript:;"
+                              data-toggle="modal"
+                              data-target="#project-member-delete"
+                            >
+                              <span class="text-danger">제명</span>
+                            </a>
+                          </div>
+                          <span>StoneEnrgyTA</span>
+                        </li>
+                        <li class="project-member nav-item dropdown open">
+                          <span>AA</span><br />
+                          <a
+                            href="javascript:;"
+                            class="project-member"
+                            aria-haspopup="true"
+                            id="navbarDropdown"
+                            data-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <img
+                              src="/webapp/resources/asserts/images/img.jpg"
+                              class="img-circle"
+                              alt="Avatar"
+                            />
+                          </a>
+                          <div
+                            class="dropdown-menu dropdown-membermenu pull-right"
+                            aria-labelledby="navbarDropdown"
+                          >
+                            <a
+                              class="dropdown-item"
+                              href="javascript:;"
+                              data-toggle="modal"
+                              data-target="#project-member-modify"
+                            >
+                              권한부여</a
+                            >
+                            <a
+                              class="dropdown-item"
+                              href="javascript:;"
+                              data-toggle="modal"
+                              data-target="#project-member-delete"
+                            >
+                              <span class="text-danger">제명</span>
+                            </a>
+                          </div>
+                          <span>EnergyWookAA</span>
+                        </li>
+                        <li class="project-member nav-item dropdown open">
+                          <span>UA</span><br />
+                          <a
+                            href="javascript:;"
+                            class="project-member"
+                            aria-haspopup="true"
+                            id="navbarDropdown"
+                            data-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <img
+                              src="/webapp/resources/asserts/images/img.jpg"
+                              class="img-circle"
+                              alt="Avatar"
+                            />
+                          </a>
+                          <div
+                            class="dropdown-menu dropdown-membermenu pull-right"
+                            aria-labelledby="navbarDropdown"
+                          >
+                            <a
+                              class="dropdown-item"
+                              href="javascript:;"
+                              data-toggle="modal"
+                              data-target="#project-member-modify"
+                            >
+                              권한부여</a
+                            >
+                            <a
+                              class="dropdown-item"
+                              href="javascript:;"
+                              data-toggle="modal"
+                              data-target="#project-member-delete"
+                            >
+                              <span class="text-danger">제명</span>
+                            </a>
+                          </div>
+                          <span>BronzeRootPL</span>
+                        </li>
+                        <li class="project-member nav-item dropdown open">
+                          <span>DA</span><br />
+                          <a
+                            href="javascript:;"
+                            class="project-member"
+                            aria-haspopup="true"
+                            id="navbarDropdown"
+                            data-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <img
+                              src="/webapp/resources/asserts/images/img.jpg"
+                              class="img-circle"
+                              alt="Avatar"
+                            />
+                          </a>
+                          <div
+                            class="dropdown-menu dropdown-membermenu pull-right"
+                            aria-labelledby="navbarDropdown"
+                          >
+                            <a
+                              class="dropdown-item"
+                              href="javascript:;"
+                              data-toggle="modal"
+                              data-target="#project-member-modify"
+                            >
+                              권한부여</a
+                            >
+                            <a
+                              class="dropdown-item"
+                              href="javascript:;"
+                              data-toggle="modal"
+                              data-target="#project-member-delete"
+                            >
+                              <span class="text-danger">제명</span>
+                            </a>
+                          </div>
+                          <span>SpearWaterDA</span>
+                        </li>
+                        <!-- 구성원 단위 끝 -->
+                        <!-- 구성원 더보기 버튼 시작 -->
+                        <li
+                          class="project-member d-flex align-items-center mr-3"
+                        >
+                          <a href="../project/project-member-list.html">
+                            <i class="fa fa-ellipsis-h fa-2x"></i>
+                          </a>
+                        </li>
+                        <!-- 구성원 더보기 버튼 끝 -->
+                      </ul>
+                    </td>
+                  </div>
+                </div>
+              </div>
+            </div>
+	</div>
+	<!-- 오버레이 끝 -->
+</body>
+</html>

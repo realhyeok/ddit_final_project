@@ -1,0 +1,26 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="base" template="/WEB-INF/tiles/default_layout.jsp">
+		<put-attribute name="css" value="/WEB-INF/tiles/css.jsp"/>
+		<put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp"/>
+		<put-attribute name="script" value="/WEB-INF/tiles/script.jsp"/>
+		<put-attribute name="overlay" value="/WEB-INF/tiles/overlay.jsp"/>
+	</definition>
+	
+<!-- 	 <definition name="/web-app/*/*" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/web-app/{1}/{2}.jsp"/>
+	</definition>  -->
+	
+	<definition name="/web-app/project/*" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/web-app/project/{1}.jsp"/>
+	</definition>
+	
+	<definition name="/web-app/my-work/*" extends="base" template="/WEB-INF/tiles/my-work_layout.jsp">
+		<put-attribute name="my_css" value="/WEB-INF/tiles/my-work_css.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/web-app/my-work/{1}.jsp"/>
+		<put-attribute name="my_script" value="/WEB-INF/tiles/my-work_script.jsp"/>
+	</definition>
+	
+</tiles-definitions>

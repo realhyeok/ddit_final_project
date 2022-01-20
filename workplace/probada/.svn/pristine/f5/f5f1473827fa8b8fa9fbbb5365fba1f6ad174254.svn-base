@@ -1,0 +1,101 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true"%>
+
+<div class="x_content">
+	<!-- 제목 시작 -->
+	<div class="row">
+		<!-- /.col -->
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<!-- <div class="row">
+						<div class="col-md-6"></div>
+						<div class="col-md-6">
+							<div class="input-group m-0">
+								<select class="form-control form-control-sm input-group-prepend">
+									<option>제목순</option>
+									<option>가, A</option>
+									<option>하, Z</option>
+								</select>
+								<select class="form-control form-control-sm input-group">
+									<option>시간순</option>
+									<option>최근순</option>
+									<option>역 순</option>
+								</select>
+								<select class="form-control form-control-sm input-group-append">
+									<option>개수별</option>
+									<option>10</option>
+									<option>15</option>
+									<option>30</option>
+								</select>
+							</div>
+						</div>					
+					</div> -->
+					<div class="row" style="margin-top: 10px;">
+						<div class="col-md-7">
+							<div class="btn-group nav">
+								<button type="button" class="btn btn-sm btn-dark" data-toggle="tab" href="#regist" role="tab" aria-controls="regist" aria-selected="false">
+									<i class="fa fa-inbox"></i>&nbsp;&nbsp;작성
+								</button>
+								<button type="button" class="btn btn-sm btn-dark" onclick="confirm('삭제 하시겠습니까?');">
+									<i class="fa fa-times-circle-o"></i>&nbsp;&nbsp;삭제
+								</button>							
+								<button type="button" class="btn btn-sm btn-dark" data-toggle="tab" href="#receive" role="tab" aria-controls="receive" aria-selected="true">
+									<i class="fa fa-inbox"></i>&nbsp;&nbsp;받은
+								</button>
+								<button type="button" class="btn btn-sm btn-dark"  data-toggle="tab" href="#send" role="tab" aria-controls="send" title="" aria-selected="false">
+									<i class="fa fa-send-o"></i>&nbsp;&nbsp;보낸
+								</button>
+								<button type="button" class="btn btn-sm btn-dark" data-toggle="tab" href="#temp" role="tab" aria-controls="temp" title="" aria-selected="false">
+									<i class="fa fa-folder-o"></i>&nbsp;&nbsp;임시
+								</button>
+								<button type="button" class="btn btn-sm btn-dark" data-toggle="tab" href="#trash" role="tab" aria-controls="trash" title="" aria-selected="false">
+									<i class="fa fa-trash-o"></i>&nbsp;&nbsp;휴지통
+								</button>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="input-group m-0">
+								<select class="form-control form-control-sm input-group-prepend">
+									<option>제목</option>
+									<option>내용</option>
+									<option>제목 + 내용</option>
+								</select>
+								<input type="text" class="form-control form-control-sm input-group"
+									style="width: 130px;" placeholder="검색어를 입력하세요.">
+								<button type="button" class="btn btn-sm btn-dark input-group-append"
+									style="margin-right: 0px;">검색</button>
+							</div>
+						</div>					
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_body">
+					<!-- 메일 리스트 시작 -->
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="card-box tab-content">
+								<div class="tab-pane fade" id="regist" role="tabpanel" aria-labelledby="regist-tab">
+									<%@ include file="/WEB-INF/views/web-app/my-work/my-mail-regist.jsp" %>
+								</div>
+								<div class="tab-pane fade show active" id="receive" role="tabpanel" aria-labelledby="receive-tab">
+									<%@ include file="/WEB-INF/views/web-app/my-work/my-mail-receive.jsp" %>
+								</div>
+								<div class="tab-pane fade" id="send" role="tabpanel" aria-labelledby="send-tab">
+									<%@ include file="/WEB-INF/views/web-app/my-work/my-mail-send.jsp" %>
+								</div>
+								<div class="tab-pane fade" id="temp" role="temp" role="tabpanel" aria-labelledby="temp-tab">
+									<%@ include file="/WEB-INF/views/web-app/my-work/my-mail-temp.jsp" %>
+								</div>
+								<div class="tab-pane fade" id="trash" role="trash" role="tabpanel" aria-labelledby="trash-tab">
+									<%@ include file="/WEB-INF/views/web-app/my-work/my-mail-trash.jsp" %>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 메일 리스트 끝 -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

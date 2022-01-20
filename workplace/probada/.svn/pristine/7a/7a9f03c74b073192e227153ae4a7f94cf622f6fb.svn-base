@@ -1,0 +1,67 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<!-- jQuery -->
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
+		<!-- Bootstrap -->
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- FastClick -->
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/fastclick/lib/fastclick.js"></script>
+		<!-- NProgress -->
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/nprogress/nprogress.js"></script>
+		<!-- Dropzone.js -->
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/dropzone/dist/min/dropzone.min.js"></script>
+		<!-- Chart.js -->
+		<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/Chart.js/dist/Chart.min.js"></script>
+		<!-- easy-pie-chart -->
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+		<!-- bootstrap-wysiwyg -->
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/google-code-prettify/src/prettify.js"></script>
+		<!-- Handlebars -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<!-- iCheck -->
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/iCheck/icheck.min.js"></script>
+		<!-- Datatables -->
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/jszip/dist/jszip.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/pdfmake/build/pdfmake.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/pdfmake/build/vfs_fonts.js"></script>
+		<!-- Custom Theme Scripts -->
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/build/js/custom.min.js"></script>
+		<!-- datatables  -->
+		<!-- <script type="module" src="<%=request.getContextPath()%>/resources/asserts/js/common/data-table-data.js"></script> -->
+		<!-- Summer Note -->
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/summernote/summernote-bs4.min.js"></script>
+		<!-- kendo -->
+		<script	src="https://kendo.cdn.telerik.com/2021.3.1207/js/kendo.all.min.js"></script>
+		<script	src="https://kendo.cdn.telerik.com/2021.3.1207/js/pako_deflate.min.js"></script>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/common/kendo.messages.kr-KR.js"></script>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/project/project-kendo.js"></script>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/common/testJS.js"></script>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/common/overlay.js"></script>
+		<!-- PNotify -->
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/pnotify/dist/pnotify.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/pnotify/dist/pnotify.buttons.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+		<!-- Custom_ChartJS -->
+		<%-- <script src="<%=request.getContextPath()%>/resources/asserts/js/common/custom_chartJS.js"></script> --%>
+	</body>
+</html>

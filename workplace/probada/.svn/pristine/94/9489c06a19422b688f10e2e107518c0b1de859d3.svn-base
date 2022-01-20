@@ -1,0 +1,119 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+    <!-- 업무 리스트 -->
+    <div class="x_content">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card-box table-responsive">
+            <div id="example">
+    <div class="demo-section wide k-content">
+        <div id="taskBoard"></div>
+    </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- 리스트 종료 -->
+
+<!-- <script>
+function myTask() {
+	 var crudServiceBaseUrl = "https://demos.telerik.com/kendo-ui/service";
+
+	    var priorities = new kendo.data.DataSource({
+	        data: [
+	            { value: "urgent", text: "Urgent", color: "orange" },
+	            { value: "highpriority", text: "High Priority", color: "blue" },
+	            { value: "lowpriority", text: "Low Priority", color: "green" }
+	        ]
+	    });
+
+	    $("#taskBoard").kendoTaskBoard({
+	        columnSettings: {
+	            dataTextField: "Text",
+	            dataStatusField: "Status",
+	            dataOrderField: "Order"
+	        },
+	        columns: {
+	            transport: {
+	                read: {
+	                    url: crudServiceBaseUrl + "/taskboard/columns"
+	                },
+	                create: {
+	                    url: crudServiceBaseUrl + "/taskboard/columns_create",
+	                    method: "POST"
+	                },
+	                update: {
+	                    url: crudServiceBaseUrl + "/taskboard/columns_update",
+	                    method: "POST"
+	                },
+	                destroy: {
+	                    url: crudServiceBaseUrl + "/taskboard/columns_destroy",
+	                    method: "POST"
+	                }
+	            },
+	            schema: {
+	                model: {
+	                    id: "ID",
+	                    fields: {
+	                        "ID": { type: "number" },
+	                        "Text": { type: "string" },
+	                        "Status": { type: "string", defaultValue: "todo" },
+	                        "Order": { type: "number" }
+	                    }
+	                }
+	            }
+	        },
+	        dataCategoryField: "Category",
+	        dataDescriptionField: "Description",
+	        dataTitleField: "Title",
+	        dataStatusField: "Status",
+	        dataOrderField: "Order",
+	        dataSource: {
+	            transport: {
+	                read: {
+	                    url: crudServiceBaseUrl + "/taskboard"
+	                },
+	                create: {
+	                    url: crudServiceBaseUrl + "/taskboard/create",
+	                    method: "POST"
+	                },
+	                update: {
+	                    url: crudServiceBaseUrl + "/taskboard/update",
+	                    method: "POST"
+	                },
+	                destroy: {
+	                    url: crudServiceBaseUrl + "/taskboard/destroy",
+	                    method: "POST"
+	                }
+	            },
+	            schema: {
+	                model: {
+	                    id: "ID",
+	                    fields: {
+	                        "ID": { type: "number" },
+	                        "Category": { type: "string", defaultValue: "lowpriority" },
+	                        "Description": { type: "string" },
+	                        "Title": { type: "string", validation: { required: true } },
+	                        "Status": { type: "string", defaultValue: "todo" },
+	                        "Order": { type: "number" }
+	                    }
+	                }
+	            }
+	        },
+	        resources: [{
+	            field: "Category",
+	            title: "Priority",
+	            dataSource: priorities
+	        }],
+	        previewPane: {
+	            template: "<p>#:Description#</p>" +
+	                "<p>#:resources.Category.title#: <span style='background-color: #:resources.Category.color#'>&nbsp;</span> #:resources.Category.text#</p>"
+	        },
+
+	        height: 750
+	    });
+	myTask = function () {}
+}
+</script> -->

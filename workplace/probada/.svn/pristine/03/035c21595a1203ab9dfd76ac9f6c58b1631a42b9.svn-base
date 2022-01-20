@@ -1,0 +1,39 @@
+package com.probada.common;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/app")
+public class app_probada {
+	
+	@RequestMapping("/index")
+	public String main() {
+		String url = "/web-app/common/app-index";
+		return url;
+	}
+	@RequestMapping("/project")
+	public String project() {
+		String url = "/web-app/project/project";
+		return url;
+	}
+	@RequestMapping("/my-work")
+	public String my_work() {
+		String url = "/web-app/my-work/my-work";
+		return url;
+	}
+	
+	@RequestMapping("/test")
+	public String home() {
+		String url = "/web-app/common/plain_page";
+		return url;
+	}
+	
+	@RequestMapping("/my-page")
+	public String my_page() {
+		String url = "/web-app/my-page/my-page";
+		return url;
+	}
+	
+	
+}

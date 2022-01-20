@@ -1,0 +1,59 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+
+<title>내 업무</title>
+
+<head></head>
+
+<body>
+<!-- page content -->
+<div class="right_col" role="main">
+  <!-- 내 작업 바디 시작 -->
+  <div class="x_panel">
+    <div class="x_title">
+      <h2><i class="fa fa-edit"></i> 내 작업</h2>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="x_content">
+      <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">대시보드</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="issue-tab" data-toggle="tab" href="#issue" role="tab" aria-controls="issue" aria-selected="false">이슈</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="request-tab" data-toggle="tab" href="#request" role="tab" aria-controls="request" aria-selected="false">리퀘스트</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="mail-tab" data-toggle="tab" href="#mail" role="tab" aria-controls="mail" aria-selected="false">메일</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">히스토리</a>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <%@ include file="/WEB-INF/views/web-app/my-work/my-dashboard.jsp" %>
+        </div>
+        <div class="tab-pane fade" id="issue" role="tabpanel" aria-labelledby="issue-tab">
+          <%@ include file="/WEB-INF/views/web-app/my-work/my-issue.jsp" %>
+        </div>
+        <div class="tab-pane fade" id="request" role="tabpanel" aria-labelledby="request-tab">
+          <%@ include file="/WEB-INF/views/web-app/my-work/my-request.jsp" %>
+        </div>
+        <div class="tab-pane fade" id="mail" role="tabpanel" aria-labelledby="mail-tab">
+          <%@ include file="/WEB-INF/views/web-app/my-work/my-mail.jsp" %>
+        </div>
+        <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+          <%@ include file="/WEB-INF/views/web-app/my-work/my-history.jsp" %>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- 내 작업 바디 끝 -->
+</div>
+<!-- /page content -->
+</body>

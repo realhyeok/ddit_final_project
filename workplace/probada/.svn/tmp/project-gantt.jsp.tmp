@@ -1,0 +1,30 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<<<<<<< .mine
+<style>
+            /*
+            Use the DejaVu Sans font for display and embedding in the PDF file.
+            The standard PDF fonts have no support for Unicode characters.
+        */
+            .k-gantt {
+                font-family: "DejaVu Sans", "Arial", sans-serif;
+            }
+||||||| .r212013
+=======
+		
+>>>>>>> .r212221
+
+<<<<<<< .mine
+            /* Hide toolbars during export */
+            .k-pdf-export .k-gantt-toolbar {
+                display: none;
+            }
+    </style>
+
+	<div id="example">
+    	<div id="gantt1"></div>
+	    
+	</div>
+||||||| .r212013
+=======
+>>>>>>> .r212221
