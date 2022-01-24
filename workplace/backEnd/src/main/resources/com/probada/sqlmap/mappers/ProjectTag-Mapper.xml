@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProjectTag-Mapper">
+
+	<select id="selectTagNameList" resultType="projectTag">
+		SELECT
+			C.PROJ_NO, A.TAG_NO, A.TAG_NAME
+		FROM
+			TAG A
+		JOIN
+			PROJECT_TAG B ON A.TAG_NO = B.TAG_NO
+		JOIN
+			PROJECT C ON B.PROJ_NO = C.PROJ_NO
+		WHERE
+			C.PROJ_NO = #{projNo}
+	</select>
+
+
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Project-Mapper">
+
+	<select id="selectProjectList" resultType="com.probada.project.vo.ProjectVO">
+		SELECT
+			PROJ_NO
+			,TITLE
+			,STARTDATE
+			,ENDDATE
+			,PRIVACY
+			,NOTICE
+			,NOTICE_CONT
+			,UPDATEDATE
+			,<include refid="statusForProject" />
+			,INTRO
+			,DOC_CONT_NO
+			,LIKE_COUNT
+		FROM
+			project
+	</select>
+
+	<select id="selectProjectByProjNo" resultType="com.probada.project.vo.ProjectVO" parameterType="String">
+		SELECT
+			PROJ_NO
+			,TITLE
+			,STARTDATE
+			,ENDDATE
+			,<include refid="privacyForProject" />
+			,NOTICE
+			,NOTICE_CONT
+			,UPDATEDATE
+			,<include refid="statusForProject" />
+			,INTRO
+			,DOC_CONT_NO
+			,LIKE_COUNT
+		FROM
+			project
+		WHERE
+			PROJ_NO = #{projNo}
+	</select>
+
+
+	<select id="selectProjectTagList" resultType="com.probada.project.vo.ProjectVO" parameterType="com.probada.project.vo.ProjectVO">
+		SELECT
+			TAG_NAME
+		FROM
+			PROJ_TAG
+		WHERE
+			PROJ_NO = #{projNo}
+	</select>
+
+	<sql id="statusForProject">
+			(SELECT
+				CODE_NAME
+			FROM
+				COMMON_CODE
+            WHERE
+            	COMMON_CODE.CODE_NO = PROJECT.STATUS) AS STATUS
+	</sql>
+
+	<sql id="privacyForProject">
+			(SELECT
+				CODE_NAME
+			FROM
+				COMMON_CODE
+            WHERE
+            	COMMON_CODE.CODE_NO = PROJECT.PRIVACY) AS PRIVACY
+	</sql>
+
+</mapper>

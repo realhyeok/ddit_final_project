@@ -1,0 +1,41 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>    
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-document.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myHistory.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-issue.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myRequest.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-task.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-dash-doughnut.js"></script>
+		
+		<%@ include file="/WEB-INF/views/web-app/myWork/summernote.jsp" %>
+		
+		<script>
+			window.onload = function(){
+		   		summernote_go($('textarea#content'));
+		   		
+				if(getCookie('tab')){
+					var curTab = getCookie('tab');
+					document.getElementById(curTab).click();
+				} else {
+					document.getElementById('home-tab').click();
+				}
+			
+				$('a[role="tab"]').on('click', function() {
+			        var id = this.id;
+			        document.cookie = "tab="+id;
+			    });
+		   	}
+			function getCookie(name) {
+				let matches = document.cookie.match(new RegExp(
+					"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+				));
+				return matches ? decodeURIComponent(matches[1]) : undefined;
+			}
+		</script>
+	</body>
+</html>

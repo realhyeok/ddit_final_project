@@ -1,0 +1,225 @@
+package com.probada.document.vo;
+
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+public class FileVO {
+
+	private String DOC_NO;
+	private String PROJ_NO="3";
+	private String USER_ID="stoneenergy@ddit.com";
+	private String DESC="desc??";
+	private String STATUS="STATUS??";
+	private String DIST="DIST??";
+	private String name;
+	private boolean isDirectory;
+    private boolean hasDirectories;
+    private String path;
+    private String extension=" ";
+     
+   
+
+	private int size =  20;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private Date createdUtc = new Date();
+    
+	@JsonFormat(pattern = "yyyy/MM/dd")
+    private Date created = new Date();
+    
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private Date modified = new Date();
+   
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private Date modifiedUtc = new Date();
+   
+    
+   
+    
+    
+   
+
+	public String getDOC_NO() {
+		return DOC_NO;
+	}
+
+	public void setDOC_NO(String dOC_NO) {
+			DOC_NO = dOC_NO;
+	}
+
+	public String getPROJ_NO() {
+		return PROJ_NO;
+	}
+
+	public void setPROJ_NO(String pROJ_NO) {
+		PROJ_NO = pROJ_NO;
+	}
+
+	public String getUSER_ID() {
+		return USER_ID;
+	}
+
+	public void setUSER_ID(String uSER_ID) {
+		USER_ID = uSER_ID;
+	}
+
+	public String getDESC() {
+		return DESC;
+	}
+
+	public void setDESC(String dESC) {
+		DESC = dESC;
+	}
+
+	public String getSTATUS() {
+		return STATUS;
+	}
+
+	public void setSTATUS(String sTATUS) {
+		STATUS = sTATUS;
+	}
+
+	public String getDIST() {
+		return DIST;
+	}
+
+	public void setDIST(String dIST) {
+		DIST = dIST;
+	}
+
+	@Override
+	public String toString() {
+		return "FileVO [name=" + name + ", IsDirectory=" + isDirectory + ", hasDirectories=" + hasDirectories
+				+ ", path=" + path + ", extension=" + extension + ", size=" + size + ", createdUtc=" + createdUtc
+				+ ", created=" + created + ", modified=" + modified + ", modifiedUtc=" + modifiedUtc + "]";
+	}
+   
+
+
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean isisDirectory() {
+		return isDirectory;
+	}
+
+	
+	public void setIsDirectory(boolean isDirectory) {
+		this.isDirectory = isDirectory;
+	}
+
+	public boolean isHasDirectories() {
+		return hasDirectories;
+	}
+
+	public void setHasDirectories(boolean hasDirectories) {
+		this.hasDirectories = hasDirectories;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getExtension() {
+		return extension;
+	}
+
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public Date getCreatedUtc() {
+		return createdUtc;
+	}
+
+	public void setCreatedUtc(Date createdUtc) {
+		this.createdUtc = createdUtc;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getModified() {
+		return modified;
+	}
+
+	public void setModified(Date modified) {
+		this.modified = modified;
+	}
+
+	public Date getModifiedUtc() {
+		return modifiedUtc;
+	}
+
+	public void setModifiedUtc(Date modifiedUtc) {
+		this.modifiedUtc = modifiedUtc;
+	}
+
+
+
+    
+    
+	
+	
+	
+	
+	
+	
+	public boolean isDirectory() {
+		return isDirectory;
+	}
+
+	public void setDirectory(boolean isDirectory) {
+		this.isDirectory = isDirectory;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    
+   
+    
+    
+}
+

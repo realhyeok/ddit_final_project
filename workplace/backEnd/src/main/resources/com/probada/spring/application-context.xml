@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Repository -->
+	<bean id="projectDAO" class="com.probada.project.dao.ProjectDAOImpl"
+		p:sqlSession-ref="sqlSession"
+	/>
+
+	<bean id="projectTagDAO" class="com.probada.project.dao.ProjectTagDAOImpl"
+		p:sqlSession-ref="sqlSession"
+	/>
+
+	<bean id="taskDAO" class="com.probada.task.dao.TaskDAOImpl"
+		p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="historyDAO"
+		  class="com.probada.myWork.dao.HistoryDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="requestDAO"
+		  class="com.probada.request.dao.RequestDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="issueDAO" class="com.probada.issue.dao.IssueDAOImpl"
+		p:sqlSession-ref="sqlSession"
+	/>
+
+	<bean id="milestoneDAO" class="com.probada.milestone.dao.MilestoneDAOImpl"
+		p:sqlSession-ref="sqlSession"
+	/>
+	
+	<bean id="userDAO" class="com.probada.user.dao.UserDAOImpl"
+		p:sqlSession-ref="sqlSession"
+	/>
+
+	<!-- Service -->
+	<bean id="projectService"
+		  class="com.probada.project.service.ProjectServiceImpl"
+		  p:projectDAO-ref="projectDAO"
+	/>
+	<bean id="projectTagService"
+		  class="com.probada.project.service.ProjectTagServiceImpl"
+		  p:projectTagDAO-ref="projectTagDAO"
+	/>
+	<bean id="taskService"
+		  class="com.probada.task.service.TaskServiceImpl"
+		  p:taskDAO-ref="taskDAO"
+	/>
+	<bean id="historyService"
+		  class="com.probada.myWork.service.HistoryServiceImpl"
+		  p:historyDAO-ref="historyDAO"
+	/>
+	<bean id="requestService"
+		  class="com.probada.request.service.RequestServiceImpl"
+		  p:requestDAO-ref="requestDAO"
+	/>
+	<bean id="issueService" class="com.probada.issue.service.IssueServiceImpl"
+		p:issueDAO-ref="issueDAO"
+	/>
+	<bean id="milestoneService" class="com.probada.milestone.service.MilestoneServiceImpl"
+		p:milestoneDAO-ref="milestoneDAO"
+	/>
+	<bean id="userService" class="com.probada.user.service.UserServiceImpl"
+		p:userDAO-ref="userDAO"
+	/>
+	
+	<!-- utils -->
+	<bean id="pwdUtil" class="com.probada.util.PwdUtil"/>
+	
+	<!-- mail -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.stmp.host}" />
+		<property name="port" value="${mail.stmp.port}" />
+		<property name="username" value="${AdminMail.id}" />
+		<property name="password" value="${AdminMail.password}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.debug">true</prop> 
+			</props>
+		</property>
+	</bean>
+</beans>

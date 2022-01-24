@@ -1,0 +1,107 @@
+package com.probada.user.service;
+
+import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.mail.MessagingException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+
+import com.probada.user.dao.UserDAO;
+import com.probada.user.mail.MailHandler;
+import com.probada.user.mail.Tempkey;
+import com.probada.user.vo.UserVO;
+
+public class UserServiceImpl implements UserService {
+
+	// 이메일 인증
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	private UserDAO userDAO;
+
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+
+	@Override
+	public UserVO getUser(String userId) throws Exception {
+		UserVO user = userDAO.selectUserById(userId);
+		return user;
+	}
+
+	@Override
+	public void registUser(UserVO user) throws Exception {
+		userDAO.insertUser(user);
+		
+		// 인증키 생성
+		String key = new Tempkey().getKey(10, false);
+
+		// 인증키 DB에 저장
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("userId", user.getUserId());
+		paramMap.put("authkey", key);
+		userDAO.createAuthkey(paramMap);
+
+		// 메일 발송
+		MailHandler sendMail;
+		try {
+			sendMail = new MailHandler(mailSender);
+			sendMail.setSubject("[probada] 회원가입 인증메일");
+			sendMail.setText(new StringBuffer().append("<h1>test 가입 메일인증 입니다</h1>")
+					.append("<a href='http://localhost/emailConfirm?email=").append(user.getUserId())
+					.append("' target='_blenk'>가입 완료를 위해 이메일 이곳을 눌러주세요</a>").toString());
+//			.append("&key=").append(key)
+			sendMail.setFrom("probadahelp@gmail.com", "probada");
+			sendMail.setTo(user.getUserId());
+			sendMail.send();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void modifyUser(UserVO user) throws Exception {
+		userDAO.updateUser(user);
+	}
+	
+	// authstatus 1로 변경
+	@Override
+	public void updateAuthstatus(String email) throws SQLException {
+		userDAO.updateAuthstatus(email);
+	}
+
+	@Override
+	public int idCheck(String email) throws SQLException {
+		int ret = 1;
+		if(email.equals(userDAO.idCheck(email))) ret = 0;
+		return ret;
+	}
+
+	@Override
+	public int nicknameCheck(String username) throws SQLException {
+		int ret = 1;
+		if(username.equals(userDAO.nicknameCheck(username))) ret = 0;
+		return ret;
+	}
+	@Override
+	public UserVO login(UserVO user) throws SQLException {
+		UserVO userVO = null;
+		
+		userVO = userDAO.login(user);
+		if(userVO == null) {
+			userVO = new UserVO();
+		}
+		return userVO;
+	}
+	
+	@Override
+	public int isAccount(String email) throws SQLException {
+		return userDAO.isAccount(email);
+	}
+}

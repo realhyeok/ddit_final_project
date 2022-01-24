@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+    <typeAliases>
+    	<typeAlias type="java.lang.String" alias="str"/>
+		<typeAlias type="java.lang.Integer" alias="int"/>
+
+		<typeAlias type="com.probada.user.vo.UserVO" alias="User"/>
+		<typeAlias type="com.probada.myWork.vo.HistoryVO" alias="historyVO"/>
+		<typeAlias type="com.probada.request.vo.RequestVO" alias="requestVO"/>
+    	<typeAlias type="com.probada.project.vo.ProjectTagVO" alias="projectTag"/>
+    	<typeAlias type="com.probada.task.vo.TaskVO" alias="task"/>
+    	<typeAlias type="com.probada.issue.vo.IssueVO" alias="issue"/>
+    	<typeAlias type="com.probada.milestone.vo.MilestoneVO" alias="milestone"/>
+    	<typeAlias type="com.probada.issue.vo.MileIssueVO" alias="mileIssue"/>
+		<!-- <typeAlias alias="projectTagVO" type="com.probada.project.vo.ProjectTagVO"/>
+		 <typeAlias alias="searchVO" type="egovframework.example.sample.service.SampleDefaultVO"/>
+		<typeAlias alias="sampleVO" type="egovframework.example.sample.service.SampleVO"/> -->
+    </typeAliases>
+</configuration>
