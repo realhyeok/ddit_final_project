@@ -1,3 +1,6 @@
+var projNo = getParameterByName("projNo");
+console.log(projNo);
+
 function getTemplate(url,templateId,appendTarget) {
 
 	$.ajax({
@@ -5,6 +8,28 @@ function getTemplate(url,templateId,appendTarget) {
 	    url : url,
 	    dataType : "JSON",
 	    data : {"projNo" : projNo },
+	    success : function(data) {
+	    	console.log("Handlebars success!!");
+	    	var formTemplate = document.getElementById(templateId).innerText;
+	    	var bindTemplate = Handlebars.compile(formTemplate);
+	    	var appe = document.getElementById(appendTarget);
+	    	var html = bindTemplate(data);
+	    	console.log(html);
+	    	appe.innerHTML = html;
+	    },
+	    error : function(error) {
+	    	console.log("Handlebars error!!");
+	    },
+	});
+}
+
+function getTaskTemplate(url,taskNo,templateId,appendTarget) {
+
+	$.ajax({
+	    type : 'GET',
+	    url : url,
+	    dataType : "JSON",
+	    data : {"taskNo" : taskNo,"projNo" : projNo },
 	    success : function(data) {
 	    	console.log("Handlebars success!!");
 	    	var formTemplate = document.getElementById(templateId).innerText;
@@ -52,3 +77,10 @@ Handlebars.registerHelper('formatTime', function (date, format) {
     var mmnt = moment(date);
     return mmnt.format(format);
 });
+
+function getParameterByName(name) {
+  	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+   	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+   	results = regex.exec(location.search);
+   	return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}

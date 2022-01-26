@@ -11,4 +11,12 @@ public interface ProjectDAO {
 
 	public ProjectVO selectProjectByProjNo(String projNo) throws SQLException;
 
+	public int selectProjectSeqNext() throws SQLException;
+
+	public void insertProject(ProjectVO projectVO) throws SQLException;
+
+	public void updateProjectDetail(ProjectVO projectVO) throws SQLException;
+
+	public void updateProjectNotice(ProjectVO projectVO) throws SQLException;
+
 }

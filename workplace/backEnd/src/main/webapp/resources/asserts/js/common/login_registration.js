@@ -46,20 +46,28 @@ $(document).ready(function () {
        },
        dataType: "json",
        success: function (res) {
-    	   if(res.success === "success"){
-//    		   console.log("복호화 성공!~!~! 브라우저단에서 알림");
-    		   $('.alert--error').hide();
-    		   location.href="/app/index";
-    		   return false;
-    	   }
+//			아이디 또는 비밀번호를 잘못 입력하였을 경우
     	   if(res.login_fail === "login_fail"){
     		   $('.alert--error > ul > li:eq(0)').html("<span>아이디 또는 비밀번호가 잘못 입력 되었습니다.<br/><strong>아이디</strong>와 <strong>비밀번호</strong>를 정확히 입력해 주세요.</span>");
     		   $('.alert--error').show();
     		   return false;
     	   }
+//			 이메일 인증을 거치지 않았을 경우
     	   if(res.authStatus === "fail"){
     		   $('.alert--error > ul > li:eq(0)').html("<span>해당 계정은 <strong>이메일</strong>인증이 확인되지 않습니다.<br/> 이메일을 확인해 주세요.</span>");
     		   $('.alert--error').show();
+    		   return false;
+    	   }
+//			이용플랜 사용 기한이 만료되었을 경우
+    	   if(res.expired === "expired"){
+    		   $('.alert--error > ul > li:eq(0)').html("<span><strong>이용 기한</strong>이 만료되어 사용하실 수 없습니다.</span>");
+    		   $('.alert--error').show();
+    		   return false;
+    	   }
+//			성공하면 app/index로 페이지 이동
+    	   if(res.success === "success"){
+    		   $('.alert--error').hide();
+    		   location.href="/app/index";
     		   return false;
     	   }
        },
@@ -78,12 +86,14 @@ $(document).ready(function () {
   })(jQuery);
 });
 
+
 /*----------------------------------------- REGISTRATION JS -----------------------------------------*/
 const form = document.getElementById('register-form');
 const username = document.getElementById('username');
 const email = document.getElementById('email');
 const pass = document.getElementById('pass');
 const re_pass = document.getElementById('re_pass');
+const agree_term = document.getElementById('agree-term');
 
 $('#register-form').submit(function (e) { 
 	e.preventDefault();
@@ -129,7 +139,7 @@ function checkInputs() {
 	const passValue = pass.value.trim();
 	const re_passValue = re_pass.value.trim();
 	
-	if(usernameValue === '') {
+	if(usernameValue === "") {
 		setErrorFor(username, '닉네임을 입력하세요.');
 	}else if (!isName(usernameValue)) {
 		setErrorFor(username, '닉네임은 한글, 영문, 숫자만 가능하며 2~20자리까지 가능합니다.');
@@ -137,7 +147,7 @@ function checkInputs() {
 		setSuccessFor(username);
 	}
 	
-	if(emailValue === '') {
+	if(emailValue === "") {
 		setErrorFor(email, '이메일을 입력하세요.');
 	} else if (!isEmail(emailValue)) {
 		setErrorFor(email, '유효하지 않는 이메일 형식입니다.');
@@ -159,6 +169,14 @@ function checkInputs() {
 		setErrorFor(re_pass, '비밀번호와 일치하지 않습니다.');
 	} else{
 		setSuccessFor(re_pass);
+	}
+	
+	if(!agree_term.checked){
+		 $('.label-agree-term').css('border-bottom', '1px solid red');
+		 setErrorFor(agree_term, "이용약관에 체크해 주세요.");
+	}else {
+		$('.label-agree-term').css('border', 'none');
+		setSuccessFor(agree_term);
 	}
 }
 

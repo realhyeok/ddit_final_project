@@ -9,10 +9,9 @@
 
 
 	<select id="selectUserById" resultType="User" parameterType="str">
-		select
-		*
-		from "USER"
-		where user_id=#{userId}
+		SELECT *
+		FROM "USER"
+		WHERE USER_ID=#{userId}
 	</select>
 
 	<!-- 로그인 -->
@@ -42,7 +41,8 @@
 		, AUTHKEY
 		, PRIVACY
 		, LIKE_COUNT
-		, AUTHSTATUS)
+		, AUTHSTATUS
+		,USER_UPLOAD_USAGE)
 		VALUES(
 		#{userId}
 		, #{pwd}
@@ -52,6 +52,7 @@
 		, SYSDATE
 		, '0'
 		, 'A201'
+		, 0
 		, 0
 		, 0)
 	</update>
@@ -117,6 +118,12 @@
 		FROM "USER"
 		WHERE NICKNAME = #{nickname}
 	</select>
+	
+	<update id="setUserUploadUsage" parameterType="User">
+		UPDATE "USER"
+		SET USER_UPLOAD_USAGE = #{userUploadUsage}
+		WHERE USER_ID = #{userId}
+	</update>
 
 
 

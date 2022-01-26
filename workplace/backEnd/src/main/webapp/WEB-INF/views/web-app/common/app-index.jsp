@@ -1,7 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
+<!-- 변수 선언 시작 -->
+<c:set var="dataUsage" value="${userVO.userUploadUsage/userMaxUploadCapacity*100}"/>
+<c:choose>
+	<c:when test="${userVO.userUploadUsage >= 1000}">
+		<c:set var="dataType" value="GB"/>
+		<fmt:formatNumber var="dataValue" value="${userVO.userUploadUsage/1000}" pattern="#.#"/>
+	</c:when>
+	<c:otherwise>
+		<c:set var="dataType" value="MB"/>
+		<c:set var="dataValue" value="${userVO.userUploadUsage}"/>
+	</c:otherwise>
+</c:choose>
+<!-- 변수 선언 끝 -->
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -222,7 +238,7 @@
       </div>
       <!-- 그래프 row start -->
       <div class="row">
-        <div class="col-md-3 widget widget_tally_box x_panel_origin ">
+        <div class="col-md-3 widget widget_tally_box x_panel_origin widget_data">
           <div class="ui-ribbon-container" style="height: 440px;">
             <div class="x_title">
               <h2>데이터</h2>
@@ -231,7 +247,7 @@
             <div class="x_content">
       
               <div style="text-align: center; margin-bottom: 17px">
-                <span class="chart" data-percent="86">
+                <span class="chart" data-percent="${dataUsage }">
                   <span class="percent"></span>
                 </span>
               </div>
@@ -240,8 +256,8 @@
               <div class="divider"></div>
       
               <p>
-                <br/><br/> 해당 계정에서 사용할 수 있는 총 데이터 사용량을 표시합니다. 
-                현재 <strong>${user_name}</strong>회원님은 ${total_capacity}중, <strong>${data_usage}</strong>를 사용중입니다. <br/><br/><br/> 구독 서비스를 원하시면 <a href="" style="color: #5C9BD1;">여기</a>를 클릭해주세요.
+                <br/><br/> 해당 계정에서 사용할 수 있는 총 데이터 사용량을 표시합니다. <br/><br/>
+                	현재 <strong>${userVO.nickname}</strong>님은 ${userMaxUploadCapacity}${dataType }중, <br/><strong>${dataValue}${dataType }</strong>를 사용중입니다. <br/><br/> 구독 서비스를 원하시면 <br/> <a href="" style="color: #5C9BD1;">여기</a>를 클릭해주세요.
               </p>
       
             </div>

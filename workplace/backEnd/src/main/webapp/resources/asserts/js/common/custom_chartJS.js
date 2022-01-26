@@ -1,3 +1,4 @@
+
 /*
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀⠀⠀⠀⠀⠀
@@ -22,7 +23,7 @@
 */
 // ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰ BAR CHART ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰
 
-const labels_bar = [
+const basic_labels_bar = [
   "1월",
   "2월",
   "3월",
@@ -38,7 +39,7 @@ const labels_bar = [
 ];
 
 const data_bar = {
-  labels: labels_bar,
+  labels: basic_labels_bar,
   datasets: [
     {
       label: "진행중",

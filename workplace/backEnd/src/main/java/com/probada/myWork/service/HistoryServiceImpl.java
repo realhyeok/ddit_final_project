@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.probada.myWork.dao.HistoryDAO;
 import com.probada.myWork.vo.HistoryVO;
 
-@Service
 public class HistoryServiceImpl implements HistoryService {
 	
 	private HistoryDAO historyDAO;

@@ -31,4 +31,12 @@ public class TaskDAOImpl implements TaskDAO {
 		return taskVOList;
 	}
 
+	@Override
+	public TaskVO selectTaskDetailByTaskNo(TaskVO taskVO) throws SQLException {
+
+		TaskVO resultVO = sqlSession.selectOne("Task-Mapper.selectTaskDetailByTaskNo", taskVO);
+
+		return resultVO;
+	}
+
 }

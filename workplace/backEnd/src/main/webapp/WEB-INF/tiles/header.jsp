@@ -1,6 +1,14 @@
+<%@page import="com.probada.user.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!-- 변수 선언 시작 -->
+<c:set var="nickname" value="${userVO.nickname }"/>
+
+<!-- 변수 선언 끝 -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,7 +101,7 @@
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="로그아웃" href="<%=request.getContextPath()%>/home/sign-in">
+              <a data-toggle="tooltip" data-placement="top" title="로그아웃" href="<%=request.getContextPath()%>/logout.do" id="logout">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
@@ -268,15 +276,13 @@
 
 				<li class="nav-item dropdown open" style="padding: 0px 15px;">
                     <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                      <img src="/resources/asserts/images/img.jpg" alt="">홍길동
+                      <img src="/resources/asserts/images/img.jpg" alt="">${nickname }
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item"  href="javascript:;"> 프로필</a>
-                        <a class="dropdown-item"  href="javascript:;">
-                          <span>알림설정</span>
-                        </a>
-                    <a class="dropdown-item"  href="javascript:;">FAQ</a>
-                      <a class="dropdown-item"  href="<%=request.getContextPath()%>/home/index"><i class="fa fa-sign-out pull-right"></i> 로그아웃</a>
+                      <a class="dropdown-item"  href="javascript:;"><span>알림설정</span></a>
+                      <a class="dropdown-item"  href="javascript:;">FAQ</a>
+                      <a class="dropdown-item" href="<%=request.getContextPath()%>/logout.do" id="logout"><i class="fa fa-sign-out pull-right"></i> 로그아웃</a>
                     </div>
                   </li>
 

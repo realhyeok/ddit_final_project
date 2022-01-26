@@ -62,7 +62,7 @@
 
 	<bean id="egov.antPathMater" class="org.springframework.util.AntPathMatcher" />
 
-	<bean id="egov.defaultTraceHandler" class="egovframework.rte.fdl.cmmn.trace.handler.DefaultTraceHandler" />
+<!-- 	<bean id="egov.defaultTraceHandler" class="egovframework.rte.fdl.cmmn.trace.handler.DefaultTraceHandler" /> -->
 
 
 </beans>

@@ -25,9 +25,9 @@ var projectHistoryTable = $("#projectHistory").kendoGrid({
         alwaysVisible: true,
         pageSizes: [5, 10, 20, 100]
     },
-    toolbar: [    		
-		{ template: "<input type='search' id='projectHistoryProject-category' style='width:150px;vertical-align:middle;'/>"},    		
-		{ template: "<input type='search' id='projectHistoryDist-category' style='width:150px;vertical-align:middle;'/>"},    		
+    toolbar: [
+		{ template: "<input type='search' id='projectHistoryProject-category' style='width:150px;vertical-align:middle;'/>"},
+		{ template: "<input type='search' id='projectHistoryDist-category' style='width:150px;vertical-align:middle;'/>"},
     	"search"
 	],
     columns: [
@@ -38,7 +38,7 @@ var projectHistoryTable = $("#projectHistory").kendoGrid({
     	{ field: "dist",    hidden:true },
     	{ field: "userId",  hidden:true },
     	{ field: "act",     hidden:true },
-    	{ template: kendo.template($("#projectHistory-template").html()) }
+    	{ template: $("#projectHistory-template").html() }
     ]
 });
 

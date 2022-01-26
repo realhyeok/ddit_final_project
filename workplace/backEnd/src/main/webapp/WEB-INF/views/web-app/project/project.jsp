@@ -21,13 +21,13 @@
           <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="false">프로젝트 상세</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="task-tab" data-toggle="tab" href="#task" role="tab" aria-controls="task" aria-selected="false" onclick="">업무</a>
+          <a class="nav-link" id="task-tab" data-toggle="tab" href="#task" role="tab" aria-controls="task" aria-selected="false" onclick="setTimeout(readTask, 300);">업무</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="gantt-tab" data-toggle="tab" href="#ganttchart" role="tab" aria-controls="ganttchart" aria-selected="false" onclick="setTimeout(myGantt, 500);">간트차트</a>
+          <a class="nav-link" id="gantt-tab" data-toggle="tab" href="#ganttchart" role="tab" aria-controls="ganttchart" aria-selected="false" onclick="setTimeout(projGantt, 300);">간트차트</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="issue-tab" data-toggle="tab" href="#issue" role="tab" aria-controls="issue" aria-selected="false" >이슈</a>
+          <a class="nav-link" id="issue-tab" data-toggle="tab" href="#issue" role="tab" aria-controls="issue" aria-selected="false" onclick="setTimeout(readIssue, 100);setTimeout(readMile, 100);">이슈</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="document-tab" data-toggle="tab" href="#document" role="tab" aria-controls="document" aria-selected="false">문서관리</a>
@@ -48,7 +48,7 @@
           <%@ include file="/WEB-INF/views/web-app/project/project-task.jsp" %>
         </div>
         <div class="tab-pane fade show" id="ganttchart" role="tabpanel" aria-labelledby="gantt-tab">
-          <div id="gantt" style="z-index:0"></div>
+          <div id="projGantt" style="z-index:0"></div>
         </div>
         <div class="tab-pane fade show" id="issue" role="tabpanel" aria-labelledby="issue-tab">
           <%@ include file="/WEB-INF/views/web-app/project/project-issue.jsp" %>

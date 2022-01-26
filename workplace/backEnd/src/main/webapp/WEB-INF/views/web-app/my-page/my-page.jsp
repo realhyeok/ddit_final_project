@@ -39,47 +39,21 @@
 					aria-labelledby="home-tab">
 					<br>
 		                <div class="col-lg-12" style="margin-left: 20px;">
-		             
-		                <style>
-		                    /* 이미지 안에 이미지를 넣기 위한 스타일 따로 css 만들어 놈*/
-		                        .imageMyfileBox {
-		                        position:relative;
-		                        transition: .5s ease; 
-		                        left:10px;
-		                        top:5px;
-		                        
-		                        }
+		           
 		
-		                        .imageMyfileBox .textMyfileBox {
-		                        position:absolute;
-		                        top:75px;
-		                        left:37px;
-		                        }
-		                        
-		                        
-		
-		                        .imageFileInput{
-		                          position: absolute;
-		                          width: 0;
-		                          height: 0;
-		                          padding: 0;
-		                          overflow: hidden;
-		                          border: 0;
-		
-		
-		                        }
-		
-		
-		
-		                </style>
-		
-		                    <form>
-		                       <div class="imageMyfileBox">
-		                            <img src="../resources/asserts/images/img.jpg" alt="..." class="img-circle" style="height: 100px; width: 100px; float: left; ">
-		                            <div class="textMyfileBox"> <a href="#이미지변경"><label style="font-weight:bold;" for="file">변경</label></a> </div>
-		                            <input class="imageFileInput" type="file" id="file">
-		                        </div>
-		                         
+		                    <form role="form" class="register-form" action="<%=request.getContextPath()%>/user/modify.do" method="post" id="modify-form" enctype="multipart/form-data">
+		                    
+		                
+		                     
+		                     <div class="imageMyfileBox">
+		                            <div id="pictureView" class="img-circle" style="height: 100px; width: 100px; float: left; "></div>
+		                            <div class="textMyfileBox"> <a href="#이미지변경"><label style="font-weight:bold;" for="inputFile">변경</label></a> </div>
+		                            <input class="imageFileInput" type="file" id="inputFile" onchange="changePicture_go();" name="picture" style="display:none">
+		                            <input id="inputFileName" class="form-control" type="text" name="tempPicture" hidden=hidden; value="haha"/>
+									<input id="picture" class="form-control" type="hidden" name="uploadPicture" />
+		               
+		                      </div>
+ 
 		                        <div style="display: inline-block;">
 		                          
 		                          <br>
@@ -101,7 +75,7 @@
 		                                <div class="col-lg-12">
 		                                   
 		                                    <!-- <div class="form-control form-control-view">칸반보드 UX  설정 REQ-001 문의</div> -->
-		                                    <input id="test_nickName" onclick="button_click();" class="form-control col-md-10 seokid" name="" value="" placeholder="중복 불가, 영문8자 이하...">
+		                                    <input id="test_nickName" onclick="button_click();" class="form-control col-md-10 seokid" name="nickName" value="" placeholder="중복 불가, 영문8자 이하...">
 		
 		                                </div>
 		                                 <div id="test_NickNamecnt" style="margin-left:20px; display: none;">(0 / 8)</div>
@@ -114,7 +88,7 @@
 		                                  
 		                                   <!-- <div class="form-control form-control-view">칸반보드 UX  설정 REQ-001 문의</div> -->
 		     
-		                                   <input id="test_info" onclick="button_click2();" class="form-control col-md-10 seokid" name="" value="" placeholder="짧은 자기소개 부탁드립니다...">
+		                                   <input id="test_info" onclick="button_click2();" class="form-control col-md-10 seokid" name="info" value="" placeholder="짧은 자기소개 부탁드립니다...">
 		                                  
 		                                
 		                               </div>
@@ -122,70 +96,7 @@
 		
 		                           </div>
 		
-		
-		
-		
 		                         
-		
-		                           <!-- 버튼css 따로 만들어 놈 -->
-		                          <style>
-		                              .switchz {
-		                                        position: relative;
-		                                      
-		                                        height: 26px;
-		                                        width: 120px;
-		                                        background: rgba(0, 0, 0, 0.25);
-		                                        border-radius: 3px;
-		                                        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0), 0 1px rgba(255, 255, 255, 0.3);
-		                                        }
-		
-		                                        .switch-label {
-		                                        position: relative;
-		                                        z-index: 2;
-		
-		                                        width: 58px;
-		                                        line-height: 26px;
-		                                        font-size: 11px;
-		                                        color:#888;;
-		                                        text-align: center;
-		
-		                                        cursor: pointer;
-		                                        }
-		
-		                                        .switch-label:hover {
-		                                        color:#fff;
-		                                        }
-		                                        .switch-input {
-		                                        display: none;
-		                                        }
-		
-		                                        .switch-input:checked + .switch-label {
-		                                        font-weight: bold;
-		                                        color: rgba(0, 0, 0, 1);
-		                                        text-shadow: 0 1px 0px rgba(1, 1, 1, .1);
-		                                        transition: 0.15s ease-out;
-		                                        }
-		
-		                                        .switch-input:checked + .switch-label-on ~ .switch-selection {
-		                                        left: 60px;
-		                                        }
-		
-		                                        .switch-selection {
-		                                        display: block;
-		                                        position: absolute;
-		                                        z-index: 1;
-		                                        top: 2px;
-		                                        left: 2px;
-		                                        width: 58px;
-		                                        height: 22px;
-		                                        background:#888;
-		                                        border-radius: 3px;
-		                                        box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 0 2px rgba(0, 0, 0, 0);
-		                                        transition: left 0.15s ease-out;
-		                                        }
-		
-		
-		                          </style>
 		
 		
 		                           <br>
@@ -200,7 +111,13 @@
 		                              <label for="no" class="btn-switch__label btn-switch__label_no"><span class="btn-switch__txt">비활성화</span></label>             
 		                            </p> -->
 		                            
-		                              <div class="switchz" style="margin-top: 5px;">
+		                            <!-- 일반버튼 -->
+		                            <!--  <label class="switch float-right">
+                                      <input type="checkbox">
+                                      <span class="slider round"></span>
+                                    </label> -->
+		                            
+		                               <div class="switchz" style="margin-top: 5px;">
 		                                <input 
 		                                    type="radio" 
 		                                    class="switch-input" 
@@ -236,7 +153,7 @@
 		                            
 		                         </div>
 		
-		                         <button type="button" style="margin-left: 735px;" class="btn btn-dark" onclick="RemoveIssue('02b02ecf-5f13-4a4e-b870-a602390cc43e');">수정  </button> 
+		                         <button type="button" onclick="modify_go();" style="margin-left: 870px;" class="btn btn-dark" onclick="RemoveIssue('02b02ecf-5f13-4a4e-b870-a602390cc43e');">수정  </button> 
 		                          	
 		                 
 		                    </form>   
@@ -374,8 +291,7 @@
 		                  </div>
 		                </div>
 		              </div>
-		            </div>
-		
+					</div>
 		             <!-- 모달끝 -->
 		
 					 <!-- 알림설정 모달폼 -->
@@ -473,108 +389,10 @@
 		
 		
 		
-		             <style>
-		              .seokid {
-		                      width: 100%;
-		                      border:none;
-		                      outline:none;
-		                      color: #000000;
-		                      font-size:18px;
-		                      height:25px;
-		                      background: none;
-		                      border-bottom: 2px solid #adadad;
-		                   }
-		                  
-		              
-		           </style>
-		           
-		              <!-- 버튼css 따로 만들어 놈 -->
-                         <style>
-                 		 .switch {
-                          position: relative;
-                          display: inline-block;
-                          width: 60px;
-                          height: 34px;
-                        }
-
-                        /* Hide default HTML checkbox */
-                        .switch input {
-                          opacity: 0;
-                          width: 0;
-                          height: 0;
-                        }
-
-                        /* The slider */
-                        .slider {
-                          position: absolute;
-                          cursor: pointer;
-                          top: 0;
-                          left: 0;
-                          right: 0;
-                          bottom: 0;
-                          background-color: #ccc;
-                          -webkit-transition: .4s;
-                          transition: .4s;
-                        }
-
-                        .slider:before {
-                          position: absolute;
-                          content: "";
-                          height: 26px;
-                          width: 26px;
-                          left: 4px;
-                          bottom: 4px;
-                          background-color: white;
-                          -webkit-transition: .4s;
-                          transition: .4s;
-                        }
-
-                        input:checked + .slider {
-                          background-color: #2196F3;
-                        }
-
-                        input:focus + .slider {
-                          box-shadow: 0 0 1px #2196F3;
-                        }
-
-                        input:checked + .slider:before {
-                          -webkit-transform: translateX(26px);
-                          -ms-transform: translateX(26px);
-                          transform: translateX(26px);
-                        }
-
-                        /* Rounded sliders */
-                        .slider.round {
-                          border-radius: 34px;
-                        }
-
-                        .slider.round:before {
-                          border-radius: 50%;
-                        }
-
-
-
-            </style>
-		           
 		           
 				</div>
-
-
 				<!-- 프로필 수정 끝 -->
 	
-              <div class="tab-pane fade" id="pwdModify" role="tabpanel" aria-labelledby="pwdModify-tab">
-              
-					
-
-			 </div>
-			<!-- 비빌번호 수정 끝  -->
-              <div class="tab-pane fade" id="alarmSetting" role="tabpanel" aria-labelledby="alarmSetting-tab">
-					
-					
-			 </div>
-			<!-- 알림설정 끝 -->
-			
-			
 					
 			</div>
 			<!-- 마이페이지 탭 끝 -->
@@ -588,10 +406,132 @@
         <!-- 내 작업 바디 끝 -->
       </div>
       <!-- /page content -->
+      
+      
+      <script>
+  
+      
+      
+      //나중에 js로 뺌
+      function MemberPictureThumb(targetObj, fileName, contextPath){ 
+    		
+    		if(!contextPath) contextPath="";
+    		
+    		targetObj.style.backgroundImage="url('"+contextPath+"/user/getPicture.do?picture="+fileName+"')";
+    		targetObj.style.backgroundPosition="center";
+    		targetObj.style.backgroundRepeat="no-repeat";
+    		targetObj.style.backgroundSize="cover";
+    	 
+    	}
+      
+      
+      	
+      function changePicture_go(){
+    		var picture = $('input#inputFile')[0];
+    		
+    		var fileFormat = picture.value.substr(picture.value.lastIndexOf(".")+1).toUpperCase();
+    		
+    		//이미지 확장자 jpg 확인
+    		if(!(fileFormat=="JPG" || fileFormat=="JPEG")){
+    			alert("이미지는 jpg/jpeg 형식만 가능합니다.");
+    			return;
+    		}
+    		
+    		//이미지 파일 용량 체크
+    		if(picture.files[0].size>1024*1024*1){
+    			alert("사진 용량은 1MB 이하면 가능합니다.");
+    			return;
+    		}
+    		
+    		document.getElementById('inputFileName').value = picture.files[0].name;
+    		
+    		if(picture.files && picture.files[0]){
+    			var reader = new FileReader();
+    			reader.onload = function(e) {
+    				//이미지 미리보기
+    				$('div#pictureView')
+    				.css({'background-image':'url('+e.target.result+')',
+    						'background-position':'center',
+    						'background-size':'cover',
+    						'background-repeat':'no-repeat'
+    				});
+    			}
+    			reader.readAsDataURL(picture.files[0]);
+    		}
+    		
+    		//이미지 변경 확인
+    		$('input[name="uploadPicture"]').val(picture.files[0].name);
+    		
+    	}
+      
+      
+      
+      
+  	function modify_go(){
+		/* var form=$('form[role="form"]');
+		form.submit(); */
+		
+		 $('#modify-form').submit(function (e) { 
+			   
+			    var input_picture = $('#picture').val();
+			    var input_nickName = $('#test_nickName').val();
+			    var input_info = $('#test_info').val();
+			    var input_switch = $('#week').val();
+			    var input_switch = $('#month').val();
+			    
+			    
+			    
+			    
+			    
+			    
+			    
+			    
+			    
+			    
+			    
+			    
+			    
+		 });
+		
+		
+		
+		
+		
+		
+		
+		
+		
+  	}
+  	
+      
+
+      
+      </script>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
     <!-- include -->
     <script>
     
     window.onload = function(){
+    	
+    	MemberPictureThumb($('#pictureView')[0],
+  				'${member.picture}','<%=request.getContextPath()%>');
+    	
+    }
     	
     	$('.modal').on('hidden.bs.modal', function (e) {
     	    console.log('modal close');

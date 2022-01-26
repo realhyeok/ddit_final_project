@@ -22,8 +22,9 @@
 
 	<!-- Repository root에 넣기-->
 	<bean id="documentDAO" class="com.probada.document.dao.DocumentDAOImpl"
-		p:session-ref="sqlSession"
-
+		
+		p:sqlSession-ref="sqlSession"
+	
 	/>
 	
 	<!-- Service -->

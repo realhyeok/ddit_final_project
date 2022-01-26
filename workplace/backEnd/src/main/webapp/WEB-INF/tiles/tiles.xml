@@ -22,6 +22,12 @@
 		<put-attribute name="project-script" value="/WEB-INF/tiles/project-script.jsp"/>
 	</definition>
 
+	<definition name="/web-app/project-list" extends="base" template="/WEB-INF/tiles/project-layout.jsp">
+		<put-attribute name="project-css" value="/WEB-INF/tiles/project-css.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/web-app/project-list.jsp"/>
+		<put-attribute name="project-script" value="/WEB-INF/tiles/project-script.jsp"/>
+	</definition>
+
 	<definition name="/web-app/collabo/*" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/web-app/collabo/{1}.jsp"/>
 	</definition>

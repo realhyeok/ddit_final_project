@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class FileVO {
 
 	private String DOC_NO;
-	private String PROJ_NO="3";
-	private String USER_ID="stoneenergy@ddit.com";
+	private String PROJ_NO;
+	private String USER_ID;
 	private String DESC="desc??";
 	private String STATUS="STATUS??";
 	private String DIST="DIST??";
@@ -17,10 +17,10 @@ public class FileVO {
     private boolean hasDirectories;
     private String path;
     private String extension=" ";
-     
-   
-
+	private String etc="1";
 	private int size =  20;
+	
+	
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date createdUtc = new Date();
     
@@ -35,7 +35,13 @@ public class FileVO {
    
     
    
-    
+    public String getEtc() {
+		return etc;
+	}
+
+	public void setEtc(String etc) {
+		this.etc = etc;
+	}
     
    
 

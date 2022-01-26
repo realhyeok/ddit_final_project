@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.probada.request.dao.RequestDAO;
 import com.probada.request.vo.RequestVO;
 
-@Service
 public class RequestServiceImpl implements RequestService {
 	
 	private RequestDAO requestDAO;

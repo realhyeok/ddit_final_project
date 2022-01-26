@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/bootstrap/kendo/css/probada.css" type="text/css"/>
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/css/project/project.css" type="text/css"/>
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/css/project/kendoGrid.css"/>
+		
 	</head>
 	<body></body>
 </html>

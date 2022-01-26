@@ -5,16 +5,17 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- Repository -->
-	<bean id="projectDAO" class="com.probada.project.dao.ProjectDAOImpl"
-		p:sqlSession-ref="sqlSession"
+	<bean id="projectDAO"
+		  class="com.probada.project.dao.ProjectDAOImpl"
+		  p:sqlSession-ref="sqlSession"
 	/>
-
-	<bean id="projectTagDAO" class="com.probada.project.dao.ProjectTagDAOImpl"
-		p:sqlSession-ref="sqlSession"
+	<bean id="projectTagDAO"
+		  class="com.probada.project.dao.ProjectTagDAOImpl"
+		  p:sqlSession-ref="sqlSession"
 	/>
-
-	<bean id="taskDAO" class="com.probada.task.dao.TaskDAOImpl"
-		p:sqlSession-ref="sqlSession"
+	<bean id="taskDAO"
+		  class="com.probada.task.dao.TaskDAOImpl"
+		  p:sqlSession-ref="sqlSession"
 	/>
 	<bean id="historyDAO"
 		  class="com.probada.myWork.dao.HistoryDAOImpl"
@@ -24,16 +25,25 @@
 		  class="com.probada.request.dao.RequestDAOImpl"
 		  p:sqlSession-ref="sqlSession"
 	/>
-	<bean id="issueDAO" class="com.probada.issue.dao.IssueDAOImpl"
-		p:sqlSession-ref="sqlSession"
+	<bean id="mailDAO"
+		  class="com.probada.mail.dao.MailDAOImpl"
+		  p:sqlSession-ref="sqlSession"
 	/>
-
-	<bean id="milestoneDAO" class="com.probada.milestone.dao.MilestoneDAOImpl"
-		p:sqlSession-ref="sqlSession"
+	<bean id="issueDAO"
+		  class="com.probada.issue.dao.IssueDAOImpl"
+		  p:sqlSession-ref="sqlSession"
 	/>
-	
-	<bean id="userDAO" class="com.probada.user.dao.UserDAOImpl"
-		p:sqlSession-ref="sqlSession"
+	<bean id="milestoneDAO"
+		  class="com.probada.milestone.dao.MilestoneDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="userDAO"
+		  class="com.probada.user.dao.UserDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="paymentsBillDAO"
+		  class="com.probada.payment.dao.PaymentsBillDAOImpl"
+		  p:sqlSession-ref="sqlSession"
 	/>
 
 	<!-- Service -->
@@ -57,18 +67,29 @@
 		  class="com.probada.request.service.RequestServiceImpl"
 		  p:requestDAO-ref="requestDAO"
 	/>
-	<bean id="issueService" class="com.probada.issue.service.IssueServiceImpl"
-		p:issueDAO-ref="issueDAO"
+	<bean id="mailService"
+		  class="com.probada.mail.service.MailServiceImpl"
+		  p:mailDAO-ref="mailDAO"
 	/>
-	<bean id="milestoneService" class="com.probada.milestone.service.MilestoneServiceImpl"
-		p:milestoneDAO-ref="milestoneDAO"
+	<bean id="issueService"
+		  class="com.probada.issue.service.IssueServiceImpl"
+		  p:issueDAO-ref="issueDAO"
 	/>
-	<bean id="userService" class="com.probada.user.service.UserServiceImpl"
-		p:userDAO-ref="userDAO"
+	<bean id="milestoneService"
+		  class="com.probada.milestone.service.MilestoneServiceImpl"
+		  p:milestoneDAO-ref="milestoneDAO"
+	/>
+	<bean id="userService"
+		  class="com.probada.user.service.UserServiceImpl"
+		  p:userDAO-ref="userDAO"
+	/>
+	<bean id="paymentsBillService"
+		  class="com.probada.payment.service.PaymentsBillServiceImpl"
+		  p:paymentsBillDAO-ref="paymentsBillDAO"
 	/>
 	
 	<!-- utils -->
-	<bean id="pwdUtil" class="com.probada.util.PwdUtil"/>
+	<bean id="userUtil" class="com.probada.util.UserUtil"/>
 	
 	<!-- mail -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -85,4 +106,5 @@
 			</props>
 		</property>
 	</bean>
+
 </beans>

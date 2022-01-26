@@ -34,4 +34,13 @@ public class TaskServiceImpl implements TaskService {
 		return taskVOList;
 	}
 
+
+	@Override
+	public TaskVO getTaskDetailByTaskNo(TaskVO taskVO) throws SQLException {
+
+		TaskVO resultVO = taskDAO.selectTaskDetailByTaskNo(taskVO);
+
+		return resultVO;
+	}
+
 }

@@ -30,4 +30,6 @@ public interface UserService {
 	//	회원 리스트에서 계정 확인
 	public int isAccount(String email) throws SQLException;
 	
+	//	유저 데이터 사용량 업데이트
+	public void setUserUploadUsage(UserVO userVO) throws SQLException;
 }

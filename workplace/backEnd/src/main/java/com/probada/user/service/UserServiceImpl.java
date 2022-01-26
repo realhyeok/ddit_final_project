@@ -104,4 +104,9 @@ public class UserServiceImpl implements UserService {
 	public int isAccount(String email) throws SQLException {
 		return userDAO.isAccount(email);
 	}
+
+	@Override
+	public void setUserUploadUsage(UserVO userVO) throws SQLException {
+		userDAO.setUserUploadUsage(userVO);
+	}
 }

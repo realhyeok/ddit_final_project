@@ -9,7 +9,8 @@
 
 
 	<resultMap id="DocResultMap" type="com.probada.document.vo.FileVO">
-	
+		<result column="ETC" property="etc" />
+		<result column="USER_ID" property="USER_ID" />
 		<result column="DOC_NO" property="DOC_NO" />
 		<result column="FILENAME" property="name" />
 		<result column="ISDIRECTORY" property="isDirectory"  />
@@ -42,7 +43,7 @@
 		
 		INSERT INTO document(DOC_NO, DOC_CONT_NO, PROJ_NO, USER_ID, UPLOADPATH, 
 							 FILENAME, FILETYPE, REGDATE,UPDATEDATE,"DESC",
-							STATUS,DIST,ISDIRECTORY,HASDIRECTORY,DOC_SIZE)
+							STATUS,DIST,ISDIRECTORY,HASDIRECTORY,DOC_SIZE,ETC)
 		
 		
 	     VALUES (#{DOC_NO}
@@ -60,6 +61,7 @@
 	           , #{isDirectory}
 	           , #{hasDirectories}
 	           , #{size}
+	           , #{etc}
 	           )
 		
 	</update>
@@ -95,6 +97,66 @@
 	<select id="selectDocumentSeqNext" resultType="str">
 		select 'doc'||doc_seq.NEXTVAL as DOC_NO from dual
 	</select>
+
+
+
+	<select id="selectDocumentByUserId" resultMap="DocResultMap" parameterType="str">
+	
+		select  * from document
+		where user_id =#{USER_ID} and 
+			  isdirectory = 0
+	
+	</select>
+
+
+
+	<select id="selectDefaultDirectoryMyProject" resultMap="DocResultMap" parameterType="str">
+				SELECT *
+			 		 FROM DOCUMENT
+			 		 
+			 		 WHERE ISDIRECTORY = 1
+			 		       AND ETC = 0
+  			   			   AND PROJ_NO IN (SELECT DISTINCT PROJ_NO FROM USER_PROJECT WHERE USER_ID = #{USER_ID})
+	</select>
+
+
+   	<select id="selectDirectoryMyProject" resultMap="DocResultMap" parameterType="str">
+				SELECT *
+			 		 FROM DOCUMENT
+			 		 
+			 		 WHERE ISDIRECTORY = 1
+			 			   AND USER_ID = #{USER_ID}
+			 		       AND ETC = 1
+  			   			   AND PROJ_NO IN (SELECT DISTINCT PROJ_NO FROM DOCUMENT WHERE USER_ID = #{USER_ID})
+	</select>
+
+
+
+
+
+
+	<select id="selectDocumentByDefaultProj" resultMap="DocResultMap" parameterType="str">
+	
+		select * from document
+			
+			where ETC = 0
+             AND PROJ_NO =#{PROJ_NO}
+	
+	</select>
+
+  <!--  AND ISDIRECTORY = 0 -->
+	<select id="selectDocumentByMyProj" resultMap="DocResultMap" parameterType="com.probada.document.vo.ProjectUserVO">
+	
+	select * from document
+			where ETC = 1
+			 AND USER_ID =#{userId}
+			
+             AND PROJ_NO =#{projNo}
+	
+	
+	</select>
+
+
 
 
 	<!-- <select id="selectMemberList" resultType="member">

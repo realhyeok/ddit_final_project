@@ -17,24 +17,16 @@
 								</h2>
 								<div class="clearfix">
 									<div class="clearfix header-title justify-content-end">
-										<a href="" data-toggle="modal"
-											data-target="#project-member-add"><i
-											class="fa fa-edit fa-2x"></i></a>
+										<i class="fa fa-edit fa-2x" onclick="getOverlayModifyTemplate('projModifyFormTemplate','/app/project/getProjectByProjNo')"></i>
 									</div>
 								</div>
 							</div>
-							<div class="x_content" >
+							<div class="x_content mb-3" >
 								<span class="project-intro">
-									{{intro}}
+									{{{intro}}}
 									</span>
 							</div>
 						</div>
-						</script>
-						<!-- 프로젝트 소개 끝 -->
-
-						<!-- 프로젝트 개요 시작 -->
-						<div id="projectDetailInfoTarget"></div>
-						<script type="text/x-handlebars-template" id="projectDetailInfo">
 						<div class="project-detail-body mb-3 px-3">
 							<div class="panel-body">
 								<div class="task_detail mb-3">
@@ -74,8 +66,9 @@
 								</div>
 							</div>
 						</div>
-						<!-- 프로젝트 개요 끝 -->
 						</script>
+						<!-- 프로젝트 소개 끝 -->
+
 
 
 						<!-- 프로젝트 공지사항 본문 시작 -->
@@ -87,10 +80,12 @@
 								<h2 class="title">
 									<i class="fa fa-exclamation-circle"></i> 공지사항
 								</h2>
-								<div class="clearfix header-title justify-content-end">
-									<a href="" data-toggle="modal"
-										data-target="#project-member-add"><i
-										class="fa fa-edit fa-2x"></i></a>
+								<div class="clearfix">
+							{{#ifCond notice '!=' NULL}}
+									<div class="clearfix header-title justify-content-end">
+										<i class="fa fa-edit fa-2x" onclick="getOverlayModifyTemplate('noticeModifyFormTemplate','/app/project/getProjectByProjNo')"></i>
+									</div>
+							{{/ifCond}}
 								</div>
 							</div>
 							{{#ifCond notice '!=' NULL}}
@@ -98,23 +93,18 @@
 								<!-- 프로젝트 공지사항 예시 시작 -->
 								<div class="x_title">
 									<h5 class="title">
-										<span>{{notice}}</span>
+										<span>{{{notice}}}</span>
 									</h5>
 									<div class="clearfix"></div>
 								</div>
 								<div class="project-detail-body project-notice-content">
-									&nbsp;{{noticeCont}}</div>
+									&nbsp;{{{noticeCont}}}</div>
 							</div>
 							<!-- 프로젝트 공지사항 예시 끝 -->
 							{{/ifCond}}
 							{{#ifCond notice '==' NULL}}
-                    <div class="btn create-btn project-bg-btn" data-toggle="modal" data-target="#project-notice-regist">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
-                        class="bi bi-plus" viewBox="0 0 16 16">
-							<path
-								d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
-								class="cQfklM" />
-							</svg>
+                    	<div class="btn create-btn project-bg-btn" style="width:80%;" onclick="getOverlayModifyTemplate('noticeRegistFormTemplate','/app/project/getProjectByProjNo')">
+                      		<span class="text-dark">새로운 공지사항을 등록해보세요!</span>
 						</div>
 							{{/ifCond}}
 				</script>
@@ -158,7 +148,7 @@
 
 							<li>
 								<div class="btn create-btn files-btn">
-									<i class="fa fa-plus fa-lg text-Secondary"></i>
+									<i class="fa fa-plus fa-lg text-dark"></i>
 								</div>
 							</li>
 

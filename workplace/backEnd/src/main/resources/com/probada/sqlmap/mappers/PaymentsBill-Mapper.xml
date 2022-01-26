@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PaymentsBill-Mapper">
+
+	<insert id="init_free" parameterType="com.probada.payment.vo.PaymentsBillVO">
+		INSERT INTO PAYMENTS_BILL(
+			BILL_NO
+			,PLAN_NO
+			,USER_ID
+			,PAIDDATE
+			,ENDDATE
+		)
+		VALUES(
+			PAYMENTS_BILL_SEQ.NEXTVAL
+			, 1
+			, #{userId}
+			, SYSDATE
+			, ADD_MONTHS(SYSDATE, +1)
+			
+		)
+		<selectKey keyProperty="billNo" resultType="int" order="BEFORE">
+			SELECT LAST_NUMBER
+			FROM USER_SEQUENCES
+			WHERE SEQUENCE_NAME = 'PAYMENTS_BILL_SEQ'
+		</selectKey>
+	</insert>
+	
+	<select id="getEndDate" resultType="date" parameterType="string">
+		SELECT ENDDATE
+		FROM PAYMENTS_BILL
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="getPlanNo" parameterType="string" resultType="string">
+		SELECT PLAN_NO
+		FROM PAYMENTS_BILL
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="getMaxUploadCapacity" parameterType="string" resultType="int">
+		SELECT MAX_UPLOAD_CAPACITY
+		FROM PAYMENTS_PLAN
+		WHERE PLAN_NO = #{planNo}
+	</select>
+
+</mapper>

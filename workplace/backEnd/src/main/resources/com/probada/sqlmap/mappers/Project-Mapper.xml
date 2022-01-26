@@ -50,6 +50,41 @@
 			PROJ_NO = #{projNo}
 	</select>
 
+	<select id="updateProjectNotice" parameterType="com.probada.project.vo.ProjectVO">
+		UPDATE
+			PROJECT
+		SET
+			NOTICE = #{notice},
+			NOTICE_CONT = #{noticeCont},
+			UPDATEDATE = sysdate
+		WHERE
+			PROJ_NO = #{projNo}
+	</select>
+
+	<insert id="insertProject" parameterType="com.probada.project.vo.ProjectVO">
+		INSERT INTO
+			PROJECT
+			(PROJ_NO, TITLE, STARTDATE, ENDDATE, PRIVACY, INTRO)
+		VALUES
+			(#{projNo},#{title},#{startdate},#{enddate},#{privacy},#{intro})
+	</insert>
+
+
+	<update id="updateProjectDetail" parameterType="com.probada.project.vo.ProjectVO">
+		UPDATE
+			PROJECT
+		SET
+			TITLE = #{title},
+			PRIVACY = #{privacy},
+			STARTDATE = #{startdate},
+			ENDDATE = #{enddate},
+			INTRO = #{intro}
+		WHERE
+			PROJ_NO = #{projNo}
+	</update>
+
+
+
 	<sql id="statusForProject">
 			(SELECT
 				CODE_NAME
@@ -68,4 +103,8 @@
             	COMMON_CODE.CODE_NO = PROJECT.PRIVACY) AS PRIVACY
 	</sql>
 
+	<select id="selectProjectSeqNext" resultType="int">
+		SELECT
+			PROJ_SEQ.NEXTVAL AS PROJ_NO FROM DUAL
+	</select>
 </mapper>

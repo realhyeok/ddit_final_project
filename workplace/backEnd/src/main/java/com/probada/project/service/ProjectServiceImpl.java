@@ -32,5 +32,36 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectVO;
 	}
 
+	@Override
+	public String registProject(ProjectVO projectVO) throws SQLException {
+
+		int seqNo = projectDAO.selectProjectSeqNext();
+
+		String projNo = Integer.toString(seqNo);
+
+		projectVO.setProjNo(projNo);
+
+		projectDAO.insertProject(projectVO);
+
+		return projNo;
+
+	}
+
+	@Override
+	public void modifyProjectDetail(ProjectVO projectVO) throws SQLException {
+
+		projectDAO.updateProjectDetail(projectVO);
+
+	}
+
+	@Override
+	public void modifyProjectNotice(ProjectVO projectVO) throws SQLException {
+
+		projectDAO.updateProjectNotice(projectVO);
+
+	}
+
+
+
 
 }

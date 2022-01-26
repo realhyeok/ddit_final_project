@@ -15,27 +15,21 @@ import org.springframework.http.MediaType;
 import org.springframework.web.servlet.View;
 
 public class FileDownloadView implements View{
-
 	
 	private String contentType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
-	
-	
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
-	
-	
 	
 	@Override
 	public String getContentType() {
 		return this.contentType;
 	}
-
 	
 	@Override
-	public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		
+	public void render(Map<String, ?> model
+					 , HttpServletRequest request
+					 , HttpServletResponse response) throws Exception {
 		
 		String savedPath = "C:/"+(String)model.get("savedPath");
 		System.out.println("savedPaht=>"+savedPath);
@@ -78,23 +72,5 @@ public class FileDownloadView implements View{
 		
 		inStream.close();
 		outStream.close();
-		
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -13,17 +13,6 @@ public class index_probada {
 		return url;
 	}
 	
-	@RequestMapping("/sign-in")
-	public String login() {
-		String url ="/web-index/common/sign-in";
-		return url;
-	}
-	
-	@RequestMapping("/sign-up")
-	public String login_verify() {
-		String url ="/web-index/common/sign-up";
-		return url;
-	}
 
 	
 }

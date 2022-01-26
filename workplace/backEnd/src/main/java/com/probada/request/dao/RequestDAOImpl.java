@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.probada.request.vo.RequestVO;
 
-@Repository
 public class RequestDAOImpl implements RequestDAO {
 	
 	private SqlSession sqlSession;

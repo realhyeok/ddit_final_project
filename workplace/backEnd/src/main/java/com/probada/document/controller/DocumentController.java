@@ -1,6 +1,8 @@
 package com.probada.document.controller;
 
 import java.io.BufferedReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,8 +16,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -42,6 +47,31 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.probada.document.service.DocumentService;
 import com.probada.document.vo.FileVO;
+import com.probada.document.vo.ProjectUserVO;
+import com.probada.user.vo.UserVO;
+
+
+
+
+
+
+
+
+
+/*
+ * 문서 가이드 1/25ver
+ * 
+ * 조건. 1) 프로젝트 생성 시에 무조건 프로젝트 폴더와 하위 폴더(업무, 이슈 등등을 지정해야한다)
+ *      2) 파일 하나 업로드 삭제, 이름 바꾸기 하나씩만 
+ *      3) 폴더 삭제 시 하위 파일이 삭제 안된다 디비만  삭제 안되고 실제 파일은 삭제가 됨
+ *      4) 같은 이름 하지마셈 에러로 막아 놓긴 함
+ *      5) 폴더 생성  가급적 자제
+ *      6) 휴지통 수정해야함
+ *      7) 프로젝트 문서관리, 내 작업 문서관리 read메서드만 다르게 만듦
+ *      8) etc "0" 공용으로 보일 거, etc "1" 나만 보일 거 디렉토리만 이렇게 하고 파일은 무조건 다 0
+ */
+
+
 
 
 
@@ -49,6 +79,7 @@ import com.probada.document.vo.FileVO;
 @RequestMapping("/document")
 public class DocumentController {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DocumentController.class);
 	
 	@Autowired
 	private DocumentService documentService;
@@ -61,50 +92,53 @@ public class DocumentController {
 	}
 	
 
+	@RequestMapping("/chat")
+	public String chat() {
+		String url = "/web-app/document/chat";
+		return url;
+	}
+	
+	
+	
+
 	@PostMapping(value="/Upload")
 	@ResponseBody
-	private void sendFile (String path, @RequestParam("file")MultipartFile uploadFile,HttpServletResponse res) throws Exception{
+	private void upload (String path, @RequestParam("file")MultipartFile uploadFile,HttpServletResponse res) throws Exception{
 		
-		String fileName = null;
+		String name;
 		String realFileName;
 		String req = documentService.seqDoc();
+		LOGGER.debug("req : {}",req);
 		String uploadPath = "c:/"+path;//3조 PMS probada/업무
-		fileName = uploadFile.getOriginalFilename();//jQuery.jpg
-		String fullPath = path+"/"+fileName;
-		System.out.println("upload..fullName=>"+fullPath);
+		LOGGER.debug("uploadPath : {}",uploadPath);
+		String fileName = uploadFile.getOriginalFilename();//jQuery.jpg
+		LOGGER.debug("fileName : {}",fileName);
+		String fullPath = path+"/"+fileName;//3조 PMS probada/업무/jQuery.jpg
+		LOGGER.debug("fullPath : {}",fullPath);
+		
 		int size = Integer.parseInt(uploadFile.getSize()+"");
+		LOGGER.debug("size : {}",size);
+		
 		String extension = fileName.substring(fileName.lastIndexOf("."));
 		if(extension== null) {
 			extension = "";
 		}
-
+		LOGGER.debug("extension : {}",extension);
 		
-		//같은 파일 등록 시 +1path와 name에 (1)추가
-		List<FileVO> fileVO = new ArrayList<FileVO>();
-		
-		fileVO = documentService.getDocList();
-		
-		List<FileVO> realFileList = new ArrayList<>();
-		
-		
-		for ( FileVO vo: fileVO) {
-			
-			if(vo.getPath().equals(fullPath)) {
-				System.out.println("getPath=>"+vo.getPath());
-				res.sendError(res.SC_BAD_REQUEST);
-			}
-	
+		//같은 이름 중복 방지
+		name  = sameFileProcess(res, fullPath);
+		if(name.equals("sameName")) {
+			res.sendError(res.SC_BAD_REQUEST);
+			return;
 		}
 		
-
-		//
 		if(fileName.substring(0,fileName.lastIndexOf(".")).equals("")) {
 			realFileName = req.substring(3,req.length()).concat("제목없음");
 		}else {
 			realFileName = fileName.substring(0,fileName.lastIndexOf("."));
 		}
 
-		File storeFile = new File(uploadPath, realFileName+extension);
+		File storeFile = new File(uploadPath,fileName);
 		storeFile.mkdirs();
 		
 		uploadFile.transferTo(storeFile);
@@ -113,13 +147,21 @@ public class DocumentController {
 		
 		String seq = documentService.seqDoc();
 		
+		doc.setEtc("0");
 		doc.setDOC_NO(seq);
+		//하드코딩
+		doc.setPROJ_NO("4");
+		doc.setUSER_ID("seok2@ddit.com");
+		
+		
 		doc.setHasDirectories(false);
 		doc.setIsDirectory(false);
 		doc.setExtension(extension);
 		doc.setName(realFileName);
 		doc.setPath(path+"/"+realFileName+extension);
 		doc.setSize(size);
+		
+		LOGGER.debug("doc : {}",doc);
 		
 		documentService.registDocument(doc);
 		
@@ -130,11 +172,11 @@ public class DocumentController {
 	
 	@PostMapping(value="/Create")
 	@ResponseBody
-	private FileVO createFolder(String target,String doc_NO) throws Exception{
+	private FileVO createFolder(String target,String doc_NO,HttpServletResponse res) throws Exception{
 
-
+		String name;
 		String seq = documentService.seqDoc();
-		
+		FileVO doc = new FileVO();
 		String fileName = "새로운 폴더"+seq;
 		String realPath;
 		
@@ -147,27 +189,32 @@ public class DocumentController {
 		
 		String uploadPath = "c:/"+target;
 
-		System.out.println("realPaht=>"+realPath);
-		System.out.println("uploadPath->"+uploadPath);
+		name  = sameFileProcess(res, realPath);
+		if(name.equals("sameName")) {
+			res.sendError(res.SC_BAD_REQUEST);
+			return doc;
+		}
 		
 		File storeFile = new File(uploadPath, fileName);
 		storeFile.mkdirs();
 				
-		FileVO doc = new FileVO();
 		
 		
+		//하드코딩
+		doc.setPROJ_NO("4");
+		doc.setUSER_ID("seok@ddit.com");
+		
+		
+		doc.setEtc("1");
 		doc.setDOC_NO(seq);
 		doc.setHasDirectories(true);
 		doc.setIsDirectory(true);
-		doc.setExtension(" ");
+		doc.setExtension("");
 		doc.setName(fileName);
 		doc.setPath(realPath);
 		doc.setSize(5000);
 		
 		documentService.registDocument(doc);
-		
-		
-		System.out.println("create=>"+doc);
 		
 		return doc;
 		
@@ -176,25 +223,23 @@ public class DocumentController {
 	
 	@PostMapping(value="/Update")
 	@ResponseBody
-	private FileVO update (String target, String path, String doc_NO, String name, String extension) throws Exception{
-
-		
-		
+	private FileVO update (String target, String path, String doc_NO, String name, String extension,HttpServletResponse res) throws Exception{
 		
 		if(target == null) {
 			path = name;
-			
 		}else {
 			path = target+"/"+name+extension;
 		}
-
-		
 		
 		FileVO doc = new FileVO();
 		doc = documentService.getDocOne(doc_NO);
 		
 		File originFile = new File("c:/"+doc.getPath());
 
+		
+		//세션에서 가지고 올 id
+		doc.setPROJ_NO("4");
+		doc.setUSER_ID("seok@ddit.com");
 		doc.setPath(path);
 		doc.setName(name);
 		doc.setExtension(extension);
@@ -212,41 +257,34 @@ public class DocumentController {
 	
 	
 	
-	
-	
-	
-	
-	
+
 	@PostMapping(value="/Read")
 	@ResponseBody
-	public  List<FileVO>  read(String target) throws Exception {
+	public  List<FileVO>  read(String target,HttpServletRequest req) throws Exception {
 		
-		List<FileVO> fileVO = new ArrayList<FileVO>();
-		
-		//sql문에 where 내가 속한 프로젝트의 파일 출력 쿼리문 두개 
-		// 하나 내가 속한 프로젝트 출력
-		// 1,2,3 프로젝트의 파일을 출력
-		
-		fileVO = documentService.getDocList();
-		
-		List<FileVO> realFileList = new ArrayList<>();
-		
-		for ( FileVO vo: fileVO) {
-			
 	
-			if(target==null && (vo.getPath().equals(vo.getName()))) {
-				realFileList.add(vo);
-			}else if(target != null && (vo.getPath().contains(target+"/"+vo.getName()))){
-				realFileList.add(vo);
-			}
-
-			
-		}
 		
-		return realFileList;
+		//내 작업 문서관리
+		//List<FileVO> result = myWork(target,"seok2@ddit.com");
+		
+		
+		//프로젝트 문서관리 하드코딩
+		ProjectUserVO user = new ProjectUserVO();
+		user.setProjNo("4");
+		user.setUserId("seok@ddit.com");
+		
+		List<FileVO> result = myProj(target,user);
+		
+		return result;
 	}
 
 	
+	
+
+
+	
+
+
 	@PostMapping(value="/Destroy")
 	@ResponseBody
 	public  FileVO remove(String doc_NO, String path, String name, String extension) throws Exception {
@@ -263,7 +301,6 @@ public class DocumentController {
 
 			//path만 이동시키면 되지 않을까??????????
 			if(orginPath.equals("휴지통")) {
-				
 				
 				doc = documentService.getDocOne(doc_NO);
 				result = documentService.getDocOne(doc_NO);
@@ -284,6 +321,7 @@ public class DocumentController {
 				
 				File originFile = new File("c:/"+path);
 			
+				
 				if(originFile.isDirectory()) {
 					originFile.delete();
 					trash = documentService.getDocOne(doc_NO);
@@ -294,13 +332,11 @@ public class DocumentController {
 					trash = documentService.getDocOne(doc_NO);
 					
 					trash.setPath("휴지통/"+name+extension);
-					System.out.println("(name)누가 에러일까?"+name);
-					System.out.println("(extension)누가 에러일까?"+extension);
 					trash.setName(name);
 					
 					File newFile = new File("c:/"+trash.getPath());
 					
-					if(originFile.exists() && newFile.exists()) {
+					if(originFile.exists()) {
 						FileUtils.moveFile(originFile, newFile);
 					}
 					
@@ -330,20 +366,115 @@ public class DocumentController {
 		//디렉토리는 다운이 되지 않으니 무조건 패스가 있는 파일만 /유무 판단 안해도 가능
 		String FileName = path.substring(path.lastIndexOf("/")+1);
 		
-		
-		
 		model.addAttribute("savedPath", path);
 		model.addAttribute("fileName", FileName);
-	
 		// path = 3조 PMS probada/업무/circle-dot-o.png
 		
 		return url;
-		
 	}
 
 
+	
+	public String sameFileProcess(HttpServletResponse res, String fullPath) throws Exception{
+		
+		
+		//String sr2 = String.format("안녕하세요. %s 입니다.","dfdf");
+		//같은 파일 등록 시 +1path와 name에 (1)추가할까말까
+		List<FileVO> fileVO = new ArrayList<FileVO>();
+		String name = "difName";
+		
+		
+		fileVO = documentService.getDocList();
+		
+		//같은 이름 중복 방지
+		for ( FileVO vo: fileVO) {
+			if(vo.getPath().equals(fullPath)) {
+				
+				name = "sameName";
+				
+				return name;
+			}
+		}
+	
+		return name;
+	}
+
+
+	
+	private List<FileVO> myWork(String target, String userId) throws Exception{
+			
+			
+			List<FileVO> fileVO = new ArrayList<FileVO>();
+			List<FileVO> realFileList = new ArrayList<>();
+			boolean flag = true;
+			
+			
+			fileVO = documentService.getMyDocument(userId);
+			
+			
+			
+			for ( FileVO vo: fileVO) {
+				
+					if(vo.getPath().equals("휴지통") && flag) {
+						
+						flag = false;
+						if(target==null && (vo.getPath().equals(vo.getName()))) {
+							realFileList.add(vo);
+						}else if(target != null && (vo.getPath().contains(target+"/"+vo.getName()))){
+							realFileList.add(vo);
+						}
+						
+					}
+					
+						if(!vo.getPath().equals("휴지통")) {
+							if(target==null && (vo.getPath().equals(vo.getName()))) {
+								realFileList.add(vo);
+							}else if(target != null && (vo.getPath().contains(target+"/"+vo.getName()))){
+								realFileList.add(vo);
+							}
+						}
+				
+			}
+			
+			return realFileList;
+			
+		}
+
+	
+	private List<FileVO> myProj(String target, ProjectUserVO user) throws Exception{
+			
+			
+			List<FileVO> fileVO = new ArrayList<FileVO>();
+			fileVO = documentService.getProjectDocumnet(user);
+			
+			List<FileVO> realFileList = new ArrayList<>();
+			
+			for ( FileVO vo: fileVO) {
+				
+		
+				if(target==null && (vo.getPath().equals(vo.getName()))) {
+					realFileList.add(vo);
+				}else if(target != null && (vo.getPath().contains(target+"/"+vo.getName()))){
+					realFileList.add(vo);
+				}
+			}
+			
+			return realFileList;
+			
+		}
+	
+	
 
 }
+
+
+
+
+
+
+
+
+
 
 
 //내가 속한 프로젝트 출력 시
@@ -376,7 +507,23 @@ public class DocumentController {
 
 
 
+//모든 프로젝트	
 
+	/*	fileVO = documentService.getDocList();
+		
+		List<FileVO> realFileList = new ArrayList<>();
+		
+		for ( FileVO vo: fileVO) {
+			
+	
+			if(target==null && (vo.getPath().equals(vo.getName()))) {
+				realFileList.add(vo);
+			}else if(target != null && (vo.getPath().contains(target+"/"+vo.getName()))){
+				realFileList.add(vo);
+			}
+		}
+		
+		return realFileList;*/
 
 
 

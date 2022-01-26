@@ -1,10 +1,14 @@
 package com.probada.document.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.probada.document.dao.DocumentDAO;
 import com.probada.document.vo.FileVO;
+import com.probada.document.vo.ProjectUserVO;
 
 
 public class DocumentServiceImpl implements DocumentService{
@@ -77,6 +81,54 @@ public class DocumentServiceImpl implements DocumentService{
 	}
 
 
+	@Override
+	public List<FileVO> getMyDocument(String userId) throws SQLException {
+
+		List<FileVO> myDoc = new ArrayList<FileVO>();
+		List<FileVO> myDefaultDir = new ArrayList<FileVO>();
+		List<FileVO> myDir = new ArrayList<FileVO>();
+		
+		myDoc = documentDAO.selectDocumentByUserId(userId);
+		myDefaultDir = documentDAO.selectDefaultDirectoryMyProject(userId);
+		myDir = documentDAO.selectDirectoryMyProject(userId);
+		
+		
+		
+		
+		List<FileVO> joined = new ArrayList<>();
+		joined.addAll(myDoc);
+		joined.addAll(myDefaultDir);
+		joined.addAll(myDir);
+		
+		
+		System.out.println("service=>"+joined);
+		
+		
+		return joined;
+	}
+
+
+	@Override
+	public List<FileVO> getProjectDocumnet(ProjectUserVO user) throws SQLException {
+		
+		
+		List<FileVO> myProjDefaultDoc = new ArrayList<>();
+		List<FileVO> myProjDoc = new ArrayList<>();
+		List<FileVO> joined = new ArrayList<>();
+		
+		
+		myProjDefaultDoc = documentDAO.selectDocumentByDefaultProj(user.getProjNo());
+		myProjDoc = documentDAO.selectDocumentByMyProj(user);
+		
+		
+		joined.addAll(myProjDefaultDoc);
+		joined.addAll(myProjDoc);
+		return joined;
+	}
+
+
+	
+	
 	
 	
 	

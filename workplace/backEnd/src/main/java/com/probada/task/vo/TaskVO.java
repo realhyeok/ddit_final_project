@@ -2,6 +2,7 @@ package com.probada.task.vo;
 
 public class TaskVO {
 
+	private String projNo;
 	private String taskNo;
 	private String status;
 	private String docContNo;
@@ -14,6 +15,12 @@ public class TaskVO {
 	private String updatedate;
 	private String content;
 
+	public String getProjNo() {
+		return projNo;
+	}
+	public void setProjNo(String projNo) {
+		this.projNo = projNo;
+	}
 	public String getEnddate() {
 		return enddate;
 	}

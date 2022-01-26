@@ -8,7 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 import com.probada.user.vo.UserVO;
 
 public class UserDAOImpl implements UserDAO{
-
+// 	현재 파타미터의 email하고 userId는 동일합니다.
+	
 	private SqlSession sqlSession;
 
 	public void setSqlSession(SqlSession sqlSession) {
@@ -56,7 +57,6 @@ public class UserDAOImpl implements UserDAO{
 		return sqlSession.selectOne("User-Mapper.idCheck", email);
 	}
 
-
 	@Override
 	public String nicknameCheck(String username) throws SQLException {
 		return sqlSession.selectOne("User-Mapper.nicknameCheck", username);
@@ -65,6 +65,11 @@ public class UserDAOImpl implements UserDAO{
 	@Override
 	public int isAccount(String email) throws SQLException {
 		return sqlSession.selectOne("User-Mapper.isAccount", email);
+	}
+
+	@Override
+	public void setUserUploadUsage(UserVO userVO) throws SQLException {
+		sqlSession.update("User-Mapper.setUserUploadUsage", userVO);
 	}
 
 }

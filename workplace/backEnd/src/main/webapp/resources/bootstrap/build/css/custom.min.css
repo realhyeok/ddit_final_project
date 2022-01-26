@@ -7018,3 +7018,17 @@ floating action button css start
 floating action button css end
 ---------------------------------------------
 */
+
+
+/*
+---------------------------------------------
+widget data css 2022-01-25
+---------------------------------------------
+*/
+.widget_data {
+	min-width: 250px;
+	max-width: 287px;
+	}
+.col-md-3.widget.widget_tally_box.x_panel_origin.widget_data{
+    margin-left: 10px;
+}

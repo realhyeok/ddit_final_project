@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.probada.document.vo.FileVO;
+import com.probada.document.vo.ProjectUserVO;
 
 
 
@@ -21,5 +22,13 @@ public interface DocumentService {
 	public void removeDocument(String docId) throws SQLException;
 	
 	public String seqDoc() throws SQLException;
+	
+	
+	public List<FileVO> getMyDocument(String userId) throws SQLException;
+	
+	
+	
+	public List<FileVO> getProjectDocumnet(ProjectUserVO user) throws SQLException;
+
 	
 }

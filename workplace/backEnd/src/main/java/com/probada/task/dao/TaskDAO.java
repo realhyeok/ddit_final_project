@@ -10,4 +10,7 @@ public interface TaskDAO {
 	public Integer selectTaskCountByProjectNo(String projNo) throws SQLException;
 
 	public List<TaskVO> selectTaskListByProjectNo(String projNo) throws SQLException;
+
+	public TaskVO selectTaskDetailByTaskNo(TaskVO taskVO) throws SQLException;
+
 }

@@ -31,8 +31,7 @@ $('#toolbar').kendoToolBar({
     ]
 });
 
-$("#mileGrid").kendoListView({
-    dataSource: mileDataSource,
+$("#mileList").kendoListView({
     selectable: true,
     change: function() {
     	var index = this.select().index();
@@ -42,7 +41,7 @@ $("#mileGrid").kendoListView({
     	sortingIssueByClick(selectedData.id);
     },
     height:760,
-    template: kendo.template($("#mileTemplate").html()),
+    template: $("#mileTemplate").html(),
     dataBound: function() {
         $('.B301').kendoBadge({
             themeColor: 'tertiary',
@@ -56,4 +55,9 @@ $("#mileGrid").kendoListView({
     }
 
 });
+function readMile(){
+	var mileList = $("#mileList").data("kendoListView");
+	console.log(mileList);
+	mileList.setDataSource(mileDataSource);
+}
 

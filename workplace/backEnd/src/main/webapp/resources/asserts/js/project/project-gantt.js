@@ -13,10 +13,6 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 	      data: { "projNo": projNo }
 	    }
 	  },
-	  chagne: function(e){
-		  var data = this.data();
-		  console.log("overhereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"+data);
-	  },
 	  schema: {
 	    model: {
 	      id: "id",
@@ -32,7 +28,6 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 	        }*/
 	      fields: {
 	        id: { from: "taskNo", type: "number" },
-	        userId: { from: "userId", type: "string" },
 	        orderId: { from: "OrderID", type: "number", validation: { required: true } },
 	        parentId: { from: "ParentID", type: "number", validation: { required: true }, defaultValue: null },
 	        start: { from: "startdate", type: "date" },
@@ -43,34 +38,39 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 	  }
 
 	});
-
-function myGantt() {
-		$("#gantt").kendoGantt({
-			culture:"jp-JP",
+	function projGantt() {
+		$("#projGantt").kendoGantt({
+			dataSource:ganttDataSource,
+			tooltip: {
+				visible: true,
+			},
 			toolbar:[
-				{ template: "<a class='k-button' href='javascript:overlay(\"업무\");'>업무 등록</a>" },
-			    { name: "pdf" }
-			],
-			 views: [
-				    "day",
-				    { type: "week",
-				    	selected: true
-				    },
-				    { type: "month",
+				{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"taskRegistFormTemplate\");'>업무 등록</a>" },
+				{ name: "pdf" }
+				],
+				views: [
+					"day",
+					{ type: "week",
+						selected: true
+					},
+					{ type: "month",
 
-				    }
-				  ],
-			dataSource: ganttDataSource,
-			columns: [
-               { field: "title", title: "업무명", editable: true, width: 255 },
-           ],
-				height:700,
-				editable: {
-				    dragPercentComplete: false
-				  },
-				  rowHeight: 20,
+					}
+					],
+					columns: [
+						{ field: "title", title: "업무명", editable: true },
+						],
+						autoSync:true,
+						height:700,
+						listWidth: 200,
+						showWorkHours: false,
+						showWorkDays: false,
+						snap: true,
+						editable: {
+							dragPercentComplete: false
+						},
 		})
-		var gantt = $("#gantt").data("kendoGantt");
 		kendo.culture("ko-KR");
-		myGantt = function() {}
+		projGantt = function () {}
 	}
+

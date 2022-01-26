@@ -13,8 +13,14 @@ public class UserVO {
 	private String pwd = "";
 	private int likeCount;
 	private int authStatus;
+	private int userUploadUsage;
 
-
+	@Override
+	public String toString() {
+		return "UserVO [nickname=" + nickname + ", privacy=" + privacy + ", picture=" + picture + ", intro=" + intro
+				+ ", authkey=" + authkey + ", regdate=" + regdate + ", userId=" + userId + ", pwd=" + pwd
+				+ ", likeCount=" + likeCount + ", authStatus=" + authStatus + "]";
+	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
@@ -75,6 +81,12 @@ public class UserVO {
 	public void setAuthStatus(int authStatus) {
 		this.authStatus = authStatus;
 	}
-
+	public int getUserUploadUsage() {
+		return userUploadUsage;
+	}
+	public void setUserUploadUsage(int userUploadUsage) {
+		this.userUploadUsage = userUploadUsage;
+	}
+	
 	
 }

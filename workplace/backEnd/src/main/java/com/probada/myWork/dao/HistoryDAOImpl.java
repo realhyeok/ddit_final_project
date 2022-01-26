@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.probada.myWork.vo.HistoryVO;
 
-@Repository
 public class HistoryDAOImpl implements HistoryDAO {
 	
 	private SqlSession sqlSession;

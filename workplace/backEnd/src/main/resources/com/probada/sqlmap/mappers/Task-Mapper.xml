@@ -32,4 +32,26 @@
 			A.PROJ_NO = #{projNo}
 	</select>
 
+	<select id="selectTaskDetailByTaskNo" resultType="task" parameterType="task">
+		SELECT
+        	A.TASK_NO AS TASK_NO,
+            A.TITLE AS TITLE,
+            B.NICKNAME AS USER_ID,
+            A.CONTENT AS CONTENT,
+            A.IMPORTANT AS IMPORTANT,
+            A.REGDATE AS REGDATE,
+            A.UPDATEDATE AS UPDATEDATE,
+            A.STARTDATE AS STARTDATE,
+            A.ENDDATE AS ENDDATE,
+            A.STATUS AS STATUS,
+            A.DOC_CONT_NO AS DOC_CONT_NO
+		FROM
+        	TASK A
+		JOIN
+			"USER" B ON A.USER_ID = B.USER_ID
+		WHERE
+			A.PROJ_NO = #{projNo}
+		AND
+			A.TASK_NO = #{taskNo}
+	</select>
 </mapper>

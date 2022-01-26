@@ -10,7 +10,6 @@ import com.probada.project.vo.ProjectVO;
 public class ProjectDAOImpl implements ProjectDAO {
 
 	private SqlSession sqlSession;
-
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
@@ -30,5 +29,35 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 		return projectVO;
 	}
+
+	@Override
+	public int selectProjectSeqNext() throws SQLException {
+
+		int projNo = sqlSession.selectOne("Project-Mapper.selectProjectSeqNext");
+
+		return projNo;
+	}
+
+	@Override
+	public void insertProject(ProjectVO projectVO) throws SQLException {
+
+		sqlSession.update("Project-Mapper.insertProject",projectVO);
+
+	}
+
+	@Override
+	public void updateProjectDetail(ProjectVO projectVO) throws SQLException {
+
+		sqlSession.update("Project-Mapper.updateProjectDetail",projectVO);
+
+	}
+
+	@Override
+	public void updateProjectNotice(ProjectVO projectVO) throws SQLException {
+
+		sqlSession.update("Project-Mapper.updateProjectNotice",projectVO);
+
+	}
+
 
 }

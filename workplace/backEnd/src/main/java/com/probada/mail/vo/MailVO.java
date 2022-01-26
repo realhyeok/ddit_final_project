@@ -1,8 +1,10 @@
 package com.probada.mail.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class MailVO {
 	private String mailNo;
@@ -13,8 +15,14 @@ public class MailVO {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date regDate;
 	private String status;
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	private String docContNo;
+	private String dist;
+	private String recvDel;
+	private String sentDel;
 	
+	private List<AttachVO> attachList;
+
 	public String getMailNo() {
 		return mailNo;
 	}
@@ -62,5 +70,30 @@ public class MailVO {
 	}
 	public void setDocContNo(String docContNo) {
 		this.docContNo = docContNo;
+	}
+	public String getDist() {
+		return dist;
+	}
+	public void setDist(String dist) {
+		this.dist = dist;
+	}
+	public String getRecvDel() {
+		return recvDel;
+	}
+	public void setRecvDel(String recvDel) {
+		this.recvDel = recvDel;
+	}
+	public String getSentDel() {
+		return sentDel;
+	}
+	public void setSentDel(String sentDel) {
+		this.sentDel = sentDel;
+	}
+	
+	public List<AttachVO> getAttachList() {
+		return attachList;
+	}
+	public void setAttachList(List<AttachVO> attachList) {
+		this.attachList = attachList;
 	}
 }

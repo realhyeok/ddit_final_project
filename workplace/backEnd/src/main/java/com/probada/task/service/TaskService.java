@@ -10,4 +10,6 @@ public interface TaskService {
 	public Integer getTaskCountByProjectNo(String projNo) throws SQLException;
 
 	public List<TaskVO> getTaskListByProjectNo(String projNo) throws SQLException;
+
+	public TaskVO getTaskDetailByTaskNo(TaskVO taskVO) throws SQLException;
 }

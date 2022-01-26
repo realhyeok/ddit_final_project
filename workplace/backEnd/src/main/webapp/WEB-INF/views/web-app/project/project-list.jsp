@@ -89,17 +89,16 @@
 				</h2>
 			</div>
 			<!-- /.user-block -->
-			<p class="overflow-auto">#:intro#</p>
+			<p class="text-truncate">#= intro#</p>
 			<p>
 				<span class="ml-3">시작일 : #:kendo.toString(startdate,"yyyy년 MM월 dd일")#</span>
-
 				<span class="ml-3">마감일 : #:kendo.toString(enddate,"yyyy년 MM월 dd일")#</span>
 			</p>
 			<div class="card-collabo mb-3 d-flex justify-content-evenly">
 					<div><span><i class="fa fa fa-heart-o fa-lg"></i> #:likeCount#</span></div>
 					<div class="ml-3 d-flex align-items-center"><h4 class="mb-0">
 				#for (var i=0, len=tagNames.length; i<len; i++){#
-						<span class="badge badge-success">#:tagNames[i]#</span>
+						<span class="badge badge-success" onclick="sortingProjectByTag('#:tagNames[i]#');">#:tagNames[i]#</span>
 				#}#
 					</h4></div>
 					<div class="d-flex justify-content-end"><span class="ml-3">갱신일 : #:kendo.toString((updatedate-new Date),"dd일")#</span></div>

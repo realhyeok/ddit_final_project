@@ -35,7 +35,7 @@
 		<!-- 추가내용 -->
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/css/common/datatable.css" type="text/css"/>
 		<!-- 콜라보  -->
-		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/css/collabo/collabo.css" type="text/css"/>
+		<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/css/collabo/collabo.css" type="text/css"/> --%>
 		<!-- kendo ui -->
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/css/project/project.css" type="text/css"/>
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/css/project/kendoGrid.css"/>

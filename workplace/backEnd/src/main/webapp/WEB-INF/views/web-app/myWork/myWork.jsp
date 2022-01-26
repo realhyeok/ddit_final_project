@@ -54,7 +54,7 @@
 					<%@ include file="/WEB-INF/views/web-app/myWork/myRequest.jsp" %>
 				</div>
 				<div id="mail" class="tab-pane fade show" role="tabpanel" aria-labelledby="mail-tab">
-					<%@ include file="/WEB-INF/views/web-app/myWork/my-mail.jsp" %>
+					<%@ include file="/WEB-INF/views/web-app/myWork/myMail.jsp" %>
 				</div>
 				<div id="history" class="tab-pane fade show" role="tabpanel" aria-labelledby="history-tab">
 					<%@ include file="/WEB-INF/views/web-app/myWork/myHistory.jsp" %>
