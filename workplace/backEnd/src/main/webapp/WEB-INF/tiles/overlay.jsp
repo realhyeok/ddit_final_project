@@ -594,18 +594,19 @@
 			<form id="modifyProjectNotice" method="post" data-parsley-validate=""
 				class="form-horizontal form-label-left" novalidate="">
 			<!-- 공지 제목 -->
-					<div class="item form-group">
+					<div class="item form-group custom-validate">
 						<label class="col-form-label col-md-3 col-sm-3 label-align"
 							for="notice">공지 제목 <span class="required">*</span>
 						</label>
 						<div class="col-md-6 col-sm-6 ">
-							<input type="text" id="notice" required="required" class="form-control form-control-sm" name="notice" value="{{notice}}">
+							<input type="text" id="notice" class="form-control form-control-sm" name="notice" cv="false" value={{{notice}}}>
+								<small>제목은 필수입력사항입니다.</small>
 						</div>
 					</div>
 			<!-- 공지 내용 -->
 			<div class=form-group">
 				<label class=" label-align">공지 내용 </label>
-				<textarea class="projSummnote" name="noticeCont" required="required">{{noticeCont}}</textarea>
+				<textarea class="projSummnote" name="noticeCont" required="required">{{{noticeCont}}}</textarea>
 			</div>
 			<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
 				<button type="button" class="btn btn-success" onclick='modifyProjectNotice()'>수정</button>

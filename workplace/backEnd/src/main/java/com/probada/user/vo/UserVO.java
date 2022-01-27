@@ -2,7 +2,7 @@ package com.probada.user.vo;
 
 public class UserVO {
 
-//	nullException을 막기 위해서 디폴트값으로 초기화가 필요하다. 
+//	nullException을 막기 위해서 디폴트값으로 초기화가 필요하다.
 	private String nickname;
 	private String privacy;
 	private String picture;
@@ -15,11 +15,22 @@ public class UserVO {
 	private int authStatus;
 	private int userUploadUsage;
 
+	private int taskCount;
+	private int projectCount;
+	private String projNo;
+
 	@Override
 	public String toString() {
 		return "UserVO [nickname=" + nickname + ", privacy=" + privacy + ", picture=" + picture + ", intro=" + intro
 				+ ", authkey=" + authkey + ", regdate=" + regdate + ", userId=" + userId + ", pwd=" + pwd
 				+ ", likeCount=" + likeCount + ", authStatus=" + authStatus + "]";
+	}
+
+	public String getProjNo() {
+		return projNo;
+	}
+	public void setProjNo(String projNo) {
+		this.projNo = projNo;
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
@@ -87,6 +98,17 @@ public class UserVO {
 	public void setUserUploadUsage(int userUploadUsage) {
 		this.userUploadUsage = userUploadUsage;
 	}
-	
-	
+	public int getTaskCount() {
+		return taskCount;
+	}
+	public void setTaskCount(int taskCount) {
+		this.taskCount = taskCount;
+	}
+	public int getProjectCount() {
+		return projectCount;
+	}
+	public void setProjectCount(int projectCount) {
+		this.projectCount = projectCount;
+	}
+
 }

@@ -11,6 +11,19 @@
 			PROJ_NO = #{projNo}
 	</select>
 
+	<select id="selectTaskCountInProjByUserId" resultType="int" parameterType="User">
+		SELECT
+			COUNT(*)
+		FROM
+			TASK A
+		JOIN
+			USER_PROJECT B ON(A.USER_ID = B.USER_ID AND A.PROJ_NO = B.PROJ_NO)
+		WHERE
+			A.USER_ID = #{userId}
+		  AND
+            A.PROJ_NO = #{projNo}
+	</select>
+
 	<select id="selectTaskListByProjectNo" resultType="task" parameterType="String">
 		SELECT
         	A.TASK_NO AS TASK_NO,

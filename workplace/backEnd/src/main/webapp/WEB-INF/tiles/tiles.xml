@@ -9,25 +9,39 @@
 		<put-attribute name="overlay" value="/WEB-INF/tiles/overlay.jsp"/>
 	</definition>
 
+
+
+
 	<definition name="/web-app/common/*" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/web-app/common/{1}.jsp"/>
 	</definition>
-	<definition name="/web-app/my-page/*" extends="base">
+
+
+	<definition name="/web-app/my-page/*" extends="base" template="/WEB-INF/tiles/seok.jsp">
+		<put-attribute name="seokCss" value="/WEB-INF/tiles/seok_css.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/web-app/my-page/{1}.jsp"/>
 	</definition>
 
-	<definition name="/web-app/project/*" extends="base" template="/WEB-INF/tiles/project-layout.jsp">
-		<put-attribute name="project-css" value="/WEB-INF/tiles/project-css.jsp"/>
-		<put-attribute name="body" value="/WEB-INF/views/web-app/project/{1}.jsp"/>
-		<put-attribute name="project-script" value="/WEB-INF/tiles/project-script.jsp"/>
-	</definition>
 
+
+	<definition name="/web-app/chat/*" extends="base" template="/WEB-INF/tiles/seok.jsp">
+		<put-attribute name="seokCss" value="/WEB-INF/tiles/seok_css.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/web-app/chat/{1}.jsp"/>
+	</definition>
+	
 	<definition name="/web-app/project-list" extends="base" template="/WEB-INF/tiles/project-layout.jsp">
 		<put-attribute name="project-css" value="/WEB-INF/tiles/project-css.jsp"/>
-		<put-attribute name="body" value="/WEB-INF/views/web-app/project-list.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/web-app/project/project-list.jsp"/>
 		<put-attribute name="project-script" value="/WEB-INF/tiles/project-script.jsp"/>
+
 	</definition>
 
+
+
+	<definition name="/web-app/project/*" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/web-app/project/{1}.jsp"/>
+	</definition>
+	
 	<definition name="/web-app/collabo/*" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/web-app/collabo/{1}.jsp"/>
 	</definition>

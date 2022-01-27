@@ -16,7 +16,6 @@ public class MailVO {
 	private Date regDate;
 	private String status;
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	private String docContNo;
 	private String dist;
 	private String recvDel;
 	private String sentDel;
@@ -64,12 +63,6 @@ public class MailVO {
 	}
 	public void setStatus(String status) {
 		this.status = status;
-	}
-	public String getDocContNo() {
-		return docContNo;
-	}
-	public void setDocContNo(String docContNo) {
-		this.docContNo = docContNo;
 	}
 	public String getDist() {
 		return dist;

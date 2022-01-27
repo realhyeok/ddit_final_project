@@ -10,21 +10,10 @@
           </div>
 
           <div class="x_content">
-
             <div class="col-md-12">
-              <div class="row project-list-sort">
-              </div>
-
-
-              <div class="tab-content">
-                <div class="active tab-pane" id="activity">
 					<div class="project-list row" id="project-list"></div>
-              <!-- /.tab-pane -->
-            </div><!-- /.tab-content -->
-          </div><!-- col-md-12 끝-->
-        </div><!-- x contents 끝-->
+        	</div><!-- x contents 끝-->
       </div>
-      <!-- 프로젝트 바디 끝 -->
     <!-- /page content -->
 
     <!-- The Modal -->
@@ -90,6 +79,7 @@
 			</div>
 			<!-- /.user-block -->
 			<p class="text-truncate">#= intro#</p>
+			<div class="col-sm-8">
 			<p>
 				<span class="ml-3">시작일 : #:kendo.toString(startdate,"yyyy년 MM월 dd일")#</span>
 				<span class="ml-3">마감일 : #:kendo.toString(enddate,"yyyy년 MM월 dd일")#</span>
@@ -101,7 +91,74 @@
 						<span class="badge badge-success" onclick="sortingProjectByTag('#:tagNames[i]#');">#:tagNames[i]#</span>
 				#}#
 					</h4></div>
-					<div class="d-flex justify-content-end"><span class="ml-3">갱신일 : #:kendo.toString((updatedate-new Date),"dd일")#</span></div>
+					<div class="d-flex justify-content-end"><span class="ml-3">갱신일 : #:kendo.toString((updatedate),"yyyy년 MM월 dd일")#</span></div>
+			</div>
+			</div>
+			<div class="col-sm-4">
+					<ul class="list-inline mt-4" style="display: inline-flex">
+				# for(var i=0, len=member.length; i<len; i++) { #
+						# if(i < 5) { #
+							<!-- 구성원 단위 시작 -->
+							<li class="project-member nav-item dropdown open ml-3">
+								<div class="d-flex flex-column">
+									<a href="" class="project-member " aria-haspopup="true"
+									id="navbarDropdown" data-toggle="dropdown"	aria-expanded="false">
+										# if(member[i].picture == null){ #
+										<img src="/resources/asserts/images/img.jpg" class="img-circle" alt="Avatar" />
+										# } else { #
+										<img src="/resources/asserts/images/#:member[i].picture#.jpg" class="img-circle" alt="Avatar" />
+										# } #
+									</a>
+									<div class="dropdown-menu dropdown-membermenu pull-right" aria-labelledby="navbarDropdown">
+									<div class="col-md-3   widget widget_tally_box">
+										<div class="fixed_height_390">
+											<div class="x_content">
+												<div class="flex">
+													<ul class="list-inline widget_profile_box">
+														<li></li>
+														<li class="d-flex justify-content-center">
+															# if(member[i].picture == null){ #
+															<img src="/resources/asserts/images/img.jpg" alt="" class="img-circle profile_img"></li>
+															# } else { #
+															<img src="/resources/asserts/images/#: member[i].picture #.jpg" alt="" class="img-circle profile_img"></li>
+															# } #
+														<li></li>
+													</ul>
+												</div>
+												<div>
+													<h3 class="d-flex justify-content-center mt-3">#: member[i].nickname #</h3>
+												</div>
+												<div class="flex">
+													<ul	class="list-inline count2 d-flex justify-content-between">
+													<li><span class="badge badge-primary">Projects</span>
+														<h3>#: member[i].projectCount #</h3></li>
+													<li><span class="badge badge-danger">Likes</span>
+														<h3>#: member[i].likeCount #</h3></li>
+													<li><span class="badge badge-info">Tasks</span>
+														<h3>#: member[i].taskCount #</h3></li>
+													</ul>
+												</div>
+												<div class="p-1"
+													style="height: 100px; background-color: rgb(229,229,229)">
+													<p class="mt-2 mb-2">#= member[i].intro #</p>
+												</div>
+												<div class="text-center mt-3">
+													<button type="button" class="btn btn-success btn-sm">
+														<i class="fa fa-pencil-square"> 권한</i>
+													</button>
+													<button type="button" class="btn btn-primary btn-sm">
+														<i class="fa fa-user-times"> 제명</i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+								</div>
+							</li>
+						# } #
+				# } #
+					</ul>
 			</div>
 		</div>
 	</div>

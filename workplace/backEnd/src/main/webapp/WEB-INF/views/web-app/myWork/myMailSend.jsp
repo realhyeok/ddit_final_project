@@ -15,7 +15,7 @@
 	<div class="mail_list m-0 border-bottom-0">
 		<div class="left">
 			<input class="sendCheck" type="checkbox" value="#:mailNo#">
-			# if(docContNo){ #
+			# if(attachList){ #
 				<i class="fa fa-paperclip"></i>
 			# } #
 		</div>
@@ -43,7 +43,10 @@
 		<div class="sender-info">
 			<div class="row">
 				<div class="col-md-12 text-right">
-					<strong>{{userTo}}</strong>
+					<strong>받은 사람 : {{userTo}}</strong>
+				</div>
+				<div class="col-md-12 text-right">
+					<strong>읽음 확인 : {{status}}</strong>
 				</div>
 			</div>
 		</div>
@@ -55,22 +58,22 @@
 			{{#if attachList}}
 				<p>
 					<span><i class="fa fa-paperclip"></i> {{attachList.length}} attachments - </span>
-					<a href="javascript:allDownload();">all downloads</a>		
+					<a href="javascript:allSendAttachDownload();">all downloads</a>		
 				</p>
 			{{/if}}
 			
 			<div class="row">
 				{{#each attachList}}
-					<a href="<%=request.getContextPath()%>/app/myWork/attachDownload?uploadPath={{uploadPath}}" class="col-md-2 row m-2 p-1 rounded bg-warning String downloadAttaches">
-						<div class="col-3 p-0 text-center">
+					<a href="<%=request.getContextPath()%>/app/myWork/attachDownload?filePath={{filePath}}/{{fileName}}" class="col-md-2 row m-2 p-1 rounded bg-warning String downloadSendAttaches">
+						<div class="col-3 p-0 text-center text-dark font-weight-bold">
 							<h2><i class="fa fa-paperclip"></i></h2>						
 						</div>
 						<div class="col-9 p-0">
-							<div class="col-12 m-0 p-0" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-								{{fileName}}{{fileType}}
+							<div class="col-12 m-0 p-0 text-dark" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+								{{fileName}}
 							</div>					
-							<div class="col-12 m-0 p-0">
-								{{docSize}} Byte			
+							<div class="col-12 m-0 p-0 text-dark">
+								{{fileSize}} Byte			
 							</div>		
 						</div>
 					</a>
@@ -94,6 +97,11 @@
 			type : "get",
 			dataType : "json",
 			success : function(data){
+				if(data.status == "A801"){
+					data.status = "안읽음";
+				}else{
+					data.status = "읽음";
+				}
 				printData(data, $('#sendMailDetail'), $('#send-mail-detail-template'));
 			},
 			error : function(error){
@@ -162,10 +170,10 @@
 		}
 	}
 	
-	function allDownload(){
-		var attachFileCount = $('.downloadAttaches').length;
+	function allSendAttachDownload(){
+		var attachFileCount = $('.downloadSendAttaches').length;
 		for(var i = 0; i < attachFileCount; i++){
-			$('.downloadAttaches').get(i).click();
+			$('.downloadSendAttaches').get(i).click();
 		}
 	}
 </script>

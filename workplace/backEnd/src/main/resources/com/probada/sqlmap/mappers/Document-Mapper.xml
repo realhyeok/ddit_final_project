@@ -20,7 +20,7 @@
 		<result column="DOC_SIZE" property="size" />
 		<result column="REGDATE" property="created" />
 		<result column="UPDATEDATE" property="modified" />
-	
+
 	</resultMap>
 
 
@@ -31,21 +31,21 @@
 			select
 				*
 			from DOCUMENT
-				
+
 	</select>
 
 
 
 	 <update id="insertDocument" parameterType="com.probada.document.vo.FileVO">
-		
-		
-		
-		
-		INSERT INTO document(DOC_NO, DOC_CONT_NO, PROJ_NO, USER_ID, UPLOADPATH, 
+
+
+
+
+		INSERT INTO document(DOC_NO, DOC_CONT_NO, PROJ_NO, USER_ID, UPLOADPATH,
 							 FILENAME, FILETYPE, REGDATE,UPDATEDATE,"DESC",
 							STATUS,DIST,ISDIRECTORY,HASDIRECTORY,DOC_SIZE,ETC)
-		
-		
+
+
 	     VALUES (#{DOC_NO}
 	           , 1
 	           , #{PROJ_NO}
@@ -63,9 +63,9 @@
 	           , #{size}
 	           , #{etc}
 	           )
-		
+
 	</update>
-	 
+
 
 
 
@@ -74,7 +74,7 @@
 						set UPLOADPATH=#{path},
 							FILENAME=#{name}
 						where DOC_NO=#{DOC_NO}
-						
+
 	</update>
 
 
@@ -93,7 +93,7 @@
 		where DOC_NO=#{DOC_NO}
 	</update>
 
-	
+
 	<select id="selectDocumentSeqNext" resultType="str">
 		select 'doc'||doc_seq.NEXTVAL as DOC_NO from dual
 	</select>
@@ -101,11 +101,11 @@
 
 
 	<select id="selectDocumentByUserId" resultMap="DocResultMap" parameterType="str">
-	
+
 		select  * from document
-		where user_id =#{USER_ID} and 
+		where user_id =#{USER_ID} and
 			  isdirectory = 0
-	
+
 	</select>
 
 
@@ -113,7 +113,7 @@
 	<select id="selectDefaultDirectoryMyProject" resultMap="DocResultMap" parameterType="str">
 				SELECT *
 			 		 FROM DOCUMENT
-			 		 
+
 			 		 WHERE ISDIRECTORY = 1
 			 		       AND ETC = 0
   			   			   AND PROJ_NO IN (SELECT DISTINCT PROJ_NO FROM USER_PROJECT WHERE USER_ID = #{USER_ID})
@@ -123,7 +123,7 @@
    	<select id="selectDirectoryMyProject" resultMap="DocResultMap" parameterType="str">
 				SELECT *
 			 		 FROM DOCUMENT
-			 		 
+
 			 		 WHERE ISDIRECTORY = 1
 			 			   AND USER_ID = #{USER_ID}
 			 		       AND ETC = 1
@@ -136,28 +136,43 @@
 
 
 	<select id="selectDocumentByDefaultProj" resultMap="DocResultMap" parameterType="str">
-	
+
 		select * from document
-			
+
 			where ETC = 0
              AND PROJ_NO =#{PROJ_NO}
-	
+
 	</select>
 
   <!--  AND ISDIRECTORY = 0 -->
 	<select id="selectDocumentByMyProj" resultMap="DocResultMap" parameterType="com.probada.document.vo.ProjectUserVO">
-	
 	select * from document
 			where ETC = 1
 			 AND USER_ID =#{userId}
-			
+
              AND PROJ_NO =#{projNo}
-	
-	
 	</select>
 
+	<select id="selectDocumentListByProjNo" resultMap="DocResultMap" parameterType="com.probada.document.vo.ProjectUserVO">
+		SELECT
+			*
+		FROM
+			DOCUMENT
+		WHERE
+			 PROJ_NO = #{projNo}
 
+	</select>
 
+	<select id="selectDocumentListForProjDetail" resultMap="DocResultMap" parameterType="String">
+		SELECT
+			*
+		FROM
+			DOCUMENT
+		WHERE
+			 PROJ_NO = #{projNo}
+		AND
+			UPLOADPATH LIKE '%'||'중요첨부/'||'%'
+	</select>
 
 	<!-- <select id="selectMemberList" resultType="member">
 		select

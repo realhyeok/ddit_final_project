@@ -43,6 +43,8 @@
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/bootstrap/vendors/pnotify/dist/pnotify.css">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/bootstrap/vendors/pnotify/dist/pnotify.buttons.css">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/bootstrap/vendors/pnotify/dist/pnotify.nonblock.css">
+		<!-- toastr css -->
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/css/common/toastr.min.css"/>
 	</head>
 	<body>
 	</body>

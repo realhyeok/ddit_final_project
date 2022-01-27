@@ -40,7 +40,7 @@
 						<div class="col-sm-12">
 							<div class="card-box tab-content">
 								<div class="tab-pane fade" id="regist" role="tabpanel" aria-labelledby="regist-tab">
-									<%@ include file="/WEB-INF/views/web-app/myWork/my-mail-regist.jsp" %>
+									<%@ include file="/WEB-INF/views/web-app/myWork/myMailRegist.jsp" %>
 								</div>
 								<div class="tab-pane fade show active" id="receive" role="tabpanel" aria-labelledby="receive-tab">
 									<%@ include file="/WEB-INF/views/web-app/myWork/myMailReceive.jsp" %>

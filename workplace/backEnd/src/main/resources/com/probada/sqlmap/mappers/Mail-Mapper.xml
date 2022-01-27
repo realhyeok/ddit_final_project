@@ -8,11 +8,10 @@
 			 , USER_FROM
 			 , CONTENT
 			 , REGDATE
-			 , DOC_CONT_NO
 		  FROM MAIL
 		 WHERE USER_TO = #{userTo}
 		   AND DIST = 'B901'
-		   AND RECV_DEL = '1'
+		   AND SENT_DEL = '1'
 		 ORDER BY REGDATE DESC
 	</select>
 	
@@ -20,10 +19,13 @@
 		SELECT MAIL_NO
 			 , TITLE
 			 , USER_TO
+			 , USER_FROM
 			 , CONTENT
 			 , REGDATE
 			 , STATUS
-			 , DOC_CONT_NO
+			 , DIST
+			 , RECV_DEL
+			 , SENT_DEL
 		  FROM MAIL
 		 WHERE USER_FROM = #{userFrom}
 		   AND DIST = 'B901'
@@ -38,7 +40,10 @@
 			 , USER_FROM
 			 , CONTENT
 			 , REGDATE
-			 , DOC_CONT_NO
+			 , STATUS
+			 , DIST
+			 , RECV_DEL
+			 , SENT_DEL
 		  FROM MAIL
 		 WHERE USER_FROM = #{userFrom}
 		   AND DIST = 'B902'
@@ -53,13 +58,13 @@
 			 , USER_FROM
 			 , CONTENT
 			 , REGDATE
-			 , DOC_CONT_NO
+			 , STATUS
 			 , DIST
 			 , RECV_DEL
 			 , SENT_DEL
 		  FROM MAIL
-		 WHERE (USER_TO = #{userTo} AND RECV_DEL = '2' AND RECV_DEL != '3')
-			OR (USER_FROM = #{userFrom} AND SENT_DEL = '2' AND SENT_DEL != '3')
+		 WHERE (USER_TO = #{userTo} AND RECV_DEL = '2')
+			OR (USER_FROM = #{userFrom} AND SENT_DEL = '2')
 		 ORDER BY REGDATE DESC
 	</select>
 	
@@ -71,21 +76,22 @@
 			 , CONTENT
 			 , REGDATE
 			 , STATUS
-			 , DOC_CONT_NO
 		  FROM MAIL
 		 WHERE MAIL_NO = #{mailNo}
 	</select>
 	
 	<select id="selectMailAttachList" resultType="attachVO">
-		SELECT DOC_NO
-			 , UPLOADPATH
-			 , FILENAME
-			 , FILETYPE
-			 , DOC_SIZE
-		  FROM DOCUMENT
-		 WHERE DOC_CONT_NO = #{docContNo}
-		   AND ISDIRECTORY = '0'
-		 ORDER BY FILENAME ASC
+		SELECT ATTACH_NO
+			 , MAIL_NO
+			 , FILE_PATH
+			 , FILE_NAME
+			 , FILE_TYPE
+			 , FILE_SIZE
+			 , ATTACHER
+			 , REGDATE 
+		  FROM ATTACH
+		 WHERE MAIL_NO = #{mailNo}
+		 ORDER BY FILE_NAME ASC
 	</select>
 	
 	<update id="changeMailStatus">
@@ -94,46 +100,52 @@
 		 WHERE MAIL_NO = #{mailNo}
 	</update>
 	
-	<update id="returnReceiveMail">
-		UPDATE MAIL
-		   SET RECV_DEL = '1'
-		 WHERE MAIL_NO = #{mailNo}
-	</update>
-
-	<update id="returnSendMail">
-		UPDATE MAIL
-		   SET SENT_DEL = '1'
-		 WHERE MAIL_NO = #{mailNo}
-	</update>
-	
-	<update id="deleteReceiveMailToTrash">
-		UPDATE MAIL
-		   SET RECV_DEL = '2'
-		 WHERE MAIL_NO = #{mailNo}
-	</update>
-
-	<update id="deleteSendMailToTrash">
-		UPDATE MAIL
-		   SET SENT_DEL = '2'
-		 WHERE MAIL_NO = #{mailNo}
-	</update>
-	
-	<update id="deleteTempMail">
-		UPDATE MAIL
-		   SET SENT_DEL = '3'
-		 WHERE MAIL_NO = #{mailNo}
+	<update id="registMail">
+		INSERT INTO MAIL (
+			  MAIL_NO
+			, TITLE
+			, USER_TO
+			, USER_FROM
+			, CONTENT
+			, REGDATE
+			, STATUS
+			, DIST
+			, RECV_DEL
+			, SENT_DEL
+			) VALUES (
+			  #{mailNo}
+			, #{title}
+			, #{userTo}
+			, #{userFrom}
+			, #{content}
+			, SYSDATE
+			, 'A801'
+			, 'B901'
+			, '1'
+			, '1'
+			)
 	</update>
 	
-	<update id="deleteTrashReceiveMail">
-		UPDATE MAIL
-		   SET RECV_DEL = '3'
-		 WHERE MAIL_NO = #{mailNo}
-	</update>
-	
-	<update id="deleteTrashSendMail">
-		UPDATE MAIL
-		   SET SENT_DEL = '3'
-		 WHERE MAIL_NO = #{mailNo}
+	<update id="registAttachFile">
+		INSERT INTO ATTACH (
+			  ATTACH_NO
+			, MAIL_NO
+			, FILE_PATH
+			, FILE_NAME
+			, FILE_TYPE
+			, FILE_SIZE
+			, ATTACHER
+			, REGDATE
+		) VALUES (
+			  1
+			, #{mailNo}
+			, #{filePath}
+			, #{fileName}
+			, #{fileType}
+			, #{fileSize}
+			, #{attacher}
+			, SYSDATE
+		)
 	</update>
 </mapper>
 

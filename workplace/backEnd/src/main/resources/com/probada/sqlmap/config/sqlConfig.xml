@@ -8,7 +8,7 @@
     <typeAliases>
     	<typeAlias type="java.lang.String" alias="str"/>
 		<typeAlias type="java.lang.Integer" alias="int"/>
-
+		
 		<typeAlias type="com.probada.user.vo.UserVO" alias="User"/>
 		<typeAlias type="com.probada.myWork.vo.HistoryVO" alias="historyVO"/>
 		<typeAlias type="com.probada.request.vo.RequestVO" alias="requestVO"/>
@@ -19,6 +19,7 @@
     	<typeAlias type="com.probada.issue.vo.IssueVO" alias="issue"/>
     	<typeAlias type="com.probada.milestone.vo.MilestoneVO" alias="milestone"/>
     	<typeAlias type="com.probada.issue.vo.MileIssueVO" alias="mileIssue"/>
+    	<typeAlias type="com.probada.collabo.vo.CollaboVO" alias="collaboVO"/>
 		<!-- <typeAlias alias="projectTagVO" type="com.probada.project.vo.ProjectTagVO"/>
 		 <typeAlias alias="searchVO" type="egovframework.example.sample.service.SampleDefaultVO"/>
 		<typeAlias alias="sampleVO" type="egovframework.example.sample.service.SampleVO"/> -->

@@ -24,7 +24,7 @@ public interface MailDAO {
 	public MailVO selectMailByMailNo(String mailNo) throws SQLException;
 	
 	//메일 첨부파일 조회
-	public List<AttachVO> selectMailAttachList(String docContNo) throws SQLException;
+	public List<AttachVO> selectMailAttachList(String mailNo) throws SQLException;
 	
 	//메일 상태 변경(읽음, 안읽음)
 	public void changeMailStatus(String mailNo) throws SQLException;
@@ -49,4 +49,10 @@ public interface MailDAO {
 	
 	//휴지통 삭제(보낸 메일)
 	public void deleteTrashSendMail(String mailNo) throws SQLException;
+	
+	//메일 등록
+	public void registMail(MailVO mailVO) throws SQLException;
+	
+	//메일 첨부파일 등록
+	public void registAttachFile(AttachVO attachVO) throws SQLException;
 }

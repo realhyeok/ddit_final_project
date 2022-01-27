@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.probada.task.vo.TaskVO;
+import com.probada.user.vo.UserVO;
 
 public interface TaskDAO {
 
@@ -13,4 +14,5 @@ public interface TaskDAO {
 
 	public TaskVO selectTaskDetailByTaskNo(TaskVO taskVO) throws SQLException;
 
+	public int selectTaskCountInProjByUserId(UserVO userVO) throws SQLException;
 }

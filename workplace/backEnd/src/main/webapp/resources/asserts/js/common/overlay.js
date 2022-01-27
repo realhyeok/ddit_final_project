@@ -81,22 +81,13 @@ function modifyProjectDetail() {
 }
 
 function deleteProjectNotice() {
-
-        pNotify()
-            .confirm({
-                title: '삭제 확인',
-                text: '정말로 삭제하시겠습니까?'
-            })
-            .then(function onConfirm() {
-                alert('삭제됨');
-            },function onCancel() {
-                alert('취소됨');
-            });
 }
 
 function modifyProjectNotice() {
 
 	console.log("hello");
+
+	checkValidate("modifyProjectNotice", "notice");
 
 	var noticeVal = $('#modifyProjectNotice [name="notice"]').val();
 
@@ -164,99 +155,20 @@ function prev() {
 	getOverlayTemplate(prevPage);
 }
 
-function checkInputs(inputId) {
+function checkValidate(FormId, targetName) {
 
-	var inputValue = $('#'+inputId).val();
+		var validateValue = $('#'+FormId+' [name="'+targetName+'"]').val();
 
-    if(inputValue === "") {
+		console.log(validateValue);
 
-    } else {
-    	$('#'+inputId).attr('cv','true');
-    }
+		if(validateValue == ""){
 
-    document.querySelectorAll('')
+			$('#'+FormId+' [name="'+targetName+'"]').parents('div.custom-validate').attr('class','item form-group custom-validate error');
+
+			return
+
+		} else {
+			$('#'+FormId+' [name="'+targetName+'"]').parents('div.custom-validate').attr('class','item form-group custom-validate');
+		}
 
 }
-
-function checkInputError() {
-    let checkError = true;
-
-    for (let i = 0; i < $('#register-form div').length; i++) {
-      // console.log(i+"번쨰 => " + $('#register-form div:eq('+i+')').attr('class'));
-      let temp = $('#register-form div:eq('+i+')').attr('class');
-      if(temp === "form-group custom-validate error"){
-        checkError = false;
-      }
-    }
-
-    return checkError;
-}
-
-    // PNotify config
-    PNotify.prototype.options.styling = "bootstrap4";
-
-    // Event bind
-    $('button').on('click', confirm);
-
-    // PNotify wrapper
-    function pNotify() {
-
-        var defaultSettings = {
-            icon: 'fa fa-question-sign'
-        };
-
-        var confirmSettings = {
-            confirm: true,
-            buttons: {
-                closer: false,
-                sticker: false
-            },
-            hide: false,
-            history: {
-                history: false
-            }
-        };
-
-        var _api = {
-            confirm: confirm
-        };
-
-        return _api;
-
-        ////////////
-
-        function factory(settings) {
-            settings = $.extend({}, defaultSettings, settings);
-
-            return new PNotify({
-                title: settings.title,
-                text: settings.text,
-                icon: 'fa fa-question-sign',
-                hide: false,
-                confirm: {
-                    confirm: true
-                },
-                buttons: {
-                    closer: false,
-                    sticker: false
-                },
-                history: {
-                    history: false
-                }
-            });
-        }
-
-        function confirm(settings) {
-            confirmSettings.title = settings.title;
-            confirmSettings.text = settings.text;
-
-            var result = factory(confirmSettings).get();
-
-            return {
-                then: function (onConfirm, onCancel) {
-                    result.on('pnotify.confirm', onConfirm);
-                    result.on('pnotify.cancel', onCancel);
-                }
-            };
-        }
-    }

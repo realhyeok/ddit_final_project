@@ -61,6 +61,21 @@ public class ProjectServiceImpl implements ProjectService {
 
 	}
 
+	@Override
+	public int getProjectCountInProjByUserId(String userId) throws SQLException {
+
+		int count = projectDAO.selectProjectCountInProjByUserId(userId);
+
+		return count;
+	}
+
+	@Override
+	public void registProjectUserRelation(ProjectVO projectVO) throws SQLException {
+
+		projectDAO.insertProjectUserRelation(projectVO);
+
+	}
+
 
 
 

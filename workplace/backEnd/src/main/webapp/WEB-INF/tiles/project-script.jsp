@@ -12,8 +12,8 @@
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/project/project-issue.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/project/project-mile.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/project/project-history.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/project/project-document.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/project/project-summernote.js"></script>
-		<script src="<%=request.getContextPath()%>/resources/asserts/js/common/jquery.validate.min.js"></script>
 
 </body>
 </html>

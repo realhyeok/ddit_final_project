@@ -137,3 +137,6 @@ i.fa-check-circle, i.fa-exclamation-circle {
   left: 5px;
   top: 30%;
 }
+.modal-backdrop{
+	display:none!important;
+}

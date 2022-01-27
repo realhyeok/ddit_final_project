@@ -209,14 +209,16 @@
                 <!--end: Quick Actions -->
                 <!-- 퀵 버튼 끝 -->
 
+				<!-- 알림 리스트 시작 -->
 				<li role="presentation" class="nav-item dropdown open" style="margin-left: 15px;">
                     <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                       <i class="fa fa-envelope-o"></i>
                       <span class="badge bg-green">6</span>
                     </a>
                     <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-                      <li class="nav-item">
-                        <a class="dropdown-item">
+                    
+                      <li class="nav-item" >
+                        <a class="dropdown-item" id="doingTest">
                           <span class="image"><img src="/resources/asserts/images/img.jpg" alt="Profile Image" /></span>
                           <span>
                             <span>John Smith</span>
@@ -227,42 +229,7 @@
                           </span>
                         </a>
                       </li>
-                      <li class="nav-item">
-                        <a class="dropdown-item">
-                          <span class="image"><img src="/resources/asserts/images/img.jpg" alt="Profile Image" /></span>
-                          <span>
-                            <span>John Smith</span>
-                            <span class="time">3 mins ago</span>
-                          </span>
-                          <span class="message">
-                            Film festivals used to be do-or-die moments for movie makers. They were where...
-                          </span>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="dropdown-item">
-                          <span class="image"><img src="/resources/asserts/images/img.jpg" alt="Profile Image" /></span>
-                          <span>
-                            <span>John Smith</span>
-                            <span class="time">3 mins ago</span>
-                          </span>
-                          <span class="message">
-                            Film festivals used to be do-or-die moments for movie makers. They were where...
-                          </span>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="dropdown-item">
-                          <span class="image"><img src="/resources/asserts/images/img.jpg" alt="Profile Image" /></span>
-                          <span>
-                            <span>John Smith</span>
-                            <span class="time">3 mins ago</span>
-                          </span>
-                          <span class="message">
-                            Film festivals used to be do-or-die moments for movie makers. They were where...
-                          </span>
-                        </a>
-                      </li>
+                      
                       <li class="nav-item">
                         <div class="text-center">
                           <a class="dropdown-item">
@@ -271,8 +238,10 @@
                           </a>
                         </div>
                       </li>
+                      
                     </ul>
                   </li>
+                  <!-- 알림 리스트 끝 -->
 
 				<li class="nav-item dropdown open" style="padding: 0px 15px;">
                     <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">

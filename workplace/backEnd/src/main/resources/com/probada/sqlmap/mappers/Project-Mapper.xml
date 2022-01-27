@@ -20,6 +20,18 @@
 			project
 	</select>
 
+	<select id="selectProjectCountInProjByUserId" resultType="int" parameterType="String">
+		SELECT
+			COUNT(*)
+		FROM
+			PROJECT A
+		JOIN
+			USER_PROJECT B ON(A.PROJ_NO = B.PROJ_NO)
+		WHERE
+			B.USER_ID = #{userId}
+	</select>
+
+
 	<select id="selectProjectByProjNo" resultType="com.probada.project.vo.ProjectVO" parameterType="String">
 		SELECT
 			PROJ_NO
@@ -69,6 +81,13 @@
 			(#{projNo},#{title},#{startdate},#{enddate},#{privacy},#{intro})
 	</insert>
 
+	<insert id="insertProjectUserRelation" parameterType="com.probada.project.vo.ProjectVO" >
+		INSERT INTO
+			USER_PROJECT
+			(USER_ID, PROJ_NO, ROLE)
+		VALUES
+			(#{userId},#{projNo},#{role})
+	</insert>
 
 	<update id="updateProjectDetail" parameterType="com.probada.project.vo.ProjectVO">
 		UPDATE
@@ -107,4 +126,5 @@
 		SELECT
 			PROJ_SEQ.NEXTVAL AS PROJ_NO FROM DUAL
 	</select>
+
 </mapper>

@@ -1,6 +1,7 @@
 package com.probada.user.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import com.probada.user.vo.UserVO;
@@ -30,10 +31,23 @@ public interface UserDAO {
 
 	//	DB 닉네임 체크
 	public String nicknameCheck(String username) throws SQLException;
-	
+
 	//	 리스트에서 해당 계정 체크
 	public int isAccount(String email) throws SQLException;
+
 	
+	
+	//seok 비밀번호 체크
+	public int pwdCheck(UserVO user)throws SQLException;
+	
+	
+
 	//	유저 데이터 사용량 업데이트
 	public void setUserUploadUsage(UserVO userVO) throws SQLException;
+
+	//  프로젝트 상세에서 사용되는 유저리스트
+	public List<UserVO> selectUserByProjNo(String projNo) throws SQLException;
+
+	// USER_PROJECT 테이블에서 유저 아이디를 조회하여 PROJ_NO를 조회한다.
+	public List<String> getUserProjNoList(String userId) throws SQLException;
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.probada.task.dao.TaskDAO;
 import com.probada.task.vo.TaskVO;
+import com.probada.user.vo.UserVO;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -41,6 +42,15 @@ public class TaskServiceImpl implements TaskService {
 		TaskVO resultVO = taskDAO.selectTaskDetailByTaskNo(taskVO);
 
 		return resultVO;
+	}
+
+
+	@Override
+	public int getTaskCountInProjByUserId(UserVO userVO) throws SQLException {
+
+		int result = taskDAO.selectTaskCountInProjByUserId(userVO);
+
+		return result;
 	}
 
 }

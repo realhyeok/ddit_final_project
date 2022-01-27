@@ -108,11 +108,12 @@
 						</div>
 							{{/ifCond}}
 				</script>
-				</div>
-				<!-- 프로젝트 공지사항 본문 끝 -->
+
 
 				<!-- 중요첨부 파일 시작 -->
-				<div class="project-detail-body">
+				<div id="projectDetailDocumentTarget"></div>
+				<script type="text/x-handlebars-template" id="projectDetailDocument">
+				<div class="project-detail-body p-3">
 					<div class="x_title">
 						<h2 class="title">
 							<i class="glyphicon glyphicon-hdd"></i> 중요첨부파일
@@ -121,307 +122,119 @@
 					</div>
 					<div class="col-sm-12">
 						<ul class="row list-unstyled project-files">
-
-						<div id="projectDetailDocumentTarget"></div>
-						<script type="text/x-handlebars-template" id="projectDetailDocument">
-							<li>
-								<div class="btn create-btn files-btn">
-									<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" class="cQfklM" />
-                        			</svg>
-								</div>
-							</li>
-						</script>
-
+							{{#each .}}
+								{{#ifCond @index "<" 3}}
 							<li class="d-flex align-items-center">
-								<div class="btn files-btn d-flex flex-wrap align-items-center justify-content-center"  style="width:140px;height:140px">
+								<div class="btn files-btn d-flex flex-wrap flex-column align-items-center justify-content-center"  style="width:140px;height:140px">
 									<i class="fa fa-file-text fa-5x text-dark"></i>
-									<div class="mt-2" style="font-size:0.8em;">요구사항정의서.doc</div>
+									<div class="mt-2" style="font-size:0.8em;">{{{name}}}{{{extension}}}</div>
 								</div>
 							</li>
-							<li class="d-flex align-items-center">
-								<div class="btn files-btn d-flex flex-wrap align-items-center justify-content-center"  style="width:140px;height:140px">
-									<i class="fa fa-file-text fa-5x text-dark"></i>
-									<div class="mt-2" style="font-size:0.8em;">화면정의서.ppt</div>
-								</div>
-							</li>
-
+								{{/ifCond}}
+							{{/each}}
+							{{#ifCond this.length "<=" 2}}
 							<li>
 								<div class="btn create-btn files-btn">
 									<i class="fa fa-plus fa-lg text-dark"></i>
 								</div>
 							</li>
-
+							{{/ifCond}}
 						</ul>
-					</div>
+						</div>
 					<br />
 				</div>
-				<!-- 중요첨부 파일 끝 -->
+
+				</script>
+
+				</div>
+				<!-- 프로젝트 공지사항 본문 끝 -->
+
+
+
 
 				<!-- 구성원 시작-->
-				<div class="project-detail-body">
+				<div id="projectDetailMemberTarget"></div>
+				<script type="text/x-handlebars-template" id="projectDetailMember">
+				<div class="project-detail-body p-3">
 					<div class="x_title header-title">
 						<h2 class="title">
 							<i class="fa fa-users"></i> 구성원
 						</h2>
 						<div class="clearfix header-title">
-							<a href="" data-toggle="modal" data-target="#project-member-add"><i
-								class="fa fa-user-plus fa-2x"></i></a>
+							<a href="" data-toggle="modal" data-target="#project-member-add">
+								<i class="fa fa-user-plus fa-2x"></i></a>
 						</div>
 					</div>
-					<td>
-						<ul class="list-inline" style="display: inline-flex">
+					<ul class="list-inline" style="display: inline-flex">
 							<!-- 구성원 단위 시작 -->
-							<li class="project-member nav-item dropdown open">
+							{{#each .}}
+							<li class="project-member nav-item dropdown open ml-3">
 								<div class="d-flex flex-column">
-									<span>PL</span><br /> <a href="javascript:;"
-										class="project-member " aria-haspopup="true"
-										id="navbarDropdown" data-toggle="dropdown"
-										aria-expanded="false"> <img
-										src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-										class="img-circle" alt="Avatar" />
+									<a href="javascript:;" class="project-member " aria-haspopup="true"
+									id="navbarDropdown" data-toggle="dropdown"	aria-expanded="false">
+										{{#ifCond picture "==" NULL}}
+										<img src="/resources/asserts/images/img.jpg" class="img-circle" alt="Avatar" />
+										{{/ifCond}}
+										{{#ifCond picture "!=" NULL}}
+										<img src="/resources/asserts/images/{{picture}}.jpg" class="img-circle" alt="Avatar" />
+										{{/ifCond}}
 									</a>
-									<div class="dropdown-menu dropdown-membermenu pull-right"
-										aria-labelledby="navbarDropdown">
-										<!-- 프로필 상세 드롭다운 -->
-								<div class="col-md-3   widget widget_tally_box">
-									<div class="fixed_height_390">
-										<div class="x_content">
-											<div class="flex">
-												<ul class="list-inline widget_profile_box">
-													<li></li>
-													<li class="d-flex justify-content-center"><img
-														src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-														alt="..." class="img-circle profile_img"></li>
-													<li></li>
-												</ul>
-											</div>
-											<div>
-												<h3 class="d-flex justify-content-center mt-3">RealHyukPL</h3>
-											</div>
-											<div class="flex">
-												<ul
-													class="list-inline count2 d-flex justify-content-between">
+									<div class="dropdown-menu dropdown-membermenu pull-right" aria-labelledby="navbarDropdown">
+									<div class="col-md-3   widget widget_tally_box">
+										<div class="fixed_height_390">
+											<div class="x_content">
+												<div class="flex">
+													<ul class="list-inline widget_profile_box">
+														<li></li>
+														<li class="d-flex justify-content-center">
+															{{#ifCond picture "==" NULL}}
+															<img src="/resources/asserts/images/img.jpg" alt="..." class="img-circle profile_img"></li>
+															{{/ifCond}}
+															{{#ifCond picture "!=" NULL}}
+															<img src="/resources/asserts/images/{{picture}}.jpg" alt="..." class="img-circle profile_img"></li>
+															{{/ifCond}}
+														<li></li>
+													</ul>
+												</div>
+												<div>
+													<h3 class="d-flex justify-content-center mt-3">{{{nickname}}}</h3>
+												</div>
+												<div class="flex">
+													<ul	class="list-inline count2 d-flex justify-content-between">
 													<li><span class="badge badge-primary">Projects</span>
-														<h3>8</h3></li>
+														<h3>{{projectCount}}</h3></li>
 													<li><span class="badge badge-danger">Likes</span>
-														<h3>3</h3></li>
+														<h3>{{likeCount}}</h3></li>
 													<li><span class="badge badge-info">Tasks</span>
-														<h3>83</h3></li>
-												</ul>
-											</div>
-											<div class="p-1"
-												style="height: 100px; background-color: #e5e5e5;">
-												<p class="mt-2 mb-2">안녕하세요. 3팀 프로젝트 리더를 맡고있는 김진혁입니다. 저는
-													java와 자바스크립트를 다룰줄압니다. 잘부탁드립니다.</p>
-											</div>
-											<div class="text-center mt-3">
-												<button type="button" class="btn btn-success btn-sm">
-													<i class="fa fa-pencil-square"> 권한</i>
-												</button>
-												<button type="button" class="btn btn-primary btn-sm">
-													<i class="fa fa-user-times"> 제명</i>
-												</button>
+														<h3>{{taskCount}}</h3></li>
+													</ul>
+												</div>
+												<div class="p-1"
+													style="height: 100px; background-color: #e5e5e5;">
+													<p class="mt-2 mb-2">{{{intro}}}</p>
+												</div>
+												<div class="text-center mt-3">
+													<button type="button" class="btn btn-success btn-sm">
+														<i class="fa fa-pencil-square"> 권한</i>
+													</button>
+													<button type="button" class="btn btn-primary btn-sm">
+														<i class="fa fa-user-times"> 제명</i>
+													</button>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<!-- 프로필 상세 드롭다운 -->
 									</div>
-									<span>RealHyukPL</span>
+									<span>{{{nickname}}}</span>
 								</div>
 							</li>
-							<li class="project-member nav-item dropdown open">
-								<div class="d-flex flex-column">
-									<span>PL</span><br /> <a href="javascript:;"
-										class="project-member " aria-haspopup="true"
-										id="navbarDropdown" data-toggle="dropdown"
-										aria-expanded="false"> <img
-										src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-										class="img-circle" alt="Avatar" />
-									</a>
-									<div class="dropdown-menu dropdown-membermenu pull-right"
-										aria-labelledby="navbarDropdown">
-										<!-- 프로필 상세 드롭다운 -->
-								<div class="col-md-3   widget widget_tally_box">
-									<div class="fixed_height_390">
-										<div class="x_content">
-											<div class="flex">
-												<ul class="list-inline widget_profile_box">
-													<li></li>
-													<li class="d-flex justify-content-center"><img
-														src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-														alt="..." class="img-circle profile_img"></li>
-													<li></li>
-												</ul>
-											</div>
-											<div>
-												<h3 class="d-flex justify-content-center mt-3">RealHyukPL</h3>
-											</div>
-											<div class="flex">
-												<ul
-													class="list-inline count2 d-flex justify-content-between">
-													<li><span class="badge badge-primary">Projects</span>
-														<h3>8</h3></li>
-													<li><span class="badge badge-danger">Likes</span>
-														<h3>3</h3></li>
-													<li><span class="badge badge-info">Tasks</span>
-														<h3>83</h3></li>
-												</ul>
-											</div>
-											<div class="p-1"
-												style="height: 100px; background-color: #e5e5e5;">
-												<p class="mt-2 mb-2">안녕하세요. 3팀 프로젝트 리더를 맡고있는 김진혁입니다. 저는
-													java와 자바스크립트를 다룰줄압니다. 잘부탁드립니다.</p>
-											</div>
-											<div class="text-center mt-3">
-												<button type="button" class="btn btn-success btn-sm">
-													<i class="fa fa-pencil-square"> 권한</i>
-												</button>
-												<button type="button" class="btn btn-primary btn-sm">
-													<i class="fa fa-user-times"> 제명</i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- 프로필 상세 드롭다운 -->
-									</div>
-									<span>RealHyukPL</span>
-								</div>
-							</li>
-							<li class="project-member nav-item dropdown">
-								<div class="d-flex flex-column">
-									<span>PL</span><br />
-									<a href="javascript:stopPropagation();"
-										class="project-member " aria-haspopup="true"
-										id="navbarDropdown" data-toggle="dropdown"
-										aria-expanded="false"> <img
-										src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-										class="img-circle" alt="Avatar" />
-									</a>
-									<div class="dropdown-menu dropdown-membermenu pull-right"
-										aria-labelledby="navbarDropdown">
-										<!-- 프로필 상세 드롭다운 -->
-								<div class="col-md-3   widget widget_tally_box">
-									<div class="fixed_height_390">
-										<div class="x_content">
-											<div class="flex">
-												<ul class="list-inline widget_profile_box">
-													<li></li>
-													<li class="d-flex justify-content-center"><img
-														src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-														alt="..." class="img-circle profile_img"></li>
-													<li></li>
-												</ul>
-											</div>
-											<div>
-												<h3 class="d-flex justify-content-center mt-3">RealHyukPL</h3>
-											</div>
-											<div class="flex">
-												<ul
-													class="list-inline count2 d-flex justify-content-between">
-													<li><span class="badge badge-primary">Projects</span>
-														<h3>8</h3></li>
-													<li><span class="badge badge-danger">Likes</span>
-														<h3>3</h3></li>
-													<li><span class="badge badge-info">Tasks</span>
-														<h3>83</h3></li>
-												</ul>
-											</div>
-											<div class="p-1"
-												style="height: 100px; background-color: #e5e5e5;">
-												<p class="mt-2 mb-2">안녕하세요. 3팀 프로젝트 리더를 맡고있는 김진혁입니다. 저는
-													java와 자바스크립트를 다룰줄압니다. 잘부탁드립니다.</p>
-											</div>
-											<div class="text-center mt-3">
-												<button type="button" class="btn btn-success btn-sm">
-													<i class="fa fa-pencil-square"> 권한</i>
-												</button>
-												<button type="button" class="btn btn-primary btn-sm">
-													<i class="fa fa-user-times"> 제명</i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- 프로필 상세 드롭다운 -->
-									</div>
-									<span>RealHyukPL</span>
-								</div>
-							</li>
-							<li class="project-member nav-item dropdown open">
-								<div class="d-flex flex-column">
-									<span>PL</span><br /> <a href="javascript:;"
-										class="project-member " aria-haspopup="true"
-										id="navbarDropdown" data-toggle="dropdown"
-										aria-expanded="false"> <img
-										src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-										class="img-circle" alt="Avatar" />
-									</a>
-									<div class="dropdown-menu dropdown-membermenu pull-right"
-										aria-labelledby="navbarDropdown">
-								<!-- 프로필 상세 드롭다운 -->
-								<div class="col-md-3   widget widget_tally_box">
-									<div class="fixed_height_390">
-										<div class="x_content">
-											<div class="flex">
-												<ul class="list-inline widget_profile_box">
-													<li></li>
-													<li class="d-flex justify-content-center"><img
-														src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-														alt="..." class="img-circle profile_img"></li>
-													<li></li>
-												</ul>
-											</div>
-											<div>
-												<h3 class="d-flex justify-content-center mt-3">RealHyukPL</h3>
-											</div>
-											<div class="flex">
-												<ul
-													class="list-inline count2 d-flex justify-content-between">
-													<li><span class="badge badge-primary">Projects</span>
-														<h3>8</h3></li>
-													<li><span class="badge badge-danger">Likes</span>
-														<h3>3</h3></li>
-													<li><span class="badge badge-info">Tasks</span>
-														<h3>83</h3></li>
-												</ul>
-											</div>
-											<div class="p-1"
-												style="height: 100px; background-color: #e5e5e5;">
-												<p class="mt-2 mb-2">안녕하세요. 3팀 프로젝트 리더를 맡고있는 김진혁입니다. 저는
-													java와 자바스크립트를 다룰줄압니다. 잘부탁드립니다.</p>
-											</div>
-											<div class="text-center mt-3">
-												<button type="button" class="btn btn-success btn-sm">
-													<i class="fa fa-pencil-square"> 권한</i>
-												</button>
-												<button type="button" class="btn btn-primary btn-sm">
-													<i class="fa fa-user-times"> 제명</i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- 프로필 상세 드롭다운 -->
-							</div>
-									<span>RealHyukPL</span>
-								</div>
-							</li>
+							{{/each}}
+					</ul>
 
-					<!-- 구성원 단위 끝 -->
-							<!-- 구성원 더보기 버튼 시작 -->
-							<li class="project-member d-flex align-items-center mr-3"><a
-								href="../project/project-member-list.html"> <i
-									class="fa fa-ellipsis-h fa-2x"></i>
-							</a></li>
-							<!-- 구성원 더보기 버튼 끝 -->
-						</ul>
-					</td>
 
 				</div>
-				<!-- 구성원 끝 -->
+				</script>
+
 		</div>
 	</div>
 <!-- 왼쪽 컬럼 끝 -->

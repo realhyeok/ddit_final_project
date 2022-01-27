@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.probada.task.vo.TaskVO;
+import com.probada.user.vo.UserVO;
 
 public class TaskDAOImpl implements TaskDAO {
 
@@ -37,6 +38,14 @@ public class TaskDAOImpl implements TaskDAO {
 		TaskVO resultVO = sqlSession.selectOne("Task-Mapper.selectTaskDetailByTaskNo", taskVO);
 
 		return resultVO;
+	}
+
+	@Override
+	public int selectTaskCountInProjByUserId(UserVO userVO) throws SQLException {
+
+		int result = sqlSession.selectOne("Task-Mapper.selectTaskCountInProjByUserId", userVO);
+
+		return result;
 	}
 
 }

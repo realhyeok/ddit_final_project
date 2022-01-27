@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.probada.project.service.ProjectService;
-import com.probada.project.service.ProjectTagService;
 import com.probada.project.vo.ProjectTagVO;
 import com.probada.project.vo.ProjectVO;
+import com.probada.util.ProjectUtil;
 
 @Controller
 @RequestMapping("/app/project")
@@ -28,8 +28,8 @@ public class ProjectController {
 
 	@Resource(name="projectService")
 	ProjectService projectService;
-	@Resource(name="projectTagService")
-	ProjectTagService projectTagService;
+	@Resource(name="projectUtil")
+	ProjectUtil projectUtil;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProjectController.class);
 
@@ -49,22 +49,12 @@ public class ProjectController {
 		LOGGER.debug("[요청받음] => /getProjectList");
 
 		List<ProjectVO> projectList = new ArrayList<ProjectVO>();
-		List<String> tagList = new ArrayList<String>();
+
 		try {
 
 			projectList = projectService.getProjectList();
-
-			for (ProjectVO projectVO : projectList) {
-				List<ProjectTagVO> projectTagList = projectTagService.getTagNameList(projectVO.getProjNo());
-
-				for (ProjectTagVO projectTagVO : projectTagList) {
-					if(projectTagVO.getProjNo().equals(projectVO.getProjNo())) {
-						tagList.add(projectTagVO.getTagName());
-					}
-				}
-				projectVO.setTagNames(tagList);
-				tagList = new ArrayList<String>();
-			}
+			projectList = projectUtil.getProjectTagList(projectList);
+			projectList = projectUtil.getProjectMemberList(projectList);
 
 			entity = new ResponseEntity<List<ProjectVO>>(projectList,HttpStatus.OK);
 
@@ -81,19 +71,11 @@ public class ProjectController {
 		ResponseEntity<ProjectVO> entity = null;
 
 		ProjectVO projectVO = new ProjectVO();
-		List<ProjectTagVO> projectTagList = new ArrayList<ProjectTagVO>();
-		List<String> tagList = new ArrayList<String>();
+
 		try {
 
 			projectVO = projectService.getProjectByProjNo(projNo);
-			projectTagList = projectTagService.getTagNameList(projNo);
-			if(projectTagList != null) {
-				for (ProjectTagVO projectTagVO : projectTagList) {
-					tagList.add(projectTagVO.getTagName());
-				}
-
-				projectVO.setTagNames(tagList);
-			}
+			projectVO = projectUtil.getProjectTagListByProjNo(projNo, projectVO);
 
 			entity = new ResponseEntity<ProjectVO>(projectVO,HttpStatus.OK);
 
@@ -163,6 +145,8 @@ public class ProjectController {
 		return entity;
 	}
 
+	
+	
 /*
 	@RequestMapping("/getProjectDashCard")
 	@ResponseBody

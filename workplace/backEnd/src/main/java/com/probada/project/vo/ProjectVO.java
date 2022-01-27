@@ -2,6 +2,8 @@ package com.probada.project.vo;
 
 import java.util.List;
 
+import com.probada.user.vo.UserVO;
+
 public class ProjectVO {
 
 	private String notice;
@@ -16,10 +18,33 @@ public class ProjectVO {
 	private String likeCount;
 	private String projNo;
 	private String enddate;
+
+//	For ProjectTagService
 	private Object tagNames;
+	private List<UserVO> member;
 
+//	For ProjectUserRelation
+	private String role;
+	private String joindate;
 
-
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public String getJoindate() {
+		return joindate;
+	}
+	public void setJoindate(String joindate) {
+		this.joindate = joindate;
+	}
+	public List<UserVO> getMember() {
+		return member;
+	}
+	public void setMember(List<UserVO> member) {
+		this.member = member;
+	}
 	public Object getTagNames() {
 		return tagNames;
 	}

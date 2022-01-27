@@ -15,12 +15,12 @@
                     <div class="project-detail-body">
                       <div class="x_title">
                         <h2 class="title">
-                          <i class="fa fa-gears fa-lg "></i> <span class="project-title">
+                          <i class="fa fa-gears fa-lg"></i> <span class="project-title">
                             Super PMS Project </span>
                         </h2>
                         <div class="clearfix">
                           <div class="clearfix header-title justify-content-end">
-                            <a href="" data-toggle="modal"
+                            <a href="" data-toggle="modal" 
                               data-target="#project-member-add"><i
                               class="fa fa-user-plus fa-2x"></i></a>
                           </div>
@@ -77,7 +77,7 @@
                       <!-- start accordion -->
                       <div class="accordion" id="accordion1" role="tablist" aria-multiselectable="true">
                         <div class="panel">
-                          <a class="panel-heading" role="tab" id="headingOne1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne1" aria-expanded="true" aria-controls="collapseOne">
+                          <a class="panel-heading collabo-detail-a" role="tab" id="headingOne1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne1" aria-expanded="true" aria-controls="collapseOne">
                             <h4 class="panel-title"><img src="https://img.icons8.com/ios-glyphs/30/000000/tasks--v2.png"/>연관 프로젝트</h4>
                           </a>
                           <div id="collapseOne1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
@@ -86,10 +86,10 @@
                                 
                                 <tbody>
                                   <tr>
-                                    <td><a href="">하위 프로젝트 1</a></td>
+                                    <td><a href="" class="collabo-detail-a">하위 프로젝트 1</a></td>
                                   </tr>
                                   <tr>
-                                    <td><a href="">하위 프로젝트 2</a></td>
+                                    <td><a href="" class="collabo-detail-a">하위 프로젝트 2</a></td>
                                   </tr>
                                 </tbody>
                               </table>

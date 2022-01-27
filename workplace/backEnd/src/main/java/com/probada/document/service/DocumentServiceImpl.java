@@ -13,70 +13,70 @@ import com.probada.document.vo.ProjectUserVO;
 
 public class DocumentServiceImpl implements DocumentService{
 
-	
+
 	private DocumentDAO documentDAO;
-	
+
 	public void setDocumentDAO(DocumentDAO documentDAO) {
 		this.documentDAO = documentDAO;
 	}
-	
-	
+
+
 	@Override
 	public List<FileVO> getDocList() throws SQLException {
-		
+
 		List<FileVO> docList = null;
 		docList = documentDAO.selectDocList();
-		
-		
+
+
 		return docList;
 	}
 
 
 	@Override
 	public void registDocument(FileVO document) throws SQLException {
-		
-		
+
+
 		documentDAO.insertDocument(document);
-		
+
 	}
 
 
 	@Override
 	public void modifyDocument(FileVO document) throws SQLException {
-		
+
 		documentDAO.updateDocument(document);
-		
+
 	}
 
 
 	@Override
 	public FileVO getDocOne(String docId) throws SQLException {
-		
+
 		FileVO file = new FileVO();
-		
+
 		file = documentDAO.selectDocumentByPath(docId);
-		
+
 		return file;
 	}
 
 
 	@Override
 	public void removeDocument(String docId) throws SQLException {
-		
-		
-		
+
+
+
 		documentDAO.deleteDocument(docId);
-		
-		
+
+
 	}
 
 
 	@Override
 	public String seqDoc() throws SQLException {
-	
+
 		String seq = documentDAO.selectDocumentSeqNext();
-		
-		
+
+
 		return seq;
 	}
 
@@ -87,49 +87,67 @@ public class DocumentServiceImpl implements DocumentService{
 		List<FileVO> myDoc = new ArrayList<FileVO>();
 		List<FileVO> myDefaultDir = new ArrayList<FileVO>();
 		List<FileVO> myDir = new ArrayList<FileVO>();
-		
+
 		myDoc = documentDAO.selectDocumentByUserId(userId);
 		myDefaultDir = documentDAO.selectDefaultDirectoryMyProject(userId);
 		myDir = documentDAO.selectDirectoryMyProject(userId);
-		
-		
-		
-		
+
+
+
+
 		List<FileVO> joined = new ArrayList<>();
 		joined.addAll(myDoc);
 		joined.addAll(myDefaultDir);
 		joined.addAll(myDir);
-		
-		
+
+
 		System.out.println("service=>"+joined);
-		
-		
+
+
 		return joined;
 	}
 
 
 	@Override
-	public List<FileVO> getProjectDocumnet(ProjectUserVO user) throws SQLException {
-		
-		
+	public List<FileVO> getProjectDocument(ProjectUserVO user) throws SQLException {
+
+
 		List<FileVO> myProjDefaultDoc = new ArrayList<>();
 		List<FileVO> myProjDoc = new ArrayList<>();
 		List<FileVO> joined = new ArrayList<>();
-		
-		
+
+
 		myProjDefaultDoc = documentDAO.selectDocumentByDefaultProj(user.getProjNo());
 		myProjDoc = documentDAO.selectDocumentByMyProj(user);
-		
-		
+
+
 		joined.addAll(myProjDefaultDoc);
 		joined.addAll(myProjDoc);
 		return joined;
 	}
 
 
-	
-	
-	
-	
-	
+	@Override
+	public List<FileVO> getDocumentListByProjNo(ProjectUserVO user) throws SQLException {
+
+		List<FileVO> fileList = documentDAO.selectDocumentListByProjNo(user);
+
+		return fileList;
+	}
+
+
+	@Override
+	public List<FileVO> getDocumentListForProjDetail(String projNo) throws SQLException {
+
+		List<FileVO> fileList = documentDAO.selectDocumentListForProjDetail(projNo);
+
+		return fileList;
+	}
+
+
+
+
+
+
+
 }

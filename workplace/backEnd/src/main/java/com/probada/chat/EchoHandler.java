@@ -1,4 +1,4 @@
-package com.probada.alarm;
+package com.probada.chat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -25,25 +26,37 @@ public class EchoHandler extends TextWebSocketHandler {
 	List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
 	// 1대1
 	Map<String, WebSocketSession> userSessionsMap = new HashMap<String, WebSocketSession>();
-		
+	
+	
+	//내가 초대한 사람 리스트
 	
 	//클라가 서버에 연결
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		
+		LOGGER.debug("session =>{}",session.getAttributes());
+		
+		 Map<String,Object> map = session.getAttributes();
+		 UserVO loginUser = (UserVO)map.get("userVO");
+
+		 LOGGER.debug("loginUser =>{}",loginUser);
+		
+		 
+		//여기서 내가 초대한 회원만 거르기
 		sessions.add(session);
 
 		
-		//하드코딩
 		Map<String, String> data = new HashMap<>();
 		data.put("dataType", "login");
-		data.put("data", "석기현님이 로그인 했습니다.<br/>현재 총 2명 접속중.");
+		//세션이 없으면 에려
+		data.put("data", loginUser.getNickname()+"님이 접속했습니다.<br/>현재 총"+sessions.size()+"명 접속중.");
 		
 		String jsonData = new Gson().toJson(data);
 		for(WebSocketSession user :sessions) {
 			user.sendMessage(new TextMessage(jsonData));
 		}
 		
-		
+		LOGGER.debug("dataMap =>{}",data);
 	/*	String senderId = getId(session);
 		userSessionsMap.put(senderId , session);*/
 	}
@@ -52,11 +65,23 @@ public class EchoHandler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
+		
+		
+		
+
 		String msg = message.getPayload();
 		
 		for (WebSocketSession sess : sessions) {
 			sess.sendMessage(new TextMessage( getId(session) +" : " +  message.getPayload()));
 		}
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	//연결 해제될때
@@ -77,7 +102,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		if(loginUser == null) {
 			return session.getId();
 		} else {
-			return loginUser.getUserId();
+			return loginUser.getNickname();
 		}
 	}
 }

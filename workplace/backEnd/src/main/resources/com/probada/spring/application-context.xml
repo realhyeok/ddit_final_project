@@ -3,7 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
+	
+	<!-- mailAttachPath -->
+	<bean id="mailAttachPath" class="java.lang.String">
+		<constructor-arg value="${mail.attach.upload}"/>
+	</bean>
+	
 	<!-- Repository -->
 	<bean id="projectDAO"
 		  class="com.probada.project.dao.ProjectDAOImpl"
@@ -46,7 +51,17 @@
 		  p:sqlSession-ref="sqlSession"
 	/>
 
+	<bean id="collaboDAO"
+		  class="com.probada.collabo.dao.CollaboDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+
+
 	<!-- Service -->
+	<bean id="collaboService"
+		  class="com.probada.collabo.service.CollaboServiceImpl"
+		  p:collaboDAO-ref="collaboDAO"
+	/>
 	<bean id="projectService"
 		  class="com.probada.project.service.ProjectServiceImpl"
 		  p:projectDAO-ref="projectDAO"
@@ -90,7 +105,10 @@
 	
 	<!-- utils -->
 	<bean id="userUtil" class="com.probada.util.UserUtil"/>
-	
+	<bean id="taskUtil" class="com.probada.util.TaskUtil"/>
+	<bean id="projectUtil" class="com.probada.util.ProjectUtil"/>
+
+
 	<!-- mail -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="${mail.stmp.host}" />
@@ -102,7 +120,7 @@
 				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
 				<prop key="mail.smtp.starttls.enable">true</prop>
 				<prop key="mail.smtp.auth">true</prop>
-				<prop key="mail.debug">true</prop> 
+				<prop key="mail.debug">true</prop>
 			</props>
 		</property>
 	</bean>

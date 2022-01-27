@@ -30,7 +30,7 @@
           <a class="nav-link" id="issue-tab" data-toggle="tab" href="#issue" role="tab" aria-controls="issue" aria-selected="false" onclick="setTimeout(readIssue, 100);setTimeout(readMile, 100);">이슈</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="document-tab" data-toggle="tab" href="#document" role="tab" aria-controls="document" aria-selected="false">문서관리</a>
+          <a class="nav-link" id="document-tab" data-toggle="tab" href="#document" role="tab" aria-controls="document" aria-selected="false" onclick="setTimeout(readDocument, 300);">문서관리</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">히스토리</a>
@@ -53,9 +53,9 @@
         <div class="tab-pane fade show" id="issue" role="tabpanel" aria-labelledby="issue-tab">
           <%@ include file="/WEB-INF/views/web-app/project/project-issue.jsp" %>
         </div>
-        <%-- <div class="tab-pane fade show" id="document" role="tabpanel" aria-labelledby="document-tab">
-          <%@ include file="/WEB-INF/views/web-app/project/project-document.jsp" %>
-        </div> --%>
+         <div class="tab-pane fade show" id="document" role="tabpanel" aria-labelledby="document-tab">
+           <%@ include file="/WEB-INF/views/web-app/project/project-document.jsp" %>
+        </div>
         <div class="tab-pane fade show" id="history" role="tabpanel" aria-labelledby="history-tab">
           <%@ include file="/WEB-INF/views/web-app/project/project-history.jsp" %>
         </div>

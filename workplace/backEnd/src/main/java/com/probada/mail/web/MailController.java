@@ -2,15 +2,22 @@ package com.probada.mail.web;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.probada.mail.command.MailRegistCommand;
 import com.probada.mail.service.MailService;
+import com.probada.mail.utils.GetAttachesByMultipartFileAdapter;
+import com.probada.mail.vo.AttachVO;
 import com.probada.mail.vo.MailVO;
 
 @Controller
@@ -19,6 +26,9 @@ public class MailController {
 	
 	@Autowired
 	private MailService mailService;
+	
+	@Resource(name="mailAttachPath")
+	private String mailAttachPath;
 	
 	//받은메일 리스트 조회
 	@RequestMapping("/getReceiveMailList")
@@ -103,15 +113,32 @@ public class MailController {
 		}
 		return entity;
 	}
+
+	//받은메일 상세 조회
+	@RequestMapping("/getReceiveMailDetail")
+	@ResponseBody
+	public ResponseEntity<MailVO> receiveMailDetailTOJSON(String mailNo) throws Exception {
+		ResponseEntity<MailVO> entity = null;
+		MailVO mailDetail = null;
+		try {
+			mailDetail = mailService.getReceiveMailByMailNo(mailNo);
+			entity = new ResponseEntity<MailVO>(mailDetail, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<MailVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
 	
 	//메일 첨부파일 다운로드
 	@RequestMapping("/attachDownload")
-	public String attachDownload(String uploadPath, Model model) throws Exception {
+	public String attachDownload(String filePath, Model model) throws Exception {
 		String url = "downloadFile";
 		
-		String fileName = uploadPath.substring(uploadPath.lastIndexOf("/") + 1);
+		String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+		filePath = filePath.substring(3);
 		
-		model.addAttribute("savedPath", uploadPath);
+		model.addAttribute("savedPath", filePath);
 		model.addAttribute("fileName", fileName);
 		
 		return url;
@@ -232,5 +259,21 @@ public class MailController {
 			e.printStackTrace();
 		}
 		return entity;
+	}
+	
+	//메일 등록
+	@RequestMapping(value="/mailRegist", method=RequestMethod.POST, produces="text/plain;charset=utf-8")
+	public String mailRegist(MailRegistCommand regData) throws Exception {
+		String url = "redirect:/app/myWork/";
+		
+		MailVO mailVO = regData.toMailVO();
+		
+		//저장 후 attachList 생성, MailVO 인가
+		List<AttachVO> attachList = GetAttachesByMultipartFileAdapter.save(regData.getAttachFile(), mailAttachPath);
+		mailVO.setAttachList(attachList);
+		
+		mailService.registMailAttachFile(mailVO);
+		
+		return url;
 	}
 }

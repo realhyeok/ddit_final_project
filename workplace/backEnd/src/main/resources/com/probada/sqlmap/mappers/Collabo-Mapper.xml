@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Collabo-Mapper">
+	
+	<select id="selectCollaboList" resultType="com.probada.collabo.vo.CollaboVO">
+		SELECT
+			 cproj_no
+			,title
+			,startdate
+			,enddate
+			,privacy
+			,notice
+			,notice_cont
+			,updatedate
+			,<include refid="statusForCollabo"/>
+			,intro
+			,doc_cont_no
+			,like_count
+		FROM
+			c_project
+	</select>
+	
+	<select id="selectCollaboByCprojNo" resultType="com.probada.collabo.vo.CollaboVO" parameterType="String">
+			SELECT
+			    cproj_no
+			   ,title
+			   ,startdate
+			   ,enddate
+			   ,<include refid="privacyForCollabo"/>
+			   ,notice
+			   ,notice_cont
+			   ,updatedate
+			   ,<include refid="statusForCollabo"/>
+			   ,intro
+			   ,doc_cont_no
+			   ,like_count
+			FROM
+			    c_project
+			where cproj_no = {cprojNo}    
+	</select>
+	
+	<select id="selectCollaboTagList">
+		
+	</select>
+	
+	
+	<sql id="statusForCollabo">
+			(SELECT
+				CODE_NAME
+			FROM
+				COMMON_CODE
+            WHERE
+            	COMMON_CODE.CODE_NO = C_PROJECT.STATUS) AS STATUS
+	</sql>
+
+	<sql id="privacyForCollabo">
+			(SELECT
+				CODE_NAME
+			FROM
+				COMMON_CODE
+            WHERE
+            	COMMON_CODE.CODE_NO = C_PROJECT.PRIVACY) AS PRIVACY
+	</sql>
+	
+
+
+</mapper>

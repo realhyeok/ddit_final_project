@@ -1,6 +1,7 @@
 package com.probada.user.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,7 +10,7 @@ import com.probada.user.vo.UserVO;
 
 public class UserDAOImpl implements UserDAO{
 // 	현재 파타미터의 email하고 userId는 동일합니다.
-	
+
 	private SqlSession sqlSession;
 
 	public void setSqlSession(SqlSession sqlSession) {
@@ -68,8 +69,29 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
+	public int pwdCheck(UserVO user) throws SQLException {
+		
+		return sqlSession.selectOne("User-Mapper.pwdCheck", user);
+	}
+
+
+	@Override
 	public void setUserUploadUsage(UserVO userVO) throws SQLException {
 		sqlSession.update("User-Mapper.setUserUploadUsage", userVO);
 	}
+
+	@Override
+	public List<UserVO> selectUserByProjNo(String projNo) throws SQLException {
+
+		List<UserVO> userListForProjDetail = sqlSession.selectList("User-Mapper.selectUserByProjNo", projNo);
+
+		return userListForProjDetail;
+	}
+
+	@Override
+	public List<String> getUserProjNoList(String userId) throws SQLException {
+		return sqlSession.selectList("User-Mapper.getUserProjNoList", userId);
+	}
+
 
 }

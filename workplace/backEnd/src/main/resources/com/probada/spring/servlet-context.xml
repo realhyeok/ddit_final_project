@@ -28,9 +28,10 @@
 	<context:component-scan base-package="com.probada" />
 
 	<!-- 파일 업로드 멀티파트 인코딩 -->
-	 	<beans:bean id="multipartResolver"
+	<beans:bean id="multipartResolver"
 				class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
-				p:defaultEncoding="utf-8"/>
+				p:defaultEncoding="utf-8"
+	/>
 
 
 	
@@ -45,14 +46,13 @@
 
 
 	<!-- 웹소켓 알림 -->
-	<beans:bean id="echoHandler" class="com.probada.alarm.EchoHandler" />
-		<websocket:handlers>
-		  <websocket:mapping handler="echoHandler" path="/doc" />
-		    <websocket:handshake-interceptors>
-		        <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
-		    </websocket:handshake-interceptors>	
-		    <websocket:sockjs />
-		</websocket:handlers>
+	<beans:bean id="echoHandler" class="com.probada.alert.EchoHandler" />
+	<websocket:handlers>
+		<websocket:mapping handler="echoHandler" path="app/**" />
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+	</websocket:handlers>
 	
 	
 	

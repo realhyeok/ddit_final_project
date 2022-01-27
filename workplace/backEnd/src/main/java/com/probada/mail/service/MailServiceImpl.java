@@ -48,6 +48,14 @@ public class MailServiceImpl implements MailService {
 	//메일 상세 조회
 	@Override
 	public MailVO getMailByMailNo(String mailNo) throws SQLException {
+		MailVO mailDetail = mailDAO.selectMailByMailNo(mailNo);
+		addAttachList(mailDetail);
+		return mailDetail;
+	}
+	
+	//받은메일 상세 조회
+	@Override
+	public MailVO getReceiveMailByMailNo(String mailNo) throws SQLException {
 		mailDAO.changeMailStatus(mailNo);
 		MailVO mailDetail = mailDAO.selectMailByMailNo(mailNo);
 		addAttachList(mailDetail);
@@ -60,12 +68,11 @@ public class MailServiceImpl implements MailService {
 			return;
 		}
 		
-		String docContNo = mailDetail.getDocContNo();
+		String mailNo = mailDetail.getMailNo();
 		List<AttachVO> attachList = null;
-		if(docContNo != null) {
-			attachList = mailDAO.selectMailAttachList(docContNo);
+		if(mailNo != null) {
+			attachList = mailDAO.selectMailAttachList(mailNo);
 		}
-		
 		mailDetail.setAttachList(attachList);
 	}
 	
@@ -109,5 +116,18 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public void deleteTrashSendMail(String mailNo) throws SQLException {
 		mailDAO.deleteTrashSendMail(mailNo);
+	}
+	
+	//메일 및 첨부파일 등록
+	@Override
+	public void registMailAttachFile(MailVO mailVO) throws SQLException {
+		mailDAO.registMail(mailVO);
+		if(mailVO.getAttachList() != null) {
+			for(AttachVO attachVO : mailVO.getAttachList()) {
+				attachVO.setMailNo(mailVO.getMailNo());
+				attachVO.setAttacher(mailVO.getUserFrom());
+				mailDAO.registAttachFile(attachVO);
+			}
+		}
 	}
 }

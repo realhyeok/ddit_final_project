@@ -16,4 +16,9 @@ public interface ProjectService {
 	public void modifyProjectDetail(ProjectVO projectVO) throws SQLException;
 
 	public void modifyProjectNotice(ProjectVO projectVO) throws SQLException;
+
+	public int getProjectCountInProjByUserId(String userId) throws SQLException;
+
+	public void registProjectUserRelation(ProjectVO projectVO) throws SQLException;
+
 }

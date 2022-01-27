@@ -21,11 +21,14 @@ public interface MailService {
 	
 	//메일 상세 조회
 	public MailVO getMailByMailNo(String mailNo) throws SQLException;
+
+	//메일 상세 조회
+	public MailVO getReceiveMailByMailNo(String mailNo) throws SQLException;
 	
-	//받은에일 복구
+	//받은메일 복구
 	public void returnReceiveMail(String mailNo) throws SQLException;
 	
-	//보낸에일 복구
+	//보낸메일 복구
 	public void returnSendMail(String mailNo) throws SQLException;
 	
 	//받은메일 삭제(휴지통으로)
@@ -42,4 +45,7 @@ public interface MailService {
 	
 	//휴지통 삭제(보낸 메일)
 	public void deleteTrashSendMail(String mailNo) throws SQLException;
+	
+	//메일 및 첨부파일 등록
+	public void registMailAttachFile(MailVO mailVO) throws SQLException;
 }

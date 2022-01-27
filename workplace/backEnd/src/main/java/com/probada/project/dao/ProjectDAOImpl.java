@@ -59,5 +59,19 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 	}
 
+	@Override
+	public int selectProjectCountInProjByUserId(String userId) throws SQLException {
+
+		int result = sqlSession.selectOne("Project-Mapper.selectProjectCountInProjByUserId",userId);
+
+		return result;
+	}
+
+	@Override
+	public void insertProjectUserRelation(ProjectVO projectVO) throws SQLException {
+
+		sqlSession.insert("Project-Mapper.insertProjectUserRelation",projectVO);
+	}
+
 
 }

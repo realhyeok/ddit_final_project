@@ -81,6 +81,9 @@
   width: 400px;
   height: 350px;
 }
+.collaboSpButton{
+      margin-top: 30px;
+    }
 
 .k-list-scroller.k-selectable {
   width: 400px;
@@ -182,12 +185,6 @@ spoonLi
 }
 
 /*collabo-list*/
-.collabo-list.card {
-  margin-bottom: 10px;
-}
-.collabo-list-a {
-  color: black;
-}
 .collabo-list-sort {
   margin-bottom: 5px;
 }
@@ -197,11 +194,88 @@ spoonLi
   float: right;
   padding: 0px;
 }
+.collabo-list.card {
+  margin-bottom: 10px;
+}
+.collabo-list-a {
+  color: black;
+}
 .card-body.collabo-list {
   padding-top: 0px;
   padding-bottom: 0px;
 }
+.projRegistPicture{
+	border: 1px solid black;
+	/*백그라운드 위치 옵션을 center 정중앙에 위치 */
+	background-position: center;
+	/*기본적으로 백그라운드의 옵션은 repeat이다. */
+	background-repeat: no-repeat;
+	/* 백그라운드 이미지를 보여주기 위한 크기 옵션 */
+	background-size:cover;
+	weight: 400px; height : 200px;
+	margin:15px;
+}
+.x_panel {
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px 17px;
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #e6e9ed;
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  column-break-inside: avoid;
+  opacity: 1;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  margin-top : 0px;
+}
+.form-group.custom-validate {
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+}
 
-a{
-  color: black;
+.form-group.custom-validate input:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+.form-group.custom-validate.success input {
+    border-color: #2ecc71;
+}
+
+.custom-validate.error input {
+    border-color: #e74c3c;
+}
+i.fa-check-circle, i.fa-exclamation-circle {
+    visibility: hidden;
+    position: absolute;
+  float: right;
+    top: 20%;
+    right: 10px;
+}
+
+.form-group.custom-validate.success i.fa-check-circle {
+    color: #2ecc71;
+    visibility: visible;
+}
+
+.form-group.custom-validate.error i.fa-exclamation-circle {
+    color: #e74c3c;
+    visibility: visible;
+}
+
+.form-group.custom-validate small {
+    color: #e74c3c;
+    position: absolute;
+    visibility: hidden;
+}
+
+.form-group.custom-validate.error small {
+    visibility: visible;
+}
+.form-group.custom-validate label{
+  left: 5px;
+  top: 30%;
 }

@@ -1,15 +1,20 @@
 package com.probada.user.web;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.probada.user.service.UserService;
 import com.probada.user.vo.UserVO;
+import com.probada.util.ProjectUtil;
+import com.probada.util.TaskUtil;
 import com.probada.util.UserUtil;
 
 
@@ -30,6 +37,10 @@ public class UserController {
 	UserService userService;
 	@Autowired
 	private UserUtil userUtil;
+	@Resource(name="taskUtil")
+	private TaskUtil taskUtil;
+	@Resource(name="projectUtil")
+	private ProjectUtil projectUtil;
 	
 	public UserController() {
 		LOGGER.debug("userController 생성됨!");
@@ -42,7 +53,7 @@ public class UserController {
 	public String getLogin() {
 		return "/web-index/common/login";
 	}
-	
+
 	/**
 	 * 로그인 시도시,
 	 * 1. DB에서 계정 존재 여부와 비밀번호 일치 검사를 한다.
@@ -56,25 +67,25 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "home/login.do", method = RequestMethod.POST)
 	public Map<String, String> postLogin(HttpServletRequest req) throws SQLException{
-		
+
 		HttpSession session = req.getSession();			// 세션 등록
 		Map<String, String> retMap = new HashMap<>();	// ajax로 보내는 리턴 값
 		UserVO user = new UserVO();
-		
+
 //		id와 password 저장
 		String inputId = req.getParameter("input_email");
 		String inputPwd = req.getParameter("input_pwd");
 		user.setUserId(inputId);
-		
+
 		user = userService.login(user);	// 계정 리스트에서 입력한 계정 확인 후 user에 저장
 		boolean flag_pwd = userUtil.comparePwd(inputPwd, user.getPwd());	// 복호화 후 비교
 		int userMaxUploadCapacity = userUtil.getUserMaxUploadCapacity(user.getUserId());
-		
+
 // 		비밀번호가 틀리거나, 계정이 없는 경우
 		if(!flag_pwd || user.getUserId().equals("")) {
 			retMap.put("login_fail", "login_fail");
 			return retMap;
-		} 
+		}
 // 		인증이 완료되면 무료 이용권 자동 시작
 		else if (user.getAuthStatus() != 1) {
 			retMap.put("authStatus", "fail");
@@ -88,13 +99,13 @@ public class UserController {
 		else {
 			retMap.put("success", "success");
 		}
-		
-		
+
+
 		session.setAttribute("userMaxUploadCapacity", userMaxUploadCapacity);
 		session.setAttribute("userVO", user);
 		return retMap;
 	}
-	
+
 	/**
 	 * 회원가입 페이지 이동
 	 * @return 회원가입 페이지 url 리턴
@@ -128,18 +139,18 @@ public class UserController {
 		// 닉네임 또는 이메일 중복일 때
 		if (idCheck == 0) { jsonMap.put("idCheck", "false"); return jsonMap; }
 		if (nicknameCheck == 0) { jsonMap.put("nicknameCheck", "false"); return jsonMap; }
-		
+
 		// 암호 복호화
 		String storeToDB = userUtil.encodePwd(user.getPwd());
 		user.setPwd(storeToDB);
-		
+
 		// register 회원가입 dao
 		userService.registUser(user);
-		
+
 		return jsonMap;
 	}
 
-	
+
 	/**
 	 * 1. updateAuthstatus()에서 회원 인증 상태를 0에서 1로 변경한다.
 	 * 2. 인증일 기준으로 무료 플랜에 30일간 가입시킨다.
@@ -153,16 +164,16 @@ public class UserController {
 	public String emailConfirm(String userId, Model model) throws Exception {
 		// authstatus 권한 상태 1로 변경
 		userService.updateAuthstatus(userId);
-		
+
 		// jsp에서 쓰기위해 model에 담음
 		model.addAttribute("welcome", userId);
-		
+
 		userUtil.init_free(userId);
 
 		return "redirect:/home/login";
 	}
 
-	
+
 	/**
 	 * 로그아웃 버튼 클릭 시, 모든 세션을 삭제하고 로그인 페이지로 이동시킨다.
 	 * @param req
@@ -173,6 +184,30 @@ public class UserController {
 		HttpSession session = req.getSession();
 		session.invalidate();
 		return "redirect:/home/login";
+	}
+
+	@RequestMapping(value = "/getUserByProjNo", method = RequestMethod.GET)
+	public ResponseEntity<List<UserVO>> getUserByProjNo(String projNo) throws Exception {
+		ResponseEntity<List<UserVO>> entity = null;
+
+
+		List<UserVO> userListForProjDetail = new ArrayList<UserVO>();
+
+		try {
+
+			userListForProjDetail = userService.getUserByProjNo(projNo);
+			
+			userListForProjDetail = taskUtil.getTaskCountUtil(userListForProjDetail);
+			userListForProjDetail = projectUtil.getProjectCountUtil(userListForProjDetail);
+			
+			entity = new ResponseEntity<List<UserVO>>(userListForProjDetail,HttpStatus.OK);
+
+		} catch(Exception e) {
+			entity = new ResponseEntity<List<UserVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.probada.user.service;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.MessagingException;
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService {
 	// 이메일 인증
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
 	private UserDAO userDAO;
 
 	public void setUserDAO(UserDAO userDAO) {
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void registUser(UserVO user) throws Exception {
 		userDAO.insertUser(user);
-		
+
 		// 인증키 생성
 		String key = new Tempkey().getKey(10, false);
 
@@ -69,7 +70,7 @@ public class UserServiceImpl implements UserService {
 	public void modifyUser(UserVO user) throws Exception {
 		userDAO.updateUser(user);
 	}
-	
+
 	// authstatus 1로 변경
 	@Override
 	public void updateAuthstatus(String email) throws SQLException {
@@ -92,21 +93,40 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserVO login(UserVO user) throws SQLException {
 		UserVO userVO = null;
-		
+
 		userVO = userDAO.login(user);
 		if(userVO == null) {
 			userVO = new UserVO();
 		}
 		return userVO;
 	}
-	
+
 	@Override
 	public int isAccount(String email) throws SQLException {
 		return userDAO.isAccount(email);
 	}
 
+
+		public int pwdCheck(UserVO user) throws SQLException {
+		
+		return userDAO.pwdCheck(user);
+	}
+		
 	@Override
 	public void setUserUploadUsage(UserVO userVO) throws SQLException {
 		userDAO.setUserUploadUsage(userVO);
 	}
+	
+	@Override
+	public List<UserVO> getUserByProjNo(String projNo) throws SQLException {
+
+		List<UserVO> userListForProjDetail = userDAO.selectUserByProjNo(projNo);
+
+		return userListForProjDetail;
+	}
+
+	@Override
+	public List<String> getUserProjNoList(String userId) throws SQLException {
+		return userDAO.getUserProjNoList(userId);
+	}	
 }

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.probada.task.vo.TaskVO;
+import com.probada.user.vo.UserVO;
 
 public interface TaskService {
 
@@ -12,4 +13,6 @@ public interface TaskService {
 	public List<TaskVO> getTaskListByProjectNo(String projNo) throws SQLException;
 
 	public TaskVO getTaskDetailByTaskNo(TaskVO taskVO) throws SQLException;
+
+	public int getTaskCountInProjByUserId(UserVO userVO) throws SQLException;
 }

@@ -60,8 +60,8 @@ public class MailDAOImpl implements MailDAO {
 	
 	//메일 첨부파일 조회
 	@Override
-	public List<AttachVO> selectMailAttachList(String docContNo) throws SQLException {
-		List<AttachVO> attachList = sqlSession.selectList("Mail-Mapper.selectMailAttachList", docContNo);
+	public List<AttachVO> selectMailAttachList(String mailNo) throws SQLException {
+		List<AttachVO> attachList = sqlSession.selectList("Mail-Mapper.selectMailAttachList", mailNo);
 		return attachList;
 	}
 	
@@ -71,7 +71,7 @@ public class MailDAOImpl implements MailDAO {
 		sqlSession.update("Mail-Mapper.changeMailStatus", mailNo);
 	}
 	
-	//받은에일 복구
+	//받은메일 복구
 	@Override
 	public void returnReceiveMail(String mailNo) throws SQLException {
 		sqlSession.update("Mail-Mapper.returnReceiveMail", mailNo);
@@ -110,5 +110,17 @@ public class MailDAOImpl implements MailDAO {
 	@Override
 	public void deleteTrashSendMail(String mailNo) throws SQLException {
 		sqlSession.update("Mail-Mapper.deleteTrashSendMail", mailNo);
+	}
+	
+	//메일 등록
+	@Override
+	public void registMail(MailVO mailVO) throws SQLException {
+		sqlSession.update("Mail-Mapper.registMail", mailVO);
+	}
+	
+	//메일 첨부파일 등록
+	@Override
+	public void registAttachFile(AttachVO attachVO) throws SQLException {
+		sqlSession.update("Mail-Mapper.registAttachFile", attachVO);
 	}
 }
