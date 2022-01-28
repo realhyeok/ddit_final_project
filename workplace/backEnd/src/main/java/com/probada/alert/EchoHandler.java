@@ -5,13 +5,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.probada.alert.vo.AlertVO;
 import com.probada.user.vo.UserVO;
 import com.probada.util.UserUtil;
 
@@ -24,6 +31,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		
 		@Autowired
 		private UserUtil userUtil = new UserUtil();
+	
 /*
 	일단 일대일로 알림을 주고받아야 하는 상황에서 각각의 로그인 되어 있는 회원의 정보를 Map에 저장을 해야 한다.
 	Map의 키값은 email을 value의 값에는 websocketSession을 저장하고
@@ -53,29 +61,34 @@ public class EchoHandler extends TextWebSocketHandler {
 					System.out.println("msg.split 출력 -> " + string);
 				}
 				
-				// 알림 송신 버튼을 했을때
-				if(strs != null && strs.length == 3) {
-					String cmd = strs[0];
-					String serderNickName = strs[1];
-					String senderProjNo = strs[2];
+				if(strs != null && strs.length == 5) {
+					String serderNickName = strs[0];
+					String serderWhere = strs[1];
+					String senderTarget = strs[2];
+					String senderWhatToDo = strs[3];
+					String senderProjNo = strs[4];
 					
 					// sender가 로그인 해있으면
 					for (WebSocketSession sess : sessions) {
 						List<String> othersProjNoList = userUtil.getUserProjNoList(getId(sess));
 						for (int i = 0; i < othersProjNoList.size(); i++) {
 							
-							if(cmd.equals("test") 	&& sess != null 
-													&& othersProjNoList.get(i).equals(senderProjNo) 
-													&& sess != session) {
+							if(sess != null && othersProjNoList.get(i).equals(senderProjNo) 
+											&& sess != session) {
+//								protocol : 누가(nickname) 어디서(분야) 무엇(target)을 curd(어떻게) + 상대방 이메일 주소(DB저장용) 
+								System.out.println("getId(sess) => " + getId(sess));
 								TextMessage tmpMsg = new TextMessage(
-										serderNickName + "님이 말씀하십니다. 씨발!!! 해냈다!!!! ");
+																	serderNickName 
+																	+ "," + serderWhere 
+																	+ "," + senderTarget
+																	+ "," + senderWhatToDo 
+																	+ "," + senderProjNo
+																	+ "," + getId(sess));
+								
 								sess.sendMessage(tmpMsg);
 							}
-							
 						}
 					}
-					
-					
 				}
 				
 //				if(strs != null && strs.length == 5) {

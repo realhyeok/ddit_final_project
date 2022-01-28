@@ -1,9 +1,11 @@
+<%@page import="com.probada.alert.vo.AlertVO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.probada.util.UserUtil"%>
 <%@page import="com.probada.user.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!-- 변수 선언 시작 -->
 <c:set var="nickname" value="${userVO.nickname }"/>
 
@@ -215,29 +217,43 @@
                       <i class="fa fa-envelope-o"></i>
                       <span class="badge bg-green">6</span>
                     </a>
-                    <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                    <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1" id="alertVOList">
                     
-                      <li class="nav-item" >
-                        <a class="dropdown-item" id="doingTest">
-                          <span class="image"><img src="/resources/asserts/images/img.jpg" alt="Profile Image" /></span>
-                          <span>
-                            <span>John Smith</span>
-                            <span class="time">3 mins ago</span>
-                          </span>
-                          <span class="message">
-                            Film festivals used to be do-or-die moments for movie makers. They were where...
-                          </span>
-                        </a>
-                      </li>
+                    <c:choose>
+                    	<c:when test="${empty alertList }">
+                    		<!-- <li class="nav-item">
+                    			<strong>해당 내용이 없습니다.</strong>
+                    		</li> -->
+                    	</c:when>
+                    	<c:otherwise>
+                    		 <c:forEach items="${alertList }" var="alert">
+                      			<li class="nav-item" >
+	                        		<a class="dropdown-item">
+			                          <span class="image"><img src="/resources/asserts/images/img.jpg" alt="Profile Image" /></span>
+			                          <span>
+			                            <span>${alert.nickname }</span>
+			                            <span class="time">${alert.writeTime }</span>
+			                          </span>
+			                          <span class="message">
+			                            ${alert.content }
+			                          </span>
+			                        </a>
+		                        </li>
+		                    </c:forEach>
+                    	</c:otherwise>
+	                  
+                    </c:choose>
                       
-                      <li class="nav-item">
+                    <!--   알림 상세보기 // 구현 계획에 미포함
+                    <li class="nav-item">
                         <div class="text-center">
                           <a class="dropdown-item">
                             <strong>See All Alerts</strong>
                             <i class="fa fa-angle-right"></i>
                           </a>
                         </div>
-                      </li>
+                      </li> 
+                      -->
                       
                     </ul>
                   </li>
@@ -248,7 +264,7 @@
                       <img src="/resources/asserts/images/img.jpg" alt="">${nickname }
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item"  href="javascript:;"> 프로필</a>
+                      <a class="dropdown-item"  href="javascript:;" id="doingTest"> 프로필</a>
                       <a class="dropdown-item"  href="javascript:;"><span>알림설정</span></a>
                       <a class="dropdown-item"  href="javascript:;">FAQ</a>
                       <a class="dropdown-item" href="<%=request.getContextPath()%>/logout.do" id="logout"><i class="fa fa-sign-out pull-right"></i> 로그아웃</a>

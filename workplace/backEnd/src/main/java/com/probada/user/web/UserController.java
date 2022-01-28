@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.probada.alert.vo.AlertVO;
 import com.probada.user.service.UserService;
 import com.probada.user.vo.UserVO;
 import com.probada.util.ProjectUtil;
@@ -71,6 +72,7 @@ public class UserController {
 		HttpSession session = req.getSession();			// 세션 등록
 		Map<String, String> retMap = new HashMap<>();	// ajax로 보내는 리턴 값
 		UserVO user = new UserVO();
+		List<AlertVO> alertList = new ArrayList<>();
 
 //		id와 password 저장
 		String inputId = req.getParameter("input_email");
@@ -80,6 +82,7 @@ public class UserController {
 		user = userService.login(user);	// 계정 리스트에서 입력한 계정 확인 후 user에 저장
 		boolean flag_pwd = userUtil.comparePwd(inputPwd, user.getPwd());	// 복호화 후 비교
 		int userMaxUploadCapacity = userUtil.getUserMaxUploadCapacity(user.getUserId());
+		alertList = userUtil.getUserAlertList(user.getUserId());
 
 // 		비밀번호가 틀리거나, 계정이 없는 경우
 		if(!flag_pwd || user.getUserId().equals("")) {
@@ -87,7 +90,7 @@ public class UserController {
 			return retMap;
 		}
 // 		인증이 완료되면 무료 이용권 자동 시작
-		else if (user.getAuthStatus() != 1) {
+		else if (user.getAuthStatus() == 0) {
 			retMap.put("authStatus", "fail");
 			return retMap;
 		}
@@ -100,7 +103,7 @@ public class UserController {
 			retMap.put("success", "success");
 		}
 
-
+		session.setAttribute("alertList", alertList);
 		session.setAttribute("userMaxUploadCapacity", userMaxUploadCapacity);
 		session.setAttribute("userVO", user);
 		return retMap;
@@ -209,5 +212,6 @@ public class UserController {
 
 		return entity;
 	}
+	
 
 }

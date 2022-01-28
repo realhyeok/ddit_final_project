@@ -2836,6 +2836,8 @@ ul.msg_list li a .message {
 
 .navbar-nav .open .dropdown-menu.msg_list {
   width: 300px !important;
+  max-height: 300px !important;
+  overflow-y: auto;
 }
 
 ul.to_do {
