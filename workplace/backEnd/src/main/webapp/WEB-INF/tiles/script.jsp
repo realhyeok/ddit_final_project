@@ -45,11 +45,11 @@
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/common/moment-with-locales.js"></script>
 		<!-- Handlebars -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<!-- handlebars based JS-->
-		<script src="<%=request.getContextPath()%>/resources/asserts/js/common/handlerbars.js"></script>
 		<!-- toastr js -->
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/common/toastr.min.js"></script>
-		<!-- testIndex js -->
-		<script src="<%=request.getContextPath()%>/resources/asserts/js/test/testIndex.js"></script>
+		<!-- alertIndex js 알림리스트 제공 -->
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/alert/alertIndex.js"></script>
+		<!-- jQuery Tags Input -->
+	    <script src="/webapp/resources/bootstrap/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
 	</body>
 </html>

@@ -17,7 +17,7 @@
 <body>
 
     <div class="main">
-		<c:if test="${not empty welcome}">
+		<c:if test="${not empty param.welcome}">
 			<h1 class="welcome_title">probada에 오신 걸 환영합니다!</h1>
 			<canvas id="canvas"></canvas>
 		</c:if>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="signin-form">
-                        <h2 class="form-title">로그인</h2>
+                        <h2 class="form-title">로그인 ${param.welcome}</h2>
                         <form class="register-form" id="login-form" onsubmit="return false;">
 
                             <div class="alert alert--error" hidden>

@@ -1,324 +1,330 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page trimDirectiveWhitespaces="true" %>    
+<%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<head>
-<style>
-    .container{max-width:1170px; margin:auto;}
-img{ max-width:100%;}
-.inbox_people {
-  background: #f8f8f8 none repeat scroll 0 0;
-  float: left;
-  overflow: hidden;
-  width: 40%; border-right:1px solid #c4c4c4;
-}
-.inbox_msg {
-  border: 1px solid #c4c4c4;
-  clear: both;
-  overflow: hidden;
-}
-.top_spac{ margin: 20px 0 0;}
-
-
-.recent_heading {float: left; width:40%;}
-.srch_bar {
-  display: inline-block;
-  text-align: right;
-  width: 60%;
-}
-.headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
-
-.recent_heading h4 {
-  color: #05728f;
-  font-size: 21px;
-  margin: auto;
-}
-.srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none;}
-.srch_bar .input-group-addon button {
-  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-  border: medium none;
-  padding: 0;
-  color: #707070;
-  font-size: 18px;
-}
-.srch_bar .input-group-addon { margin: 0 0 0 -27px;}
-
-.chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
-.chat_ib h5 span{ font-size:13px; float:right;}
-.chat_ib p{ font-size:14px; color:#989898; margin:auto}
-.chat_img {
-  float: left;
-  width: 11%;
-}
-.chat_ib {
-  float: left;
-  padding: 0 0 0 15px;
-  width: 88%;
-}
-
-.chat_people{ overflow:hidden; clear:both;}
-.chat_list {
-  border-bottom: 1px solid #c4c4c4;
-  margin: 0;
-  padding: 18px 16px 10px;
-}
-.inbox_chat { height: 550px; overflow-y: scroll;}
-
-.active_chat{ background:#ebebeb;}
-
-.incoming_msg_img {
-  display: inline-block;
-  width: 6%;
-}
-.received_msg {
-  display: inline-block;
-  padding: 0 0 0 10px;
-  vertical-align: top;
-  width: 92%;
- }
- .received_withd_msg p {
-  background: #ebebeb none repeat scroll 0 0;
-  border-radius: 3px;
-  color: #646464;
-  font-size: 14px;
-  margin: 0;
-  padding: 5px 10px 5px 12px;
-  width: 100%;
-}
-.time_date {
-  color: #747474;
-  display: block;
-  font-size: 12px;
-  margin: 8px 0 0;
-}
-.received_withd_msg { width: 57%;}
-.mesgs {
-  float: left;
-  padding: 30px 15px 0 25px;
-  width: 60%;
-}
-
- .sent_msg p {
-  background: #05728f none repeat scroll 0 0;
-  border-radius: 3px;
-  font-size: 14px;
-  margin: 0; color:#fff;
-  padding: 5px 10px 5px 12px;
-  width:100%;
-}
-.outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
-.sent_msg {
-  float: right;
-  width: 46%;
-}
-.input_msg_write input {
-  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-  border: medium none;
-  color: #4c4c4c;
-  font-size: 15px;
-  min-height: 48px;
-  width: 100%;
-}
-
-.type_msg {border-top: 1px solid #c4c4c4;position: relative;}
-.msg_send_btn {
-  background: #05728f none repeat scroll 0 0;
-  border: medium none;
-  border-radius: 50%;
-  color: #fff;
-  cursor: pointer;
-  font-size: 17px;
-  height: 33px;
-  position: absolute;
-  right: 0;
-  top: 11px;
-  width: 33px;
-}
-.messaging { padding: 0 0 50px 0;}
-.msg_history {
-  height: 516px;
-  overflow-y: auto;
-}
+<div class="x_content">
+<div id="contentWraps">
+    <nav>
+	
+       
+    </nav>
+    <div id="contentCovers">
+        <div id="roomWrap">
+            <div id="roomList">
+                <div id="roomCreate" data-toggle="modal" data-target="#createRoomModal">방만들기+</div>
+                <div id='roomHeader'>채팅 방 목록</div>
+                <div id="roomSelect">
+                
+                
+	                
+	                
+	                <c:forEach items="${chat }" var="chat">
+	                
+	               				<c:if test="${empty chat }">
+									<div class="roomEl" data-id="2" >채팅방이 없습니다.</div>
+								</c:if>
+		                  
+		                    <div class="roomEl" data-id="2" onclick="selectMember('${chat.title}');">${chat.title}</div>
+		                
+	                    
+	                </c:forEach>    
+                    
+                  
+              </div>
+          </div>
 
 
 
-</style>
+        </div>
 
 
-    <meta charset="UTF-8">
-    <title>채팅</title>
-</head>
-<body>
-<h1>채팅방</h1>
+        <div id="chatWrap">
+            <div id="chatHeader">Everyone</div>
 
+            <div id="chatLog">
+                <div class="anotherMsg">
+                    <span class="anotherName">Jo</span>
+                    <span class="msg">Hello, Nice to meet you.</span>
+                </div>
+                <div class="myMsg">
+                    <span class="msg">Nice to meet you, too.</span>
+                </div>
+            </div>
+            
+            
+            <form id="chatForm">
+                <input type="text" autocomplete="off" size="30" id="message" placeholder="메시지를 입력하세요">
+                <input type="submit" value="보내기">
+            </form>
+            
+            
+            
+        </div>
+        <div id="memberWrap">
+            <div id="memberList">
+                <div id="memberHeader">사람</div>
+                <div id="realMemberList">
+                </div>
+                <div id="memberSelect"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-
-<div id="chatConnect">
-    <button onclick="connectSocket()">채팅 시작하기</button>
 </div>
 
 
 
+<!-- 모달 -->
+<div id="createRoomModal" class="modal modal-default fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<br>
+			<div class="modal-header">
+				<h3 class="modal-title">채팅방 생성</h3>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body" data-rno>
 
-<div id="chat" hidden="hidden">
+				<form role="form" method="post" action="/chat/createRoom" name="createForm">
+					<br>
+					<div class="form-group row">
+						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;채팅방 이름 </span></label>
+						<div class="col-lg-12">
 
+							<input id="title" onclick="button_click();" class="form-control col-md-12 seokid" name="title" value="" placeholder="">
+			
+			            </div>
+							
+					</div>
+
+					
+
+					<div class="form-group row">
+						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;프로젝트 선택</span></label>
+						<div class="col-lg-12">
+			                    <select class="select2_single form-control" name="Ptitle" id="selectProject" tabindex="-1" >
+			                        
+			                      
+			                    </select>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;멤버선택</span></label>
+						<div class="col-lg-12" id="memberInvite">
+			                        <!-- <input type="checkbox" id="member" name="member" value="석기현">석기현<br>
+					                <input type="checkbox" id="member" name="member" value="기순">기순<br>
+					                <input type="checkbox" id="member" name="member" value="순기">순기 -->
+						</div>
+					</div>
+					<span id="checkCreateRoom">가이드</span>
+					<div class="float-right">
+						<button type="button" class="btn btn-danger" id="replyDelBtn"
+							onclick="createRoom();">생성</button>
+						<button type="button" class="btn btn-dark" data-dismiss="modal">취소</button>
+					</div>	
+					
+				</form>
+			</div>
+
+
+		</div>
+
+		<div class="modal-footer">
+
+			
+		</div>
+	</div>
+</div>
+</div>
+
+<!-- 모달끝 -->
+
+
+<script>
+
+if(${create eq 'success'}){
+	alert("채팅방 등록 완료 되었습니다.");
+}
+
+
+
+window.onload = function(){
+	
 
 	
-<div class="container">
-<h3 class=" text-center">Messaging</h3>
-<div class="messaging">
-      <div class="inbox_msg">
-        <div class="inbox_people">
-          <div class="headind_srch">
-            <div class="recent_heading">
-              <h4>Recent</h4>
-            </div>
-            <div class="srch_bar">
-              <div class="stylish-input-group">
-                <input type="text" class="search-bar"  placeholder="Search" >
-                <span class="input-group-addon">
-                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                </span> </div>
-            </div>
-          </div>
-          <div class="inbox_chat">
-            <div class="chat_list active_chat">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mesgs">
-          <div class="msg_history" id="messages-top">
+	//모달을 열시 
+	$.ajax({
+	    url: "/chat/getProjectTitle.do",
+	    type: "POST",
+	    success : function(arg) {
+	    	
+	    	var projTitle ="<option value=''>==내가속한 프로젝트 리스트==</option>";
+	    	
+	    	 for (var i = 0; i < arg.length; i++) { 
+	    	    
+	    	      projTitle += 
+	    	    	  "<option value='"+arg[i]+"'>"+arg[i]+"</option>";
+	    	    }
+	    	 document.getElementById('selectProject').innerHTML=projTitle;
+	    }, 
+	    error : function(arg){
+		alert("통신실패시에만 실행"+arg.status);
+	    }
+	});
+	//프로젝트 리스트 출력 끝
+	
+	//프로젝트 리스트 누를 시 나타나는 체크박스
+	$("#selectProject").change(function(){
+	
+		
+		var selectProj = $('#selectProject').val();
+		
+		alert(selectProj+"hoho");
+	/* 	<div class="col-lg-12" id="memberInvite">
+        <input type="checkbox" id="member" name="member" value="석기현">석기현<br>
+        <input type="checkbox" id="member" name="member" value="기순">기순<br>
+        <input type="checkbox" id="member" name="member" value="순기">순기 
+		</div>
+		 */
+		
+		 $.ajax({
+		    url: "/chat/getProjectUser.do",
+		    type: "POST",
+		    data: {"selectProj":selectProj},
 
-            
-   			<div id="chatBox"></div>
-            
+		    success : function(arg) {
+			
+		    	var userList ="";
+		    	
+		    	 for (var i = 0; i < arg.length; i++) { 
+		    	     
+		    	      userList += 
+		    	    	  "<input type='checkbox' class='member'"+i+" name='userId' value='"+arg[i]+"'>"+arg[i]+"<br>";
+		    	    }
+		    	 document.getElementById('memberInvite').innerHTML=userList;
+		    	
+		    }, 
+		    error : function(arg){
+			alert("통신실패시에만 실행");
+		    }
+		}); 
+		
 
+		
+	})
+	//체크박스 끝
+	
 
-          </div>
+	
+}
+//윈도우 함수 끝
 
-
-
-          <div class="type_msg">
-            <div class="input_msg_write">
-              <input type="text" class="write_msg"  id="message" placeholder="Type a message" />
-              <button  id="sendBtn" class="msg_send_btn"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-              <!-- <button id="publish-button" type="submit" value="Submit Update">ddd</button> -->
-
-            </div>
-          </div>
-        </div>
-      </div>
+function createRoom(){
+	
+	  var title = document.getElementById('title');
+	  var selectProject = document.getElementById('selectProject');
+		
       
-      
-      
-      
-    </div></div>
+		 if(title.value==""){
+			 checkCreateRoom.innerHTML = "채팅방 제목을 작성해주세요.";
+			
+			return false;
+	  	}
+		 
+		 if(selectProject.value==""){
+			 checkCreateRoom.innerHTML = "프로젝트를 선택해주세요.";
+			
+			return false;
+	  	}
+		  	
+		 var isSeasonChk = false;
+	        var arr_Season = document.getElementsByName("userId");
+	        for(var i=0;i<arr_Season.length;i++){
+	            if(arr_Season[i].checked == true) {
+	                isSeasonChk = true;
+	                break;
+	            }
+	        }
+	    
+	        if(!isSeasonChk){
+	        	 checkCreateRoom.innerHTML = "멤버는 적어도 한 명을 선택해야합니다.";
+	            return false;
+	        }
+		 
+	document.createForm.submit();
+
+}
+//채팅방 생성
+	
+	
+//채팅방 제목을 누를 시 나오는
+function selectMember(target){
+	
+	
+	 $.ajax({
+		    url: "/chat/getRoomUser",
+		    type: "POST",
+		    data: {"pTitle":target},
+
+		    success : function(arg) {
+			
+		    	var userList ="";
+		    	
+		    	 for (var i = 0; i < arg.length; i++) { 
+		    	     
+		    	      userList += 
+		    	    	  "<div class='memberEl'>"+arg[i]+"</div>";
+		    	    	 
+		    	    }
+		    	 document.getElementById('realMemberList').innerHTML=userList;
+		    	 
+		    	 //소켓 통신 시작
+		    	
+		    	 getRoomNumId();
+		    	 
+		    }, 
+		    error : function(arg){
+			alert("통신실패시에만 실행");
+		    }
+		}); 
+
+	
+}
 
 
-
- 
- 
- 
-</div>
-
-
-
-
+function getRoomNumId(){
+	
+	
+	
+	
+	
+}
 
 
+//채팅방 인원 출력
+
+/* 소켓 통신 시작 스크립트 */
     
-
-
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-
     let sock;
-    
     function connectSocket() {
-        sock = new SockJS("/doc");
+    	
+    	
+        sock = new SockJS("/chat");
         sock.onopen = function (){
             alert('연결에 성공하였습니다.');
-            sock.onmessage = (data => {
-                $("<p>" + data.data + "</p>").prependTo('#chatBox');
-            });
-            $('#chatConnect').hide();
-            $('#chat').show();
+           
+
+        sock.onmessage = (data => {
+        	alert(data.data);
+        });
+        
         }
         sock.onerror = function (e) {
             alert('연결에 실패하였습니다.');
@@ -330,8 +336,8 @@ img{ max-width:100%;}
             $('#chatConnect').show();
             $('#chat').hide();
         };
+    
     }
-
     function sendMessage() {
         sock.send($("#message").val());
         $('#message').val("");
@@ -345,6 +351,17 @@ img{ max-width:100%;}
 
     $("#sendBtn").click(() => {
         sendMessage();
-    });
-</script>
-</body>
+    }); 
+   
+
+
+
+
+
+</script>  
+
+
+
+
+
+

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import com.probada.project.service.ProjectService;
 import com.probada.project.service.ProjectTagService;
@@ -105,4 +106,45 @@ public class ProjectUtil {
 
 		return projectList;
 	}
+
+	public List<UserVO> getProjectMemberByProjNo(String projNo) throws SQLException{
+
+		List<UserVO> userList = new ArrayList<UserVO>();
+		try {
+
+				userList = userService.getUserByProjNo(projNo);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+		return userList;
+	}
+
+	public void setProjectUserRelation(HttpSession session, ProjectVO projectVO) throws SQLException{
+
+		UserVO userVO = (UserVO) session.getAttribute("userVO");
+		String userId = userVO.getUserId();
+
+		projectVO.setUserId(userId);
+		projectVO.setRole("A303");
+
+		projectService.registProjectUserRelation(projectVO);
+
+	}
+
+	public String getProjectNameByProjNo(String projNo) throws SQLException{
+
+		String title = "";
+
+		try {
+			title = projectService.getProjectNameByProjNo(projNo);
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return title;
+	}
+
 }

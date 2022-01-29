@@ -9,6 +9,8 @@ public interface ProjectService {
 
 	public List<ProjectVO> getProjectList() throws SQLException;
 
+	public List<ProjectVO> getProjectListByUserId(String userId) throws SQLException;
+
 	public ProjectVO getProjectByProjNo(String projNo) throws SQLException;
 
 	public String registProject(ProjectVO projectVO) throws SQLException;
@@ -21,4 +23,5 @@ public interface ProjectService {
 
 	public void registProjectUserRelation(ProjectVO projectVO) throws SQLException;
 
+	public String getProjectNameByProjNo(String projNo) throws SQLException;
 }

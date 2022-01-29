@@ -45,5 +45,16 @@
 		FROM PAYMENTS_PLAN
 		WHERE PLAN_NO = #{planNo}
 	</select>
-
+	
+	<select id="countUserPaymentsBill" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM PAYMENTS_BILL
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="getMemoryCapacity" parameterType="string" resultType="int">
+		SELECT MEMORY_CAPACITY
+		  FROM PAYMENTS_PLAN
+		 WHERE PLAN_NO = #{planNo}
+	</select>
 </mapper>

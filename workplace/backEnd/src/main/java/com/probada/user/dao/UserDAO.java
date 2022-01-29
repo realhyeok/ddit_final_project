@@ -37,11 +37,15 @@ public interface UserDAO {
 
 	
 	
+	
 	//seok 비밀번호 체크
 	public int pwdCheck(UserVO user)throws SQLException;
 	
+	public String pwdPiker(String userId) throws SQLException;
 	
 
+	public void deleteUser(String userId) throws SQLException;
+	
 	//	유저 데이터 사용량 업데이트
 	public void setUserUploadUsage(UserVO userVO) throws SQLException;
 
@@ -50,4 +54,7 @@ public interface UserDAO {
 
 	// USER_PROJECT 테이블에서 유저 아이디를 조회하여 PROJ_NO를 조회한다.
 	public List<String> getUserProjNoList(String userId) throws SQLException;
+	
+	// userId를 파라미터로 받아서 해당 유저의 pwd를 리턴한다.
+	public String pwdPicker(String userId) throws SQLException;
 }

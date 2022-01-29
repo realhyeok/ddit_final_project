@@ -1,5 +1,9 @@
 package com.probada.task.vo;
 
+import java.util.List;
+
+import com.probada.user.vo.UserVO;
+
 public class TaskVO {
 
 	private String projNo;
@@ -15,6 +19,31 @@ public class TaskVO {
 	private String updatedate;
 	private String content;
 
+	// 출력용
+	private String projTitle;
+	private List<UserVO> userList;
+	private String nickname;
+
+
+
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public List<UserVO> getUserList() {
+		return userList;
+	}
+	public void setUserList(List<UserVO> userList) {
+		this.userList = userList;
+	}
+	public String getProjTitle() {
+		return projTitle;
+	}
+	public void setProjTitle(String projTitle) {
+		this.projTitle = projTitle;
+	}
 	public String getProjNo() {
 		return projNo;
 	}

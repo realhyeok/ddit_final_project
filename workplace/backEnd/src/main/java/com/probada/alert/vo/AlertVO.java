@@ -2,6 +2,8 @@ package com.probada.alert.vo;
 
 import java.util.Date;
 
+import com.probada.util.StrFormatTime;
+
 public class AlertVO {
 	
 	private String userId;
@@ -32,6 +34,16 @@ public class AlertVO {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public String getWriteTimeDisplay() {
+		String writeTimeDisplay = "";
+		if(this.writeTime != null) {
+			writeTimeDisplay = StrFormatTime.formatTimeString(this.writeTime);
+//			System.out.println("writeTimeDisplay => " + writeTimeDisplay);
+//			writeTimeDisplay = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(this.writeTime);
+		}
+		return writeTimeDisplay;
 	}
 	
 }

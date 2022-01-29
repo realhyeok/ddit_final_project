@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.probada.project.service.ProjectService;
-import com.probada.project.vo.ProjectTagVO;
 import com.probada.project.vo.ProjectVO;
+import com.probada.user.vo.UserVO;
 import com.probada.util.ProjectUtil;
 
 @Controller
@@ -53,6 +55,33 @@ public class ProjectController {
 		try {
 
 			projectList = projectService.getProjectList();
+			projectList = projectUtil.getProjectTagList(projectList);
+			projectList = projectUtil.getProjectMemberList(projectList);
+
+			entity = new ResponseEntity<List<ProjectVO>>(projectList,HttpStatus.OK);
+
+		} catch(Exception e) {
+			entity = new ResponseEntity<List<ProjectVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+
+	@RequestMapping("/getProjectListByUserId")
+	@ResponseBody
+	public ResponseEntity<List<ProjectVO>> getProjectListByUserId(HttpServletRequest request) throws Exception {
+		ResponseEntity<List<ProjectVO>> entity = null;
+
+		LOGGER.debug("[요청받음] => /getProjectListByUserId");
+
+		List<ProjectVO> projectList = new ArrayList<ProjectVO>();
+		HttpSession session = request.getSession();
+
+		try {
+			UserVO userVO = (UserVO) session.getAttribute("userVO");
+			String userId = userVO.getUserId();
+
+			projectList = projectService.getProjectListByUserId(userId);
 			projectList = projectUtil.getProjectTagList(projectList);
 			projectList = projectUtil.getProjectMemberList(projectList);
 
@@ -106,14 +135,17 @@ public class ProjectController {
 
 	@RequestMapping(value = "/registProject", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<HashMap<String, Object>> registProject(ProjectVO projectVO) throws Exception {
+	public ResponseEntity<HashMap<String, Object>> registProject(HttpServletRequest request, ProjectVO projectVO) throws Exception {
 		ResponseEntity<HashMap<String, Object>> entity = null;
 
 		HashMap<String,Object> hashmap = new HashMap<String,Object>();
+		HttpSession session = request.getSession();
 
 		try {
 
 			String projNo = projectService.registProject(projectVO);
+
+			projectUtil.setProjectUserRelation(session, projectVO);
 
 			hashmap.put("projNo", projNo);
 
@@ -145,8 +177,8 @@ public class ProjectController {
 		return entity;
 	}
 
-	
-	
+
+
 /*
 	@RequestMapping("/getProjectDashCard")
 	@ResponseBody

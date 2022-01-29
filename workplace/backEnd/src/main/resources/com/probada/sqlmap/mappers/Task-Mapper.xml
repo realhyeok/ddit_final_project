@@ -67,4 +67,38 @@
 		AND
 			A.TASK_NO = #{taskNo}
 	</select>
+
+	<insert id="insertTask" parameterType="task">
+		INSERT INTO TASK (
+		    TASK_NO   ,PROJ_NO   ,TITLE   ,USER_ID   ,CONTENT
+		    ,IMPORTANT   ,REGDATE   ,UPDATEDATE   ,STATUS
+		    ,DOC_CONT_NO   ,STARTDATE   ,ENDDATE
+		) VALUES (
+		    #{taskNo}   ,#{projNo}   ,#{title}   ,#{userId}   ,#{content}
+		    ,#{important}   ,sysdate   ,sysdate   ,#{status}
+		    ,1   ,#{startdate}   ,#{enddate}
+		)
+	</insert>
+
+	<update id="updateTaskDetailByTaskNo" parameterType="task">
+		UPDATE
+			TASK
+		SET
+			PROJ_NO = #{projNo}
+			,TITLE = #{title}
+			,USER_ID = #{userId}
+			,CONTENT = #{content}
+			,IMPORTANT = #{important}
+			,UPDATEDATE = sysdate
+			,STATUS = #{status}
+			,STARTDATE = #{startdate}
+			,ENDDATE = #{enddate}
+		WHERE
+			TASK_NO = #{taskNo}
+	</update>
+
+	<select id="selectTaskSeqNext" resultType="int">
+		SELECT
+			TASK_SEQ.NEXTVAL AS TASK_NO FROM DUAL
+	</select>
 </mapper>

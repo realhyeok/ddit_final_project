@@ -5,25 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.probada.alert.vo.AlertVO;
 import com.probada.user.vo.UserVO;
 import com.probada.util.UserUtil;
 
 
-public class EchoHandler extends TextWebSocketHandler {
+public class AlertHandler extends TextWebSocketHandler {
 		// 접속되어 있는 유저들을 담는다.
 		List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
 		// 1대1
@@ -41,7 +34,6 @@ public class EchoHandler extends TextWebSocketHandler {
 		@Override
 		public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 			sessions.add(session);
-			
 			String senderEmail = getId(session);
 			userSessionsMap.put(senderEmail , session);
 		}

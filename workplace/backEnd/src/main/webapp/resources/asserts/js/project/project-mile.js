@@ -30,34 +30,33 @@ $('#toolbar').kendoToolBar({
         { template: '<span class="k-d-flex k-flex-row k-align-items-center"><span class="status-icon k-icon k-i-check"></span> 0 완료됨</span>' }
     ]
 });
+function readMile() {
+	$("#mileList").empty();
+	$("#mileList").kendoListView({
+		dataSource:mileDataSource,
+		selectable: true,
+		change: function() {
+			var index = this.select().index();
+			var selectedData = this.dataSource.view()[index];
 
-$("#mileList").kendoListView({
-    selectable: true,
-    change: function() {
-    	var index = this.select().index();
-    	var selectedData = this.dataSource.view()[index];
+			console.log(selectedData.id);
+			sortingIssueByClick(selectedData.id);
+		},
+		height:760,
+		template: $("#mileTemplate").html(),
+		dataBound: function() {
+			$('.B301').kendoBadge({
+				themeColor: 'tertiary',
+				text: '진행중'
+			});
 
-    	console.log(selectedData.id);
-    	sortingIssueByClick(selectedData.id);
-    },
-    height:760,
-    template: $("#mileTemplate").html(),
-    dataBound: function() {
-        $('.B301').kendoBadge({
-            themeColor: 'tertiary',
-            text: '진행중'
-        });
+			$('.B302').kendoBadge({
+				themeColor: 'primary',
+				text: '완료'
+			});
+		}
 
-        $('.B302').kendoBadge({
-            themeColor: 'primary',
-            text: '완료'
-        });
-    }
-
-});
-function readMile(){
-	var mileList = $("#mileList").data("kendoListView");
-	console.log(mileList);
-	mileList.setDataSource(mileDataSource);
+	});
 }
+
 

@@ -27,13 +27,19 @@
           <a class="nav-link" id="gantt-tab" data-toggle="tab" href="#ganttchart" role="tab" aria-controls="ganttchart" aria-selected="false" onclick="setTimeout(projGantt, 300);">간트차트</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="issue-tab" data-toggle="tab" href="#issue" role="tab" aria-controls="issue" aria-selected="false" onclick="setTimeout(readIssue, 100);setTimeout(readMile, 100);">이슈</a>
+          <a class="nav-link" id="issue-tab" data-toggle="tab" href="#issue" role="tab" aria-controls="issue" aria-selected="false" onclick="setTimeout(readIssue, 300);setTimeout(readMile, 300);">이슈</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="document-tab" data-toggle="tab" href="#document" role="tab" aria-controls="document" aria-selected="false" onclick="setTimeout(readDocument, 300);">문서관리</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">히스토리</a>
+        </li>
+        <li class="nav-item" style="display:none;" >
+          <a class="nav-link" id="taskDetail-tab" data-toggle="tab" href="#taskDetail" role="tab" aria-controls="taskDetail" aria-selected="false">업무상세</a>
+        </li>
+        <li class="nav-item" style="display:none;" >
+          <a class="nav-link" id="issueDetail-tab" data-toggle="tab" href="#issueDetail" role="tab" aria-controls="issueDetail" aria-selected="false">이슈상세</a>
         </li>
       </ul>
 
@@ -59,6 +65,12 @@
         <div class="tab-pane fade show" id="history" role="tabpanel" aria-labelledby="history-tab">
           <%@ include file="/WEB-INF/views/web-app/project/project-history.jsp" %>
         </div>
+        <div class="tab-pane fade show" id="taskDetail" role="tabpanel" aria-labelledby="taskDetail-tab">
+          <%@ include file="/WEB-INF/views/web-app/project/project-task-detail.jsp" %>
+        </div>
+        <div class="tab-pane fade show" id="issueDetail" role="tabpanel" aria-labelledby="issueDetail-tab">
+          <%@ include file="/WEB-INF/views/web-app/project/project-issue-detail.jsp" %>
+        </div>
       </div>
     </div>
   </div>
@@ -82,6 +94,7 @@ window.onload = function() {
 
 	if(getCookie('tab')){
 		var curTab = getCookie('tab');
+		curTab = curTabCheck(curTab);
 		document.getElementById(curTab).click();
 	} else if(!getCookie('tab')) {
 		document.getElementById('home-tab').click();
@@ -92,6 +105,15 @@ window.onload = function() {
 		document.cookie = "tab="+id;
 	})
 
+}
+// 상세 탭일경우 리스트로 돌려줌 (각 상세폼에 추가)
+function curTabCheck(curTab){
+	if(curTab == 'taskDetail-tab'){
+		curTab = 'task-tab';
+	} else if (curTab == 'issueDetail-tab'){
+		curTab = 'issue-tab';
+	}
+		return curTab;
 }
 
 function getCookie(name) {

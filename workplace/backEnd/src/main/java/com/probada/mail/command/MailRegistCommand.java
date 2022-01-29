@@ -7,11 +7,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.probada.mail.vo.MailVO;
 
 public class MailRegistCommand {
-	private String mailNo = "500";			//메일 번호
 	private String title;					//제목
 	private String content;					//내용
 	private String userTo;					//받는사람
 	private String userFrom;				//보내는 사람
+	private String dist;					//전송, 임시저장 구분
 	
 	private List<MultipartFile> attachFile;	//첨부파일
 	
@@ -39,6 +39,12 @@ public class MailRegistCommand {
 	public void setUserFrom(String userFrom) {
 		this.userFrom = userFrom;
 	}
+	public String getDist() {
+		return dist;
+	}
+	public void setDist(String dist) {
+		this.dist = dist;
+	}
 	
 	public List<MultipartFile> getAttachFile() {
 		return attachFile;
@@ -46,16 +52,9 @@ public class MailRegistCommand {
 	public void setAttachFile(List<MultipartFile> attachFile) {
 		this.attachFile = attachFile;
 	}
-	public String getMailNo() {
-		return mailNo;
-	}
-	public void setMailNo(String mailNo) {
-		this.mailNo = mailNo;
-	}
 	
 	public MailVO toMailVO() {
 		MailVO mailVO = new MailVO();
-		mailVO.setMailNo(this.mailNo);
 		mailVO.setTitle(this.title);
 		mailVO.setContent(this.content);
 		mailVO.setUserTo(this.userTo);

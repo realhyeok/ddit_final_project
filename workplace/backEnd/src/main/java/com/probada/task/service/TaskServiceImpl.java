@@ -53,4 +53,27 @@ public class TaskServiceImpl implements TaskService {
 		return result;
 	}
 
+
+	@Override
+	public void modifyTaskDetailByTaskNo(TaskVO taskVO) throws SQLException {
+
+		taskDAO.updateTaskDetailByTaskNo(taskVO);
+
+	}
+
+
+	@Override
+	public String registTask(TaskVO taskVO) throws SQLException {
+
+		int seq = taskDAO.selectTaskSeqNext();
+
+		String taskNo = Integer.toString(seq);
+
+		taskVO.setTaskNo(taskNo);
+
+		taskDAO.insertTask(taskVO);
+
+		return taskNo;
+	}
+
 }

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class MailVO {
-	private String mailNo;
+	private int mailNo = 0;
 	private String title;
 	private String userTo;
 	private String userFrom;
@@ -21,11 +21,12 @@ public class MailVO {
 	private String sentDel;
 	
 	private List<AttachVO> attachList;
-
-	public String getMailNo() {
+	private int memoryCapacity;
+	
+	public int getMailNo() {
 		return mailNo;
 	}
-	public void setMailNo(String mailNo) {
+	public void setMailNo(int mailNo) {
 		this.mailNo = mailNo;
 	}
 	public String getTitle() {
@@ -88,5 +89,11 @@ public class MailVO {
 	}
 	public void setAttachList(List<AttachVO> attachList) {
 		this.attachList = attachList;
+	}
+	public int getMemoryCapacity() {
+		return memoryCapacity;
+	}
+	public void setMemoryCapacity(int memoryCapacity) {
+		this.memoryCapacity = memoryCapacity;
 	}
 }

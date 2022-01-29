@@ -9,47 +9,50 @@
 		<put-attribute name="overlay" value="/WEB-INF/tiles/overlay.jsp"/>
 	</definition>
 
-
-
-
 	<definition name="/web-app/common/*" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/web-app/common/{1}.jsp"/>
 	</definition>
-
 
 	<definition name="/web-app/my-page/*" extends="base" template="/WEB-INF/tiles/seok.jsp">
 		<put-attribute name="seokCss" value="/WEB-INF/tiles/seok_css.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/web-app/my-page/{1}.jsp"/>
 	</definition>
 
-
-
 	<definition name="/web-app/chat/*" extends="base" template="/WEB-INF/tiles/seok.jsp">
 		<put-attribute name="seokCss" value="/WEB-INF/tiles/seok_css.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/web-app/chat/{1}.jsp"/>
 	</definition>
-	
+
 	<definition name="/web-app/project-list" extends="base" template="/WEB-INF/tiles/project-layout.jsp">
 		<put-attribute name="project-css" value="/WEB-INF/tiles/project-css.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/web-app/project/project-list.jsp"/>
 		<put-attribute name="project-script" value="/WEB-INF/tiles/project-script.jsp"/>
-
+		<put-attribute name="project-overlay" value="/WEB-INF/tiles/project-overlay.jsp"/>
 	</definition>
 
-
-
-	<definition name="/web-app/project/*" extends="base">
+	<definition name="/web-app/project/*" extends="base" template="/WEB-INF/tiles/project-layout.jsp">
+		<put-attribute name="project-css" value="/WEB-INF/tiles/project-css.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/web-app/project/{1}.jsp"/>
+		<put-attribute name="project-script" value="/WEB-INF/tiles/project-script.jsp"/>
+		<put-attribute name="project-overlay" value="/WEB-INF/tiles/project-overlay.jsp"/>
+	</definition>
+
+	<definition name="/web-app/collabo/*" extends="base" template="/WEB-INF/tiles/collabo-layout.jsp">
+		<put-attribute name="collabo-css" value="/WEB-INF/tiles/collabo-css.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/web-app/collabo/{1}.jsp"/>
+		<put-attribute name="collabo-script" value="/WEB-INF/tiles/collabo-script.jsp"/>
+	</definition>
+
+	<definition name="/web-app/collabo/getCollaboList" extends="base" template="/WEB-INF/tiles/collabo-layout.jsp">
+		<put-attribute name="collabo-css" value="/WEB-INF/tiles/collabo-css.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/web-app/collabo/collabo-list.jsp"/>
+		<put-attribute name="collabo-script" value="/WEB-INF/tiles/collabo-script.jsp"/>
 	</definition>
 	
-	<definition name="/web-app/collabo/*" extends="base">
-		<put-attribute name="body" value="/WEB-INF/views/web-app/collabo/{1}.jsp"/>
-	</definition>
-
 	<definition name="/web-app/myWork/*" extends="base" template="/WEB-INF/tiles/myWork_layout.jsp">
-		<put-attribute name="my_css" value="/WEB-INF/tiles/myWork_css.jsp"/>
+		<put-attribute name="myCss" value="/WEB-INF/tiles/myWork_css.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/web-app/myWork/{1}.jsp"/>
-		<put-attribute name="my_script" value="/WEB-INF/tiles/myWork_script.jsp"/>
+		<put-attribute name="myScript" value="/WEB-INF/tiles/myWork_script.jsp"/>
+		<put-attribute name="myOverlay" value="/WEB-INF/views/web-app/myWork/myOverlay.jsp"/>
 	</definition>
-
 </tiles-definitions>

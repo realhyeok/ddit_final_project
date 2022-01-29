@@ -78,13 +78,13 @@
 				</h2>
 			</div>
 			<!-- /.user-block -->
-			<p class="text-truncate">#= intro#</p>
-			<div class="col-sm-8">
-			<p>
-				<span class="ml-3">시작일 : #:kendo.toString(startdate,"yyyy년 MM월 dd일")#</span>
-				<span class="ml-3">마감일 : #:kendo.toString(enddate,"yyyy년 MM월 dd일")#</span>
-			</p>
-			<div class="card-collabo mb-3 d-flex justify-content-evenly">
+			<div class="col-sm-8 text-truncate">#: xssPurify(intro)#</div>
+			<div class="col-sm-4 text-right">
+				<p>
+					<span class="ml-3 rounded rounded-2" style="background:rgb(239,239,239);">마감일 : #:kendo.toString(enddate,"yyyy년 MM월 dd일")#</span>
+				</p>
+			</div>
+			<div class="col-sm-8 row d-flex justify-content-evenly">
 					<div><span><i class="fa fa fa-heart-o fa-lg"></i> #:likeCount#</span></div>
 					<div class="ml-3 d-flex align-items-center"><h4 class="mb-0">
 				#for (var i=0, len=tagNames.length; i<len; i++){#
@@ -93,9 +93,8 @@
 					</h4></div>
 					<div class="d-flex justify-content-end"><span class="ml-3">갱신일 : #:kendo.toString((updatedate),"yyyy년 MM월 dd일")#</span></div>
 			</div>
-			</div>
-			<div class="col-sm-4">
-					<ul class="list-inline mt-4" style="display: inline-flex">
+			<div class="col-sm-4 ml-3 text-right" style="height:50px">
+					<ul class="list-inline" style="display: inline-flex">
 				# for(var i=0, len=member.length; i<len; i++) { #
 						# if(i < 5) { #
 							<!-- 구성원 단위 시작 -->
@@ -141,14 +140,6 @@
 												<div class="p-1"
 													style="height: 100px; background-color: rgb(229,229,229)">
 													<p class="mt-2 mb-2">#= member[i].intro #</p>
-												</div>
-												<div class="text-center mt-3">
-													<button type="button" class="btn btn-success btn-sm">
-														<i class="fa fa-pencil-square"> 권한</i>
-													</button>
-													<button type="button" class="btn btn-primary btn-sm">
-														<i class="fa fa-user-times"> 제명</i>
-													</button>
 												</div>
 											</div>
 										</div>

@@ -1,6 +1,3 @@
-<%@page import="com.probada.alert.vo.AlertVO"%>
-<%@page import="java.util.List"%>
-<%@page import="com.probada.util.UserUtil"%>
 <%@page import="com.probada.user.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -36,7 +33,7 @@
                 <ul class="nav side-menu">
                   <li><a href="<%=request.getContextPath() %>/app/index"><i class="fa fa-home"></i> 홈</a>
                   </li>
-                  <li><a href="<%=request.getContextPath()%>/app/myWork"><i class="fa fa-edit"></i> 내 작업 </a>
+                  <li><a id="myWorkMenu" href="<%=request.getContextPath()%>/app/myWork"><i class="fa fa-edit"></i> 내 작업 </a>
                   </li>
                   <li><a href="<%=request.getContextPath()%>/app/project-list"><i class="fa fa-desktop"></i> 프로젝트</a>
                   </li>
@@ -219,7 +216,8 @@
                     </a>
                     <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1" id="alertVOList">
                     
-                    <c:choose>
+                  <%--   이거 없어도 잘돌아감
+                  <c:choose>
                     	<c:when test="${empty alertList }">
                     		<!-- <li class="nav-item">
                     			<strong>해당 내용이 없습니다.</strong>
@@ -231,8 +229,8 @@
 	                        		<a class="dropdown-item">
 			                          <span class="image"><img src="/resources/asserts/images/img.jpg" alt="Profile Image" /></span>
 			                          <span>
-			                            <span>${alert.nickname }</span>
-			                            <span class="time">${alert.writeTime }</span>
+			                            <span>${alert.nickname}</span>
+			                            <span class="time">${alert.writeTimeDisplay}</span>
 			                          </span>
 			                          <span class="message">
 			                            ${alert.content }
@@ -242,7 +240,8 @@
 		                    </c:forEach>
                     	</c:otherwise>
 	                  
-                    </c:choose>
+                    </c:choose> 
+                    --%>
                       
                     <!--   알림 상세보기 // 구현 계획에 미포함
                     <li class="nav-item">

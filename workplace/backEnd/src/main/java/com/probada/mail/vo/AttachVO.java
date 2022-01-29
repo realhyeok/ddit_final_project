@@ -5,8 +5,8 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class AttachVO {
-	private String attachNo;
-	private String mailNo;
+	private int attachNo;
+	private int mailNo;
 	private String filePath;
 	private String fileName;
 	private String fileType;
@@ -15,16 +15,16 @@ public class AttachVO {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private String regDate;
 	
-	public String getAttachNo() {
+	public int getAttachNo() {
 		return attachNo;
 	}
-	public void setAttachNo(String attachNo) {
+	public void setAttachNo(int attachNo) {
 		this.attachNo = attachNo;
 	}
-	public String getMailNo() {
+	public int getMailNo() {
 		return mailNo;
 	}
-	public void setMailNo(String mailNo) {
+	public void setMailNo(int mailNo) {
 		this.mailNo = mailNo;
 	}
 	public String getFilePath() {

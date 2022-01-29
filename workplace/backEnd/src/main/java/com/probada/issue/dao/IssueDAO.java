@@ -12,4 +12,8 @@ public interface IssueDAO {
 
 	public List<MileIssueVO> selectMileIssueListByIssueNo(String issueNo) throws SQLException;
 
+	public IssueVO selectIssueByIssueNo(IssueVO issueVO) throws SQLException;
+
+	public void updateIssueByIssueNo(IssueVO issueVO) throws SQLException;
+
 }

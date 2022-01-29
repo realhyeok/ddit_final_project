@@ -8,7 +8,7 @@
 			,TITLE
 			,STARTDATE
 			,ENDDATE
-			,PRIVACY
+			,<include refid="privacyForProject" />
 			,NOTICE
 			,NOTICE_CONT
 			,UPDATEDATE
@@ -18,6 +18,28 @@
 			,LIKE_COUNT
 		FROM
 			project
+	</select>
+
+	<select id="selectProjectListByUserId" parameterType="String" resultType="com.probada.project.vo.ProjectVO">
+		SELECT
+			A.PROJ_NO
+			,A.TITLE
+			,A.STARTDATE
+			,A.ENDDATE
+			,<include refid="privacyForProjectAsA" />
+			,A.NOTICE
+			,A.NOTICE_CONT
+			,A.UPDATEDATE
+			,<include refid="statusForProjectAsA" />
+			,A.INTRO
+			,A.DOC_CONT_NO
+			,A.LIKE_COUNT
+		FROM
+			project A
+        JOIN
+        	USER_PROJECT B ON(A.PROJ_NO = B.PROJ_NO)
+        WHERE
+        	B.USER_ID = #{userId}
 	</select>
 
 	<select id="selectProjectCountInProjByUserId" resultType="int" parameterType="String">
@@ -52,6 +74,14 @@
 			PROJ_NO = #{projNo}
 	</select>
 
+	<select id="selectProjectNameByProjNo" resultType="String" parameterType="String">
+		SELECT
+			TITLE
+		FROM
+			PROJECT
+		WHERE
+			PROJ_NO = #{projNo}
+	</select>
 
 	<select id="selectProjectTagList" resultType="com.probada.project.vo.ProjectVO" parameterType="com.probada.project.vo.ProjectVO">
 		SELECT
@@ -113,6 +143,15 @@
             	COMMON_CODE.CODE_NO = PROJECT.STATUS) AS STATUS
 	</sql>
 
+	<sql id="statusForProjectAsA">
+			(SELECT
+				CODE_NAME
+			FROM
+				COMMON_CODE
+            WHERE
+            	COMMON_CODE.CODE_NO = A.STATUS) AS STATUS
+	</sql>
+
 	<sql id="privacyForProject">
 			(SELECT
 				CODE_NAME
@@ -120,6 +159,15 @@
 				COMMON_CODE
             WHERE
             	COMMON_CODE.CODE_NO = PROJECT.PRIVACY) AS PRIVACY
+	</sql>
+
+	<sql id="privacyForProjectAsA">
+			(SELECT
+				CODE_NAME
+			FROM
+				COMMON_CODE
+            WHERE
+            	COMMON_CODE.CODE_NO = A.PRIVACY) AS PRIVACY
 	</sql>
 
 	<select id="selectProjectSeqNext" resultType="int">

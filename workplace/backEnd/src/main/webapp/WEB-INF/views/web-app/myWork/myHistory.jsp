@@ -9,7 +9,7 @@
 
 <script id="myHistory-template" type="text/x-kendo-template">
 	<div class="media event">
-		<img src='<%=request.getContextPath()%>/resources/asserts/images/img.jpg' alt='img' style='margin:5px 10px 5px 3px;height:50px;width:50px;border-radius:100%;'/>
+		<img src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userId#" alt="img" style="margin:5px 10px 5px 3px;height:50px;width:50px;border-radius:100%;">
 		<div class="media-body">
 			<p class="mt-1">#:msg#</p>
 			<p>#:regDate#</p>

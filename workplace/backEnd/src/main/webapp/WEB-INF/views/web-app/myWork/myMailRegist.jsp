@@ -5,21 +5,22 @@
 	<div class="col-sm-12 mail_view border-left-0">
 		<div class="col-sm-12">
 			<div class="col-md-12 col-sm-12" style="text-align:right;">
-				<button type="button" class="btn btn-sm btn-dark">임시저장</button>
-				<button id="mailSendButton" type="button" class="btn btn-sm btn-primary" onclick="mailRegist_go();return false;">전송</button>
+				<button type="button" class="btn btn-sm btn-dark" onclick="mailRegist_go('temp');return false;">임시저장</button>
+				<button id="mailSendButton" type="button" class="btn btn-sm btn-primary" onclick="mailRegist_go('send');return false;">전송</button>
 				<button type="button" class="btn btn-sm btn-secondary" onclick="history.go(-1);">취소</button>
 			</div>
 		</div>
 		<div class="col-sm-12">
 			<!-- 메일 작성 시작 -->
-			<form enctype="multipart/form-data" role="form" method="post" action="myWork/mailRegist" name="mailRegistForm" class="form-horizontal form-label-left">
+			<form enctype="multipart/form-data" role="form" method="post" action="<%=request.getContextPath()%>/app/myWork/mailRegist" name="mailRegistForm" class="form-horizontal form-label-left">
 				<div class="inbox-body">
-					<input type="hidden" id="userFrom" name="userFrom" value="realhyuk@ddit.com">
-					<input type="text" id="userTo" name="userTo" class="form-control form-control-sm mt-3" placeholder="받는 사람:">
+					<input type="hidden" id="userFrom" name="userFrom" value="${userVO.userId}">
+					<input type="hidden" id="dist" name="dist" value="">
+					<input type="text" id=sendUserTo name="userTo" class="form-control form-control-sm mt-3" placeholder="받는 사람:">
 					<br>
-					<input type="text" id="title" name="title" class="form-control form-control-sm" placeholder="제목:">
+					<input type="text" id="sendTitle" name="title" class="form-control form-control-sm" placeholder="제목:">
 					<br>
-					<textarea id="content" name="content" rows="10" class="form-control" placeholder="내용을 입력하세요." style="display:none;"></textarea>
+					<textarea id="sendContent" name="content" rows="10" class="form-control content" placeholder="내용을 입력하세요." style="display:none;"></textarea>
 					<br>
 				</div>
 				<div class="card">
@@ -36,27 +37,44 @@
 </div>
 
 <script>
-	window.onload = function(){
+	window.addEventListener('load', function() {
+		var memoryCapacity = null;
+		var userId = $("#userFrom").val();
+		$.ajax({
+			url: "<%=request.getContextPath()%>/app/myWork/getMemoryCapacity",
+			type: "get",
+			async: false,
+			data: {
+				"userId" : userId
+			},
+			success: function(data){
+				memoryCapacity = data;
+			},
+			error: function(error){
+				alert(error.status);
+			}
+		});
+		
 		$('.fileInput').on('change', 'input[type="file"]', function(event){
-			if(this.files[0].size > 1024 * 1024 * 40){
-				alert("파일 용량은 40MB 이하만 가능합니다.");
+			if(this.files[0].size > memoryCapacity * 1024 * 1024){
+				alert("파일 용량은 " + memoryCapacity + "MB 이하만 가능합니다.");
 				this.value="";
 				$(this).click();
 				return;
 			}
 		});
-	}	
+	});
 
 	var dataNum = 0;
 
 	function addFile_go(){
-		if($('input[name="attachFile"]').length >= 5){
+		if($('input[class="sendAttachFile"]').length >= 5){
 			alert("파일 추가는 5개 까지만 가능합니다.");
 			return;
 		}
 	
-		var div = $('<div>').addClass("inputRow").attr("data-no", dataNum);
-		var input = $('<input>').attr({"type":"file", "name":"attachFile"}).css("display", "inline");
+		var div = $('<div>').addClass("inputRow").addClass("mb-1").attr("data-no", dataNum);
+		var input = $('<input>').attr({"type":"file", "name":"attachFile", "class":"sendAttachFile"}).css("display", "inline");
 		
 		div.append(input).append("<button type='button' class='badge bg-red' onclick='remove_go(" + dataNum + ")' style='border:0;outline:0;'>X</button>");
 		$('.fileInput').append(div);
@@ -68,8 +86,14 @@
 		$('div[data-no="' + dataNum + '"]').remove();
 	}
 
-	function mailRegist_go(){
-		var files = $('input[name="attachFile"]');
+	function mailRegist_go(dist){
+		if(dist == "temp"){
+			$("#dist").val("temp");
+		}else if(dist == "send"){
+			$("#dist").val("send");
+		}
+		
+		var files = $('input[class="sendAttachFile"]');
 		for(var file of files){
 			console.log(file.name + " : " + file.value);
 			if(file.value == ""){
@@ -80,19 +104,19 @@
 			}
 		}
 	
-		if($("input[name='title']").val() == ""){
+		if($("input[id='sendTitle']").val() == ""){
 			alert("제목을 입력해주세요.");
-			$("input[name='title']").focus();
+			$("input[id='sendTitle']").focus();
 			return;
 		}
-		if($("input[name='userTo']").val() == ""){
+		if($("input[id='sendUserTo']").val() == ""){
 			alert("수신자 메일을 입력해주세요.");
-			$("input[name='userTo']").focus();
+			$("input[id='sendUserTo']").focus();
 			return;
 		}
-		if($("textarea[name='content']").val() == ""){
+		if($("textarea[id='sendContent']").val() == ""){
 			alert("내용을 입력해주세요.");
-			$("textarea[name='content']").focus();
+			$("textarea[id='sendContent']").focus();
 			return;
 		}
 		document.mailRegistForm.submit();

@@ -7,7 +7,7 @@ function getParameterByName(name) {
 }
 
 var cprojNo = getParameterByName("cprojNo");
-
+console.log(cprojNo);
 //콜라보 리스트 데이터소스
 const cprojDataSource = new kendo.data.DataSource({
       type: "json",
@@ -46,3 +46,10 @@ const cprojList = $("#collabo-list").kendoGrid({
 	dataSource: cprojDataSource,
 });
 
+function xssPurify(html) {
+    const extractTextPattern = /(<([^>]+)>)/gi;
+    var newhtml = html.replace(extractTextPattern, "");
+    console.log("old" + html);
+    console.log("new" + newhtml);
+    return newhtml;
+}

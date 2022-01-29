@@ -6,8 +6,14 @@
 <meta charset="UTF-8">
 </head>
 <body>
-		<script	src="<%=request.getContextPath()%>/resources/asserts/js/collabo/collabo-list.js"></script>
 		<!-- Collabo JS -->
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/collabo/collaboHandlerbars.js"></script>
 		<script	src="<%=request.getContextPath()%>/resources/asserts/js/collabo/collabo.js"></script>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/collabo/collabo-list.js"></script>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/collabo/collabo-detail.js"></script>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/collabo/collabo-overlay.js"></script>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/collabo/collabo-summernote.js"></script>
+		
 </body>
+
 </html>

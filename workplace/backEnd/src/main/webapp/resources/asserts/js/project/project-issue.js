@@ -10,7 +10,6 @@ const IssueDataSource = new kendo.data.DataSource({
             model: {
             	id:"id",
                 fields: {
-                	id : { from:"issueNo",type:"number"},
                 	title: { from:"title", type: "string" },
                 	important: { from:"important", type: "string" },
                 	userId: { from:"userId", type: "string" },
@@ -22,25 +21,15 @@ const IssueDataSource = new kendo.data.DataSource({
         },
 });
 
-
 // 이슈 시작
-
-		var registBtn = kendo.template("<button type='button'>hello<button>")
-			 $("#issueGrid").kendoGrid({
-	             columnMenu: {
-	                 filterable: false
-	             },
-	             batch: true,
-	             pageable: {
-	                 pageSizes: true
-	               },
-	             autoSync: false,
-	             height: "100%",
-	             numeric: true,
-	             sortable: true,
-	             navigatable: true,
-	             resizable: true,
-	             groupable: true,
+var issueGridFlag = false;
+function readIssue() {
+			if(issueGridFlag == true){
+				reloadIssue();
+				return;
+			}
+			$("#issueGrid").kendoGrid({
+				dataSource:IssueDataSource,
 	             toolbar: [
 	             	{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"issueRegistFormTemplate\");'>이슈 등록</a>" }
 	             	,"search","excel", "pdf" ],
@@ -57,7 +46,7 @@ const IssueDataSource = new kendo.data.DataSource({
 	             },  {
 	                 field: "title",
 	                 title: "이슈 제목",
-	                 format: "{0:c}",
+	                 template: "<a href=\"javascript:getIssueTemplate('/app/issue/getIssueByIssueNo','#:issueNo#','issueDetailForm','issueDetailFormTarget')\" class='text-dark'>#:title#</a>",
 	                 width: 200,
 	                 encoded: false,
 	             }, {
@@ -80,13 +69,31 @@ const IssueDataSource = new kendo.data.DataSource({
 	                 format: "{0:yy-MM-dd}",
 	                 width: 100
 	             },  ],
-
 	         });
-		function readIssue() {
-			var issueGrid = $("#issueGrid").data("kendoGrid");
-			issueGrid.setDataSource(IssueDataSource);
+			issueGridSetOpt();
+			
+			issueGridFlag = true;
+}
 
-		}
+function issueGridSetOpt(){
+	var issueGrid = $("#issueGrid").data("kendoGrid");
+	issueGrid.setOptions({
+		 batch: true,
+	     autoSync: false,
+	     height: "100%",
+	     numeric: true,
+	     sortable: true,
+	     navigatable: true,
+	     resizable: true,
+	     groupable: true,
+	})
+}
+
+function reloadIssue() {
+	$("#issueGrid").data("kendoGrid").dataSource.read();
+}
+
+
 
 		const sortingIssueByClick = function(tData) {
 			var externalFilter = {
@@ -96,4 +103,10 @@ const IssueDataSource = new kendo.data.DataSource({
 		              ]
 		            };
 			$("#issueGrid").data("kendoGrid").dataSource.filter(externalFilter);
+		}
+
+		function readMileIssue(){
+			getDefaultTemplate('issueListTemplate','issue-content');
+			setTimeout(readIssue,200);
+			setTimeout(readMile,200);
 		}

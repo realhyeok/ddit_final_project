@@ -77,10 +77,6 @@ function modifyProjectDetail() {
 			alert(xhr + " : " + status);
 		}
 	});
-
-}
-
-function deleteProjectNotice() {
 }
 
 function modifyProjectNotice() {

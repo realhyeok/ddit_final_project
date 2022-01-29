@@ -11,17 +11,18 @@
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailSend.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailTemp.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailTrash.js"></script>
-		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-issue.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myRequest.js"></script>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myOverlay.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-issue.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-task.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-dash-doughnut.js"></script>
-
 		<%@ include file="/WEB-INF/views/web-app/myWork/summernote.jsp" %>
-
+		<input type="hidden" id="sessionId" value="${userVO.userId}">
+		
 		<script>
 			window.onload = function(){
-		   		summernote_go($('textarea#content'));
-
+				summernote_go($('textarea.content'));
+		   		
 				if(getCookie('tab')){
 					var curTab = getCookie('tab');
 					document.getElementById(curTab).click();
@@ -32,8 +33,87 @@
 				$('a[role="tab"]').on('click', function() {
 			        var id = this.id;
 			        document.cookie = "tab="+id;
+			        
+			        if(id != 'mail-tab'){
+				        var link = document.location.href.split("#");
+						var newLink = link[0];
+						
+						history.pushState(null, null, newLink);
+			        }
 			    });
+				
+				if(${from eq 'deniedRegistFileSize'}) {
+					alert("파일용량을 초과하였습니다. 메일 전송이 취소되었습니다.");
+					
+					document.getElementById('mailWrite-tab').click();
+					
+					var link = document.location.href.split("#");
+					var newLink = link[0] + "#mailWrite-tab";
+					
+					history.pushState(null, null, newLink);
+				}
+				
+				if(${from eq 'deniedTempRegistFileSize'}) {
+					alert("파일용량을 초과하였습니다. 메일 전송이 취소되었습니다.");
+					
+					document.getElementById('mailTemp-tab').click();
+					
+					var link = document.location.href.split("#");
+					var newLink = link[0] + "#mailTemp-tab";
+					
+					history.pushState(null, null, newLink);
+				}
+
+				if(${from eq 'tempRegistAfter'}) {
+					document.getElementById('mailTemp-tab').click();
+					
+					var link = document.location.href.split("#");
+					var newLink = link[0] + "#mailTemp-tab";
+					
+					history.pushState(null, null, newLink);
+				}
+				
+				if(${from eq 'sendRegistAfter'}) {
+					document.getElementById('mailSend-tab').click();
+					
+					var link = document.location.href.split("#");
+					var newLink = link[0] + "#mailSend-tab";
+					
+					history.pushState(null, null, newLink);
+				}
+				
+				if(${from eq 'tempToSendAfter'}) {
+					document.getElementById('mailSend-tab').click();
+					
+					var link = document.location.href.split("#");
+					var newLink = link[0] + "#mailSend-tab";
+					
+					history.pushState(null, null, newLink);
+				}
+				
+				$('.mail-tab').on('click', function(){
+					var id = this.id;
+					
+					var link = document.location.href.split("#");
+					var newLink = link[0] + "#" + id;
+					
+					history.pushState(null, null, newLink);
+				});
+				
+				var link = document.location.href.split("#");
+				if(link[1]){
+					document.getElementById(link[1]).click();
+				}
+				
+				$("#myWorkMenu").on("click", function(){
+					document.getElementById('home-tab').click();
+				});
+				
+				$("#mail-tab").on("click", function(){
+					document.getElementById('mailReceive-tab').click();
+				});
 		   	}
+			
 			function getCookie(name) {
 				let matches = document.cookie.match(new RegExp(
 					"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"

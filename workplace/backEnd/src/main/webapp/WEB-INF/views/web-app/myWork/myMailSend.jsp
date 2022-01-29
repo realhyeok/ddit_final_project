@@ -15,7 +15,7 @@
 	<div class="mail_list m-0 border-bottom-0">
 		<div class="left">
 			<input class="sendCheck" type="checkbox" value="#:mailNo#">
-			# if(attachList){ #
+			# if(attachList.length != 0){ #
 				<i class="fa fa-paperclip"></i>
 			# } #
 		</div>
@@ -63,8 +63,9 @@
 			{{/if}}
 			
 			<div class="row">
+
 				{{#each attachList}}
-					<a href="<%=request.getContextPath()%>/app/myWork/attachDownload?filePath={{filePath}}/{{fileName}}" class="col-md-2 row m-2 p-1 rounded bg-warning String downloadSendAttaches">
+					<a href="<%=request.getContextPath()%>/app/myWork/attachDownload?attachNo={{attachNo}}" class="col-md-2 row m-2 p-1 rounded bg-warning String downloadSendAttaches">
 						<div class="col-3 p-0 text-center text-dark font-weight-bold">
 							<h2><i class="fa fa-paperclip"></i></h2>						
 						</div>
@@ -147,6 +148,7 @@
 		deleteAllConfirm = confirm("삭제하시겠습니까?");
 		var mailNo = "";
 		if(deleteAllConfirm){
+			
 			$(".sendCheck:checked").each(function(){
 				mailNo += $(this).val() + ",";
 			});
@@ -159,7 +161,9 @@
 					"mailDist" : "sendMail"	
 				},
 				success: function(data){
+					$("#sendAllCheckButton").prop("checked", false);
 					alert("성공");
+					
 					$('#sendMailList').data("kendoGrid").dataSource.read();
 					$('#trashMailList').data("kendoGrid").dataSource.read();
 				},

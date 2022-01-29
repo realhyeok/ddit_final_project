@@ -23,28 +23,6 @@ function getTemplate(url,templateId,appendTarget) {
 	});
 }
 
-function getTaskTemplate(url,taskNo,templateId,appendTarget) {
-
-	$.ajax({
-	    type : 'GET',
-	    url : url,
-	    dataType : "JSON",
-	    data : {"taskNo" : taskNo,"projNo" : projNo },
-	    success : function(data) {
-	    	console.log("Handlebars success!!");
-	    	var formTemplate = document.getElementById(templateId).innerText;
-	    	var bindTemplate = Handlebars.compile(formTemplate);
-	    	var appe = document.getElementById(appendTarget);
-	    	var html = bindTemplate(data);
-	    	console.log(html);
-	    	appe.innerHTML = html;
-	    },
-	    error : function(error) {
-	    	console.log("Handlebars error!!");
-	    },
-	});
-}
-
 Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 
     switch (operator) {

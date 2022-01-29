@@ -15,4 +15,11 @@ public interface TaskDAO {
 	public TaskVO selectTaskDetailByTaskNo(TaskVO taskVO) throws SQLException;
 
 	public int selectTaskCountInProjByUserId(UserVO userVO) throws SQLException;
+
+	public int selectTaskSeqNext() throws SQLException;
+
+	public void updateTaskDetailByTaskNo(TaskVO taskVO) throws SQLException;
+
+	public void insertTask(TaskVO taskVO) throws SQLException;
+
 }

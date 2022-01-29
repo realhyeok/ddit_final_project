@@ -24,6 +24,18 @@
 			A.PROJ_NO = #{projNo}
 	</select>
 
+	<select id="selectIssueByIssueNo" resultType="issue" parameterType="issue">
+		SELECT
+    		ISSUE_NO,PROJ_NO ,USER_ID ,TITLE ,CONTENT ,IMPORTANT
+   			,REGDATE ,STARTDATE ,ENDDATE ,UPDATEDATE ,STATUS ,DOC_CONT_NO
+		FROM
+    		ISSUE
+    	WHERE
+    		ISSUE_NO = #{issueNo}
+    	AND
+    		PROJ_NO = #{projNo}
+	</select>
+
 	<select id="selectMileIssueListByIssueNo" resultType="mileIssue" parameterType="String">
 		SELECT
 			MILE_NO,
@@ -35,6 +47,23 @@
 			ISSUE_NO = #{issueNo}
 	</select>
 
+	<update id="updateIssueByIssueNo" parameterType="issue">
+		UPDATE
+			ISSUE
+		SET
+			PROJ_NO = #{projNo}
+    		USER_ID = #{userId}
+       		TITLE = #{title}
+       		CONTENT = #{content}
+       		IMPORTANT = #{important}
+       		REGDATE = #{regdate}
+       		STARTDATE = #{stardate}
+       		ENDDATE = #{enddate}
+       		UPDATEDATE = sysdate
+       		STATUS = #{status}
+       	WHERE
+       		ISSUE_NO = #{issueNo}
+	</update>
 
 	<sql id="statusForIssue">
 			(SELECT

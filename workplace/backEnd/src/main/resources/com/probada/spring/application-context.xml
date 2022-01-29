@@ -8,7 +8,12 @@
 	<bean id="mailAttachPath" class="java.lang.String">
 		<constructor-arg value="${mail.attach.upload}"/>
 	</bean>
-
+	
+	<!-- summerNote ImagePath -->
+	<bean id="imgPath" class="java.lang.String">
+		<constructor-arg value="${summernote.img}"/>
+	</bean>
+	
 	<!-- Repository -->
 	<bean id="projectDAO"
 		  class="com.probada.project.dao.ProjectDAOImpl"
@@ -115,6 +120,7 @@
 	<bean id="userUtil" class="com.probada.util.UserUtil"/>
 	<bean id="taskUtil" class="com.probada.util.TaskUtil"/>
 	<bean id="projectUtil" class="com.probada.util.ProjectUtil"/>
+	<bean id="issueUtil" class="com.probada.util.IssueUtil"/>
 
 
 	<!-- mail -->

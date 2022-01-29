@@ -6,8 +6,9 @@ console.log(projNo);
 const projDataSource = new kendo.data.DataSource({
       type: "json",
       transport: {
-          read: "/app/project/getProjectList"
+          read: "/app/project/getProjectListByUserId"
       },
+      pageSize: 5,
       schema: {
           model: {
         	  id:"id",
@@ -34,6 +35,7 @@ const taskDataSource = new kendo.data.DataSource({
 	    		fields: {
 	    			taskNo: { type: "string" },
 	    			title: { type: "string" },
+	    			projTitle: { type: "string"},
 	    			userId: { type: "string" },
 	    			content: { type: "string" },
 	    			important: { type: "string" },
@@ -45,12 +47,11 @@ const taskDataSource = new kendo.data.DataSource({
 	    		}
 	    	}
 	    },
+	    sort: {field: "updatedate", dir:"desc"},
 });
 
-//
-
 const projList = $("#project-list").kendoGrid({
-	pageable:true,
+	pageable: true,
 	toolbar: [
 		{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"projRegistTypeTemplate\");'>프로젝트 등록</a>" }
 		,{ template: "<div class='k-spacer'>&nbsp;</div>"},"search","pdf"
@@ -64,11 +65,11 @@ const projList = $("#project-list").kendoGrid({
 			template: $("#projectCardTemplate").html(), field:"odd"
 		},
 	],
-	dataSource: projDataSource,
+	dataSource: projDataSource
 });
 
 $(".k-toolbar.k-grid-toolbar").css("flex","1 1 auto");
-/*$("table[role='grid']").find("thead").hide();*/
+$("table[role='grid']").find("thead").hide();
 
 //
 function readTask() {
@@ -83,7 +84,7 @@ function readTask() {
 	    ],
 	    toolbar: {
 	        items: [
-	        	{ template: "<button class='k-button' type='button' onclick='getOverlayTemplate(\"taskRegistFormTemplate\")'>업무 등록</button>" },
+	        	{ template: "<button class='k-button' type='button' onclick='getOverlayRegistTaskTemplate(\"taskRegistFormTemplate\",\"/app/task/getTaskRegistInfoByProjNo\")'>업무 등록</button>" },
 	            "spacer",
 	            "search"
 	        ]

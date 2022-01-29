@@ -43,52 +43,28 @@
 				</div>
 				<div class="x_content">
 					<div class="row">
-							<!-- 내용저장 -->
 							<div class="x_content">
-								<br>
-								<form id="demo-form2" data-parsley-validate=""
-									class="form-horizontal form-label-left" novalidate="">
-									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="project">프로젝트 <span class="required">*</span>
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<select name="project" class="form-control form-control-sm" readonly>
-												<option>프로젝트AA</option>
-              									<option>프로젝트BB</option>
-             									<option>프로젝트CC</option>
-											</select>
-										</div>
-									</div>
-									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="project">업무 <span class="required">*</span>
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<select name="project" class="form-control form-control-sm" id="project">
-												<option>업무AA</option>
-              									<option>업무BB</option>
-             									<option>업무CC</option>
-											</select>
-										</div>
-									</div>
-									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="mile">마일스톤 <span class="required">*</span>
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="mile" required="required" class="form-control form-control-sm">
-										</div>
-									</div>
+								<form id="registTaskForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<!-- 프로젝트명 -->
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align"
+										for="projTitle">
+										프로젝트명
+									</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="projTitle" required="required" class="form-control form-control-sm"
+										name="projTitle" value="{{projTitle}}" disabled>
+								</div>
+							</div>
 									<div class="item form-group">
           								<label class="col-form-label col-md-3 col-sm-3 label-align for="userNickname">
 											담당자
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-            								<select class="form-control form-control-sm" id="userNickname">
-              									<option>RealHyukPL</option>
-              									<option>EnergyWookAA</option>
-             									<option>SpearWaterDA</option>
+            								<select class="form-control form-control-sm" id="userNickname" name="userId">
+												{{#each userList}}
+              									<option value="{{this.userId}}">{{this.nickname}}</option>
+												{{/each}}
             								</select>
 										</div>
         							</div>
@@ -97,52 +73,59 @@
 											중요도
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-            								<select class="form-control form-control-sm" id="important">
-              									<option>낮음</option>
-              									<option>보통</option>
-             									<option>높음</option>
+            								<select class="form-control form-control-sm" id="important" name="important">
+              									<option value="B101">낮음</option>
+              									<option value="B102">보통</option>
+             									<option value="B103">높음</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="status">
+											진행상태
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="status" name="status">
+              									<option value="B201">예정</option>
+              									<option value="B202">진행중</option>
+             									<option value="B203">지연중</option>
+             									<option value="B204">완료</option>
             								</select>
 										</div>
         							</div>
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="startdate">시작일 <span class="required">*</span>
+											for="startdate">시작일
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="date" id="startdate" required="required" class="form-control form-control-sm ">
+											<input type="date" id="startdate" name="startdate" class="form-control form-control-sm">
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="enddate">마감일 <span class="required">*</span>
+											for="enddate">마감일
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="date" id="enddate" required="required" class="form-control form-control-sm">
+											<input type="date" id="enddate" name="enddate" class="form-control form-control-sm">
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="title">이슈 제목 <span class="required">*</span>
+											for="title">업무 제목
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" id="title" required="required" class="form-control form-control-sm">
+											<input type="text" id="title" class="form-control form-control-sm" name="title">
 										</div>
 									</div>
-									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="content">이슈 내용 <span class="required">*</span>
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<textarea class="form-control form-control-sm" name="content" style="height:120px;"></textarea>
-										</div>
+									<div class=form-group">
+										<label class=" label-align"> 업무내용 </label>
+										<textarea class="projSummnote" name="content" ></textarea>
 									</div>
-									<div class="item form-group">
-        								<div class="col-sm-12">
-          									<label class="col-form-label col-md-3 col-sm-3 label-align">첨부파일 :</label>
-          									<form action="form_upload.html" class="dropzone dz-clickable">
-            							<div class="dz-default dz-message">
-              							<span>파일을 등록해주세요.</span>
-            						</div>
+									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+										<button type="button" class="btn btn-success" onclick='registTask()'>등록</button>
+										<button class="btn btn-primary" type="button">취소</button>
+										<button class="btn btn-primary" type="reset">리셋</button>
+									</div>
 								</form>
 							</div>
 					</div>
@@ -153,12 +136,12 @@
 </script>
 
 <script type="text/x-handlebars-template" id="taskRegistFormTemplate">
-	<div class="row" style="display:none;" id="fadeInContent">
+		<div class="row" style="display:none;" id="fadeInContent">
 		<div class="col-md-12">
 			<div class="x_panel">
 				<div class="x_title row d-flex justify-content-between">
 					<h5 class="title">
-							<i class="fa fa-clone"></i> <span class="task-bold task-sm">{{dist}} 등록</span>
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">업무 수정</span>
 					</h5>
 					<div class="clearfix">
 						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
@@ -166,32 +149,28 @@
 				</div>
 				<div class="x_content">
 					<div class="row">
-							<!-- 내용저장 -->
 							<div class="x_content">
-								<br>
-								<form id="demo-form2" data-parsley-validate=""
-									class="form-horizontal form-label-left" novalidate="">
-									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="project">프로젝트 <span class="required">*</span>
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<select name="project" class="form-control form-control-sm" readonly>
-												<option>프로젝트AA</option>
-              									<option>프로젝트BB</option>
-             									<option>프로젝트CC</option>
-											</select>
-										</div>
-									</div>
+								<form id="registTaskForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<!-- 프로젝트명 -->
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align"
+										for="projTitle">
+										프로젝트명
+									</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="projTitle" required="required" class="form-control form-control-sm"
+										name="projTitle" value="{{projTitle}}" disabled>
+								</div>
+							</div>
 									<div class="item form-group">
           								<label class="col-form-label col-md-3 col-sm-3 label-align for="userNickname">
 											담당자
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-            								<select class="form-control form-control-sm" id="userNickname">
-              									<option>RealHyukPL</option>
-              									<option>EnergyWookAA</option>
-             									<option>SpearWaterDA</option>
+            								<select class="form-control form-control-sm" id="userNickname" name="userId">
+												{{#each userList}}
+              									<option value="{{this.userId}}">{{this.nickname}}</option>
+												{{/each}}
             								</select>
 										</div>
         							</div>
@@ -200,52 +179,59 @@
 											중요도
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-            								<select class="form-control form-control-sm" id="important">
-              									<option>낮음</option>
-              									<option>보통</option>
-             									<option>높음</option>
+            								<select class="form-control form-control-sm" id="important" name="important">
+              									<option value="B101">낮음</option>
+              									<option value="B102">보통</option>
+             									<option value="B103">높음</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="status">
+											진행상태
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="status" name="status">
+              									<option value="B201">예정</option>
+              									<option value="B202">진행중</option>
+             									<option value="B203">지연중</option>
+             									<option value="B204">완료</option>
             								</select>
 										</div>
         							</div>
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="startdate">시작일 <span class="required">*</span>
+											for="startdate">시작일
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="date" id="startdate" required="required" class="form-control form-control-sm ">
+											<input type="date" id="startdate" name="startdate" class="form-control form-control-sm">
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="enddate">마감일 <span class="required">*</span>
+											for="enddate">마감일
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="date" id="enddate" required="required" class="form-control form-control-sm">
+											<input type="date" id="enddate" name="enddate" class="form-control form-control-sm">
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="title">{{dist}} 제목 <span class="required">*</span>
+											for="title">업무 제목
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" id="title" required="required" class="form-control form-control-sm">
+											<input type="text" id="title" class="form-control form-control-sm" name="title">
 										</div>
 									</div>
-									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="content">{{dist}} 내용 <span class="required">*</span>
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<textarea class="form-control form-control-sm" name="content" style="height:120px;"></textarea>
-										</div>
+									<div class=form-group">
+										<label class=" label-align"> 업무내용 </label>
+										<textarea class="projSummnote" name="content" ></textarea>
 									</div>
-									<div class="item form-group">
-        								<div class="col-sm-12">
-          									<label class="col-form-label col-md-3 col-sm-3 label-align">첨부파일 :</label>
-          									<form action="form_upload.html" class="dropzone dz-clickable">
-            							<div class="dz-default dz-message">
-              							<span>파일을 등록해주세요.</span>
-            						</div>
+									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+										<button type="button" class="btn btn-success" onclick='registTask()'>등록</button>
+										<button class="btn btn-primary" type="button">취소</button>
+										<button class="btn btn-primary" type="reset">리셋</button>
+									</div>
 								</form>
 							</div>
 					</div>
@@ -254,6 +240,115 @@
 		</div>
 	</div>
 </script>
+
+
+<script type="text/x-handlebars-template" id="taskModifyFormTemplate">
+	<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">업무 수정</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+				<div class="x_content">
+					<div class="row">
+							<div class="x_content">
+								<form id="modifyTaskForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<!-- 프로젝트명 -->
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align"
+										for="title">
+										프로젝트명
+									</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="title" required="required" class="form-control form-control-sm"
+										name="projTitle" value="{{projTitle}}" disabled>
+									<input type="hidden" name="taskNo" value="{{taskNo}}">
+								</div>
+							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="userNickname">
+											담당자
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="userNickname" name="userId">
+												{{#each userList}}
+              									<option value="{{this.userId}}">{{this.nickname}}</option>
+												{{/each}}
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="important">
+											중요도
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="important" name="important">
+              									<option value="B101">낮음</option>
+              									<option value="B102">보통</option>
+             									<option value="B103">높음</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="status">
+											진행상태
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="status" name="status">
+              									<option value="B201">예정</option>
+              									<option value="B202" selected>진행중</option>
+             									<option value="B203">지연중</option>
+             									<option value="B204">완료</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align"
+											for="startdate">시작일
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="date" id="startdate" value="{{formatTime startdate "yyyy-MM-DD"}}" name="startdate" class="form-control form-control-sm">
+										</div>
+									</div>
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align"
+											for="enddate">마감일
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="date" id="enddate" value="{{formatTime enddate "yyyy-MM-DD"}}" name="enddate" class="form-control form-control-sm">
+										</div>
+									</div>
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align"
+											for="title">업무 제목
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" id="title" value="{{title}}" class="form-control form-control-sm" name="title">
+										</div>
+									</div>
+									<div class=form-group">
+										<label class=" label-align"> 업무내용 </label>
+										<textarea class="projSummnote" name="content" >{{{content}}}</textarea>
+									</div>
+									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+										<button type="button" class="btn btn-success" onclick='modifyTaskDetail()'>수정</button>
+										<button class="btn btn-primary" type="button">취소</button>
+										<button class="btn btn-primary" type="reset">리셋</button>
+									</div>
+								</form>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
 
 
 
@@ -430,8 +525,6 @@
 
 <!-- 프로젝트 수정 -->
 <script type="text/x-handlebars-template" id="projModifyFormTemplate">
-
-
 <div class="row" style="display:none;" id="fadeInContent">
 <div class="col-md-12">
   <div class="x_panel">
@@ -511,7 +604,6 @@
 				<button class="btn btn-primary" type="button">취소</button>
 				<button class="btn btn-primary" type="reset">리셋</button>
 			</div>
-
 		</form>
         </div>
       </div>

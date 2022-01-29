@@ -34,4 +34,14 @@ public class PaymentsBillServiceImpl implements PaymentsBillService{
 		return paymentsBillDAO.getMaxUploadCapacity(planNo);
 	}
 
+	@Override
+	public int countUserPaymentsBill(String userId) throws SQLException {
+		return paymentsBillDAO.countUserPaymentsBill(userId);
+	}
+
+	@Override
+	public int getMemoryCapacity(String planNo) throws SQLException {
+		return paymentsBillDAO.getMemoryCapacity(planNo);
+	}
+
 }

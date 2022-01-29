@@ -1,3 +1,16 @@
+// url 파라미터값 가져오기
+function getParameterByName(name) {
+  	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+   	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+   	results = regex.exec(location.search);
+   	return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+window.onload = function() {
+	var cprojNo = getParameterByName("cprojNo");
+	console.log(cprojNo);
+	
+}
+
 // 업무 시작
 function go(url) {
 	location.href=url;

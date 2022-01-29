@@ -89,8 +89,25 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
+	public String pwdPiker(String userId) throws SQLException {
+		
+		return sqlSession.selectOne("User-Mapper.pwdPiker", userId);
+	}
+
+	@Override
+	public void deleteUser(String userId) throws SQLException {
+		sqlSession.update("User-Mapper.deleteUser", userId);
+		
+	}
+
+	@Override
 	public List<String> getUserProjNoList(String userId) throws SQLException {
 		return sqlSession.selectList("User-Mapper.getUserProjNoList", userId);
+	}
+
+	@Override
+	public String pwdPicker(String userId) throws SQLException {
+		return sqlSession.selectOne("User-Mapper.pwdPicker", userId);
 	}
 
 

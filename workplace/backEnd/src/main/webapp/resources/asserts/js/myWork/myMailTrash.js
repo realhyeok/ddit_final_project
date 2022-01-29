@@ -1,16 +1,18 @@
-//받은 메일 시작
-$(function(){
+//휴지통 메일 시작
+window.addEventListener('load', function() {
+	var sessionId = $('#sessionId').val();
+	
 	var trashMailList = $("#trashMailList").kendoGrid({
 		dataSource: {
 			type: "json",
 			transport: {
-				read: "/app/myWork/getTrashMailList?userId=realhyuk@ddit.com"
+				read: "/app/myWork/getTrashMailList?userId=" + sessionId
 			},
 			pageSize: 9,
 			schema: {
 				model: {
 					fields: {
-						mailNo   : { type: "string" },
+						mailNo   : { type: "number" },
 						title    : { type: "string" },
 						userTo   : { type: "string" },
 						regDate  : { type: "string" },
@@ -27,13 +29,15 @@ $(function(){
 			}
 		},
 		batch: true,
+		noRecords: true,
 		pageable: {
 	        alwaysVisible: false
 	    },
+	    height: 600,
 		toolbar: [
 			{ template:
 				"<div class='btn-group'>" +
-					"<button type='button' class='btn btn-sm btn-dark' style='padding-top:5px;padding-bottom:0px;'>" +
+					"<button type='button' class='btn btn-sm btn-dark' style='padding-top:5px;padding-bottom:0px;cursor:default;'>" +
 						"<input id='trashAllCheckButton' type='checkbox' onchange='trashAllCheck();'>" +
 					"</button>" +
 					"<button type='button' class='btn btn-sm btn-dark btn-append' onclick='deleteTrashMailAll();'>삭제</button>" +
@@ -41,6 +45,11 @@ $(function(){
 			},
 			"search"
 		],
+		noRecords: {
+			template: function(e) {
+				return "No data available on current page. Current page is: ";
+			}
+		},
 		columns: [
 			{ field: "mailNo"  , hidden: true },    
 			{ field: "title"   , hidden: true },    
@@ -54,3 +63,4 @@ $(function(){
 	
 	$('#trashMailList').find('thead').hide();
 });
+//휴지통 메일 끝

@@ -13,7 +13,7 @@
 <script id="yourRequest-template" type="text/x-kendo-template">
 	<div class="row" style="padding:5px;margin:10px 0px;">
 		<div class="col-2 p-0">
-			<img src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg" alt="img" style="height:64px;width:64px;border-radius:100%;"/>
+			<img src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userFrom#" alt="img" style="height:64px;width:64px;border-radius:100%;">
 		</div>
 		<div class="col-8 p-0">
 			<div class="row" style="margin:2px;">#:title#</div>
@@ -91,7 +91,7 @@
 <script id="myRequest-template" type="text/x-kendo-template">
 	<div class="row" style="padding:5px;margin:10px 0px;">
 		<div class="col-2 p-0">
-			<img src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg" alt="img" style="height:64px;width:64px;border-radius:100%;"/>
+			<img src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userFrom#" alt="img" style="height:64px;width:64px;border-radius:100%;">
 		</div>
 		<div class="col-8 p-0">
 			<div class="row" style="margin:2px;">#:title#</div>
@@ -135,7 +135,6 @@
 		</div>
 	</div>	
 </script>
-
 
 <script>
 	function accept(reqNo){

@@ -34,6 +34,14 @@ public class PaymentsBillDAOImpl implements PaymentsBillDAO{
 	public int getMaxUploadCapacity(String planNo) throws SQLException {
 		return sqlSession.selectOne("PaymentsBill-Mapper.getMaxUploadCapacity", planNo);
 	}
-	
 
+	@Override
+	public int countUserPaymentsBill(String userId) throws SQLException {
+		return (Integer)sqlSession.selectOne("PaymentsBill-Mapper.countUserPaymentsBill", userId);
+	}
+
+	@Override
+	public int getMemoryCapacity(String planNo) throws SQLException {
+		return sqlSession.selectOne("PaymentsBill-Mapper.getMemoryCapacity", planNo);
+	}
 }

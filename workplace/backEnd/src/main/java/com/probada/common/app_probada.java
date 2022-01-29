@@ -36,11 +36,7 @@ public class app_probada {
 		return url;
 	}
 	
-	@RequestMapping("/my-page")
-	public String my_page() {
-		String url = "/web-app/my-page/my-page";
-		return url;
-	}
+
 	
 	@RequestMapping("/pricing")
 	public String pricing() {

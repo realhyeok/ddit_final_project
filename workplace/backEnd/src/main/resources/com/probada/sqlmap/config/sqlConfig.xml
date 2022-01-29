@@ -8,7 +8,7 @@
     <typeAliases>
     	<typeAlias type="java.lang.String" alias="str"/>
 		<typeAlias type="java.lang.Integer" alias="int"/>
-		
+
 		<typeAlias type="com.probada.user.vo.UserVO" alias="User"/>
 		<typeAlias type="com.probada.myWork.vo.HistoryVO" alias="historyVO"/>
 		<typeAlias type="com.probada.request.vo.RequestVO" alias="requestVO"/>

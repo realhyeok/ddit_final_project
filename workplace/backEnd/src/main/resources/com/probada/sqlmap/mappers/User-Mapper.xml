@@ -79,13 +79,19 @@
 				,intro=#{intro}
 			</if>
 
-			<if test="auth != null">
-				,auth=#{auth}
+			<if test="authkey != null">
+				,authkey=#{authkey}
 			</if>
 
 			<if test="privacy != null">
 				,privacy=#{privacy}
 			</if>
+
+			<if test="authStatus != null">
+				,AUTHSTATUS=#{authStatus}
+			</if>
+
+
 
 		where user_id=#{userId}
 
@@ -100,11 +106,11 @@
 	</update>
 
 	<!-- authstatus 컬럼을 0 에서 1로 업데이트  구현되어있지 않은 상태-->
-	<update id="updateAuthstatus">
+	<update id="updateAuthstatus" parameterType="String">
 		UPDATE "USER"
 		SET
 		AUTHSTATUS = 1
-		WHERE USER_ID = #{email}
+		WHERE USER_ID = #{userId}
 	</update>
 
 	<select id="idCheck" parameterType="string" resultType="string">
@@ -145,12 +151,146 @@
 		where pwd = #{pwd}
          and USER_ID = #{userId}
 	</select>
-	
+
+
 	<select id="getUserProjNoList" parameterType="String" resultType="String">
 		SELECT PROJ_NO
 		FROM USER_PROJECT
 		WHERE USER_ID = #{userId}
 	</select>
+	
+	<select id="pwdPicker" parameterType="String" resultType="String">
+		SELECT PWD
+		FROM "USER"
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="pwdPiker" parameterType="str" resultType="str">
+		select pwd from "USER"
+		where
+         USER_ID = #{userId}
+	</select>
+	
+	<update id="deleteUser" parameterType="str">
+		delete
+		from "USER"
+		where USER_ID = #{userId}
+	</update>
+
+
+	<!-- <select id="selectMemberList" resultType="member">
+		select
+		*
+		from
+		member
+		order by regDate desc
+	</select>
+
+	<select id="selectMemberListCount" resultType="int">
+		select
+		count(*)
+		from
+		member
+		order by regDate desc
+	</select>
+
+
+	<sql id="search">
+		<if test="searchType == 'i'.toString()">
+			and id like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'p'.toString()">
+			and phone like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'e'.toString()">
+			and email like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'n'.toString()">
+			and name like '%'||#{keyword}||'%'
+		</if>
+	</sql>
+
+
+	<select id="selectSearchMemberList" resultType="member">
+		select
+		*
+		from member
+		where id is not null
+		<include refid="search"/>
+		order by regDate desc
+	</select>
+
+
+	<select id="selectSearchMemberListCount" resultType="int">
+		select
+		count(*)
+		from member
+		where id is not null
+		<include refid="search"/>
+	</select>
+
+
+	<select id="selectMemberById" resultType="member" parameterType="str">
+		select
+		*
+		from member
+		where id = #{id}
+	</select>
+
+	<select id="selectMemberByPictureId" resultType="member" parameterType="str">
+		select
+		*
+		from member
+		where picture = #{picture}
+	</select>
+
+
+
+
+
+	<update id="insertMember" parameterType="member">
+		insert into
+		member (id, pwd, email, phone, picture, name, authority)
+		values(#{id}, #{pwd}, #{email}, #{phone}, #{picture}, #{name}, #{authority})
+	</update>
+
+
+	<update id="updateMember" parameterType="member">
+		update member
+		set
+		pwd=#{pwd},email=#{email},phone=#{phone},name=#{name},picture=#{picture}
+
+		<if test="authority != null">
+			,authority=#{authority}
+		</if>
+
+		where id=#{id}
+
+	</update>
+
+
+	<select id="selectMemberEnable" resultType="member" parameterType="str">
+		select
+		enabled
+		from member
+		where id = #{id}
+	</select>
+
+
+	<update id="deleteMember" parameterType="str">
+		delete
+		from member
+		where id=#{id}
+	</update>
+
+
+	<update id="enabledMember">
+		update member
+		set enabled=#{enabled}
+		where id=#{id}
+	</update>
+	 -->
+	
 
 
 

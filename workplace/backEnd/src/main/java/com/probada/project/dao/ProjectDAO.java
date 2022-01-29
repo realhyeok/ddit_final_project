@@ -9,6 +9,8 @@ public interface ProjectDAO {
 
 	public List<ProjectVO> selectProjectList() throws SQLException;
 
+	public List<ProjectVO> selectProjectListByUserId(String userId) throws SQLException;
+
 	public ProjectVO selectProjectByProjNo(String projNo) throws SQLException;
 
 	public int selectProjectSeqNext() throws SQLException;
@@ -23,4 +25,8 @@ public interface ProjectDAO {
 
 	// ProjectUserRelation Table
 	public void insertProjectUserRelation(ProjectVO projectVO) throws SQLException;
+
+	public String selectProjectNameByProjNo(String projNo) throws SQLException;
+
+
 }

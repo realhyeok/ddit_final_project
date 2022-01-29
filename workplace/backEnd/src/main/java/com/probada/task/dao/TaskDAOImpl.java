@@ -48,4 +48,26 @@ public class TaskDAOImpl implements TaskDAO {
 		return result;
 	}
 
+	@Override
+	public void updateTaskDetailByTaskNo(TaskVO taskVO) throws SQLException {
+
+		sqlSession.update("Task-Mapper.updateTaskDetailByTaskNo",taskVO);
+
+	}
+
+	@Override
+	public void insertTask(TaskVO taskVO) throws SQLException {
+
+		sqlSession.update("Task-Mapper.insertTask",taskVO);
+
+	}
+
+	@Override
+	public int selectTaskSeqNext() throws SQLException {
+
+		int seq = sqlSession.selectOne("Task-Mapper.selectTaskSeqNext");
+
+		return seq;
+	}
+
 }

@@ -11,19 +11,19 @@
 					<div class="row" style="margin-top: 10px;">
 						<div class="col-md-8">
 							<div class="btn-group nav">
-								<button type="button" id="mailWrite" class="btn btn-sm btn-dark" data-toggle="tab" href="#regist" role="tab" aria-controls="regist" aria-selected="false">
+								<button type="button" id="mailWrite-tab" class="btn btn-sm btn-dark mail-tab" data-toggle="tab" href="#regist" role="tab" aria-controls="regist" aria-selected="false">
 									<i class="fa fa-inbox"></i>&nbsp;&nbsp;메일 작성
 								</button>
-								<button type="button" id="mailReceive" class="btn btn-sm btn-dark" data-toggle="tab" href="#receive" role="tab" aria-controls="receive" aria-selected="true">
+								<button type="button" id="mailReceive-tab" class="btn btn-sm btn-dark mail-tab" data-toggle="tab" href="#receive" role="tab" aria-controls="receive" aria-selected="true">
 									<i class="fa fa-inbox"></i>&nbsp;&nbsp;받은 메일함
 								</button>
-								<button type="button" id="mailSend" class="btn btn-sm btn-dark"  data-toggle="tab" href="#send" role="tab" aria-controls="send" aria-selected="false">
+								<button type="button" id="mailSend-tab" class="btn btn-sm btn-dark mail-tab"  data-toggle="tab" href="#send" role="tab" aria-controls="send" aria-selected="false">
 									<i class="fa fa-send-o"></i>&nbsp;&nbsp;보낸 메일함
 								</button>
-								<button type="button" id="mailTemp" class="btn btn-sm btn-dark" data-toggle="tab" href="#temp" role="tab" aria-controls="temp" aria-selected="false">
+								<button type="button" id="mailTemp-tab" class="btn btn-sm btn-dark mail-tab" data-toggle="tab" href="#temp" role="tab" aria-controls="temp" aria-selected="false">
 									<i class="fa fa-folder-o"></i>&nbsp;&nbsp;임시 메일함
 								</button>
-								<button type="button" id="mailTrash" class="btn btn-sm btn-dark" data-toggle="tab" href="#trash" role="tab" aria-controls="trash" aria-selected="false">
+								<button type="button" id="mailTrash-tab" class="btn btn-sm btn-dark mail-tab" data-toggle="tab" href="#trash" role="tab" aria-controls="trash" aria-selected="false">
 									<i class="fa fa-trash-o"></i>&nbsp;&nbsp;휴지통
 								</button>
 							</div>
@@ -42,7 +42,7 @@
 								<div class="tab-pane fade" id="regist" role="tabpanel" aria-labelledby="regist-tab">
 									<%@ include file="/WEB-INF/views/web-app/myWork/myMailRegist.jsp" %>
 								</div>
-								<div class="tab-pane fade show active" id="receive" role="tabpanel" aria-labelledby="receive-tab">
+								<div class="tab-pane fade" id="receive" role="tabpanel" aria-labelledby="receive-tab">
 									<%@ include file="/WEB-INF/views/web-app/myWork/myMailReceive.jsp" %>
 								</div>
 								<div class="tab-pane fade" id="send" role="tabpanel" aria-labelledby="send-tab">

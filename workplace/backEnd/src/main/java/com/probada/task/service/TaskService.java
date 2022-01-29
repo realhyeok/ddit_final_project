@@ -15,4 +15,8 @@ public interface TaskService {
 	public TaskVO getTaskDetailByTaskNo(TaskVO taskVO) throws SQLException;
 
 	public int getTaskCountInProjByUserId(UserVO userVO) throws SQLException;
+
+	public void modifyTaskDetailByTaskNo(TaskVO taskVO) throws SQLException;
+
+	public String registTask(TaskVO taskVO) throws SQLException;
 }

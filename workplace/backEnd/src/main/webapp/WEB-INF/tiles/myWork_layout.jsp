@@ -7,7 +7,7 @@
 	<head>
 	<meta charset="UTF-8">
 	<tiles:insertAttribute name="css"/>
-	<tiles:insertAttribute name="my_css"/>
+	<tiles:insertAttribute name="myCss"/>
 	<title>Project Management System - probada</title>
 </head>
 <body>
@@ -15,6 +15,7 @@
 	<tiles:insertAttribute name="body"/>
 	<tiles:insertAttribute name="footer"/>
 	<tiles:insertAttribute name="script"/>
-	<tiles:insertAttribute name="my_script"/>
+	<tiles:insertAttribute name="myScript"/>
+	<tiles:insertAttribute name="myOverlay"/>
 </body>
 </html>

@@ -72,7 +72,7 @@ public class UserController {
 		HttpSession session = req.getSession();			// 세션 등록
 		Map<String, String> retMap = new HashMap<>();	// ajax로 보내는 리턴 값
 		UserVO user = new UserVO();
-		List<AlertVO> alertList = new ArrayList<>();
+//		List<AlertVO> alertList = new ArrayList<>();
 
 //		id와 password 저장
 		String inputId = req.getParameter("input_email");
@@ -80,9 +80,8 @@ public class UserController {
 		user.setUserId(inputId);
 
 		user = userService.login(user);	// 계정 리스트에서 입력한 계정 확인 후 user에 저장
-		boolean flag_pwd = userUtil.comparePwd(inputPwd, user.getPwd());	// 복호화 후 비교
-		int userMaxUploadCapacity = userUtil.getUserMaxUploadCapacity(user.getUserId());
-		alertList = userUtil.getUserAlertList(user.getUserId());
+		boolean flag_pwd = userUtil.comparePwd(inputPwd, user.getUserId());	// 복호화 후 비교
+//		alertList = userUtil.getUserAlertList(user.getUserId());
 
 // 		비밀번호가 틀리거나, 계정이 없는 경우
 		if(!flag_pwd || user.getUserId().equals("")) {
@@ -102,8 +101,10 @@ public class UserController {
 		else {
 			retMap.put("success", "success");
 		}
+		int userMaxUploadCapacity = userUtil.getUserMaxUploadCapacity(user.getUserId());
 
-		session.setAttribute("alertList", alertList);
+		
+//		session.setAttribute("alertList", alertList);
 		session.setAttribute("userMaxUploadCapacity", userMaxUploadCapacity);
 		session.setAttribute("userVO", user);
 		return retMap;
@@ -144,7 +145,7 @@ public class UserController {
 		if (nicknameCheck == 0) { jsonMap.put("nicknameCheck", "false"); return jsonMap; }
 
 		// 암호 복호화
-		String storeToDB = userUtil.encodePwd(user.getPwd());
+		String storeToDB = userUtil.encodePwd(user.getPwd(), user.getUserId());
 		user.setPwd(storeToDB);
 
 		// register 회원가입 dao
@@ -164,16 +165,13 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/emailConfirm", method = RequestMethod.GET)
-	public String emailConfirm(String userId, Model model) throws Exception {
+	public String emailConfirm(String userId) throws Exception {
 		// authstatus 권한 상태 1로 변경
 		userService.updateAuthstatus(userId);
 
-		// jsp에서 쓰기위해 model에 담음
-		model.addAttribute("welcome", userId);
-
 		userUtil.init_free(userId);
 
-		return "redirect:/home/login";
+		return "redirect:/home/login?welcome=true";
 	}
 
 

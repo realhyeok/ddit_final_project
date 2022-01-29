@@ -4,43 +4,66 @@
 	
 	<select id="selectCollaboList" resultType="com.probada.collabo.vo.CollaboVO">
 		SELECT
-			 cproj_no
-			,title
-			,startdate
-			,enddate
-			,privacy
-			,notice
-			,notice_cont
-			,updatedate
+			 CPROJ_NO
+			,TITLE
+			,STARTDATE
+			,ENDDATE
+			,PRIVACY
+			,NOTICE
+			,NOTICE_CONT
+			,UPDATEDATE
 			,<include refid="statusForCollabo"/>
-			,intro
-			,doc_cont_no
-			,like_count
+			,INTRO
+			,DOC_CONT_NO
+			,LIKE_COUNT
 		FROM
-			c_project
+			C_PROJECT
 	</select>
 	
 	<select id="selectCollaboByCprojNo" resultType="com.probada.collabo.vo.CollaboVO" parameterType="String">
 			SELECT
-			    cproj_no
-			   ,title
-			   ,startdate
-			   ,enddate
+			    CPROJ_NO
+			   ,TITLE
+			   ,STARTDATE
+			   ,ENDDATE
 			   ,<include refid="privacyForCollabo"/>
-			   ,notice
-			   ,notice_cont
-			   ,updatedate
+			   ,NOTICE
+			   ,NOTICE_CONT
+			   ,UPDATEDATE
 			   ,<include refid="statusForCollabo"/>
-			   ,intro
-			   ,doc_cont_no
-			   ,like_count
+			   ,INTRO
+			   ,DOC_CONT_NO
+			   ,LIKE_COUNT
 			FROM
-			    c_project
-			where cproj_no = {cprojNo}    
+			    C_PROJECT
+			WHERE CPROJ_NO = #{cprojNo}    
 	</select>
 	
 	<select id="selectCollaboTagList">
+		DELETE FROM C_PROJECT
+		      WHERE
+    				CPROJ_NO = #{cprojNo}
 		
+	</select>
+	
+	<select id="updateCollaboDetail">
+		UPDATE C_PROJECT 
+		   SET 
+		        TITLE = #{title}
+		       ,PRIVACY = #{privacy}
+		       ,STARTDATE = #{startdate}
+		       ,ENDDATE = #{enddate} 
+		       ,INTRO = #{intro} 
+		  WHERE CPROJ_NO = #{cprojNo}   
+	</select>
+	
+	<select id="updateCollaboNotice">
+		UPDATE C_PROJECT
+    	   SET
+         	   NOTICE = #{notice}
+        	  ,NOTICE_CONT = #{noticeCont}
+        	  ,UPDATEDATE = SYSDATE
+		WHERE CPROJ_NO = #{cprojNo}
 	</select>
 	
 	

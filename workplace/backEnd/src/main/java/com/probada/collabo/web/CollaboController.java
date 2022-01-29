@@ -1,7 +1,9 @@
 package com.probada.collabo.web;
 
 import java.sql.SQLException;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,8 +28,8 @@ public class CollaboController {
 
 	@Resource(name="collaboService")
 	CollaboService collaboService;
-	private static final Logger LOGGER = LoggerFactory.getLogger(CollaboController.class);
 	
+	private final Logger LOGGER = LoggerFactory.getLogger(CollaboController.class);
 	
 	@RequestMapping("/main")
 	public String index() {
@@ -55,7 +59,7 @@ public class CollaboController {
 	
 	@RequestMapping("/getCollaboByCprojNo")
 	@ResponseBody
-	public ResponseEntity<CollaboVO> getCollaboByCprojNo(@RequestParam(defaultValue="")String cprojNo)throws Exception{
+	public ResponseEntity<CollaboVO> getCollaboByCprojNo(@RequestParam(defaultValue="") String cprojNo)throws Exception{
 		
 		ResponseEntity<CollaboVO> entity = null;
 		
@@ -72,6 +76,40 @@ public class CollaboController {
 		}
 		return entity;
 	}
+	
+	@RequestMapping(value="/modifyCollaboDetail",method= RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<HashMap<String, Object>> modifyCollaboDetail(CollaboVO collaboVO) throws Exception{
+		
+		ResponseEntity<HashMap<String, Object>> entity = null;
+		
+		try {
+			collaboService.modifyCollaboDetail(collaboVO);
+			entity = new ResponseEntity<HashMap<String,Object>>(HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<HashMap<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+		
+	}
+	
+	@PostMapping("/modifyCollaboNotice")
+	@ResponseBody
+	public ResponseEntity<HashMap<String, Object>> modifyCollaboNotice(CollaboVO collaboVO)throws Exception{
+		
+		ResponseEntity<HashMap<String, Object>> entity = null;
+		
+		try {
+			collaboService.modifyCollaboNotice(collaboVO);
+			entity = new ResponseEntity<HashMap<String,Object>>(HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<HashMap<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+	
 }
 
 

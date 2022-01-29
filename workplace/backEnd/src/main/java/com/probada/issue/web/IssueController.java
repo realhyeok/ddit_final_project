@@ -2,10 +2,14 @@ package com.probada.issue.web;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,11 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.probada.issue.service.IssueService;
 import com.probada.issue.vo.IssueVO;
-import com.probada.issue.vo.MileIssueVO;
-import com.probada.milestone.service.MilestoneService;
-import com.probada.milestone.vo.MilestoneVO;
-import com.probada.project.vo.ProjectTagVO;
-import com.probada.project.vo.ProjectVO;
+import com.probada.user.vo.UserVO;
+import com.probada.util.IssueUtil;
 
 @Controller
 @RequestMapping("/app/issue")
@@ -27,30 +28,23 @@ public class IssueController {
 
 	@Resource(name="issueService")
 	private IssueService issueService;
+	@Resource(name="issueUtil")
+	IssueUtil issueUtil;
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(IssueController.class);
 
 	@RequestMapping("/getIssueListByProjNo")
 	@ResponseBody
 	public ResponseEntity<List<IssueVO>> getIssueListByProjNo(@RequestParam(defaultValue="") String projNo) throws SQLException {
 		ResponseEntity<List<IssueVO>> entity = null;
 
+		LOGGER.debug("[요청받음] => /getIssueListByProjNo");
+
 		List<IssueVO> issueList = new ArrayList<IssueVO>();
-		List<MileIssueVO> mileIssueList = new ArrayList<MileIssueVO>();
-		List<String> mileNoList = new ArrayList<String>();
 
 		try {
 			issueList = issueService.getIssueListByProjNo(projNo);
-
-			for (IssueVO issueVO : issueList) {
-				mileIssueList = issueService.selectMileIssueListByIssueNo(issueVO.getIssueNo());
-
-				for (MileIssueVO mileIssueVO : mileIssueList) {
-					if(mileIssueVO.getIssueNo().equals(issueVO.getIssueNo())) {
-						mileNoList.add(mileIssueVO.getMileNo());
-					}
-				}
-				issueVO.setMileNo(mileNoList);
-				mileNoList = new ArrayList<String>();
-			}
+			issueList = issueUtil.getMileListByIssueList(issueList);
 
 			entity = new ResponseEntity<List<IssueVO>>(issueList,HttpStatus.OK);
 
@@ -62,4 +56,62 @@ public class IssueController {
 
 		return entity;
 	}
+
+	@RequestMapping("/getIssueByIssueNo")
+	@ResponseBody
+	public ResponseEntity<HashMap<String, Object>> getIssueByIssueNo(HttpServletRequest request, IssueVO issueVO) throws SQLException {
+		ResponseEntity<HashMap<String, Object>> entity = null;
+
+		LOGGER.debug("[요청받음] => /getIssueByIssueNo");
+
+
+		UserVO userVO = new UserVO();
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
+		try {
+
+			userVO = issueUtil.getSessionUserNickName(request);
+
+			issueVO = issueService.getIssueByIssueNo(issueVO);
+			issueVO = issueUtil.getMileListByIssueNo(issueVO);
+
+			hashMap.put("userVO", userVO);
+			hashMap.put("issueVO", issueVO);
+
+			entity = new ResponseEntity<HashMap<String, Object>>(hashMap,HttpStatus.OK);
+
+		} catch(Exception e) {
+			entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+
+		}
+
+		return entity;
+	}
+
+
+
+
+	@RequestMapping("/modifyIssueByIssueNo")
+	@ResponseBody
+	public ResponseEntity<HashMap<String, Object>> modifyIssueByIssueNo(IssueVO issueVO) throws SQLException {
+		ResponseEntity<HashMap<String, Object>> entity = null;
+
+		LOGGER.debug("[요청받음] => /modifyIssueByIssueNo");
+
+	try {
+
+		issueService.modifyIssueByIssueNo(issueVO);
+
+		entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.OK);
+
+	} catch(Exception e) {
+		entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		e.printStackTrace();
+
+	}
+
+	return entity;
+}
+
 }

@@ -3,10 +3,12 @@ var socket = null;
 
 $(document).ready(function (){
 	connectWs();
+	updateAlertList(); // 실시간 알림 리스트 갱신
 });
 
 function connectWs(){
-	var sock = new WebSocket("ws://localhost:8088/app/**");
+//	var sock = new WebSocket("ws://localhost:8088/app/**");
+	var sock = new WebSocket("ws://localhost/app/**");
 	socket = sock;
 
 	sock.onopen = function(e) {
@@ -14,7 +16,7 @@ function connectWs(){
 	};
 
 	sock.onmessage = function(event) {
-		console.log("ReceivMessage : " + event.data + "\n");
+//		console.log("ReceivMessage : " + event.data + "\n");
 
 		let datas = event.data.split(',');
 		if(datas != null && datas.length == 6){
@@ -97,8 +99,8 @@ function connectWs(){
 								<img src="/resources/asserts/images/img.jpg" alt="Profile Image" />
 							</span>
 							<span>
-								<span>${alertData.serderNickName}</span>
-								<span class="time">3 mins ago</span>
+								<span>${alertData.nickname}</span>
+								<span class="time">${timeForToday(alertData.writeTime)}</span>
 							</span>
 							<span class="message">${alertData.content}</span>
 						</a>
@@ -109,14 +111,17 @@ function connectWs(){
     }
 
 function updateAlertList() {
+
+	let values = [];
 	$.ajax({
-		type: "post",
+		type: "POST",
 		url: "/app/updateAlertList.do",
-//		data : ${userVO.userId},
-		success: function (res) {
-			let alertList = res;
-			console.log("alertList => " + alertList);
-			
+		success: function (data) {
+//			console.log("res => " + JSON.stringify(data));
+			$(data).each(function(){
+				add_alert_li(this);
+//				console.log(this.userId + " " + timeForToday(this.writeTime));
+			});
 		},
 		error: function (err) {
 			console.log("updateAlertList err status : " + err.status);

@@ -16,6 +16,6 @@
 	<tiles:insertAttribute name="footer"/>
 	<tiles:insertAttribute name="script"/>
 	<tiles:insertAttribute name="project-script"/>
-	<tiles:insertAttribute name="overlay"/>
+	<tiles:insertAttribute name="project-overlay"/>
 </body>
 </html>

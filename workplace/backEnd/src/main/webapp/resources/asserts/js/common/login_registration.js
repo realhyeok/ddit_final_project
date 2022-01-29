@@ -110,7 +110,7 @@ $('#register-form').submit(function (e) {
 	    	if(res.idCheck === "false") { setErrorFor(email, '이미 가입된 이메일입니다.'); return false; }
 	    	if(res.nicknameCheck === "false"){ setErrorFor(username, '중복된 닉네임을 사용할 수 없습니다.'); return false; }
 	    	else {
-	    		console.log("res가 성공으로 넘어왔습니다~!!!");
+//	    		console.log("res가 성공으로 넘어왔습니다~!!!");
 	    		location.href="/home/login";
 	    	}
 	    },

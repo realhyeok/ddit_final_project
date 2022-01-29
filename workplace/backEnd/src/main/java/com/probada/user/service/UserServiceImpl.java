@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 			sendMail = new MailHandler(mailSender);
 			sendMail.setSubject("[probada] 회원가입 인증메일");
 			sendMail.setText(new StringBuffer().append("<h1>test 가입 메일인증 입니다</h1>")
-					.append("<a href='http://localhost/emailConfirm?email=").append(user.getUserId())
+					.append("<a href='http://localhost/emailConfirm?userId=").append(user.getUserId())
 					.append("' target='_blenk'>가입 완료를 위해 이메일 이곳을 눌러주세요</a>").toString());
 //			.append("&key=").append(key)
 			sendMail.setFrom("probadahelp@gmail.com", "probada");
@@ -128,5 +128,22 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<String> getUserProjNoList(String userId) throws SQLException {
 		return userDAO.getUserProjNoList(userId);
-	}	
+	}
+
+	@Override
+	public String pwdPicker(String userId) throws SQLException {
+		return userDAO.pwdPicker(userId);
+	}
+
+	@Override
+	public String getPwdByUserId(String userId) throws SQLException {
+		
+		return userDAO.pwdPiker(userId);
+	}
+
+	@Override
+	public void removeUser(String userId) throws SQLException {
+		userDAO.deleteUser(userId);
+		
+	}
 }

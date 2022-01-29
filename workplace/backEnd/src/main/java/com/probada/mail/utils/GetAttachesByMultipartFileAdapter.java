@@ -16,7 +16,7 @@ public class GetAttachesByMultipartFileAdapter {
 		//저장 -> AttachVO -> list.add
 		if(multiFiles != null) {
 			for(MultipartFile multi : multiFiles) {
-				String fileName = multi.getOriginalFilename();
+				String fileName = MakeFileName.toUUIDFileName(multi.getOriginalFilename(), "$$");
 				long fileSize = multi.getSize();
 				File target = new File(savePath, fileName);
 				

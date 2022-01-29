@@ -35,17 +35,19 @@ var ganttDataSource = new kendo.data.GanttDataSource({
             title: { from: "title", defaultValue: "", type: "string" },
 	      }
 	    }
-	  }
-
+	  },
+	  sort: {field: "updatedate", dir:"desc"},
 	});
 	function projGantt() {
-		$("#projGantt").kendoGantt({
+		$("#projGantt").empty();
+		var projectGantt = $("#projGantt").kendoGantt({
 			dataSource:ganttDataSource,
 			tooltip: {
 				visible: true,
 			},
 			toolbar:[
-				{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"taskRegistFormTemplate\");'>업무 등록</a>" },
+				{ template: "<a class='k-button' href='javascript:getOverlayRegistTaskTemplate(\"taskRegistFormTemplate\",\"/app/task/getTaskRegistInfoByProjNo\")'>" +
+						"업무 등록</a>" },
 				{ name: "pdf" }
 				],
 				views: [
@@ -61,7 +63,7 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 						{ field: "title", title: "업무명", editable: true },
 						],
 						autoSync:true,
-						height:700,
+						height:774,
 						listWidth: 200,
 						showWorkHours: false,
 						showWorkDays: false,
@@ -71,6 +73,10 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 						},
 		})
 		kendo.culture("ko-KR");
-		projGantt = function () {}
 	}
 
+	function ganttRefresh() {
+		 var projectGantt = $("#projGantt").getKendoGantt();
+			projectGantt.dataSource.read()
+			projectGantt.dependencies.read()
+	}

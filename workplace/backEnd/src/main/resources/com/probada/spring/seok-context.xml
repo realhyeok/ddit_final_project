@@ -20,18 +20,33 @@
 	
 
 
-	<!-- Repository root에 넣기-->
+	
 	<bean id="documentDAO" class="com.probada.document.dao.DocumentDAOImpl"
 		
 		p:sqlSession-ref="sqlSession"
 	
 	/>
+
+	<bean id="chatDAO" class="com.probada.chat.dao.ChatDAOImpl"
+		
+		p:sqlSession-ref="sqlSession"
 	
-	<!-- Service -->
+	/>
+
+
+
+
 	<bean id="documentService" class="com.probada.document.service.DocumentServiceImpl"
 		  p:documentDAO-ref="documentDAO"
 	/>
 	
+	
+	<!-- Service -->
+	<bean id="chatService" class="com.probada.chat.service.ChatServiceImpl"
+		  p:chatDAO-ref="chatDAO"
+	/>
+
+
 
 
 	

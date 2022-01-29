@@ -31,4 +31,19 @@ public class IssueServiceImpl implements IssueService {
 		return mileIssueList;
 	}
 
+	@Override
+	public void modifyIssueByIssueNo(IssueVO issueVO) throws SQLException {
+
+		issueDAO.updateIssueByIssueNo(issueVO);
+
+	}
+
+	@Override
+	public IssueVO getIssueByIssueNo(IssueVO issueVO) throws SQLException {
+
+		IssueVO resultIssueVO = issueDAO.selectIssueByIssueNo(issueVO);
+
+		return resultIssueVO;
+	}
+
 }

@@ -83,3 +83,9 @@
     	.k-grid td {
     overflow : visible;
 }
+.k-gantt .k-grid-content {
+  height: 600px!important;
+}
+.k-timeline.k-grid.k-widget{
+	height: 715px!important;
+}

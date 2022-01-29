@@ -1,13 +1,12 @@
-package probada;
+package probada; 
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.util.Base64Utils;
+import org.apache.commons.codec.digest.Sha2Crypt;
 
 public class Test {
 
 	public static void main(String[] args) {
 
-		BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
+	/*	BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
 
 		String pw = pwdEncoder.encode("12345");
 
@@ -27,7 +26,19 @@ public class Test {
 //		boolean s = pwdEncoder.matches("12345", new String(en));
 		boolean s = pwdEncoder.matches("Wlsgur@4852", new String("$2a$10$CwDyt/.grkegFcthcO8IvuO5XfdaWMpejD2kdoTYBTSJ8fwTiLLTu"));
 		System.out.println(s);
-
+*/
+		String userInput = "QWeqwe!@#123";
+		String userId = "tester1";
+		String toDBPwd = Sha2Crypt.sha256Crypt(userInput.getBytes(), "$5$"+userId);
+		
+		String UserInput2 = Sha2Crypt.sha256Crypt("QWeqwe!@#123".getBytes(), "$5$"+userId);
+		
+		
+		System.out.println("userInput => " + userInput);
+		System.out.println("toDBPwd => " + toDBPwd);
+		System.out.println("UserInput2 => " + UserInput2);
+		
+		System.out.println("boolean : " + toDBPwd.equals(UserInput2));
 	}
 
 }

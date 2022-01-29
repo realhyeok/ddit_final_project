@@ -14,20 +14,20 @@
 <script id="trashMailList-template" type="text/x-kendo-template">
 	<div class="mail_list m-0 border-bottom-0">
 		<div class="left">
-			# if(userTo == "realhyuk@ddit.com"){ #
-				<input class="trashCheck" type="checkbox" value="#:mailNo#" data-mailType="trashReceiveMail">
-			# }else if(userFrom == "realhyuk@ddit.com"){ #
-				<input class="trashCheck" type="checkbox" value="#:mailNo#" data-mailType="trashSendMail">
+			# if(userTo == "${userVO.userId}"){ #
+				<input class="trashCheck" type="checkbox" value="#:mailNo#" mailType="trashReceiveMail">
+			# }else if(userFrom == "${userVO.userId}"){ #
+				<input class="trashCheck" type="checkbox" value="#:mailNo#" mailType="trashSendMail">
 			# } #
-			# if(attachList){ #
+			# if(attachList.length != 0){ #
 				<i class="fa fa-paperclip"></i>
 			# } #
 		</div>
 		<div class="right" style="height:40px;">
 			<h3>
-				# if(userTo == "realhyuk@ddit.com"){ #
+				# if(userTo == "${userVO.userId}"){ #
 					받은 메일
-				# }else if(userFrom == "realhyuk@ddit.com"){ #
+				# }else if(userFrom == "${userVO.userId}"){ #
 					보낸 메일
 				# } #
 				<small>#:regDate#</small>
@@ -76,7 +76,7 @@
 			
 			<div class="row">
 				{{#each attachList}}
-					<a href="<%=request.getContextPath()%>/app/myWork/attachDownload?filePath={{filePath}}/{{fileName}}" class="col-md-2 row m-2 p-1 rounded bg-warning String downloadTrashAttaches">
+					<a href="<%=request.getContextPath()%>/app/myWork/attachDownload?attachNo={{attachNo}}" class="col-md-2 row m-2 p-1 rounded bg-warning String downloadTrashAttaches">
 						<div class="col-3 p-0 text-center text-dark font-weight-bold">
 							<h2><i class="fa fa-paperclip"></i></h2>						
 						</div>
@@ -129,9 +129,9 @@
 	
 	function returnTrashMailOne(mailNo, userTo, userFrom){
 		var mailDist = null;
-		if(userTo == "realhyuk@ddit.com"){
+		if(userTo == "${userVO.userId}"){
 			mailDist = "receiveMail";
-		}else if(userFrom == "realhyuk@ddit.com"){
+		}else if(userFrom == "${userVO.userId}"){
 			mailDist = "sendMail";
 		}
 		
@@ -159,9 +159,9 @@
 	
 	function deleteTrashMailOne(mailNo, userTo, userFrom){
 		var mailDist = null;
-		if(userTo == "realhyuk@ddit.com"){
+		if(userTo == "${userVO.userId}"){
 			mailDist = "trashReceiveMail";
-		}else if(userFrom == "realhyuk@ddit.com"){
+		}else if(userFrom == "${userVO.userId}"){
 			mailDist = "trashSendMail";
 		}
 		
@@ -177,8 +177,6 @@
 				success: function(data){
 					alert("성공");
 					$('#trashMailList').data("kendoGrid").dataSource.read();
-					$('#receiveMailList').data("kendoGrid").dataSource.read();
-					$('#sendMailList').data("kendoGrid").dataSource.read();
 				},
 				error: function(error){
 					alert(error.status);
@@ -188,29 +186,29 @@
 	}
 	
 	function deleteTrashMailAll(){
+		var deleteAllConfirm = confirm("휴지통의 메일은 완전히 삭제됩니다.\n삭제하시겠습니까?");
 		var mailNo = "";
 		var mailDist = "";
 		
-		$(".trashCheck:checked").each(function(){
-			mailNo += $(this).val() + ",";
-			
-		});
-		
-		var deleteAllConfirm = confirm("휴지통의 메일은 완전히 삭제됩니다.\n삭제하시겠습니까?");
 		if(deleteAllConfirm){
+			$(".trashCheck:checked").each(function(){
+				mailNo += $(this).val() + ",";
+				mailDist += $(this).attr("mailType") + ",";
+			});
 			
+			$("#sendAllCheckButton").prop("checked", false);
 			$.ajax({
 				url : "<%=request.getContextPath()%>/app/myWork/deleteMailAll",
 				type: "get",
 				data: {
 					"mailNo"  : mailNo,
-					"mailDist": "trashMail"
+					"mailDist": mailDist
 				},
 				success: function(data){
+					$("#trashAllCheckButton").prop("checked", false);
+
 					alert("성공");
 					$('#trashMailList').data("kendoGrid").dataSource.read();
-					$('#receiveMailList').data("kendoGrid").dataSource.read();
-					$('#sendMailList').data("kendoGrid").dataSource.read();
 				},
 				error: function(error){
 					alert(error.status);

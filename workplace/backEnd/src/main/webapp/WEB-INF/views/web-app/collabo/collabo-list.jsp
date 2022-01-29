@@ -85,7 +85,7 @@
               </h2>
             </div>
             <!-- /.user-block -->
-            <p class="text-truncate">#:intro#</p>
+            <div class="text-truncate">#:xssPurify(intro)#</div>
             <p>
               <span class="ml-3">시작일 : #:kendo.toString(startdate,"yyyy년 MM월 dd일")#</span>
               <span class="ml-3">마감일 : #:kendo.toString(enddate,"yyyy년 MM월 dd일")#</span>

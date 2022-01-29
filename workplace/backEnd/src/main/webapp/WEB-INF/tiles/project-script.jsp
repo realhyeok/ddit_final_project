@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 </head>
 <body>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/project/projectHandlebars.js"></script>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/project/projectOverlay.js"></script>
 		<script	src="<%=request.getContextPath()%>/resources/asserts/js/project/project-task.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/project/project-detail.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/project/project-gantt.js"></script>
@@ -14,6 +16,6 @@
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/project/project-history.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/project/project-document.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/project/project-summernote.js"></script>
-
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/project/templateUtil.js"></script>
 </body>
 </html>

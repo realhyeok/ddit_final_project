@@ -76,6 +76,22 @@ public class ProjectServiceImpl implements ProjectService {
 
 	}
 
+	@Override
+	public List<ProjectVO> getProjectListByUserId(String userId) throws SQLException {
+
+		List<ProjectVO> projectList = projectDAO.selectProjectListByUserId(userId);
+
+		return projectList;
+	}
+
+	@Override
+	public String getProjectNameByProjNo(String projNo) throws SQLException {
+
+		String title = projectDAO.selectProjectNameByProjNo(projNo);
+
+		return title;
+	}
+
 
 
 

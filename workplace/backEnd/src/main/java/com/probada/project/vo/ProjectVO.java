@@ -24,9 +24,16 @@ public class ProjectVO {
 	private List<UserVO> member;
 
 //	For ProjectUserRelation
+	private String userId;
 	private String role;
 	private String joindate;
 
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String getRole() {
 		return role;
 	}

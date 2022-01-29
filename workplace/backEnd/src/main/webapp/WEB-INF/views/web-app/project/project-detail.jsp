@@ -17,7 +17,7 @@
 								</h2>
 								<div class="clearfix">
 									<div class="clearfix header-title justify-content-end">
-										<i class="fa fa-edit fa-2x" onclick="getOverlayModifyTemplate('projModifyFormTemplate','/app/project/getProjectByProjNo')"></i>
+										<i class="fa fa-edit fa-2x" onclick="getOverlayModifyTemplate('projModifyFormTemplate','/app/project/getProjectByProjNo','')"></i>
 									</div>
 								</div>
 							</div>
@@ -83,7 +83,7 @@
 								<div class="clearfix">
 							{{#ifCond notice '!=' NULL}}
 									<div class="clearfix header-title justify-content-end">
-										<i class="fa fa-edit fa-2x" onclick="getOverlayModifyTemplate('noticeModifyFormTemplate','/app/project/getProjectByProjNo')"></i>
+										<i class="fa fa-edit fa-2x" onclick="getOverlayModifyTemplate('noticeModifyFormTemplate','/app/project/getProjectByProjNo','')"></i>
 									</div>
 							{{/ifCond}}
 								</div>
@@ -103,7 +103,7 @@
 							<!-- 프로젝트 공지사항 예시 끝 -->
 							{{/ifCond}}
 							{{#ifCond notice '==' NULL}}
-                    	<div class="btn create-btn project-bg-btn" style="width:80%;" onclick="getOverlayModifyTemplate('noticeRegistFormTemplate','/app/project/getProjectByProjNo')">
+                    	<div class="btn create-btn project-bg-btn" style="width:80%;" onclick="getOverlayModifyTemplate('noticeRegistFormTemplate','/app/project/getProjectByProjNo','')">
                       		<span class="text-dark">새로운 공지사항을 등록해보세요!</span>
 						</div>
 							{{/ifCond}}

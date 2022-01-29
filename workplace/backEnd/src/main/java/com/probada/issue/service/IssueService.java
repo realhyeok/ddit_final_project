@@ -11,4 +11,8 @@ public interface IssueService {
 	public List<IssueVO> getIssueListByProjNo(String projNo) throws SQLException;
 
 	public List<MileIssueVO> selectMileIssueListByIssueNo(String issueNo) throws SQLException;
+
+	public IssueVO getIssueByIssueNo(IssueVO issueVO) throws SQLException;
+
+	public void modifyIssueByIssueNo(IssueVO issueVO) throws SQLException;
 }

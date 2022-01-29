@@ -15,7 +15,7 @@
 	<div class="mail_list m-0 border-bottom-0">
 		<div class="left">
 			<input class="receiveCheck" type="checkbox" value="#:mailNo#">
-			# if(attachList){ #
+			# if(attachList.length != 0){ #
 				<i class="fa fa-paperclip"></i>
 			# } #
 		</div>
@@ -32,7 +32,7 @@
 		<div class="mail_heading row">
 			<div class="col-md-8">
 				<div class="btn-group">
-					<button type="button" class="btn btn-sm btn-dark"><i class="fa fa-reply"></i>&nbsp;&nbsp;답장</button>
+					<button type="button" class="btn btn-sm btn-dark" onclick="getOverlayMailRegistTemplate('{{userFrom}}');"><i class="fa fa-reply"></i>&nbsp;&nbsp;답장</button>
 					<button type="button" class="btn btn-sm btn-dark btn-append" onclick="deleteReceiveMailOne({{mailNo}});"><i class="fa fa-times-circle-o"></i>&nbsp;&nbsp;삭제</button>	
 				</div>
 			</div>
@@ -64,7 +64,7 @@
 			
 			<div class="row">
 				{{#each attachList}}
-					<a href="<%=request.getContextPath()%>/app/myWork/attachDownload?filePath={{filePath}}/{{fileName}}" class="col-md-2 row m-2 p-1 rounded bg-warning String downloadReceiveAttaches">
+					<a href="<%=request.getContextPath()%>/app/myWork/attachDownload?attachNo={{attachNo}}" class="col-md-2 row m-2 p-1 rounded bg-warning String downloadReceiveAttaches">
 						<div class="col-3 p-0 text-center text-dark font-weight-bold">
 							<h2><i class="fa fa-paperclip"></i></h2>						
 						</div>
@@ -128,7 +128,6 @@
 				success: function(data){
 					alert("성공");
 					$('#receiveMailList').data("kendoGrid").dataSource.read();
-					$('#tempMailList').data("kendoGrid").dataSource.read();
 					$('#trashMailList').data("kendoGrid").dataSource.read();
 				},
 				error: function(error){
@@ -154,9 +153,10 @@
 					"mailDist" : "receiveMail"	
 				},
 				success: function(data){
+					$("#receiveAllCheckButton").prop("checked", false);
 					alert("성공");
+		
 					$('#receiveMailList').data("kendoGrid").dataSource.read();
-					$('#tempMailList').data("kendoGrid").dataSource.read();
 					$('#trashMailList').data("kendoGrid").dataSource.read();
 				},
 				error: function(error){

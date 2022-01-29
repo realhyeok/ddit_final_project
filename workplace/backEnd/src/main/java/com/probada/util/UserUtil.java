@@ -6,11 +6,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-
+import org.apache.commons.codec.digest.Sha2Crypt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.util.Base64Utils;
 
 import com.probada.alert.service.AlertService;
 import com.probada.alert.vo.AlertVO;
@@ -25,9 +24,8 @@ import com.probada.user.vo.UserVO;
  * @author 김진혁
  */
 public class UserUtil {
+	private final Logger LOGGER = LoggerFactory.getLogger(UserUtil.class);
 
-	@Inject
-	private BCryptPasswordEncoder pwdEncoder;
 	@Autowired
 	private PaymentsBillService paymentsBillService;
 	@Autowired
@@ -38,48 +36,53 @@ public class UserUtil {
 	public UserUtil() {};
 
 	/**
-	 * 입력한 패스워드와 암호화된 user.getPwd()가 일치하면 true값을 반환, 틀리면 false.
-	 * @param String inputPwd
-	 * @param UserVO user
-	 * @return boolean
-	 */
-	public boolean decodePwd(String inputPwd, UserVO user) { // 사용중지
-
-		boolean flag = true;
-
-		byte[] toDecodePwd = Base64Utils.decodeFromString(user.getPwd());
-
-		flag = pwdEncoder.matches(inputPwd, new String(toDecodePwd));
-		return flag;
-	}
-
-	/**
-	 * 입력한 패스워드를 암호화 하여 String값으로 리턴한다.
+	 * 파라미터로 받은 비밀번호를 암호화하여 String으로 반환한다.
 	 * @param String inputPwd
 	 * @return String
 	 */
-	public String encodePwd(String inputPwd) {
-		String retPwd = "";
-
-		String SHA1_pwd = pwdEncoder.encode(inputPwd);
-		retPwd = Base64Utils.encodeToString(SHA1_pwd.getBytes());
-
-		return retPwd;
+	public String encodePwd(String inputPwd, String userId) {
+		String encriptedPassword = "";
+		
+		if(inputPwd == "") {
+			LOGGER.debug("에러상태 : encodePwd()에서 빈 문자열로 인하여 빠른 리턴");
+			return "";
+		} else {
+			encriptedPassword = Sha2Crypt.sha256Crypt(inputPwd.getBytes(), "$5$"+userId);
+		}
+//		String SHA1_pwd = pwdEncoder.encode(inputPwd);
+//		retPwd = Base64Utils.encodeToString(SHA1_pwd.getBytes());
+		return encriptedPassword;
 	}
 
 	/**
-	 * 암호화되어 있는 compareTo를 복호화 시킨 후, 같은 String타입의 from과 문자열이 같은지 비교한다.
-	 * 둘이 일치하면 true, 아니면 false를 반환한다.
-	 * @param String from
-	 * @param String to
+	 * 유저 아이디로 비밀번호를 조회하여, 그것과 inputPwd를 비교하여 일치하면 true를,
+	 * 불일치하면 false를 반환한다.
+	 * @param String inputPwd
+	 * @param String userId
 	 * @return boolean
 	 */
-	public boolean comparePwd (String inputPwd, String compareTo) {
+	public boolean comparePwd (String inputPwd, String userId) {
+		boolean flag = false;
+		
+		if(inputPwd == "" || userId == "") {
+			LOGGER.debug("에러상태 : comparePwd()에서 파라미터 빈 문자열로 인하여 빠른 리턴");
+			return flag;
+		}
+		
+		try {
+			String userDBPwd = userService.pwdPicker(userId);
+			String encriptedPwd = Sha2Crypt.sha256Crypt(inputPwd.getBytes(), "$5$"+userId);
+			if(userDBPwd.equals(encriptedPwd)) {
+				flag = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+//		byte[] en = Base64Utils.decodeFromString(compareTo);
+//		boolean ret = pwdEncoder.matches(inputPwd, new String(en));
 
-		byte[] en = Base64Utils.decodeFromString(compareTo);
-		boolean ret = pwdEncoder.matches(inputPwd, new String(en));
-
-		return ret;
+		return flag;
 	}
 
 	/**
@@ -113,6 +116,12 @@ public class UserUtil {
 
 		try {
 			userVO = userService.getUser(userId);
+			
+//			유저가 가입된 payment가 있다면 init_free로 가지 않고 빠른 리턴한다.
+			if((paymentsBillService.countUserPaymentsBill(userVO.getUserId())) != 0) {
+				return false;
+			}
+			
 			paymentsBillVO.setUserId(userVO.getUserId());
 			paymentsBillService.init_free(paymentsBillVO);
 		} catch (Exception e) {

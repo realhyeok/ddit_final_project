@@ -10,4 +10,11 @@ public interface CollaboService {
 	public List<CollaboVO> getCollaboList() throws SQLException;
 	
 	public CollaboVO getCollaboByCprojNo(String cprojNo) throws SQLException;
+	
+	
+	public void modifyCollaboDetail(CollaboVO collaboVO) throws SQLException;
+
+	public void modifyCollaboNotice(CollaboVO collaboVO) throws SQLException;
+	
+	
 }
