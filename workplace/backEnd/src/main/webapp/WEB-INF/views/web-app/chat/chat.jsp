@@ -23,14 +23,11 @@
 	                
 	                
 	                <c:forEach items="${chat }" var="chat">
-	                
 	               				<c:if test="${empty chat }">
 									<div class="roomEl" data-id="2" >채팅방이 없습니다.</div>
 								</c:if>
 		                  
-		                    <div class="roomEl" data-id="2" onclick="selectMember('${chat.title}');">${chat.title}</div>
-		                
-	                    
+		                    <div class="roomEl" data-id="2" onclick="selectMember('${chat.title}','${chat.realRoom}');">${chat.title}</div>
 	                </c:forEach>    
                     
                   
@@ -53,13 +50,32 @@
                 <div class="myMsg">
                     <span class="msg">Nice to meet you, too.</span>
                 </div>
+                
+                <!-- test -->
+               
+                 <div id="chatBox"></div>
+                <!-- test -->
+
+                <!--  <h1>채팅방</h1>
+					<div id="chatConnect">
+					    <button onclick="connectSocket()">채팅 시작하기</button>
+					</div>
+					
+					<div id="chat1" hidden="hidden">
+					    <input id="message">
+					    <button id="sendBtn">전송</button>
+					  
+					</div> -->
+                
             </div>
             
             
-            <form id="chatForm">
+           <!--  <form id="chatForm"> -->
                 <input type="text" autocomplete="off" size="30" id="message" placeholder="메시지를 입력하세요">
-                <input type="submit" value="보내기">
-            </form>
+
+              <!--   <input type="submit" id="sendBtn" value="보내기"> -->
+              <button id="sendBtn">전송</button>
+           <!--  </form> -->
             
             
             
@@ -153,7 +169,8 @@ if(${create eq 'success'}){
 	alert("채팅방 등록 완료 되었습니다.");
 }
 
-
+chatRealRoom = null;
+flag = 0;
 
 window.onload = function(){
 	
@@ -221,7 +238,16 @@ window.onload = function(){
 	})
 	//체크박스 끝
 	
+	  $("#message").keyup(e => {
+	        if (e.keyCode == 13) {
+	            sendMessage();
+	        }
+	    });
 
+	    $("#sendBtn").click(() => {
+	        sendMessage();
+	    }); 
+	   
 	
 }
 //윈도우 함수 끝
@@ -264,8 +290,14 @@ function createRoom(){
 //채팅방 생성
 	
 	
-//채팅방 제목을 누를 시 나오는
-function selectMember(target){
+//채팅방 제목을 누를 시 나오는, 여기서 채팅방  소켓을 같이 열어준다.
+function selectMember(target,room){
+	chatRealRoom = room;
+	
+	if(flag=="1"){
+		onclose();
+		flag="0";
+	}
 	
 	
 	 $.ajax({
@@ -281,14 +313,11 @@ function selectMember(target){
 		    	     
 		    	      userList += 
 		    	    	  "<div class='memberEl'>"+arg[i]+"</div>";
-		    	    	 
-		    	    }
+		    	 }
 		    	 document.getElementById('realMemberList').innerHTML=userList;
-		    	 
 		    	 //소켓 통신 시작
-		    	
-		    	 getRoomNumId();
-		    	 
+		    	 connectSocket(chatRealRoom);
+		    	 flag =1;
 		    }, 
 		    error : function(arg){
 			alert("통신실패시에만 실행");
@@ -297,7 +326,7 @@ function selectMember(target){
 
 	
 }
-
+//끝
 
 function getRoomNumId(){
 	
@@ -313,13 +342,16 @@ function getRoomNumId(){
 /* 소켓 통신 시작 스크립트 */
     
     let sock;
-    function connectSocket() {
+    function connectSocket(roomNo) {
     	
     	
         sock = new SockJS("/chat");
         sock.onopen = function (){
-            alert('연결에 성공하였습니다.');
-           
+        	   sock.onmessage = (data => {
+                   $("<p>" + data.data + "</p>").prependTo('#chatBox');
+               });
+        
+        alert(roomNo);
 
         sock.onmessage = (data => {
         	alert(data.data);
@@ -329,13 +361,8 @@ function getRoomNumId(){
         sock.onerror = function (e) {
             alert('연결에 실패하였습니다.');
             $('#chatConnect').show();
-            $('#chat').hide();
         }
-        sock.onclose = function () {
-            alert('연결을 종료합니다.');
-            $('#chatConnect').show();
-            $('#chat').hide();
-        };
+        
     
     }
     function sendMessage() {
@@ -343,23 +370,18 @@ function getRoomNumId(){
         $('#message').val("");
     }
 
-    $("#message").keyup(e => {
-        if (e.keyCode == 13) {
-            sendMessage();
-        }
-    });
-
-    $("#sendBtn").click(() => {
-        sendMessage();
-    }); 
-   
-
+  
+    function onclose() {
+    	sock.onclose = function () {
+            alert('연결을 종료합니다.');
+        };
+    }
 
 
 
 
 </script>  
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 
 
 

@@ -18,6 +18,12 @@ public class IssueUtil {
 	@Resource(name="issueService")
 	IssueService issueService;
 
+	/**
+	 * 이슈 리스트 각자에 소속된 마일리스트 조회
+	 * @param issueList
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<IssueVO> getMileListByIssueList(List<IssueVO> issueList) throws SQLException{
 
 		List<MileIssueVO> mileIssueList = new ArrayList<MileIssueVO>();
@@ -45,6 +51,12 @@ public class IssueUtil {
 		return issueList;
 	}
 
+	/**
+	 * 이슈 번호로 마일리스트 조회
+	 * @param issueVO
+	 * @return
+	 * @throws SQLException
+	 */
 	public IssueVO getMileListByIssueNo(IssueVO issueVO) throws SQLException{
 
 		List<MileIssueVO> mileIssueList = new ArrayList<MileIssueVO>();
@@ -71,12 +83,5 @@ public class IssueUtil {
 		return issueVO;
 	}
 
-	public UserVO getSessionUserNickName(HttpServletRequest request) throws SQLException{
 
-		HttpSession session = request.getSession();
-
-		UserVO userVO = (UserVO) session.getAttribute("userVO");
-
-		return userVO;
-	}
 }

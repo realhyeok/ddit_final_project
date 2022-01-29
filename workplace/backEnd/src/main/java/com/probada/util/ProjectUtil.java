@@ -25,6 +25,12 @@ public class ProjectUtil {
 	@Resource(name="taskUtil")
 	TaskUtil taskUtil;
 
+	/**
+	 * 프로젝트 개수 조회
+	 * @param userList
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<UserVO> getProjectCountUtil(List<UserVO> userList) throws SQLException {
 
 		try {
@@ -42,6 +48,12 @@ public class ProjectUtil {
 		return userList;
 	}
 
+	/**
+	 * 프로젝트들의 태그리스트를 조회
+	 * @param projectList
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<ProjectVO> getProjectTagList(List<ProjectVO> projectList) throws SQLException{
 
 		List<String> tagList = new ArrayList<String>();
@@ -65,6 +77,13 @@ public class ProjectUtil {
 		return projectList;
 	}
 
+	/**
+	 * 프로젝트 단일의 태그리스트를 조회
+	 * @param projNo
+	 * @param projectVO
+	 * @return
+	 * @throws SQLException
+	 */
 	public ProjectVO getProjectTagListByProjNo(String projNo, ProjectVO projectVO) throws SQLException{
 
 		List<ProjectTagVO> projectTagList = new ArrayList<ProjectTagVO>();
@@ -85,6 +104,12 @@ public class ProjectUtil {
 		return projectVO;
 	}
 
+	/**
+	 * 프로젝트들의 프로젝트 멤버 조회
+	 * @param projectList
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<ProjectVO> getProjectMemberList(List<ProjectVO> projectList) throws SQLException{
 
 		List<UserVO> userList = new ArrayList<UserVO>();
@@ -107,6 +132,12 @@ public class ProjectUtil {
 		return projectList;
 	}
 
+	/**
+	 * 프로젝트 번호로 프로젝트 멤버 조회
+	 * @param projNo
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<UserVO> getProjectMemberByProjNo(String projNo) throws SQLException{
 
 		List<UserVO> userList = new ArrayList<UserVO>();
@@ -122,6 +153,12 @@ public class ProjectUtil {
 		return userList;
 	}
 
+	/**
+	 * 프로젝트와 유저(세션접속중)의 관계성 추가
+	 * @param session
+	 * @param projectVO
+	 * @throws SQLException
+	 */
 	public void setProjectUserRelation(HttpSession session, ProjectVO projectVO) throws SQLException{
 
 		UserVO userVO = (UserVO) session.getAttribute("userVO");
@@ -134,6 +171,12 @@ public class ProjectUtil {
 
 	}
 
+	/**
+	 * 프로젝트 번호로 프로젝트 이름 조회
+	 * @param projNo
+	 * @return
+	 * @throws SQLException
+	 */
 	public String getProjectNameByProjNo(String projNo) throws SQLException{
 
 		String title = "";

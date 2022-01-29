@@ -19,22 +19,22 @@ public class FileVO {
     private String extension=" ";
 	private String etc="1";
 	private int size =  20;
-	
-	
+
+
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date createdUtc = new Date();
-    
+
 	@JsonFormat(pattern = "yyyy/MM/dd")
     private Date created = new Date();
-    
+
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date modified = new Date();
-   
+
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date modifiedUtc = new Date();
-   
-    
-   
+
+
+
     public String getEtc() {
 		return etc;
 	}
@@ -42,8 +42,8 @@ public class FileVO {
 	public void setEtc(String etc) {
 		this.etc = etc;
 	}
-    
-   
+
+
 
 	public String getDOC_NO() {
 		return DOC_NO;
@@ -93,15 +93,15 @@ public class FileVO {
 		DIST = dIST;
 	}
 
+
 	@Override
 	public String toString() {
-		return "FileVO [name=" + name + ", IsDirectory=" + isDirectory + ", hasDirectories=" + hasDirectories
-				+ ", path=" + path + ", extension=" + extension + ", size=" + size + ", createdUtc=" + createdUtc
-				+ ", created=" + created + ", modified=" + modified + ", modifiedUtc=" + modifiedUtc + "]";
+		return "FileVO [DOC_NO=" + DOC_NO + ", PROJ_NO=" + PROJ_NO + ", USER_ID=" + USER_ID + ", DESC=" + DESC
+				+ ", STATUS=" + STATUS + ", DIST=" + DIST + ", name=" + name + ", isDirectory=" + isDirectory
+				+ ", hasDirectories=" + hasDirectories + ", path=" + path + ", extension=" + extension + ", etc=" + etc
+				+ ", size=" + size + ", createdUtc=" + createdUtc + ", created=" + created + ", modified=" + modified
+				+ ", modifiedUtc=" + modifiedUtc + "]";
 	}
-   
-
-
 
 	public String getName() {
 		return name;
@@ -115,7 +115,7 @@ public class FileVO {
 		return isDirectory;
 	}
 
-	
+
 	public void setIsDirectory(boolean isDirectory) {
 		this.isDirectory = isDirectory;
 	}
@@ -186,14 +186,14 @@ public class FileVO {
 
 
 
-    
-    
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 	public boolean isDirectory() {
 		return isDirectory;
 	}
@@ -202,30 +202,30 @@ public class FileVO {
 		this.isDirectory = isDirectory;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    
-   
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 

@@ -84,7 +84,7 @@ public class ChatController {
 		//하드 코딩
 		String userId = userVO.getUserId();
 		
-		List<String> projectList = new ArrayList<String>();
+		List<String> projectList= null;
 
 		try {
 
@@ -164,7 +164,7 @@ public class ChatController {
 		chatVO1.setChatroom_no(seq);
 		chatVO1.setTitle(title);
 		chatVO1.setUser_id(myId);
-		chatVO1.setReal_room(realRoom);
+		chatVO1.setRealRoom(realRoom);
 		chatService.createChatRoom(chatVO1);
 		
 		LOGGER.debug("chatvo1 {}",chatVO1);
@@ -177,7 +177,7 @@ public class ChatController {
 			chatVO.setChatroom_no(seq);
 			chatVO.setTitle(title);
 			chatVO.setUser_id(user);
-			chatVO.setReal_room(realRoom);
+			chatVO.setRealRoom(realRoom);
 			chatService.createChatRoom(chatVO);
 			LOGGER.debug(" for문 안에 {}"+chatVO);
 		}

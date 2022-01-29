@@ -55,8 +55,12 @@
   width: 650px;
 }
 
-/*collabo-none search box*/
+/*collabo-none*/
 .collabo.search-box {
+}
+
+#tags_1_tag{
+      min-width: 300px;
 }
 
 /* 스푼 */
@@ -304,5 +308,7 @@ i.fa-check-circle, i.fa-exclamation-circle {
   display: flex;
   justify-content: space-between;
 }
+
+
 
 

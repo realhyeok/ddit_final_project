@@ -18,13 +18,3 @@
     </div>
 </script>
 
-<script type="text/x-handlebars-template" id="issueListTemplate">
-	<div class="k-content d-flex row"  style="height:800px;overflow:hidden;">
-  			  <div class="mile-content" style="width:30%;overflow:auto;">
-        		<div id="toolbar"></div>
-        		<div id="mileList"></div>
-    		</div>
-        	  <div id="issueGrid" style="width:69%"></div>
-    </div>
-</script>
-

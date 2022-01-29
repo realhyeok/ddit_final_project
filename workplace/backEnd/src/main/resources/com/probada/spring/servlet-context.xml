@@ -46,6 +46,17 @@
 
 
 	<!-- 웹소켓 알림 -->
+	<beans:bean id="echoHandler" class="com.probada.chat.EchoHandler" />
+	<websocket:handlers>
+		<websocket:mapping handler="echoHandler" path="/chat" />
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		<websocket:sockjs />
+	</websocket:handlers>
+	
+	
+	<!-- 웹소켓 알림 -->
 	<beans:bean id="alertHandler" class="com.probada.alert.AlertHandler" />
 	<websocket:handlers>
 		<websocket:mapping handler="alertHandler" path="app/**" />

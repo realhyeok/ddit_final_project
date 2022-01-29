@@ -1,4 +1,4 @@
-var projNo = getParameterByName("projNo");
+var PROJ_NO = getParameterByName("projNo");
 // 하드코딩
 var userId = "seok@ddit.com";
 
@@ -78,7 +78,7 @@ function readDocument(){
 		        	             }
 		        	    }
 		           },
-		           uploadUrl: baseUrl+"Upload",
+		           uploadUrl: baseUrl+"Upload?PROJ_NO="+projNo,
 		           toolbar: {
 		               items: [
 		                   { name: "createFolder" },

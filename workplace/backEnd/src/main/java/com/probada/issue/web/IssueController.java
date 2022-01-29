@@ -21,6 +21,7 @@ import com.probada.issue.service.IssueService;
 import com.probada.issue.vo.IssueVO;
 import com.probada.user.vo.UserVO;
 import com.probada.util.IssueUtil;
+import com.probada.util.ProjectUtil;
 
 @Controller
 @RequestMapping("/app/issue")
@@ -30,6 +31,8 @@ public class IssueController {
 	private IssueService issueService;
 	@Resource(name="issueUtil")
 	IssueUtil issueUtil;
+	@Resource(name="projectUtil")
+	ProjectUtil projectUtil;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(IssueController.class);
 
@@ -70,13 +73,12 @@ public class IssueController {
 
 		try {
 
-			userVO = issueUtil.getSessionUserNickName(request);
-
+			String projTitle = projectUtil.getProjectNameByProjNo(issueVO.getProjNo());
 			issueVO = issueService.getIssueByIssueNo(issueVO);
 			issueVO = issueUtil.getMileListByIssueNo(issueVO);
 
-			hashMap.put("userVO", userVO);
 			hashMap.put("issueVO", issueVO);
+			hashMap.put("projTitle", projTitle);
 
 			entity = new ResponseEntity<HashMap<String, Object>>(hashMap,HttpStatus.OK);
 
@@ -88,9 +90,6 @@ public class IssueController {
 
 		return entity;
 	}
-
-
-
 
 	@RequestMapping("/modifyIssueByIssueNo")
 	@ResponseBody

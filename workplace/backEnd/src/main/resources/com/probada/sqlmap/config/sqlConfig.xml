@@ -21,6 +21,7 @@
     	<typeAlias type="com.probada.issue.vo.MileIssueVO" alias="mileIssue"/>
     	<typeAlias type="com.probada.collabo.vo.CollaboVO" alias="collaboVO"/>
     	<typeAlias type="com.probada.alert.vo.AlertVO" alias="Alert"/>
+    	<typeAlias type="com.probada.issue.vo.IssueReplyVO" alias="issueReply"/>
 		<!-- <typeAlias alias="projectTagVO" type="com.probada.project.vo.ProjectTagVO"/>
 		 <typeAlias alias="searchVO" type="egovframework.example.sample.service.SampleDefaultVO"/>
 		<typeAlias alias="sampleVO" type="egovframework.example.sample.service.SampleVO"/> -->

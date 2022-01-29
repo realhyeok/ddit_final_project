@@ -14,6 +14,12 @@ public class TaskUtil {
 	@Resource(name="taskService")
 	private TaskService taskService;
 
+	/**
+	 * 업무 개수 조회
+	 * @param userList
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<UserVO> getTaskCountUtil(List<UserVO> userList) throws SQLException {
 
 		try {

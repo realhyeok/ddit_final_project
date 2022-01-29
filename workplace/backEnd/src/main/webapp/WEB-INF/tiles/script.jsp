@@ -50,6 +50,6 @@
 		<!-- alertIndex js 알림리스트 제공 -->
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/alert/alertIndex.js"></script>
 		<!-- jQuery Tags Input -->
-	    <script src="/webapp/resources/bootstrap/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+	    <script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
 	</body>
 </html>

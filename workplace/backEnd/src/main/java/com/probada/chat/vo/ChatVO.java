@@ -10,15 +10,16 @@ public class ChatVO {
 	private String proj_no;
 	private String title;
 	private Date regdate;
-	private String real_room;
+	private String realRoom;
 	
 	
 	
-	public String getReal_room() {
-		return real_room;
+	
+	public String getRealRoom() {
+		return realRoom;
 	}
-	public void setReal_room(String real_room) {
-		this.real_room = real_room;
+	public void setRealRoom(String realRoom) {
+		this.realRoom = realRoom;
 	}
 	public String getChatroom_no() {
 		return chatroom_no;

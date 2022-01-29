@@ -43,7 +43,7 @@
 		                <div class="col-lg-12" >
 			
 		                	<div class="form-group row">
-		                		<div class="col-lg-5 float-rigth">
+		                		<div class="col-lg-6 float-rigth">
 		                		
 			                     <form role="formPicture"  action="<%=request.getContextPath()%>/user/pictureUpload.do" method="post" enctype="multipart/form-data">
 				                     <div class="imageMyfileBox float-right">
@@ -58,14 +58,14 @@
 	 							
 	 							</div>
 	 							
-	 							<div class="col-lg-7">
+	 							<div class="col-lg-6">
 	 							  <div style="display: inline-block;">
 		                          
 		                          <br>
 		                            <h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.nickname }</h5>
-		                            
+		                            <input type="hidden" id="userId" value="${user.userId }">
 		                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.userId }</h4>
-		                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-heart fa-2x"  style="color: red;">&nbsp;30</i>
+		                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-heart fa-2x"  style="color: red;">&nbsp;${user.likeCount}</i>
 					                <br><br><br><br>
 		                        </div>
 	 							
@@ -73,24 +73,25 @@
 	 							
  							</div>
  							
- 							<div>
+ 							<div style="margin-left: 120px;">
 		                      
 		                          
 		                       <form role="form" onsubmit="return false;" class="modify-form"  id="modify-form">
 		                          <h5 style="color: rgb(0, 0, 0); font-weight: 600;">&nbsp;&nbsp;내 정보 관리</h5>
 		                          &nbsp;
 		                          <div class="kt-portlet__body">
-		                            <input type="hidden" name="picture"/>
+		                            <input type="hidden" name="picture" value="${user.picture}">
 		
 		                            <div class="form-group row" id="countTextDiv">
 		                               <label ><span class="required" ><h2>&nbsp;&nbsp;&nbsp;&nbsp;닉네임</h2> </label>
 		                                <div class="col-lg-12">
 		                                   
 		                                    <!-- <div class="form-control form-control-view">칸반보드 UX  설정 REQ-001 문의</div> -->
-		                                    <input id="test_nickName" onclick="button_click();" class="form-control col-md-10 seokid" name="nickname" value="" placeholder="중복 불가, 영문8자 이하..."><span id="nickNameCheck"></span>
+		                                    <input id="test_nickName" onclick="button_click();" class="form-control col-md-11 seokid" name="nickname" value="" placeholder="중복 불가, 영문8자 이하...">
 		
 		                                </div>
-		                                 <div id="test_NickNamecnt" style="margin-left:20px; display: none;">(0/8)</div>
+		                                 <div id="test_NickNamecnt" style="margin-left:20px; display: none;">(0/8)</div><br>
+		                                 <span id="nickNameCheck" style="color:red; margin-left: 2%;"></span>
 		                            </div>
 		            
 		                            <br>
@@ -100,7 +101,7 @@
 		                                  
 		                                   <!-- <div class="form-control form-control-view">칸반보드 UX  설정 REQ-001 문의</div> -->
 		     
-		                                   <input id="test_info" onclick="button_click2();" class="form-control col-md-10 seokid" name="intro" value="" placeholder="짧은 자기소개 부탁드립니다..."><span id="infoCheck"></span>
+		                                   <input id="test_info" onclick="button_click2();" class="form-control col-md-11 seokid" name="intro" value="" placeholder="짧은 자기소개 부탁드립니다..."><span id="infoCheck"></span>
 		                                  
 		                                
 		                               </div>
@@ -132,7 +133,7 @@
 		                                    name="privacy" 
 		                                    value="A201" 
 		                                    id="week" 
-		                                    checked
+		                                    ${user.privacy eq 'A201' ? 'checked' : ''}
 		                                >
 		                                <label 
 		                                    for="week" 
@@ -146,6 +147,7 @@
 		                                    name="privacy" 
 		                                    value="A202" 
 		                                    id="month"
+		                                     ${user.privacy eq 'A202' ? 'checked' : ''}
 		                                    >
 		                                <label 
 		                                    for="month" 
@@ -161,7 +163,7 @@
 		                            
 		                         </div>
 		
-		                         <button type="button" onclick="modify_go();" style="margin-left: 870px;" class="btn btn-dark" >수정  </button> 
+		                         <button type="button" onclick="modify_go();" style="margin-left: 86%;" class="btn btn-dark" >수정  </button> 
 		                          	
 		                 
 		                    </form>   
@@ -171,14 +173,14 @@
 		                <h5 style="color: black; font-weight: 600;">&nbsp;&nbsp;기타 수정</h5><br>
 		
 		               <a style="color: rgb(49, 48, 48);" href="#" data-toggle="modal" data-target="#pwdModal"><h2>&nbsp;&nbsp;비밀번호 수정</a><br>
-		              <hr style="background-color: rgb(182, 179, 179); width: 850px; margin-left: 5px; height: 1px;">
+		              <hr style="background-color: rgb(182, 179, 179); width: 93%; margin-left: 5px; height: 1px;">
 		                
 		                <a style="color: rgb(49, 48, 48);" href="#" data-toggle="modal" data-target="#alarmModal"><h2>&nbsp;&nbsp;알림설정</h2></a>
-		                  <hr style="background-color: rgb(182, 179, 179); width: 850px; margin-left: 5px; height: 1px;">
+		                  <hr style="background-color: rgb(182, 179, 179); width: 93%; margin-left: 5px; height: 1px;">
 		                
 		               
 		                  <a style="color: rgb(49, 48, 48);" href="#" data-toggle="modal" data-target="#fireModal"><h2>&nbsp;&nbsp;회원탈퇴</h2></a>
-		                  <hr style="background-color: rgb(182, 179, 179); width: 850px; margin-left: 5px; height: 1px;">
+		                  <hr style="background-color: rgb(182, 179, 179); width: 93%; margin-left: 5px; height: 1px;">
 		               
 		                 
 		               
@@ -290,17 +292,17 @@
 			                     <div class="col-lg-12">
 			                        
 			                      
-			                         <input type="password" class="form-control col-md-12 seokid" name="" value="" placeholder="">
+			                         <input type="password" class="form-control col-md-12 seokid" id="firePassword" name="firePassword" value="" placeholder="">
 			                    </div>
 		                    </form>  
 		                 </div>
 		
 		
 		                  </div>
-		                  
+		                    <span id="fireCheck" style="color: red; margin-left: 20px; "></span>
 		                  <div class="modal-footer">
-		                
-		                    <button type="button" class="btn btn-danger" id="replyDelBtn" onclick="replyRemove_go();">탈퇴</button>
+		                	
+		                    <button type="button" class="btn btn-danger" id="replyDelBtn" onclick="fire_go();">탈퇴</button>
 		                    <button type="button" class="btn btn-dark" data-dismiss="modal">취소</button>
 		                    </div>
 		                  </div>
@@ -392,13 +394,6 @@
 								</div>
 							</div>
 							<!-- 모달끝 -->
-		
-		
-		
-		
-		
-		
-		           
 				</div>
 				<!-- 프로필 수정 끝 -->
 	
@@ -531,16 +526,16 @@
 								if(!checkInputError()){
 								return false;
 								} */
-								alert("dfdsdfs");
+								
 								$.ajax({
 									type : "POST",
 									url : "/user/modify.do",
 									data : $("#modify-form").serialize(),
-									dataType : "json",
+									//dataType : "json",
 									success : function(res) {
 
-										alert("닉네임 유부" + res.nickName);
-
+										alert("성공적! 근데 모달로 해요?");
+										location.href ="<%=request.getContextPath()%>/user/my-page";
 									},
 									error : function(err) {
 										alert("에러" + err.status);
@@ -623,6 +618,8 @@
 
     window.onload = function(){
     	
+    	
+    	alert('${user.privacy}');
     	MemberPictureThumb($('#pictureView')[0],
   				'${user.picture}','<%=request.getContextPath()%>');
     	
@@ -636,6 +633,7 @@
     	
         $('#test_nickName').on('keyup', function() {
             $('#test_NickNamecnt').html("("+$(this).val().length+" / 8)");
+            $('#nickNameCheck').html("");
     
             if($(this).val().length > 8) {
                 $(this).val($(this).val().substring(0, 8));
@@ -737,14 +735,43 @@
 			         newPwdVCheck.innerHTML = "비밀번호가 동일하지 비밀번호 입니다.";
 			      }
 	
-			   }) 
+			   })
+			   
     };//window.onload
 
     
+   function fire_go(){
+    	
+	   var fireArea = document.getElementById('test_fire');
+	   var fireCheck = document.getElementById('fireCheck');
+	   var firePassword = document.getElementById('firePassword');
+	   var userId = document.getElementById('userId');
+	   
+		if (fireArea.value.length<50) {
+			fireCheck.innerHTML = "50글자 이하입니다.";
+			return false;
+		}
+    	
+		    	
+		    	 $.ajax({
+					    type: "POST",
+					    async : false,
+					    url: "/user/fire.do",
+					    data: {"passwords" : firePassword.value},
+					    success: function (res) {
+					    
+					    	alert("이거 모달로 띄우니 겹침");
+					    	window.location.href = 'https:/naver.com';
+					    },
+					    error: function (err) {
+					    	alert("fire에러발생"+err.status);
+					    }
+					});
+
+    	
+    }//회원탈퇴
     
-    
-    
-    
+  
     
 
     function button_click(){

@@ -1,55 +1,30 @@
 package com.probada.document.controller;
 
-import java.io.BufferedReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.probada.document.service.DocumentService;
 import com.probada.document.vo.FileVO;
 import com.probada.document.vo.ProjectUserVO;
-import com.probada.project.vo.ProjectTagVO;
-import com.probada.project.vo.ProjectVO;
 import com.probada.user.vo.UserVO;
 
 
@@ -100,7 +75,7 @@ public class DocumentController {
 
 	@PostMapping(value="/Upload")
 	@ResponseBody
-	private void upload (String path, @RequestParam("file")MultipartFile uploadFile,HttpServletResponse res) throws Exception{
+	private void upload (String path, @RequestParam("file")MultipartFile uploadFile, HttpServletRequest request, HttpServletResponse res, String projNo) throws Exception{
 
 		String name;
 		String realFileName;
@@ -147,8 +122,12 @@ public class DocumentController {
 		doc.setEtc("0");
 		doc.setDOC_NO(seq);
 		//하드코딩
-		doc.setPROJ_NO("4");
-		doc.setUSER_ID("seok2@ddit.com");
+
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("userVO");
+		String userId = userVO.getUserId();
+		doc.setPROJ_NO(projNo);
+		doc.setUSER_ID(userId);
 
 
 		doc.setHasDirectories(false);
@@ -449,9 +428,9 @@ public class DocumentController {
 	}
 
 
-	
-	
-	
+
+
+
 	private List<FileVO> myWork(String target, String userId) throws Exception{
 
 

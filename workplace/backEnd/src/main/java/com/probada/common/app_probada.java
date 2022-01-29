@@ -18,6 +18,12 @@ public class app_probada {
 		return url;
 	}
 	
+	@RequestMapping("/collabo-none")
+	public String collaboNone() {
+		String url = "/web-app/collabo/collabo-none";
+		return url;
+	}
+
 	@RequestMapping("/collabo-list")
 	public String collabo() {
 		String url = "/web-app/collabo/collabo-list";

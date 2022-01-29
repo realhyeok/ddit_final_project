@@ -37,7 +37,7 @@
                   </li>
                   <li><a href="<%=request.getContextPath()%>/app/project-list"><i class="fa fa-desktop"></i> 프로젝트</a>
                   </li>
-                  <li><a href="<%=request.getContextPath()%>/app/collabo-list"><i class="fa fa-group"></i> 콜라보</a>
+                  <li><a href="<%=request.getContextPath()%>/app/collabo-none"><i class="fa fa-group"></i> 콜라보</a>
                   </li>
                   <li><a href="javascript:meeting_newteb();"><i class="fa fa-video-camera"></i> 온라인 회의</a>
                   </li>

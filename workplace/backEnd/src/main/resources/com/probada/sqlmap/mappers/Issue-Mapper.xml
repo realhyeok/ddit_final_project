@@ -26,14 +26,16 @@
 
 	<select id="selectIssueByIssueNo" resultType="issue" parameterType="issue">
 		SELECT
-    		ISSUE_NO,PROJ_NO ,USER_ID ,TITLE ,CONTENT ,IMPORTANT
-   			,REGDATE ,STARTDATE ,ENDDATE ,UPDATEDATE ,STATUS ,DOC_CONT_NO
+    		A.ISSUE_NO,A.PROJ_NO ,B.NICKNAME AS USER_ID ,A.TITLE ,A.CONTENT ,<include refid="importantForIssue"/>
+   			,A.REGDATE ,A.STARTDATE ,A.ENDDATE ,A.UPDATEDATE ,<include refid="statusForIssue"/> ,A.DOC_CONT_NO
 		FROM
-    		ISSUE
+    		ISSUE A
+    	JOIN
+			"USER" B ON A.USER_ID = B.USER_ID
     	WHERE
-    		ISSUE_NO = #{issueNo}
+    		A.ISSUE_NO = #{issueNo}
     	AND
-    		PROJ_NO = #{projNo}
+    		A.PROJ_NO = #{projNo}
 	</select>
 
 	<select id="selectMileIssueListByIssueNo" resultType="mileIssue" parameterType="String">
