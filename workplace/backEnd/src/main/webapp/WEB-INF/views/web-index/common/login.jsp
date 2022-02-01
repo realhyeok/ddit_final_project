@@ -32,9 +32,17 @@
                     </div>
 
                     <div class="signin-form">
-                        <h2 class="form-title">로그인 ${param.welcome}</h2>
-                        <form class="register-form" id="login-form" onsubmit="return false;">
-
+                        <h2 class="form-title">로그인 </h2>
+                        <form class="register-form" id="login-form" name="loginForm" onsubmit="return false;">
+                        
+                        <c:if test="${not empty successReset}">
+                        	    <div class="alert alert--info">
+                                <button type="button" class="close">&times;</button>
+                                <ul>
+                                    <li>비밀번호 재설정이 성공적으로 처리되었습니다.</li>
+                                </ul>
+                            </div>
+                        </c:if>
                             <div class="alert alert--error" hidden>
                                 <button type="button" class="close">&times;</button>
                                 <ul>
@@ -44,7 +52,7 @@
 
                             <div class="form-group">
                                 <label for="user-email"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="user-email" id="user-email" placeholder="이메일" autocomplete="off" />
+                                <input type="text" name="userEmail" id="user-email" placeholder="이메일" autocomplete="off" />
                             </div>
 
                             <div class="form-group">
@@ -54,11 +62,11 @@
 
                             <div class="remember_search">
                                 <div class="form-group">
-                                    <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                                    <input type="checkbox" name="rememberMe" id="remember-me" class="agree-term" />
                                     <label for="remember-me" class="label-agree-term"><span><span></span></span>아이디 기억하기</label>
                                 </div>
                                 <div class="form-group search_pwd">
-                                    <a class="" href="#">비밀번호 찾기</a>
+                                    <a class="" href="<%=request.getContextPath()%>/home/send_pwdReset">비밀번호 찾기</a>
                                 </div>
                             </div>
 

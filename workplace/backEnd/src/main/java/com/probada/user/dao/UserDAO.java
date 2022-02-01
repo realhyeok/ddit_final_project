@@ -57,4 +57,10 @@ public interface UserDAO {
 	
 	// userId를 파라미터로 받아서 해당 유저의 pwd를 리턴한다.
 	public String pwdPicker(String userId) throws SQLException;
+	
+	// 해당 유저 아이디를 참조하여 유저의 authkey를 조회한다.
+	public String selectAuthkey(String userId) throws SQLException;
+	
+	// 유저의 비밀번호를 재설정한다.
+	public void setUserPwd(UserVO userVO) throws SQLException;
 }

@@ -7,8 +7,8 @@ $(document).ready(function (){
 });
 
 function connectWs(){
-//	var sock = new WebSocket("ws://localhost:8088/app/**");
-	var sock = new WebSocket("ws://localhost/app/**");
+	var sock = new WebSocket("ws://localhost:8088/app/**");
+//	var sock = new WebSocket("ws://localhost/app/**");
 	socket = sock;
 
 	sock.onopen = function(e) {

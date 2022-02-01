@@ -796,3 +796,8 @@ canvas {
         opacity: 0;
     }
 }
+
+/*----------------------------------------- reset password CSS -----------------------------------------*/
+.signup-content.successSendReset{
+  justify-content: center;
+}

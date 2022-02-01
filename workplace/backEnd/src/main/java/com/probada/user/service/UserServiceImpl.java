@@ -80,22 +80,25 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int idCheck(String email) throws SQLException {
 		int ret = 1;
-		if(email.equals(userDAO.idCheck(email))) ret = 0;
+		if (email.equals(userDAO.idCheck(email)))
+			ret = 0;
 		return ret;
 	}
 
 	@Override
 	public int nicknameCheck(String username) throws SQLException {
 		int ret = 1;
-		if(username.equals(userDAO.nicknameCheck(username))) ret = 0;
+		if (username.equals(userDAO.nicknameCheck(username)))
+			ret = 0;
 		return ret;
 	}
+
 	@Override
 	public UserVO login(UserVO user) throws SQLException {
 		UserVO userVO = null;
 
 		userVO = userDAO.login(user);
-		if(userVO == null) {
+		if (userVO == null) {
 			userVO = new UserVO();
 		}
 		return userVO;
@@ -106,17 +109,16 @@ public class UserServiceImpl implements UserService {
 		return userDAO.isAccount(email);
 	}
 
+	public int pwdCheck(UserVO user) throws SQLException {
 
-		public int pwdCheck(UserVO user) throws SQLException {
-		
 		return userDAO.pwdCheck(user);
 	}
-		
+
 	@Override
 	public void setUserUploadUsage(UserVO userVO) throws SQLException {
 		userDAO.setUserUploadUsage(userVO);
 	}
-	
+
 	@Override
 	public List<UserVO> getUserByProjNo(String projNo) throws SQLException {
 
@@ -137,13 +139,28 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String getPwdByUserId(String userId) throws SQLException {
-		
+
 		return userDAO.pwdPiker(userId);
 	}
 
 	@Override
 	public void removeUser(String userId) throws SQLException {
 		userDAO.deleteUser(userId);
-		
+
+	}
+
+	@Override
+	public int createAuthkey(Map<String, String> paramMap) throws SQLException {
+		return userDAO.createAuthkey(paramMap);
+	}
+
+	@Override
+	public String selectAuthkey(String userId) throws SQLException {
+		return userDAO.selectAuthkey(userId);
+	}
+
+	@Override
+	public void setUserPwd(UserVO userVO) throws SQLException {
+		userDAO.setUserPwd(userVO);
 	}
 }

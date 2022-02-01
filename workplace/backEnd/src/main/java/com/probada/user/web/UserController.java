@@ -1,5 +1,7 @@
 package com.probada.user.web;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +10,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,13 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.probada.alert.vo.AlertVO;
 import com.probada.user.service.UserService;
+import com.probada.user.vo.EmailVO;
 import com.probada.user.vo.UserVO;
 import com.probada.util.ProjectUtil;
 import com.probada.util.TaskUtil;
@@ -209,6 +212,79 @@ public class UserController {
 		}
 
 		return entity;
+	}
+	
+	@RequestMapping(value="home/send_pwdReset", method = RequestMethod.GET)
+	public String password_reset() {
+		return "/web-index/common/send_pwdReset";
+	}
+	
+	@RequestMapping(value="home/send_pwdReset.do", method = RequestMethod.POST)
+	public String success_send_pwdReset(String userId) {
+		
+		EmailVO emailVO = new EmailVO();
+		emailVO.setUserId(userId);
+		emailVO.setSubject("비밀번호를 재설정합니다.");
+		emailVO.setContent("<h1>회원님의 이메일을 제설정합니다.</h1>");
+		emailVO.setHostname("home/password_reset");
+		
+		userUtil.sendEmail(emailVO);
+		
+		return "/web-index/common/success_send_pwdReset";
+	}
+	
+	@RequestMapping(value = "home/password_reset", method = RequestMethod.GET)
+	public ModelAndView verifyPasswordReset(String userId, String authkey) throws Exception {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		String userAutkeyFromDB = userUtil.selectAuthkey(userId);
+		mav.addObject("userId", userId);
+		
+		if(userAutkeyFromDB.equals(authkey)) {
+			mav.setViewName("/web-index/common/password_reset");
+		} else {
+			LOGGER.debug("DB에서 가져온 유저의 인증키와 URL파라미터로 전달된 인증키의 값이 일치하지 않습니다.");
+			throw new Exception("에러가 발생했습니다.");
+			// 나중에 404 처리해야 됨.
+		}
+		
+		return mav;
+	}
+
+	@RequestMapping(value = "home/password_reset.do", method = RequestMethod.POST)
+	public ModelAndView passwordReset(String pwd, String userId){
+
+		ModelAndView mav = new ModelAndView();
+		
+		UserVO userVO = new UserVO();
+		userVO.setUserId(userId);
+		
+		String encriptPwd = userUtil.encodePwd(pwd, userId);
+		userVO.setPwd(encriptPwd);
+
+		try {
+			userService.setUserPwd(userVO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		mav.addObject("successReset", "true");
+		mav.setViewName("/web-index/common/login");
+
+		return mav;
+	}
+	
+	@RequestMapping(value="home/testtest")
+	public void testing(HttpServletResponse resp) {
+		String test = "";
+		try {
+			test = userService.pwdPicker("apdlfthd@gmail.com");
+			userService.updateAuthstatus("apdlfthd@gmail.com");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		System.out.println("test => " + test);
 	}
 	
 

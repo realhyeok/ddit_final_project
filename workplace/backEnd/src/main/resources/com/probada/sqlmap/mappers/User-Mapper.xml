@@ -166,15 +166,27 @@
 	</select>
 	
 	<select id="pwdPiker" parameterType="str" resultType="str">
-		select pwd from "USER"
-		where
+		SELECT PWD FROM "USER"
+		WHERE
          USER_ID = #{userId}
 	</select>
 	
 	<update id="deleteUser" parameterType="str">
-		delete
-		from "USER"
-		where USER_ID = #{userId}
+		DELETE
+		FROM "USER"
+		WHERE USER_ID = #{userId}
+	</update>
+	
+	<select id="selectAuthkey" parameterType="String" resultType="String">
+		SELECT AUTHKEY
+		FROM "USER"
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<update id="setUserPwd" parameterType="User">
+		UPDATE "USER"
+		SET PWD = #{pwd}
+		WHERE USER_ID = #{userId}
 	</update>
 
 

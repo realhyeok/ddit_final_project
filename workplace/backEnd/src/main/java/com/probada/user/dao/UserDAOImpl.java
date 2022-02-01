@@ -110,5 +110,15 @@ public class UserDAOImpl implements UserDAO{
 		return sqlSession.selectOne("User-Mapper.pwdPicker", userId);
 	}
 
+	@Override
+	public String selectAuthkey(String userId) throws SQLException {
+		return sqlSession.selectOne("User-Mapper.selectAuthkey", userId);
+	}
+
+	@Override
+	public void setUserPwd(UserVO userVO) throws SQLException {
+		sqlSession.update("User-Mapper.setUserPwd", userVO);
+	}
+
 
 }

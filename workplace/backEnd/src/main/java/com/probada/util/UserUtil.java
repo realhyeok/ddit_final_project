@@ -1,21 +1,29 @@
 package com.probada.util;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.mail.MessagingException;
 
 import org.apache.commons.codec.digest.Sha2Crypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import com.probada.alert.service.AlertService;
 import com.probada.alert.vo.AlertVO;
 import com.probada.payment.service.PaymentsBillService;
 import com.probada.payment.vo.PaymentsBillVO;
+import com.probada.user.mail.MailHandler;
+import com.probada.user.mail.Tempkey;
 import com.probada.user.service.UserService;
+import com.probada.user.vo.EmailVO;
 import com.probada.user.vo.UserVO;
 
 /**
@@ -32,6 +40,8 @@ public class UserUtil {
 	UserService userService;
 	@Autowired
 	AlertService alertService;
+	@Autowired
+	private JavaMailSender mailSender;
 
 	public UserUtil() {};
 
@@ -239,4 +249,61 @@ public class UserUtil {
 		return alertList;
 	}
 
+	
+	/**
+	 * 해당 파라미터에 이메일을 전송한다.
+	 * @param String userId
+	 */
+	public void sendEmail(EmailVO emailVO) {
+
+		// 메일 발송
+		MailHandler sendMail;
+		try {
+			// 인증키 생성
+			String key = new Tempkey().getKey(10, false);
+			Map<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("userId", emailVO.getUserId());
+			paramMap.put("authkey", key);
+			emailVO.setAuthkey(key);
+			
+			// 인증키 DB에 저장
+			if(userService.createAuthkey(paramMap) <= 0) {
+				throw new SQLException("createAuthkey()에 업데이트되지 않았습니다. 다시 시도해주세요.");
+			}
+			
+			sendMail = new MailHandler(mailSender);
+			sendMail.setSubject("[probada] " + emailVO.getSubject());
+			sendMail.setText(new StringBuffer().append(emailVO.getContent())
+					.append("<a href='http://localhost/" + emailVO.getHostname() + "?userId=").append(emailVO.getUserId())
+					.append("&authkey=").append(key)
+					.append("' target='_blenk'>비밀번호 재설정을 위해 이메일 이곳을 눌러주세요</a>").toString());
+			sendMail.setFrom("probadahelp@gmail.com", "probada");
+			sendMail.setTo(emailVO.getUserId());
+			sendMail.send();
+		} catch (MessagingException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * userId를 받아서 해당 유저의 Authkey를 조회한다.
+	 * @param String userId
+	 * @return String
+	 */
+	public String selectAuthkey(String userId) {
+		
+		String key = "";
+		
+		try {
+			key = userService.selectAuthkey(userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return key;
+	}
+	
+	
 }
