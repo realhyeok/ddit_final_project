@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import com.probada.user.vo.UserTotalCountVO;
 import com.probada.user.vo.UserVO;
 
 public interface UserService {
@@ -61,4 +62,10 @@ public interface UserService {
 
 	// 유저의 비밀번호를 재설정한다.
 	public void setUserPwd(UserVO userVO) throws SQLException;
+
+	// 외부 로그인을 회원가입을 승인하는 메서드
+	public void registExternalLogin(UserVO userVO) 	throws SQLException;
+	
+//	유저의 총량을 반환하는 메서드
+	public UserTotalCountVO setUserTotalCount(UserTotalCountVO userVO) throws SQLException;
 }

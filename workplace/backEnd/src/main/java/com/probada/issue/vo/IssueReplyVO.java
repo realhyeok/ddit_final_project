@@ -1,5 +1,9 @@
 package com.probada.issue.vo;
 
+import java.util.List;
+
+import com.probada.user.vo.UserVO;
+
 public class IssueReplyVO {
 
 	private String regdate;
@@ -9,9 +13,16 @@ public class IssueReplyVO {
 	private String issueNo;
 	private String issueResNo;
 	private String projNo;
-
-
-
+	
+	
+	private UserVO userVO;
+	
+	public UserVO getUserVO() {
+		return userVO;
+	}
+	public void setUserVO(UserVO userVO) {
+		this.userVO = userVO;
+	}
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}

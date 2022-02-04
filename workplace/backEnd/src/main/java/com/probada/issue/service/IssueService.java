@@ -15,4 +15,6 @@ public interface IssueService {
 	public IssueVO getIssueByIssueNo(IssueVO issueVO) throws SQLException;
 
 	public void modifyIssueByIssueNo(IssueVO issueVO) throws SQLException;
+	
+	public String registIssue(IssueVO issueVO) throws SQLException;
 }

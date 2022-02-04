@@ -14,6 +14,9 @@ public interface IssueDAO {
 
 	public IssueVO selectIssueByIssueNo(IssueVO issueVO) throws SQLException;
 
+	public int selectIssueSeqNext() throws SQLException;
+	
 	public void updateIssueByIssueNo(IssueVO issueVO) throws SQLException;
 
+	public void insertIssue(IssueVO issueVO) throws SQLException;
 }

@@ -4,7 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
 <!-- 변수 선언 시작 -->
 <c:set var="dataUsage" value="${userVO.userUploadUsage/userMaxUploadCapacity*100}"/>
 <c:choose>
@@ -24,7 +23,7 @@
 
   <div class="clearfix"></div>
 
-  <div class="row">
+  <div class="row dash-board-boxes">
     <div class="col-md-12 col-sm-12">
 
       <!-- dashboard-stat start -->
@@ -37,8 +36,12 @@
               <i class="fa fa-tasks"></i>
             </div>
             <div class="details">
-              <h3 style="color:#5C9BD1;">21<small class="font-blue-sharp"></small></h3>
-              <div class="noti-desc"> 내 작업 </div>
+              <h3 style="color:#5C9BD1;">
+              <span title="활동중인 업무" class="taskTotalCount">0</span>
+              </h3>
+              <div class="noti-desc"> 
+              내 작업 
+              </div>
             </div>
             <a class="more" href="/ToDoList">
               View More <i class="fa fa-arrow-right"></i>
@@ -54,8 +57,12 @@
               <i class="fa fa-thumb-tack"></i>
             </div>
             <div class="details">
-              <h3 style="color:#8877a9;">10 <small class="font-purple-soft"></small></h3>
-              <div class="noti-desc"> 이슈 </div>
+              <h3 style="color:#8877a9;">
+              	<span title="받은 요청" class="issueTotalCount">0</span>
+              </h3>
+              <div class="noti-desc"> 
+              이슈 
+              </div>
             </div>
             <a class="more" href="/Issue">
               View More <i class="fa fa-arrow-right"></i>
@@ -71,9 +78,11 @@
               <i class="fa fa-pencil-square"></i>
             </div>
             <div class="details">
-              <h3 style="color:#4DB3A2;">0 <small class="font-green-sharp"></small></h3>
+              <h3 style="color:#4DB3A2;">
+              	<span title="받은 요청" class="requestTotalCount">0</span>
+              </h3>
               <div class="noti-desc">
-
+	
                 변경요청
               </div>
             </div>
@@ -92,7 +101,7 @@
             </div>
             <div class="details">
               <h3 style="color:#f36a5a;">
-                <span title="보낸 요청">8</span>
+                <span title="받은 메일" class="mailTotalCount">0</span>
               </h3>
               <div class="noti-desc">
 
@@ -114,7 +123,7 @@
             </div>
             <div class="details">
               <h3 style="color:#bfd042;">
-                <span title="받은 요청">0</span>
+                <span title="참여중인 콜라보" class="collaboTotalCount">0</span>
               </h3>
               <div class="noti-desc">
                 콜라보
@@ -135,13 +144,13 @@
             </div>
             <div class="details">
               <h3 style="color:#5e738b;">
-                <span title="보낸 요청">35</span>
+                <span title="참여중인 프로젝트" class="projectTotalCount">0</span>
               </h3>
               <div class="noti-desc">
                 프로젝트
               </div>
             </div>
-            <a class="more" href="/ProjectCenter">
+            <a class="more" href="<%=request.getContextPath() %>/app/project-list">
               View More <i class="fa fa-arrow-right"></i>
             </a>
           </div>

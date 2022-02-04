@@ -24,6 +24,7 @@ import com.probada.user.mail.MailHandler;
 import com.probada.user.mail.Tempkey;
 import com.probada.user.service.UserService;
 import com.probada.user.vo.EmailVO;
+import com.probada.user.vo.UserTotalCountVO;
 import com.probada.user.vo.UserVO;
 
 /**
@@ -59,8 +60,6 @@ public class UserUtil {
 		} else {
 			encriptedPassword = Sha2Crypt.sha256Crypt(inputPwd.getBytes(), "$5$"+userId);
 		}
-//		String SHA1_pwd = pwdEncoder.encode(inputPwd);
-//		retPwd = Base64Utils.encodeToString(SHA1_pwd.getBytes());
 		return encriptedPassword;
 	}
 
@@ -89,9 +88,6 @@ public class UserUtil {
 			e.printStackTrace();
 		}
 		
-//		byte[] en = Base64Utils.decodeFromString(compareTo);
-//		boolean ret = pwdEncoder.matches(inputPwd, new String(en));
-
 		return flag;
 	}
 
@@ -126,12 +122,10 @@ public class UserUtil {
 
 		try {
 			userVO = userService.getUser(userId);
-			
 //			유저가 가입된 payment가 있다면 init_free로 가지 않고 빠른 리턴한다.
 			if((paymentsBillService.countUserPaymentsBill(userVO.getUserId())) != 0) {
 				return false;
 			}
-			
 			paymentsBillVO.setUserId(userVO.getUserId());
 			paymentsBillService.init_free(paymentsBillVO);
 		} catch (Exception e) {
@@ -303,6 +297,25 @@ public class UserUtil {
 		}
 		
 		return key;
+	}
+	
+	// 외부 로그인을 회원가입을 승인하는 메서드
+	public void registExternalLogin(UserVO userVO){
+		try {
+			userService.registExternalLogin(userVO);
+			init_free(userVO.getUserId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public UserTotalCountVO getUserTotalCount(UserTotalCountVO userVO) {
+		try {
+			userVO = userService.setUserTotalCount(userVO);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userVO;
 	}
 	
 	

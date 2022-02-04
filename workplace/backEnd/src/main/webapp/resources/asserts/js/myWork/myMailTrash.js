@@ -1,6 +1,6 @@
 //휴지통 메일 시작
 window.addEventListener('load', function() {
-	var sessionId = $('#sessionId').val();
+	var sessionId = $("#sessionId").val();
 	
 	var trashMailList = $("#trashMailList").kendoGrid({
 		dataSource: {

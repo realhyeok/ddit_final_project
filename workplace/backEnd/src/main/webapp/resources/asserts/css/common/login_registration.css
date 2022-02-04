@@ -518,6 +518,15 @@ label.valid {
 
 .zmdi-google {
   background: #e72734; }
+  
+.zmdi-naver{
+	background-image: url("../../images/naverIcon.png");
+	background-size: 30px;
+}
+.zmdi-kakao{
+	background-image: url("../../images/kakaoIcon.png");
+	background-size: 30px;
+}
 
 .signin-form {
   margin-right: 90px;
@@ -795,9 +804,4 @@ canvas {
     to {
         opacity: 0;
     }
-}
-
-/*----------------------------------------- reset password CSS -----------------------------------------*/
-.signup-content.successSendReset{
-  justify-content: center;
 }

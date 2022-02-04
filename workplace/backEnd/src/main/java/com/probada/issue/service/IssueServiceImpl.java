@@ -46,4 +46,16 @@ public class IssueServiceImpl implements IssueService {
 		return resultIssueVO;
 	}
 
+
+	@Override
+	public String registIssue(IssueVO issueVO) throws SQLException {
+		
+		int seq = issueDAO.selectIssueSeqNext();
+		String issueNo = Integer.toString(seq);
+		issueVO.setIssueNo(issueNo);
+		issueDAO.insertIssue(issueVO);
+		
+		return issueNo;
+	}
+
 }

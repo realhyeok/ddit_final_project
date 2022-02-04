@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/fonts/material-icon/css/material-design-iconic-font.min.css">
     <!-- Main css -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/css/common/login_registration.css">
+   
 </head>
 <body>
 
@@ -79,8 +80,8 @@
                         <div class="social-login">
                             <span class="social-label">Or login with</span>
                             <ul class="socials">
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-kakao"></i></a></li>
+                                <li><a href="#" id="naverIdLogin"><i class="display-flex-center zmdi zmdi-naver"></i></a></li>
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
                             </ul>
                         </div>
@@ -94,6 +95,8 @@
 
     <!-- JS -->
     <script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script src="<%=request.getContextPath()%>/resources/asserts/js/common/login_registration.js"></script>
 </body>
 </html>

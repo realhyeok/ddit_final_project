@@ -3,6 +3,7 @@ package com.probada.chat.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.probada.chat.vo.ChatMessageVO;
 import com.probada.chat.vo.ChatVO;
 
 public interface ChatService {
@@ -26,5 +27,15 @@ public interface ChatService {
 	public String seqRealChat() throws SQLException;
 	
 	public List<String> getUserInRoom(String roomId) throws SQLException;	
+	
+	
+	public ChatVO getRoomByRealRoom(ChatVO chat) throws SQLException;
+	
+	
+	public String seqMessage() throws SQLException;
+	
+	public List<ChatMessageVO> getMessage(ChatMessageVO message) throws SQLException;
+	
+	public void createMessage(ChatMessageVO message) throws SQLException;
 
 }

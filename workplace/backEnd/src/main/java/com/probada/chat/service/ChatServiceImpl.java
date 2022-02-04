@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.probada.chat.dao.ChatDAO;
+import com.probada.chat.vo.ChatMessageVO;
 import com.probada.chat.vo.ChatVO;
 import com.probada.project.dao.ProjectDAO;
 import com.probada.project.vo.ProjectVO;
@@ -126,6 +127,47 @@ public class ChatServiceImpl implements ChatService {
 		
 		
 		return chatDAO.selectUserInRoom(roomId);
+	}
+
+
+
+
+	@Override
+	public ChatVO getRoomByRealRoom(ChatVO chat) throws SQLException {
+		
+		return chatDAO.selectChatRoom(chat);
+	}
+
+
+
+
+	@Override
+	public String seqMessage() throws SQLException {
+		
+		String seq = chatDAO.selectMessageSeqNext();
+		return seq;
+	}
+
+
+
+
+	@Override
+	public List<ChatMessageVO> getMessage(ChatMessageVO message) throws SQLException {
+		
+		
+		List<ChatMessageVO> messageVO = new ArrayList<>();
+		messageVO = chatDAO.selectMessage(message);
+		return messageVO;
+	}
+
+
+
+
+	@Override
+	public void createMessage(ChatMessageVO message) throws SQLException {
+		
+		
+		chatDAO.insertMessage(message);
 	}
 
 

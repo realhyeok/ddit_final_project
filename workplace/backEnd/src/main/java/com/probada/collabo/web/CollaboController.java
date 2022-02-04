@@ -2,11 +2,13 @@ package com.probada.collabo.web;
 
 import java.sql.SQLException;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.probada.collabo.command.CollaboCommand;
 import com.probada.collabo.service.CollaboService;
 import com.probada.collabo.vo.CollaboVO;
+import com.probada.mail.vo.MailVO;
+import com.probada.user.vo.UserVO;
 
 @Controller
 @RequestMapping("/app/collabo")
@@ -110,7 +115,43 @@ public class CollaboController {
 		return entity;
 	}
 	
+	@RequestMapping("/getProjectTitle")
+	public ResponseEntity<List<String>> getProjectTitle(HttpSession session)throws Exception{
+		ResponseEntity<List<String>> entity = null;
+		
+		LOGGER.debug("[요청받음] => /getProjectTitle");
+		
+		UserVO userVO = (UserVO) session.getAttribute("userVO");
+		
+		String userId = userVO.getUserId();
+		
+		List<String> projTitle = null;
+		
+		try {
+			projTitle = collaboService.getProjectTitle(userId);
+			LOGGER.debug("[프로젝트 제목] => ", projTitle);
+			entity = new ResponseEntity<List<String>>(projTitle,HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<String>>(HttpStatus.INTERNAL_SERVER_ERROR); 
+			e.printStackTrace();
+		}
+		return entity;
+	}
 	
+	@RequestMapping(value = "/sendInviteCollaboMail", method = RequestMethod.POST, produces="text/plain;charset=utf-8")
+	public String sendInviteCollaboMail(CollaboCommand cmd)throws Exception{
+		String url = "/app/index";
+		
+		LOGGER.debug("[요청받음] => /sendInviteCollaboMail");
+		
+		System.out.println("콘텐트 : " + cmd.getContent());
+		
+		collaboService.sendInviteCollaboMail(cmd);
+		
+		
+		return url;
+		
+	}
 	
 }
 

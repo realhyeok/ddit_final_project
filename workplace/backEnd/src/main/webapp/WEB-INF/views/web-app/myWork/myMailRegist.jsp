@@ -5,8 +5,8 @@
 	<div class="col-sm-12 mail_view border-left-0">
 		<div class="col-sm-12">
 			<div class="col-md-12 col-sm-12" style="text-align:right;">
-				<button type="button" class="btn btn-sm btn-dark" onclick="mailRegist_go('temp');return false;">임시저장</button>
-				<button id="mailSendButton" type="button" class="btn btn-sm btn-primary" onclick="mailRegist_go('send');return false;">전송</button>
+				<button type="button" class="btn btn-sm btn-dark" onclick="mailRegist_go('temp');">임시저장</button>
+				<button id="mailSendButton" type="button" class="btn btn-sm btn-primary" onclick="mailRegist_go('send');">전송</button>
 				<button type="button" class="btn btn-sm btn-secondary" onclick="history.go(-1);">취소</button>
 			</div>
 		</div>
@@ -73,7 +73,7 @@
 			return;
 		}
 	
-		var div = $('<div>').addClass("inputRow").addClass("mb-1").attr("data-no", dataNum);
+		var div = $('<div>').addClass("inputRow").addClass("mb-1").attr("rData-no", dataNum);
 		var input = $('<input>').attr({"type":"file", "name":"attachFile", "class":"sendAttachFile"}).css("display", "inline");
 		
 		div.append(input).append("<button type='button' class='badge bg-red' onclick='remove_go(" + dataNum + ")' style='border:0;outline:0;'>X</button>");
@@ -83,7 +83,7 @@
 	}
 
 	function remove_go(dataNum){
-		$('div[data-no="' + dataNum + '"]').remove();
+		$('div[rData-no="' + dataNum + '"]').remove();
 	}
 
 	function mailRegist_go(dist){
@@ -119,6 +119,39 @@
 			$("textarea[id='sendContent']").focus();
 			return;
 		}
+		if(dist == "send"){
+			var receiverId = $("#sendUserTo").val();
+			mailAlarm(receiverId);
+		}
+		
 		document.mailRegistForm.submit();
+	}
+	
+	function mailAlarm(rid){
+		var nickname   = "${userVO.nickname}";
+		var where      = "메일";
+		var target     = "메일";
+		var whatTodo   = "전송";
+		var projNo     = "0";
+		var receiverId = rid;
+		
+		let socketData = {
+			nickname   : nickname,
+			where      : where,
+			target     : target,
+			whatToDo   : whatTodo,
+			projNo     : projNo,
+			receiverId : receiverId
+		}
+		
+		if(socket){
+			let socketMsg = socketData.nickname 
+					+ "," + socketData.where 
+					+ "," + socketData.target 
+					+ "," + socketData.whatToDo 
+					+ "," + socketData.projNo
+					+ "," + socketData.receiverId;
+			socket.send(socketMsg);
+		}
 	}
 </script>

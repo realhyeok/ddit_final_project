@@ -28,6 +28,179 @@
 	<!-- 오버레이 끝 -->
 
 
+<!------------------------------- 마일스톤 등록 ----------------------------->
+<script type="text/x-handlebars-template" id="mileStoneRegistFormTemplate">
+	<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">마일스톤 등록</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+				<div class="x_content">
+					<div class="row">
+							<div class="x_content">
+								<form id="registMileForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<!-- 프로젝트명 -->
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align"
+										for="projTitle">
+										프로젝트명
+									</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="projTitle" required="required" class="form-control form-control-sm"
+										name="projTitle" value="{{projTitle}}" disabled>
+								</div>
+							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="userNickname">
+											제기자
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="userNickname" name="userId">
+              									<option value="{{userVO.userId}}">{{userVO.nickname}}</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="status">
+											마일스톤 상태
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="status" name="status">
+              									<option	value="B301">미완료</option>
+              									<option	value="B302">완료</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align"
+											for="title">마일스톤 제목
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" id="title" class="form-control form-control-sm" name="title">
+										</div>
+									</div>
+									<div class=form-group">
+										<textarea class="projSummnote" name="content" ></textarea>
+									</div>
+									<div class=form-group">
+										<label class=" label-align mt-3">이슈 등록 </label>
+										<select id="mileIssueTag" name="issueList" multiple="multiple" data-placeholder="추가하실 이슈를 선택해주세요">
+										{{#each wholeIssueList}}
+											<option value="{{issueNo}}">{{title}}</option>
+										{{/each}}
+        								</select>
+									</div>
+									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+										<button type="button" class="btn btn-success" onclick='registMileDetail()'>등록</button>
+										<button class="btn btn-primary" type="button">취소</button>
+										<button class="btn btn-primary" type="reset">리셋</button>
+									</div>
+								</form>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<!------------------------------- 마일스톤 수정 ----------------------------->
+<script type="text/x-handlebars-template" id="mileStoneModifyFormTemplate">
+	<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">마일스톤 수정</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+				<div class="x_content">
+					<div class="row">
+							<div class="x_content">
+								<form id="modifyMileForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<!-- 프로젝트명 -->
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align"
+										for="projTitle">
+										프로젝트명
+									</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="projTitle" required="required" class="form-control form-control-sm"
+										name="projTitle" value="{{mileVO.projTitle}}" disabled>
+									<input type="hidden" name="mileNo" value="{{mileVO.mileNo}}">
+								</div>
+							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="userNickname">
+											제기자
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="userNickname" name="userId">
+              									<option value="{{mileVO.userId}}">{{mileVO.nickname}}</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="status">
+											마일스톤 상태
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="status" name="status">
+              									<option
+												{{#ifCond mileVO.status "==" "B301"}}
+              									selected
+												{{/ifCond}}
+												value="B301">미완료</option>
+              									<option
+												{{#ifCond mileVO.status "==" "B302"}}
+              									selected
+												{{/ifCond}}
+												value="B302">완료</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align"
+											for="title">마일스톤 제목
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" id="title" class="form-control form-control-sm" name="title" value="{{mileVO.title}}">
+										</div>
+									</div>
+									<div class=form-group">
+										<textarea class="projSummnote" name="content" >{{{mileVO.content}}}</textarea>
+									</div>
+									<div class=form-group">
+										<label class=" label-align mt-3">이슈 등록 </label>
+										<select id="mileIssueTag" name="issueList" multiple="multiple" data-placeholder="추가하실 이슈를 선택해주세요">
+										{{#each wholeIssueList}}
+											<option value="{{issueNo}}">{{title}}</option>
+										{{/each}}
+        								</select>
+									</div>
+									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+										<button type="button" class="btn btn-success" onclick='modifyMileDetail()'>수정</button>
+										<button class="btn btn-primary" type="button">취소</button>
+										<button class="btn btn-primary" type="reset">리셋</button>
+									</div>
+								</form>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
 <!------------------------------- 이슈 등록 ----------------------------->
 <script type="text/x-handlebars-template" id="issueRegistFormTemplate">
 	<div class="row" style="display:none;" id="fadeInContent">
@@ -44,7 +217,7 @@
 				<div class="x_content">
 					<div class="row">
 							<div class="x_content">
-								<form id="registTaskForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<form id="registIssueForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
 								<!-- 프로젝트명 -->
 								<div class="item form-group">
 									<label class="col-form-label col-md-3 col-sm-3 label-align"
@@ -58,13 +231,11 @@
 							</div>
 									<div class="item form-group">
           								<label class="col-form-label col-md-3 col-sm-3 label-align for="userNickname">
-											담당자
+											제기자
 										</label>
 										<div class="col-md-6 col-sm-6 ">
             								<select class="form-control form-control-sm" id="userNickname" name="userId">
-												{{#each userList}}
-              									<option value="{{this.userId}}">{{this.nickname}}</option>
-												{{/each}}
+              									<option value="{{member.userId}}">{{member.nickname}}</option>
             								</select>
 										</div>
         							</div>
@@ -74,22 +245,21 @@
 										</label>
 										<div class="col-md-6 col-sm-6 ">
             								<select class="form-control form-control-sm" id="important" name="important">
-              									<option value="B101">낮음</option>
-              									<option value="B102">보통</option>
-             									<option value="B103">높음</option>
+												<option value="B401">낮음</option>
+              									<option value="B402">보통</option>
+             									<option value="B403">높음</option>
             								</select>
 										</div>
         							</div>
 									<div class="item form-group">
           								<label class="col-form-label col-md-3 col-sm-3 label-align for="status">
-											진행상태
+											이슈 상태
 										</label>
 										<div class="col-md-6 col-sm-6 ">
             								<select class="form-control form-control-sm" id="status" name="status">
-              									<option value="B201">예정</option>
-              									<option value="B202">진행중</option>
-             									<option value="B203">지연중</option>
-             									<option value="B204">완료</option>
+              									<option value="B501">진행전</option>
+              									<option value="B502">진행중</option>
+             									<option value="B503">완료</option>
             								</select>
 										</div>
         							</div>
@@ -103,7 +273,7 @@
 									</div>
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="enddate">마감일
+											for="enddate">종료일
 										</label>
 										<div class="col-md-6 col-sm-6 ">
 											<input type="date" id="enddate" name="enddate" class="form-control form-control-sm">
@@ -111,18 +281,18 @@
 									</div>
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="title">업무 제목
+											for="title">이슈 제목
 										</label>
 										<div class="col-md-6 col-sm-6 ">
 											<input type="text" id="title" class="form-control form-control-sm" name="title">
 										</div>
 									</div>
 									<div class=form-group">
-										<label class=" label-align"> 업무내용 </label>
+										<label class=" label-align"> 이슈 내용 </label>
 										<textarea class="projSummnote" name="content" ></textarea>
 									</div>
 									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
-										<button type="button" class="btn btn-success" onclick='registTask()'>등록</button>
+										<button type="button" class="btn btn-success" onclick='registIssue()'>등록</button>
 										<button class="btn btn-primary" type="button">취소</button>
 										<button class="btn btn-primary" type="reset">리셋</button>
 									</div>
@@ -151,7 +321,7 @@
 				<div class="x_content">
 					<div class="row">
 							<div class="x_content">
-								<form id="registTaskForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<form id="modifyIssueForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
 								<!-- 프로젝트명 -->
 								<div class="item form-group">
 									<label class="col-form-label col-md-3 col-sm-3 label-align"
@@ -161,7 +331,7 @@
 								<div class="col-md-6 col-sm-6 ">
 									<input type="text" id="projTitle" required="required" class="form-control form-control-sm"
 										name="projTitle" value="{{projTitle}}" disabled>
-									<input type="hidden" name="issueNo" value="{{issueNo}}">
+									<input type="hidden" name="issueNo" value="{{issueVO.issueNo}}">
 								</div>
 							</div>
 									<div class="item form-group">
@@ -170,7 +340,7 @@
 										</label>
 										<div class="col-md-6 col-sm-6 ">
             								<select class="form-control form-control-sm" id="userNickname" name="userId">
-              									<option value="{{userVO.userId}}">{{userVO.nickname}}</option>
+              									<option value="{{issueVO.userId}}">{{issueVO.nickname}}</option>
             								</select>
 										</div>
         							</div>
@@ -181,17 +351,17 @@
 										<div class="col-md-6 col-sm-6 ">
             								<select class="form-control form-control-sm" id="important" name="important">
 												<option value="B401"
-											{{#ifCond important "==" "B401"}}
+											{{#ifCond issueVO.important "==" "B401"}}
               									selected
 											{{/ifCond}}
 												>낮음</option>
 												<option value="B402"
-											{{#ifCond important "==" "B402"}}
+											{{#ifCond issueVO.important "==" "B402"}}
               									selected
 											{{/ifCond}}
 												>보통</option>
 												<option value="B403"
-											{{#ifCond important "==" "B403"}}
+											{{#ifCond issueVO.important "==" "B403"}}
               									selected
 											{{/ifCond}}
 												>높음</option>
@@ -205,17 +375,17 @@
 										<div class="col-md-6 col-sm-6 ">
             								<select class="form-control form-control-sm" id="status" name="status">
               									<option value="B501"
-											{{#ifCond status "==" "B501"}}
+											{{#ifCond issueVO.status "==" "B501"}}
               									selected
 											{{/ifCond}}
 												>진행전</option>
               									<option value="B502"
-											{{#ifCond status "==" "B502"}}
+											{{#ifCond issueVO.status "==" "B502"}}
               									selected
 											{{/ifCond}}
 												>진행중</option>
               									<option value="B503"
-											{{#ifCond status "==" "B503"}}
+											{{#ifCond issueVO.status "==" "B503"}}
               									selected
 											{{/ifCond}}
 												>완료</option>
@@ -227,7 +397,7 @@
 											for="startdate">시작일
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="date" id="startdate" value="{{formatTime startdate "yyyy-MM-DD"}}" name="startdate" class="form-control form-control-sm">
+											<input type="date" id="startdate" value="{{formatTime issueVO.startdate "yyyy-MM-DD"}}" name="startdate" class="form-control form-control-sm">
 										</div>
 									</div>
 									<div class="item form-group">
@@ -235,7 +405,7 @@
 											for="enddate">종료일
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="date" id="enddate" value="{{formatTime enddate "yyyy-MM-DD"}}" name="enddate" class="form-control form-control-sm">
+											<input type="date" id="enddate" value="{{formatTime issueVO.enddate "yyyy-MM-DD"}}" name="enddate" class="form-control form-control-sm">
 										</div>
 									</div>
 									<div class="item form-group">
@@ -243,22 +413,15 @@
 											for="title">이슈 제목
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" id="title" class="form-control form-control-sm" name="title" value="{{title}}">
+											<input type="text" id="title" class="form-control form-control-sm" name="title" value="{{issueVO.title}}">
 										</div>
 									</div>
 									<div class=form-group">
 										<label class=" label-align"> 이슈 내용 </label>
-										<textarea class="projSummnote" name="content" >{{{content}}}</textarea>
+										<textarea class="projSummnote" name="content" >{{{issueVO.content}}}</textarea>
 									</div>
-									<div class="control-group row">
-                    					<label class="control-label col-md-3 col-sm-3 ">Input Tags</label>
-                    						<div class="col-md-9 col-sm-9 ">
-                      							<input id="tags_1" type="text" class="tags form-control" value="social, adverts, sales" />
-                      						<div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
-                    					</div>
-                  					</div>
 									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
-										<button type="button" class="btn btn-success" onclick='registTask()'>등록</button>
+										<button type="button" class="btn btn-success" onclick='modifyIssueDetail()'>수정</button>
 										<button class="btn btn-primary" type="button">취소</button>
 										<button class="btn btn-primary" type="reset">리셋</button>
 									</div>

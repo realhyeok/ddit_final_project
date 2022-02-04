@@ -145,6 +145,13 @@ public class DocumentServiceImpl implements DocumentService{
 	}
 
 
+	@Override
+	public String getProjByTitle(String title) throws SQLException {
+		String list = documentDAO.selectProjByTitle(title);
+		return list;
+	}
+
+
 
 
 

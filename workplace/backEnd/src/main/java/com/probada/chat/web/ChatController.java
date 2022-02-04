@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.probada.chat.service.ChatService;
+import com.probada.chat.vo.ChatMessageVO;
 import com.probada.chat.vo.ChatVO;
 import com.probada.project.service.ProjectService;
 import com.probada.project.vo.ProjectVO;
@@ -70,6 +71,7 @@ public class ChatController {
 	 }
 	
 
+	
 
 	
 	@RequestMapping("/getProjectTitle")
@@ -77,11 +79,8 @@ public class ChatController {
 	public ResponseEntity<List<String>> getProjectTitle(HttpSession session) throws Exception {
 		ResponseEntity<List<String>> entity = null;
 
-		LOGGER.debug("[요청받음] => /getProjectTitle");
 		UserVO userVO= (UserVO)session.getAttribute("userVO");
 	 	
-		
-		//하드 코딩
 		String userId = userVO.getUserId();
 		
 		List<String> projectList= null;
@@ -139,44 +138,51 @@ public class ChatController {
 	
 	
 	
-	@RequestMapping("/createRoom")
-	public String createRoom(String title, String Ptitle, String[] userId, RedirectAttributes rttr,HttpSession session) throws Exception {
+	@RequestMapping("/createRoom.do")
+	@ResponseBody
+	public void createRoom(String ptitle, String title,String userId,RedirectAttributes rttr,HttpSession session) throws Exception {
 		
+		LOGGER.debug(" 1"+ptitle);
+		LOGGER.debug(" 1"+title);
+		LOGGER.debug(" 1"+userId);
+		
+		
+		String[] realUserId = userId.split(",");
 		
 		
 		UserVO userVO= (UserVO)session.getAttribute("userVO");
 		String realRoom = chatService.seqRealChat();
-		String url = "redirect:/chat/";
+		
 		
 		LOGGER.debug("[요청받음] => /createRoom");
 		String seq=null;
 		//하드코딩
 		String myId=userVO.getUserId();
 		//프로젝트가 중복될 경우 배제한 코드
-		String projNo = chatService.getProjNoByTitle(Ptitle);
+		String projNo = chatService.getProjNoByTitle(ptitle);
 		
 		seq = chatService.seqChat();
 		
 		ChatVO chatVO1 = new ChatVO();
 		
 		seq = chatService.seqChat();
-		chatVO1.setProj_no(projNo);
-		chatVO1.setChatroom_no(seq);
+		chatVO1.setProjNo(projNo);
+		chatVO1.setChatroomNo(seq);
 		chatVO1.setTitle(title);
-		chatVO1.setUser_id(myId);
+		chatVO1.setUserId(myId);
 		chatVO1.setRealRoom(realRoom);
 		chatService.createChatRoom(chatVO1);
 		
 		LOGGER.debug("chatvo1 {}",chatVO1);
 		
 		
-		for(String user : userId) {
+		for(String user : realUserId) {
 			ChatVO chatVO = new ChatVO();
 			seq = chatService.seqChat();
-			chatVO.setProj_no(projNo);
-			chatVO.setChatroom_no(seq);
+			chatVO.setProjNo(projNo);
+			chatVO.setChatroomNo(seq);
 			chatVO.setTitle(title);
-			chatVO.setUser_id(user);
+			chatVO.setUserId(user);
 			chatVO.setRealRoom(realRoom);
 			chatService.createChatRoom(chatVO);
 			LOGGER.debug(" for문 안에 {}"+chatVO);
@@ -184,8 +190,6 @@ public class ChatController {
 
 		rttr.addFlashAttribute("create", "success");
 		
-		
-		return url;
 	}
 	
 	
@@ -220,6 +224,92 @@ public class ChatController {
 
 		} catch(Exception e) {
 			entity = new ResponseEntity<List<String>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+	
+	
+	
+	@RequestMapping("/chatRoom")
+	public ModelAndView chatRoom(ModelAndView mnv,HttpSession session,String roomNo) throws Exception {
+	 	
+	 	String url = "/web-app/chattest/chatRoom";
+	 	LOGGER.debug("roomNo  {}",roomNo);
+	 	
+	 	UserVO userVO= (UserVO)session.getAttribute("userVO");
+	 	
+	 	
+	 	//String userId = userVO.getUserId();
+	 	
+	 	
+		mnv.addObject("roomNo", roomNo);
+		mnv.addObject("userVO", userVO);
+		mnv.setViewName(url);
+	 	
+	     return mnv;
+	 }
+	
+	
+	
+	
+	
+	@RequestMapping("/getMyChatProject")
+	@ResponseBody
+	public ResponseEntity<List<ChatVO>> getProject(HttpSession session) throws Exception {
+		ResponseEntity<List<ChatVO>> entity = null;
+
+		LOGGER.debug("[요청받음] => /getMyChatProject");
+		UserVO userVO= (UserVO)session.getAttribute("userVO");
+	 	
+	
+	 	List<ChatVO> chat = new ArrayList<>();
+	 	
+	 	String userId = userVO.getUserId();
+	 	
+	 	chat = chatService.getRoomList(userId);
+
+	
+
+		try {
+
+			LOGGER.debug("프로젝트 리스트, {}",chat);
+
+			entity = new ResponseEntity<List<ChatVO>>(chat,HttpStatus.OK);
+
+		} catch(Exception e) {
+			entity = new ResponseEntity<List<ChatVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+	
+	
+	
+	@RequestMapping("/getMessageByDb")
+	@ResponseBody
+	public ResponseEntity<List<ChatMessageVO>> getMessage(HttpSession session,String roomNo) throws Exception {
+		ResponseEntity<List<ChatMessageVO>> entity = null;
+
+		LOGGER.debug("[요청받음] => /getMessageByDb");
+		UserVO userVO= (UserVO)session.getAttribute("userVO");
+	 	
+	
+	 	List<ChatMessageVO> message = new ArrayList<>();
+	 	ChatMessageVO messageVO = new ChatMessageVO();
+	 	
+	 	String userId = userVO.getUserId();
+	 	
+	 	messageVO.setRealRoom(roomNo);
+	 	
+	 	message = chatService.getMessage(messageVO);
+	 	LOGGER.debug("db 리스트, {}",message);
+		try {
+
+			entity = new ResponseEntity<List<ChatMessageVO>>(message,HttpStatus.OK);
+			LOGGER.debug("db, {}",entity);
+		} catch(Exception e) {
+			entity = new ResponseEntity<List<ChatMessageVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
 			e.printStackTrace();
 		}
 		return entity;

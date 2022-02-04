@@ -26,7 +26,7 @@
 
 	<select id="selectIssueByIssueNo" resultType="issue" parameterType="issue">
 		SELECT
-    		A.ISSUE_NO,A.PROJ_NO ,B.NICKNAME AS USER_ID ,A.TITLE ,A.CONTENT ,<include refid="importantForIssue"/>
+    		A.ISSUE_NO,A.PROJ_NO ,B.NICKNAME ,B.USER_ID, A.TITLE ,A.CONTENT ,<include refid="importantForIssue"/>
    			,A.REGDATE ,A.STARTDATE ,A.ENDDATE ,A.UPDATEDATE ,<include refid="statusForIssue"/> ,A.DOC_CONT_NO
 		FROM
     		ISSUE A
@@ -53,20 +53,33 @@
 		UPDATE
 			ISSUE
 		SET
-			PROJ_NO = #{projNo}
-    		USER_ID = #{userId}
-       		TITLE = #{title}
-       		CONTENT = #{content}
-       		IMPORTANT = #{important}
-       		REGDATE = #{regdate}
-       		STARTDATE = #{stardate}
-       		ENDDATE = #{enddate}
-       		UPDATEDATE = sysdate
+			PROJ_NO = #{projNo},
+    		USER_ID = #{userId},
+       		TITLE = #{title},
+       		CONTENT = #{content},
+       		IMPORTANT = #{important},
+       		REGDATE = sysdate,
+       		STARTDATE = #{startdate},
+       		ENDDATE = #{enddate},
+       		UPDATEDATE = sysdate,
        		STATUS = #{status}
        	WHERE
        		ISSUE_NO = #{issueNo}
 	</update>
 
+	<insert id="insertIssue" parameterType="issue">
+		INSERT INTO 
+			ISSUE (
+  		  	ISSUE_NO, PROJ_NO, USER_ID, TITLE, CONTENT,
+    		IMPORTANT, REGDATE, STARTDATE, ENDDATE, UPDATEDATE,
+    		STATUS, DOC_CONT_NO
+    	  ) VALUES (
+    		#{issueNo}, #{projNo}, #{userId}, #{title}, #{content},
+    		#{important}, sysdate, #{startdate}, #{enddate}, sysdate,
+    		#{status}, 1
+		)
+	
+	</insert>
 	<sql id="statusForIssue">
 			(SELECT
 				CODE_NAME
@@ -84,4 +97,9 @@
             WHERE
             	COMMON_CODE.CODE_NO = A.IMPORTANT) AS IMPORTANT
 	</sql>
+	
+	<select id="selectIssueSeqNext" resultType="int">
+		SELECT
+			ISSUE_SEQ.NEXTVAL AS ISSUE_NO FROM DUAL
+	</select>
 </mapper>

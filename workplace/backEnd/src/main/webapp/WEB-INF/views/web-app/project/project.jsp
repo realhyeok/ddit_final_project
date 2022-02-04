@@ -77,57 +77,5 @@
 <!-- 내 작업 바디 끝 -->
 </div>
 <!-- /page content -->
-<script>
-var endPointBefore = "";
 
-window.onload = function() {
-
-	var endPoint = window.location.search;
-
-	if(getCookie('endPoint')){
-		if(getCookie('endPoint') != endPoint){
-			delCookie('endPoint');
-		}
-	}
-
-	document.cookie = "endPoint="+endPoint;
-
-	if(getCookie('tab')){
-		var curTab = getCookie('tab');
-		curTab = curTabCheck(curTab);
-		document.getElementById(curTab).click();
-	} else if(!getCookie('tab')) {
-		document.getElementById('home-tab').click();
-	}
-
-	$('a[role="tab"]').on('click', function() {
-		var id = this.id
-		document.cookie = "tab="+id;
-	})
-
-}
-// 상세 탭일경우 리스트로 돌려줌 (각 상세폼에 추가)
-function curTabCheck(curTab){
-	if(curTab == 'taskDetail-tab'){
-		curTab = 'task-tab';
-	} else if (curTab == 'issueDetail-tab'){
-		curTab = 'issue-tab';
-	}
-		return curTab;
-}
-
-function getCookie(name) {
-	  let matches = document.cookie.match(new RegExp(
-	    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-	  ));
-	  return matches ? decodeURIComponent(matches[1]) : undefined;
-	}
-
-const delCookie = function delCookie_by_name(name){
-    let date = new Date();
-    date.setDate(date.getDate() - 100);
-    let Cookie = `${name}=;Expires=${date.toUTCString()}`
-    document.cookie = Cookie;
-}
-</script>
 </body>

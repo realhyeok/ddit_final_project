@@ -31,7 +31,7 @@ function readIssue() {
 			$("#issueGrid").kendoGrid({
 				dataSource:IssueDataSource,
 	             toolbar: [
-	             	{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"issueRegistFormTemplate\");'>이슈 등록</a>" }
+	             	{ template: "<a class='k-button' href='javascript:getOverlayIssueRegistTemplate(\"issueRegistFormTemplate\",\"/app/issue/getIssueRegistInfoByProjNo\");'>이슈 등록</a>" }
 	             	,"search","excel", "pdf" ],
 	             columns: [{
 	                 selectable: true,
@@ -95,13 +95,16 @@ function reloadIssue() {
 
 
 
-		const sortingIssueByClick = function(tData) {
-			var externalFilter = {
-		              filters:[
-		            	  { field:"mileNo", value:tData,
-		            		  operator: "contains" }
-		              ]
-		            };
+const sortingIssueByClick = function(tData) {
+	if(tData === "clear"){
+		$("#issueGrid").data("kendoGrid").dataSource.filter([]);
+		return;
+	}
+	var externalFilter = {
+			filters:[
+					{ field:"mileNo", value:tData, operator: "contains" }
+					]
+		};
 			$("#issueGrid").data("kendoGrid").dataSource.filter(externalFilter);
 		}
 

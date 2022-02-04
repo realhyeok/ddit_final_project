@@ -62,7 +62,7 @@ public interface DocumentDAO {
 
 
 
-
+	public String selectProjByTitle(String title) throws SQLException;
 
 
 

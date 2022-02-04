@@ -2,35 +2,29 @@ package com.probada.chat.vo;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ChatMessageVO {
 
-	private String chatroom_msg_no;
-	private String chatroom_no;
-	private String user_id;
+	private String chatroomMsgNo;
+	private String userId;
 	private String content;
-	private Date regdate;
-	private String doc_cont_no;
-	
-	
-	
-	
-	public String getChatroom_msg_no() {
-		return chatroom_msg_no;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+	private Date regdate = new Date();
+	private String docContNo;
+	private String realRoom;
+	private String nickname;
+	public String getChatroomMsgNo() {
+		return chatroomMsgNo;
 	}
-	public void setChatroom_msg_no(String chatroom_msg_no) {
-		this.chatroom_msg_no = chatroom_msg_no;
+	public void setChatroomMsgNo(String chatroomMsgNo) {
+		this.chatroomMsgNo = chatroomMsgNo;
 	}
-	public String getChatroom_no() {
-		return chatroom_no;
+	public String getUserId() {
+		return userId;
 	}
-	public void setChatroom_no(String chatroom_no) {
-		this.chatroom_no = chatroom_no;
-	}
-	public String getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getContent() {
 		return content;
@@ -44,20 +38,34 @@ public class ChatMessageVO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
-	public String getDoc_cont_no() {
-		return doc_cont_no;
+	public String getDocContNo() {
+		return docContNo;
 	}
-	public void setDoc_cont_no(String doc_cont_no) {
-		this.doc_cont_no = doc_cont_no;
+	public void setDocContNo(String docContNo) {
+		this.docContNo = docContNo;
+	}
+	public String getRealRoom() {
+		return realRoom;
+	}
+	public void setRealRoom(String realRoom) {
+		this.realRoom = realRoom;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	@Override
+	public String toString() {
+		return "ChatMessageVO [chatroomMsgNo=" + chatroomMsgNo + ", userId=" + userId + ", content=" + content
+				+ ", regdate=" + regdate + ", docContNo=" + docContNo + ", realRoom=" + realRoom + ", nickname="
+				+ nickname + "]";
 	}
 	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
 }
+

@@ -28,9 +28,40 @@ const projDataSource = new kendo.data.DataSource({
 // 태스크 데이터리소스
 const taskDataSource = new kendo.data.DataSource({
 		transport: {
-			read: "/app/task/getTaskListByProjNo?projNo="+projNo,
-	    },
-	    schema: {
+				read: {
+					url: "/app/task/read",
+					method: "POST",
+					data: {"projNo":projNo},
+					success:function(result) {
+						console.log(result);
+						}
+				},
+	             update: {
+	            	url: "/app/task/update",
+	     			method: "POST",
+	     			data: projNo,
+	     			success:function(result) {
+	     				console.log(result);
+	     			}
+	             },
+	             create:  {
+	            	url: "/app/task/update",
+	     			method: "POST",
+	     			data: {"projNo":projNo},
+	     			success:function(result) {
+	     				console.log(result);
+	     			}
+	             },
+	             destroy: {
+	            	url: "/app/task/destroy",
+	     			method: "POST",
+	     			data: projNo,
+	     			success:function(result) {
+	     				console.log(result);
+	     			}
+	             }
+		    },
+		    schema: {
 	    	model: {
 	    		fields: {
 	    			taskNo: { type: "string" },
@@ -47,7 +78,7 @@ const taskDataSource = new kendo.data.DataSource({
 	    		}
 	    	}
 	    },
-	    sort: {field: "updatedate", dir:"desc"},
+	    /*sort: {field: "updatedate", dir:"desc"},*/
 });
 
 const projList = $("#project-list").kendoGrid({
@@ -97,6 +128,12 @@ function readTask() {
 	    	width:260,
 	         buttons: []
 	      },
+	    moveEnd: function (ev) {
+	    	var taskNo = ev.card.get("taskNo");
+	    	var status = ev.column.get("status");
+	    	var taskVO = {"taskNo":taskNo,"status":status};
+	        console.log(ev.card.get("title") + " will move to " + ev.column.get("text"));
+	    }
 	});
 }
 
@@ -120,3 +157,33 @@ function getParameterByName(name) {
    	results = regex.exec(location.search);
    	return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+
+/*핸들바스관련 CRUD*/
+function deleteTaskById(url, taskNo){
+
+	var taskVO = {"taskNo":taskNo, "projNo":projNo};
+	console.log(taskVO);
+
+	if(window.confirm("정말로 삭제하시겠습니까?")){
+
+		$.ajax({
+			url : url,
+			type : 'POST',
+			datatype : 'text',
+			data : taskVO,
+			success : function(data) {
+				alert("삭제가 완료되었습니다.")
+				document.getElementById('task-tab').click();
+			}, // success
+			error : function(xhr, status) {
+				alert("삭제에 실패하였습니다.");
+			}
+		});
+
+	} else {
+		return;
+	}
+
+}
+

@@ -521,16 +521,11 @@
 									return false;
 								}
 
-								/* e.preventDefault();
-								checkInputs();
-								if(!checkInputError()){
-								return false;
-								} */
-								
 								$.ajax({
 									type : "POST",
 									url : "/user/modify.do",
 									data : $("#modify-form").serialize(),
+										
 									//dataType : "json",
 									success : function(res) {
 
@@ -608,18 +603,12 @@
 								});
 
 							}
-						</script>
-      
-      
+		
 
-    <!-- include -->
-    <script>
-
-
-    window.onload = function(){
+	window.addEventListener('load', function(){
     	
     	
-    	alert('${user.privacy}');
+    
     	MemberPictureThumb($('#pictureView')[0],
   				'${user.picture}','<%=request.getContextPath()%>');
     	
@@ -737,8 +726,13 @@
 	
 			   })
 			   
-    };//window.onload
+		
 
+	});
+	//window.onload
+
+    
+    
     
    function fire_go(){
     	
@@ -791,4 +785,17 @@
     <script>
 		includeHTML();	
 	</script>
+	
+	
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
 </body>

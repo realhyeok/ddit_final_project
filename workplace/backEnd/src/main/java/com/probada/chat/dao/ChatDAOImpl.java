@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.probada.chat.vo.ChatMessageVO;
 import com.probada.chat.vo.ChatVO;
 import com.probada.project.vo.ProjectVO;
 
@@ -86,6 +87,33 @@ public class ChatDAOImpl implements ChatDAO {
 	@Override
 	public List<String> selectUserInRoom(String roomId) throws SQLException {
 		return sqlSession.selectList("Chat-Mapper.selectUserInRoom",roomId);
+		
+	}
+
+
+	@Override
+	public ChatVO selectChatRoom(ChatVO chat) throws SQLException {
+		return sqlSession.selectOne("Chat-Mapper.selectChatRoom",chat);
+	}
+
+
+	@Override
+	public List<ChatMessageVO> selectMessage(ChatMessageVO message) throws SQLException {
+		return sqlSession.selectList("Chat-Mapper.selectMessage",message);
+	}
+
+
+	@Override
+	public String selectMessageSeqNext() throws SQLException {
+		String seq_num=
+				sqlSession.selectOne("Chat-Mapper.selectMessageSeqNext");
+		return seq_num;
+	}
+
+
+	@Override
+	public void insertMessage(ChatMessageVO message) throws SQLException {
+		sqlSession.insert("Chat-Mapper.insertMessage",message);
 		
 	}
 

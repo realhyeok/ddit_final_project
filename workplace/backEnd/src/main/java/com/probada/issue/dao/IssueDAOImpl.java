@@ -47,4 +47,17 @@ public class IssueDAOImpl implements IssueDAO {
 		return issueVo;
 	}
 
+	@Override
+	public void insertIssue(IssueVO issueVO) throws SQLException {
+		sqlSession.insert("Issue-Mapper.insertIssue",issueVO);
+	}
+
+	@Override
+	public int selectIssueSeqNext() throws SQLException {
+		
+		int seq = sqlSession.selectOne("Issue-Mapper.selectIssueSeqNext");
+		
+		return seq;
+	}
+
 }

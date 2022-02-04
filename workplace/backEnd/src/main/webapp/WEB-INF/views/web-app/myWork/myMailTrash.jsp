@@ -14,21 +14,30 @@
 <script id="trashMailList-template" type="text/x-kendo-template">
 	<div class="mail_list m-0 border-bottom-0">
 		<div class="left">
-			# if(userTo == "${userVO.userId}"){ #
-				<input class="trashCheck" type="checkbox" value="#:mailNo#" mailType="trashReceiveMail">
-			# }else if(userFrom == "${userVO.userId}"){ #
-				<input class="trashCheck" type="checkbox" value="#:mailNo#" mailType="trashSendMail">
+			# if(userTo == userFrom){ #
+				<input class="trashCheck" type="checkbox" value="#:mailNo#" mailType="trashMineMail">
+			# }else{ #
+				# if(userTo == "${userVO.userId}"){ #
+					<input class="trashCheck" type="checkbox" value="#:mailNo#" mailType="trashReceiveMail">
+				# }else if(userFrom == "${userVO.userId}"){ #
+					<input class="trashCheck" type="checkbox" value="#:mailNo#" mailType="trashSendMail">
+				# } #
 			# } #
+
 			# if(attachList.length != 0){ #
 				<i class="fa fa-paperclip"></i>
 			# } #
 		</div>
 		<div class="right" style="height:40px;">
 			<h3>
-				# if(userTo == "${userVO.userId}"){ #
-					받은 메일
-				# }else if(userFrom == "${userVO.userId}"){ #
-					보낸 메일
+				# if(userFrom == userTo){ #
+					내게 쓴 메일
+				# }else{ #
+					# if(userTo == "${userVO.userId}"){ #
+						받은 메일
+					# }else if(userFrom == "${userVO.userId}"){ #
+						보낸 메일
+					# } #
 				# } #
 				<small>#:regDate#</small>
 			</h3>
@@ -129,10 +138,14 @@
 	
 	function returnTrashMailOne(mailNo, userTo, userFrom){
 		var mailDist = null;
-		if(userTo == "${userVO.userId}"){
-			mailDist = "receiveMail";
-		}else if(userFrom == "${userVO.userId}"){
-			mailDist = "sendMail";
+		if(userFrom == userTo){
+			mailDist = "mineMail";
+		}else{
+			if(userTo == "${userVO.userId}"){
+				mailDist = "receiveMail";
+			}else if(userFrom == "${userVO.userId}"){
+				mailDist = "sendMail";
+			}
 		}
 		
 		returnOneConfirm = confirm("메일을 복구하시겠습니까?");
@@ -159,10 +172,14 @@
 	
 	function deleteTrashMailOne(mailNo, userTo, userFrom){
 		var mailDist = null;
-		if(userTo == "${userVO.userId}"){
-			mailDist = "trashReceiveMail";
-		}else if(userFrom == "${userVO.userId}"){
-			mailDist = "trashSendMail";
+		if(userFrom == userTo){
+			mailDist = "trashMineMail";
+		}else{
+			if(userTo == "${userVO.userId}"){
+				mailDist = "trashReceiveMail";
+			}else if(userFrom == "${userVO.userId}"){
+				mailDist = "trashSendMail";
+			}
 		}
 		
 		deleteOneConfirm = confirm("휴지통의 메일은 완전히 삭제됩니다.\n삭제하시겠습니까?");

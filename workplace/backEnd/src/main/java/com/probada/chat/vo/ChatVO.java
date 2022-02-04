@@ -5,39 +5,34 @@ import java.util.Date;
 public class ChatVO {
 
 	
-	private String chatroom_no;
-	private String user_id;
-	private String proj_no;
+	private String chatroomNo;
+	private String userId;
+	private String projNo;
 	private String title;
 	private Date regdate;
 	private String realRoom;
-	
-	
-	
-	
-	public String getRealRoom() {
-		return realRoom;
+	@Override
+	public String toString() {
+		return "ChatVO [chatroomNo=" + chatroomNo + ", userId=" + userId + ", projNo=" + projNo + ", title=" + title
+				+ ", regdate=" + regdate + ", realRoom=" + realRoom + "]";
 	}
-	public void setRealRoom(String realRoom) {
-		this.realRoom = realRoom;
+	public String getChatroomNo() {
+		return chatroomNo;
 	}
-	public String getChatroom_no() {
-		return chatroom_no;
+	public void setChatroomNo(String chatroomNo) {
+		this.chatroomNo = chatroomNo;
 	}
-	public void setChatroom_no(String chatroom_no) {
-		this.chatroom_no = chatroom_no;
+	public String getUserId() {
+		return userId;
 	}
-	public String getUser_id() {
-		return user_id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public String getProjNo() {
+		return projNo;
 	}
-	public String getProj_no() {
-		return proj_no;
-	}
-	public void setProj_no(String proj_no) {
-		this.proj_no = proj_no;
+	public void setProjNo(String projNo) {
+		this.projNo = projNo;
 	}
 	public String getTitle() {
 		return title;
@@ -51,11 +46,17 @@ public class ChatVO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
-	@Override
-	public String toString() {
-		return "ChatVO [chatroom_no=" + chatroom_no + ", user_id=" + user_id + ", proj_no=" + proj_no + ", title="
-				+ title + ", regdate=" + regdate + "]";
+	public String getRealRoom() {
+		return realRoom;
 	}
+	public void setRealRoom(String realRoom) {
+		this.realRoom = realRoom;
+	}
+	
+	
+	
+	
+	
 	
 	
 	

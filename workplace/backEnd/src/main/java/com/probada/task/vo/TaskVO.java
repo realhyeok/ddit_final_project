@@ -1,7 +1,10 @@
 package com.probada.task.vo;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.probada.user.vo.UserVO;
 
 public class TaskVO {
@@ -20,12 +23,19 @@ public class TaskVO {
 	private String content;
 
 	// 출력용
-	private String projTitle;
-	private List<UserVO> userList;
-	private String nickname;
+	private String projTitle = "";
+	private List<UserVO> userList = new ArrayList<UserVO>();
+	private String nickname = "";
 
 
 
+	@Override
+	public String toString() {
+		return "TaskVO [projNo=" + projNo + ", taskNo=" + taskNo + ", status=" + status + ", docContNo=" + docContNo
+				+ ", startdate=" + startdate + ", enddate=" + enddate + ", regdate=" + regdate + ", important="
+				+ important + ", userId=" + userId + ", title=" + title + ", updatedate=" + updatedate + ", content="
+				+ content + ", projTitle=" + projTitle + ", userList=" + userList + ", nickname=" + nickname + "]";
+	}
 	public String getNickname() {
 		return nickname;
 	}
@@ -50,12 +60,6 @@ public class TaskVO {
 	public void setProjNo(String projNo) {
 		this.projNo = projNo;
 	}
-	public String getEnddate() {
-		return enddate;
-	}
-	public void setEnddate(String enddate) {
-		this.enddate = enddate;
-	}
 	public void setTaskNo(String taskNo) {
 		this.taskNo = taskNo;
 	}
@@ -73,18 +77,6 @@ public class TaskVO {
 	}
 	public String getDocContNo() {
 		return docContNo;
-	}
-	public void setStartdate(String startdate) {
-		this.startdate = startdate;
-	}
-	public String getStartdate() {
-		return startdate;
-	}
-	public void setRegdate(String regdate) {
-		this.regdate = regdate;
-	}
-	public String getRegdate() {
-		return regdate;
 	}
 	public void setImportant(String important) {
 		this.important = important;
@@ -104,17 +96,35 @@ public class TaskVO {
 	public String getTitle() {
 		return title;
 	}
-	public void setUpdatedate(String updatedate) {
-		this.updatedate = updatedate;
-	}
-	public String getUpdatedate() {
-		return updatedate;
-	}
 	public void setContent(String content) {
 		this.content = content;
 	}
 	public String getContent() {
 		return content;
+	}
+	public String getStartdate() {
+		return startdate;
+	}
+	public void setStartdate(String startdate) {
+		this.startdate = startdate;
+	}
+	public String getEnddate() {
+		return enddate;
+	}
+	public void setEnddate(String enddate) {
+		this.enddate = enddate;
+	}
+	public String getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
+	}
+	public String getUpdatedate() {
+		return updatedate;
+	}
+	public void setUpdatedate(String updatedate) {
+		this.updatedate = updatedate;
 	}
 
 }

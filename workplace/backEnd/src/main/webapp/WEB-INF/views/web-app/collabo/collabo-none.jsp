@@ -377,46 +377,40 @@
 
             <div class="x_content">
               <!-- form start -->
-              <form>
+              <form role="form" method="post" action="<%=request.getContextPath()%>/app/collabo/sendInviteCollaboMail" name="collaboMailRegist">
+                
                 <p>콜라보 제안은 다른 프로젝트 팀과 협업 할 수 있는 곳입니다.</p>
                 <p>다른 팀과 협업 공간을 만들고 함께 일해보세요.</p>
                 <div class="card-body">
                   
                   <div class="control-group row">
-                    <label class="control-label col-md-3 col-sm-3 ">Input Tags</label>
+                    <label class="control-label col-md-3 col-sm-3 ">이메일 입력</label>
                     <div class="col-md-9 col-sm-9 ">
-                      <input id="tags_1" type="text" class="tags form-control" value=""/> 
+                      <input type="hidden" id="userFrom" name="userFrom" value="${userVO.userId}">
+                      <input type="hidden" id="title" name="title" value="${userVO.userId}의 콜라보 제안 메일입니다.">
+                      <input type="hidden" id="dist" name="dist" value="">
+                      <input id="tags_1" name="userTo" type="text" class="tags form-control" value=""/> 
                       <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
                     </div>
                   </div>
 
                   <!-- select -->
                   <div class="form-group">
-                    <label>접근 권한</label>
-                    <select class="form-control">
-                      <option value="" disabled selected hidden>접근 권한을 설정해 주세요.</option>
-                      <option>공개</option>
-                      <option>제한</option>
+                    <label>나의 프로젝트</label>
+                    <select class="form-control" id="selectProject">
+                    
                     </select>
                   </div>
-
-                  <div class="form-group">
-                    <label>나의 프로젝트?</label>
-                    <select class="form-control">
-                      <option value="" disabled selected hidden>프로젝트를 선택해주세요.</option>
-                      <option>Small PMS</option>
-                      <option>Small LMS</option>
-                      <option>그그룹웨어</option>
-                    </select>
-                  </div>
+                  
                   <!-- textarea -->
                   <div class="form-group">
                     <label>보낼 메세지</label>
-                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                    <textarea id="sendMessage" class="form-control" rows="3" placeholder="메세지를 입력해주세요."></textarea>
                   </div>
                 </div>
                 <!-- /.card-body -->
-                <button type="submit" class="btn  btn-outline-primary collabo-submit-btn">보내기</button>
+                <input type="hidden" name="content" id="collaboContent">
+                <button type="button" id="inviteButton" class="btn  btn-outline-primary collabo-submit-btn" onclick="invite_go();">보내기</button>
               </form>
             </div>
           </div>
@@ -426,6 +420,101 @@
     <!-- 콜라보 제안 모달 끝-->
 
   </div>
+  
+  <script>
+  window.addEventListener('load', function() {
+	  
+	  $.ajax({
+			url : "/app/collabo/getProjectTitle.do",
+			type : "POST",
+			success : function(arg) {
+				let projTitle = "<option value='' disabled selected hidden>프로젝트를 선택해주세요.</option>";
+				
+				for (var i = 0; i < arg.length; i++) {
+					projTitle += "<option value='"+arg[i]+"'>"+arg[i]+"</option>";
+				}
+				document.getElementById('selectProject').innerHTML=projTitle;
+			},
+			error : function(arg) {
+				alert("리스트 가져오는거 에러임 ㅎㅎ" + arg.status + "메세지" + arg.responseText);
+			}
+		})
+	
+		
+});
+  
+	function invite_go(){
+		alert("ddd");
+		//let userTo = $("#tags_1").val();
+		let userTo = document.getElementById('tags_1').value;
+		//alert(userTo);
+		let myProj = document.getElementById('selectProject').value;
+		//alert(myProj);
+		let text = document.getElementById('sendMessage').value;
+		//alert(text);
+		let title = document.getElementById('title').value;
+		alert(title);
+		
+		if (userTo == "") {
+			alert("초대할 유저를 입력하세요.")	
+			return false;
+		}
+		if (myProj == "") {
+			alert("프로젝트를 선택하세요.")	
+			return false;
+		}
+		if (text == "") {
+			alert("메세지를 입력하세요.")	
+			return false;
+		}
+		
+		let content = inviteMailForm(userTo,myProj,text);
+		console.log(text);
+		document.getElementById('collaboContent').value = content;
+		console.log(document.getElementById('collaboContent').value);
+		document.collaboMailRegist.submit();
+	}
+	
+	
+	
+	function inviteMailForm(userTo,myProj,text) {
+		var content = ""
+		content += 
+			`<div class="x_content">
+			  <br>
+			    <div class="item form-group">
+			      <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name"><span class="required">보낸 사람 : <a href="">`+ userTo +`</a></span>
+			        
+			      </label>
+			    </div>
+			    
+			    <div class="item form-group">
+			      <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name"><span
+			          class="required">보낸 사람의 프로젝트 : <a href="">`+ myProj +`</a></span>
+			        
+			      </label>
+			    </div>
+			    
+			    <div class="item form-group">
+			      <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">메세지 : 
+			      <span>`+ text +`</span>
+			      </label>
+			    </div>
+		   
+		    <div class="ln_solid"></div>
+		    <div class="item form-group">
+		      <div class="col-md-6 col-sm-6 offset-md-3">
+		        <button class="btn btn-primary" type="button">수락</button>
+		        <button class="btn btn-primary" type="reset">거절</button>
+		      </div>
+		    </div>
+		</div>`;
+		
+		return content;
+	}	
+		
+	
+  </script>
 
 
 </body>

@@ -6,9 +6,11 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.probada.collabo.command.CollaboCommand;
 import com.probada.collabo.dao.CollaboDAO;
 import com.probada.collabo.vo.CollaboVO;
 import com.probada.collabo.web.CollaboController;
+import com.probada.mail.vo.MailVO;
 
 public class CollaboServiceImpl implements CollaboService {
 	
@@ -49,6 +51,22 @@ public class CollaboServiceImpl implements CollaboService {
 	public void modifyCollaboNotice(CollaboVO collaboVO) throws SQLException {
 
 		collaboDAO.updateCollaboNotice(collaboVO);
+	}
+
+	@Override
+	public List<String> getProjectTitle(String userId) throws SQLException {
+		
+		List<String> projTitle = collaboDAO.selectProjectTitle(userId);
+		return projTitle;
+	}
+
+	@Override
+	public void sendInviteCollaboMail(CollaboCommand cmd) throws SQLException {
+		int mailNo = collaboDAO.selectCollaboMailSequenceNextValue();
+		
+		cmd.setMailNo(mailNo);
+		
+		collaboDAO.registInviteCollaboMail(cmd);
 	}
 
 }

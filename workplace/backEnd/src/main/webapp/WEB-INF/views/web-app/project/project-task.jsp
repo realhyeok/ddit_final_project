@@ -20,6 +20,7 @@
                 <div class="two" style="border-left: 1px solid;border-left-color: rgb(138,43,226);border-left-width: 2px;">
                     <div class="d-flex justify-content-end px-2"><i class="mdi mdi-star-outline pr-1 star"></i><i class="mdi mdi-dots-horizontal dot"></i></div>
                     <div class="px-3">
+							<input type="hidden" id="taskNoForDrag" value="#:taskNo#">
                         	<h2 class="name"><a href="javascript:getTaskTemplate('/app/task/getTaskDetailByTaskNo',#:taskNo#,'taskDetailForm','taskDetailFormTarget')" class="text-dark">#:title#</a></h2>
                         <div class="quote2 col-sm-12 bg-light text-truncate mb-2"> #: xssPurify(content)# </div>
                     </div>

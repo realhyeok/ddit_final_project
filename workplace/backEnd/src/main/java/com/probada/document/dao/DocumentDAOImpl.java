@@ -139,6 +139,11 @@ public class DocumentDAOImpl implements DocumentDAO{
 		return docList;
 	}
 
+	@Override
+	public String selectProjByTitle(String title) throws SQLException {
+		return  sqlSession.selectOne("Document-Mapper.selectProjByTitle",title);
+	}
+
 
 
 

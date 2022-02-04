@@ -66,6 +66,46 @@
 		WHERE CPROJ_NO = #{cprojNo}
 	</select>
 	
+	<update id="registInviteCollaboMail">
+		INSERT INTO MAIL (
+			  MAIL_NO
+			, TITLE
+			, USER_TO
+			, USER_FROM
+			, CONTENT
+			, REGDATE
+			, STATUS
+			, DIST
+			, RECV_DEL
+			, SENT_DEL
+			
+			) VALUES (
+			
+			  #{mailNo}
+			, #{title}
+			, #{userTo}
+			, #{userFrom}
+			, #{content}
+			, SYSDATE
+			, 'A801'
+			, 'B901'
+			, '1'
+			, '1'
+			)
+	</update>
+	
+	<select id="selectCollaboMailSequenceNextValue" resultType="int">
+		SELECT MAIL_SEQ.NEXTVAL AS MAIL_NO
+		  FROM DUAL
+	</select>
+	
+	<select id="selectProjectTitle" resultType="String" parameterType="String">
+		SELECT TITLE
+		  FROM USER_PROJECT A, PROJECT B
+	     WHERE A.PROJ_NO = B.PROJ_NO
+		   AND A.USER_ID = #{userId} 	
+	</select>
+	
 	
 	<sql id="statusForCollabo">
 			(SELECT

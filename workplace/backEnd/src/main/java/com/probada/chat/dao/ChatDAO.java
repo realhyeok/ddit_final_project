@@ -3,6 +3,7 @@ package com.probada.chat.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.probada.chat.vo.ChatMessageVO;
 import com.probada.chat.vo.ChatVO;
 import com.probada.project.vo.ProjectVO;
 
@@ -26,5 +27,14 @@ public interface ChatDAO {
 	String selectRealChatSeqNext() throws SQLException;
 	
 	public List<String> selectUserInRoom(String roomId) throws SQLException;
+	
+	
+	public ChatVO selectChatRoom(ChatVO chat) throws SQLException;
+	
+	public List<ChatMessageVO> selectMessage(ChatMessageVO message) throws SQLException;
+	
+	String selectMessageSeqNext() throws SQLException;
+	
+	public void insertMessage(ChatMessageVO message) throws SQLException;
 	
 }

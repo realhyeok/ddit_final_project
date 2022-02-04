@@ -1,7 +1,5 @@
 package com.probada.user.web;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.probada.user.service.UserService;
 import com.probada.user.vo.EmailVO;
+import com.probada.user.vo.UserTotalCountVO;
 import com.probada.user.vo.UserVO;
 import com.probada.util.ProjectUtil;
 import com.probada.util.TaskUtil;
@@ -75,7 +74,6 @@ public class UserController {
 		HttpSession session = req.getSession();			// 세션 등록
 		Map<String, String> retMap = new HashMap<>();	// ajax로 보내는 리턴 값
 		UserVO user = new UserVO();
-//		List<AlertVO> alertList = new ArrayList<>();
 
 //		id와 password 저장
 		String inputId = req.getParameter("input_email");
@@ -84,7 +82,6 @@ public class UserController {
 
 		user = userService.login(user);	// 계정 리스트에서 입력한 계정 확인 후 user에 저장
 		boolean flag_pwd = userUtil.comparePwd(inputPwd, user.getUserId());	// 복호화 후 비교
-//		alertList = userUtil.getUserAlertList(user.getUserId());
 
 // 		비밀번호가 틀리거나, 계정이 없는 경우
 		if(!flag_pwd || user.getUserId().equals("")) {
@@ -107,7 +104,6 @@ public class UserController {
 		int userMaxUploadCapacity = userUtil.getUserMaxUploadCapacity(user.getUserId());
 
 		
-//		session.setAttribute("alertList", alertList);
 		session.setAttribute("userMaxUploadCapacity", userMaxUploadCapacity);
 		session.setAttribute("userVO", user);
 		return retMap;
@@ -200,10 +196,10 @@ public class UserController {
 		try {
 
 			userListForProjDetail = userService.getUserByProjNo(projNo);
-			
+
 			userListForProjDetail = taskUtil.getTaskCountUtil(userListForProjDetail);
 			userListForProjDetail = projectUtil.getProjectCountUtil(userListForProjDetail);
-			
+
 			entity = new ResponseEntity<List<UserVO>>(userListForProjDetail,HttpStatus.OK);
 
 		} catch(Exception e) {
@@ -219,6 +215,11 @@ public class UserController {
 		return "/web-index/common/send_pwdReset";
 	}
 	
+	/**
+	 * 이메일로 전송할 폼을 생성한다.
+	 * @param String userId
+	 * @return /web-index/common/success_send_pwdReset
+	 */
 	@RequestMapping(value="home/send_pwdReset.do", method = RequestMethod.POST)
 	public String success_send_pwdReset(String userId) {
 		
@@ -233,6 +234,14 @@ public class UserController {
 		return "/web-index/common/success_send_pwdReset";
 	}
 	
+	/**
+	 * 유저 아이디와 인증키를 받아서 password_reset.jsp로 전달한다.
+	 * 인증키가 유효하지 않으면 Exception이 발생한다.
+	 * @param String userId
+	 * @param String authkey
+	 * @return ModelAndView mav
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "home/password_reset", method = RequestMethod.GET)
 	public ModelAndView verifyPasswordReset(String userId, String authkey) throws Exception {
 		
@@ -252,6 +261,12 @@ public class UserController {
 		return mav;
 	}
 
+	/**
+	 * 비밀번호 암호화하여 재설정한다.
+	 * @param String pwd
+	 * @param String userId
+	 * @return ModelAndView mav
+	 */
 	@RequestMapping(value = "home/password_reset.do", method = RequestMethod.POST)
 	public ModelAndView passwordReset(String pwd, String userId){
 
@@ -274,18 +289,52 @@ public class UserController {
 
 		return mav;
 	}
-	
-	@RequestMapping(value="home/testtest")
-	public void testing(HttpServletResponse resp) {
-		String test = "";
+
+	@RequestMapping(value="externalLogin.do", method = RequestMethod.POST)
+	public void externalLogin(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+		
+		UserVO userVO = new UserVO();
+		userVO.setUserId(req.getParameter("memEmail"));
+		userVO.setNickname(req.getParameter("memNm"));
+		userVO.setPicture(req.getParameter("memImgUrl"));
+		
+//		해당 아이디로 가입한 계정이 있는지 DB에서 확인
+//		있다면 DB에서 해당 계정 불러와서 userVO에 초기화, 없다면 회원가입시킨다.
 		try {
-			test = userService.pwdPicker("apdlfthd@gmail.com");
-			userService.updateAuthstatus("apdlfthd@gmail.com");
-		} catch (SQLException e) {
+			if(userService.isAccount(userVO.getUserId()) <= 0) {
+				userUtil.registExternalLogin(userVO);
+			} else {
+				userVO = userService.getUser(userVO.getUserId());
+			}
+			
+			int userMaxUploadCapacity = userUtil.getUserMaxUploadCapacity(userVO.getUserId());
+			
+			session.setAttribute("userMaxUploadCapacity", userMaxUploadCapacity);
+			session.setAttribute("userVO", userVO);
+			
+//			세션에 등록 후, 로그인 성공처리
+			resp.setContentType("application/json");
+			resp.getWriter().print("{\"flag\": \"true\"}");
+
+		}catch (Exception e) {
 			e.printStackTrace();
-		} 
-		System.out.println("test => " + test);
+		}
+	
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getUserTotalCount.do", method = RequestMethod.GET)
+	public UserTotalCountVO getUserTotalCount(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		UserTotalCountVO vo = new UserTotalCountVO();
+		UserVO userVO = (UserVO) session.getAttribute("userVO");
+		
+		vo.setUserId(userVO.getUserId());
+		vo = userUtil.getUserTotalCount(vo);
+		
+		return vo;
+	}
+	
 	
 
 }

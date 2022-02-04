@@ -20,6 +20,10 @@ public interface TaskDAO {
 
 	public void updateTaskDetailByTaskNo(TaskVO taskVO) throws SQLException;
 
+	public void updateTaskStatus(TaskVO taskVO) throws SQLException;
+
+	public void deleteTaskByTaskNo(TaskVO taskVO) throws SQLException;
+
 	public void insertTask(TaskVO taskVO) throws SQLException;
 
 }

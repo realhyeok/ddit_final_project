@@ -1,20 +1,25 @@
 package com.probada.task.web;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.probada.document.vo.FileVO;
+import com.probada.document.vo.ProjectUserVO;
 import com.probada.task.service.TaskService;
 import com.probada.task.vo.TaskVO;
 import com.probada.user.vo.UserVO;
@@ -34,11 +39,11 @@ public class TaskController {
 
 	@RequestMapping("/getTaskListByProjNo")
 	@ResponseBody
-	public ResponseEntity<List<TaskVO>> getTaskListByProjNo(@RequestParam(defaultValue = "") String projNo)
+	public ResponseEntity<List<TaskVO>> getTaskListByProjNo(String projNo)
 			throws Exception {
 		ResponseEntity<List<TaskVO>> entity = null;
 
-		LOGGER.debug("[요청받음] => /getTaskListByProjNo");
+		LOGGER.debug("[요청받음] => /getTaskListByProjNo" + projNo);
 
 		List<TaskVO> taskVOList = new ArrayList<TaskVO>();
 
@@ -112,7 +117,6 @@ public class TaskController {
 	public ResponseEntity<TaskVO> getTaskDetailByTaskNo(TaskVO taskVO)
 			throws Exception {
 		ResponseEntity<TaskVO> entity = null;
-
 		TaskVO detailVO = new TaskVO();
 		try {
 
@@ -121,6 +125,7 @@ public class TaskController {
 			List<UserVO> userList = projectUtil.getProjectMemberByProjNo(taskVO.getProjNo());
 			detailVO.setProjTitle(projTitle);
 			detailVO.setUserList(userList);
+			detailVO.setProjNo(taskVO.getProjNo());
 
 			entity = new ResponseEntity<TaskVO>(detailVO, HttpStatus.OK);
 
@@ -136,10 +141,8 @@ public class TaskController {
 	public ResponseEntity<TaskVO> modifyTaskDetailByTaskNo(TaskVO taskVO)
 			throws Exception {
 		ResponseEntity<TaskVO> entity = null;
-
+		System.out.println(taskVO.getProjNo() + "zzzzz");
 		LOGGER.debug("[요청받음] => /modifyTaskDetailByTaskNo");
-
-		TaskVO resultVO = new TaskVO();
 
 		try {
 
@@ -176,5 +179,84 @@ public class TaskController {
 			e.printStackTrace();
 		}
 		return entity;
+	}
+
+
+
+
+	@PostMapping(value="/read")
+	@ResponseBody
+	public List<TaskVO> read(String projNo) throws Exception {
+
+		LOGGER.debug("요청받음 read" + projNo);
+
+		List<TaskVO> taskVOList = new ArrayList<TaskVO>();
+
+		try {
+
+			taskVOList = taskService.getTaskListByProjectNo(projNo);
+
+			for (TaskVO taskVO : taskVOList) {
+				String projTitle = projectUtil.getProjectNameByProjNo(projNo);
+				taskVO.setProjTitle(projTitle);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return taskVOList;
+	}
+
+	@PostMapping(value="/update")
+	@ResponseBody
+	private TaskVO update (TaskVO taskVO, String projNo) throws Exception{
+
+		LOGGER.debug("[요청받음] => /registTask VO =>"+taskVO.toString());
+
+		taskVO.setProjNo(projNo);
+
+		taskService.modifyTaskStatus(taskVO);
+
+		return taskVO;
+	}
+
+	@RequestMapping("/regist")
+	@ResponseBody
+	public void regist(TaskVO taskVO) throws Exception {
+
+		LOGGER.debug("[요청받음] => /registTask VO =>"+taskVO.toString());
+
+
+		try {
+
+			taskService.registTask(taskVO);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@PostMapping(value="/updateTaskStatus")
+	@ResponseBody
+	public void updateTaskStatus(TaskVO taskVO) throws Exception {
+
+		LOGGER.debug("요청받음 updateTaskStatus" + taskVO.getStatus());
+
+		try {
+
+			taskService.modifyTaskStatus(taskVO);
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@PostMapping(value="/delete")
+	@ResponseBody
+	private void delete (TaskVO taskVO) throws Exception{
+
+		taskService.removeTaskByTaskNo(taskVO);
+
 	}
 }

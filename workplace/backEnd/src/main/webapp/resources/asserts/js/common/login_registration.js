@@ -1,10 +1,10 @@
+
 /*
   form 태그를 바로 컨트롤러로 보내고 싶지 않은 경우
   submit return false를 주고, 해당 form을 불러냄
 
   
  */
-
 
 $(document).ready(function () {
   if (getCookie("rememberId")) {
@@ -381,3 +381,92 @@ const confNum = Math.floor(w / 4);
 const confs = new Array(confNum).fill().map(_ => new Confetti());
 
 loop();
+
+
+////////////////////////////////!!!!! 카카오 로그인 !!!!!///////////////////////////////////
+
+//SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+//Kakao.init("582c43c5379e1cd6033238a735875c5f");
+//SDK 초기화 여부를 판단합니다.
+//console.log(Kakao.isInitialized());
+
+//로그인
+//function kakaoLogin() {
+//Kakao.Auth.login({
+//success: function (authObj) {
+// 
+// // 로그인 성공시, api를 호출합니다.
+// Kakao.API.request({
+//   url: "/v2/user/me",
+//
+//   success: function (resp) { 
+//     let kakao_account = resp.kakao_account;
+//     let properties = resp.properties;
+//
+//     let memEmail = "";
+//     let memNm = "";
+//     let memImgUrl = "";
+//     if (typeof kakao_account != "undefined") {
+//       // 변수에 속성 값 넣기
+//       memEmail = kakao_account.email;
+//       memNm = properties.nickname;
+//       memImgUrl = properties.profile_image;
+////       alert(memImg);
+//     }
+//
+//     $.ajax({
+//       url: "/externalLogin.do",
+//       data: {
+//         "memEmail": memEmail,
+//         "memNm": memNm,
+//         "memImgUrl" : memImgUrl
+//       },
+//       type: "post",
+//       dataType: "json",
+//       success: function (resp) {
+//      	 if (resp.flag == "true") {
+//               location.href = "/app/index";
+//             }
+//       },
+//       error: function (xhr) {
+//         alert("외부 로그인 api 에러 상태 : " + xhr.status);
+//       },
+//     });
+//   },
+//
+//   fail: function (error) {
+//     console.log("error : " + error);
+//   },
+// });
+//},
+//fail: function (err) {
+// alert(JSON.stringify(err));
+//},
+//});
+
+
+//로그아웃
+//function kakaoLogout() {
+//	if (Kakao.Auth.getAccessToken()) {
+//	 Kakao.API.request({
+//	   url: "/v1/user/unlink",
+//	   success: function (resp) {
+//	     location.href="/home/login";
+//	   },
+//	   fail: function (error) {
+//	     console.log("error : " + error);
+//	   },
+//	 });
+//	 Kakao.Auth.setAccessToken(undefined);
+//	}
+//}
+////////////////////////////////!!!!! 네이버 로그인 !!!!!///////////////////////////////////
+//function naverLogin(){
+//	var naver_id_login = new naverIdLogin("zFXzPH5MbhIUJpBcUHID", "http://localhost/home/login");
+//	var state = naver_id_login.getUniqState();
+//	naver_id_login.setButton("green", 1,40);
+//	naver_id_login.setDomain("http://localhost");
+//	naver_id_login.setState(state);
+//	naver_id_login.setPopup();
+//	naver_id_login.init_naver_id_login();
+//}

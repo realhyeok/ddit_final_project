@@ -18,8 +18,11 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.probada.chat.service.ChatService;
+import com.probada.chat.vo.ChatMessageVO;
 import com.probada.chat.vo.ChatUserVO;
+import com.probada.chat.vo.ChatVO;
 import com.probada.user.vo.UserVO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 
@@ -28,47 +31,39 @@ public class EchoHandler extends TextWebSocketHandler {
 	@Autowired
 	ChatService chatService;
 
+	
+	private final ObjectMapper objectMapper = new ObjectMapper();
+	
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(EchoHandler.class);
 	//로그인 한 전체
 	List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
-	// 1대1대?
-	Map<String, WebSocketSession> userSessionsMap = new HashMap<String, WebSocketSession>();
+
+	private Map<String, ArrayList<WebSocketSession>> RoomList = new HashMap<String, ArrayList<WebSocketSession>>();
+	    
+	private Map<WebSocketSession, String> sessionList = new HashMap<WebSocketSession, String>();
 	
-	//방 넘버를 저장하는 이걸로 세션을 구별함
-	Map<String,List<WebSocketSession>> chatUserSession = new HashMap<>();
-	
-	List<WebSocketSession> userList = new ArrayList<>();
-	//List<Map<String, List<WebSocketSession>>> chat = new ArrayList<>();
-	/*
-	 * Map<"1",List<WebSocketSession>
-	 * Map<"2",List<WebSocketSession>
-	 * 
-	 */
-	private String chatNo;
-	//내가 초대한 사람 리스트
-	
-	//클라가 서버에 연결
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		
-		 Map<String,Object> map = session.getAttributes();
-		 UserVO loginUser = (UserVO)map.get("userVO");
+		// Map<String,Object> map = session.getAttributes();
+		// UserVO loginUser = (UserVO)map.get("userVO");
 
-		 LOGGER.debug("loginUser =>{}",loginUser);
+		// LOGGER.debug("loginUser =>{}",loginUser);
 		
-		sessions.add(session);
+		//sessions.add(session);
 		
-		Map<String, String> data = new HashMap<>();
-		data.put("dataType", "login");
+		//Map<String, String> data = new HashMap<>();
+		//data.put("dataType", "login");
 		//세션이 없으면 에려
-		data.put("data", loginUser.getNickname()+"님이 접속했습니다.<br/>현재 총"+sessions.size()+"명 접속중.");
+		//data.put("data", loginUser.getNickname()+"님이 접속했습니다.<br/>현재 총"+sessions.size()+"명 접속중.");
 		
-		String jsonData = new Gson().toJson(data);
-		for(WebSocketSession user :sessions) {
-			user.sendMessage(new TextMessage(jsonData));
-		}
+		//String jsonData = new Gson().toJson(data);
+	//	for(WebSocketSession user :sessions) {
+		//	user.sendMessage(new TextMessage(jsonData));
+		//}
 		
-		LOGGER.debug("dataMap =>{}",data);
+		//LOGGER.debug("dataMap =>{}",data);
 	/*	String senderId = getId(session);
 		userSessionsMap.put(senderId , session);*/
 	}
@@ -77,50 +72,78 @@ public class EchoHandler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
+	
 		
-		//받은 room 아이디
-		String roomId = "realChat4";
-		//만약 아이디가 룸 넘버를 속하고 있다면? 리스트에 저장한다. 위로 뺴야함
+		String msg = message.getPayload();
 		
-		//
-		//Map<String,List<WebSocketSession>> chatUserSession = new HashMap<>();
+		ChatMessageVO chatMessage = objectMapper.readValue(msg,ChatMessageVO.class);
 		
+		LOGGER.debug("chatMessage =>{}",chatMessage);
 		
+		ChatVO commandChat = new ChatVO();
+		commandChat.setUserId(chatMessage.getUserId());
+		commandChat.setRealRoom(chatMessage.getRealRoom());
 		
-		List<String> userInRoom = new ArrayList<>();
+		LOGGER.debug("commandChat =>{}",commandChat);
 		
-		Map<String,Object> map = session.getAttributes();
-		UserVO loginUser = (UserVO)map.get("userVO");
+		ChatVO chatRoom = chatService.getRoomByRealRoom(commandChat);
 		
-		//로직 시작
-		//내가 속한 룸 넘버를 뽑는다.
-		userInRoom = chatService.getUserInRoom(roomId);
+		LOGGER.debug("chatRoom =>{}",chatRoom);
 		
-		LOGGER.debug("userInRoom =>{}",userInRoom);
+		if(RoomList.get(chatRoom.getRealRoom()) == null && chatMessage.getContent().equals("ENTER-CHAT") && chatRoom != null) {
+            
+            // 채팅방에 들어갈 session들
+            ArrayList<WebSocketSession> sessionTwo = new ArrayList<>();
+            // session 추가
+            sessionTwo.add(session);
+            // sessionList에 추가
+            sessionList.put(session, chatRoom.getRealRoom());
+            // RoomList에 추가
+            RoomList.put(chatRoom.getRealRoom(), sessionTwo);
+            LOGGER.debug("채팅방 생성");
+        }
+        
+        // 채팅방이 존재 할 때
+        else if(RoomList.get(chatRoom.getRealRoom()) != null && chatMessage.getContent().equals("ENTER-CHAT") && chatRoom != null) {
+            
+            // RoomList에서 해당 방번호를 가진 방이 있는지 확인.
+            RoomList.get(chatRoom.getRealRoom()).add(session);
+            // sessionList에 추가
+            sessionList.put(session, chatRoom.getRealRoom());
+            LOGGER.debug("채팅방 입장");
+        }
+        
+        // 채팅 메세지 입력 시
+        else if(RoomList.get(chatRoom.getRealRoom()) != null && !chatMessage.getContent().equals("ENTER-CHAT") && chatRoom != null) {
+            
+        	
+        	LOGGER.debug("채팅 매시지 입력 메서드 실행");
+        	
+            // 메세지에 이름, 내용을 담는다.
+            TextMessage textMessage = new TextMessage(chatMessage.getUserId() + ","+chatMessage.getNickname()+","+ chatMessage.getContent()+","+chatMessage.getRegdate());
+            
+            
+            // 현재 session 수
+            int sessionCount = 0;
+ 
+            // 해당 채팅방의 session에 뿌려준다.
+            for(WebSocketSession sess : RoomList.get(chatRoom.getRealRoom())) {
+                sess.sendMessage(textMessage);
+                sessionCount++;
+            }
+            
+            // 동적쿼리에서 사용할 sessionCount 저장
+            // sessionCount == 2 일 때는 unReadCount = 0,
+            // sessionCount == 1 일 때는 unReadCount = 1
+            // chatMessage.setSessionCount(sessionCount);
+            
+            chatMessage.setChatroomMsgNo(chatService.seqMessage());
+            
+            LOGGER.debug("chatMessage=>{}",chatMessage);
+            chatService.createMessage(chatMessage);
+            
+        }
 		
-		for (String inUser : userInRoom) {
-			if(inUser.equals(loginUser.getUserId())) {
-				userList.add(session);
-			}
-		}
-		
-		chatUserSession.put(roomId, userList);
-		LOGGER.debug("userList =>{}",userList);
-		
-		for (WebSocketSession sess : userList) {
-			LOGGER.debug("getId(session) =>{}",getId(session));
-			sess.sendMessage(new TextMessage( getId(session) +" : " +  message.getPayload()));
-			LOGGER.debug("TextMessage =>{}",new TextMessage( getId(session) +" : " +  message.getPayload()));
-			//여기서 db에 메시지 저장
-			
-		}
-		
-		//룸 넘버를 받고 룸넘ㄴ에 있는 회워들을 조회한다.
-		
-		//회원들을 맵에 넣는다. <Map<String, List<WebSocketSession>>
-		// "룸넘버","세션"
-		//방 넘버를 저장하는 이걸로 세션을 구별함
-		//Map<String,List<WebSocketSession>> chatUserSession = new HashMap<>();
 		
 		
 		
@@ -139,8 +162,14 @@ public class EchoHandler extends TextWebSocketHandler {
 	//연결 해제될때
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		userSessionsMap.remove(session.getId());
-		sessions.remove(session);
+		
+		  if(sessionList.get(session) != null) {
+	            // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 ArrayList<session>에서 해당 session을 지운다.
+	            RoomList.get(sessionList.get(session)).remove(session);
+	            sessionList.remove(session);
+	        }
+		
+		
 	}
 	
 	//웹소켓 id 가져오기

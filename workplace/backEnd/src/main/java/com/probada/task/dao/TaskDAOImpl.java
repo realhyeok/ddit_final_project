@@ -70,4 +70,18 @@ public class TaskDAOImpl implements TaskDAO {
 		return seq;
 	}
 
+	@Override
+	public void updateTaskStatus(TaskVO taskVO) throws SQLException {
+
+		sqlSession.update("Task-Mapper.updateTaskStatus",taskVO);
+
+	}
+
+	@Override
+	public void deleteTaskByTaskNo(TaskVO taskVO) throws SQLException {
+
+		sqlSession.delete("Task-Mapper.deleteTaskByTaskNo", taskVO);
+
+	}
+
 }

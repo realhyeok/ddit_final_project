@@ -5,18 +5,18 @@
 	<head>
 	</head>
 	<body>
-		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-document.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myDocument.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myHistory.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailReceive.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailSend.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailTemp.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailTrash.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailAlert.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myRequest.js"></script>
 		<script	src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myOverlay.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myTask.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-issue.js"></script>
-		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-task.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-dash-doughnut.js"></script>
-		<%@ include file="/WEB-INF/views/web-app/myWork/summernote.jsp" %>
 		<input type="hidden" id="sessionId" value="${userVO.userId}">
 		
 		<script>
@@ -41,6 +41,17 @@
 						history.pushState(null, null, newLink);
 			        }
 			    });
+				
+				if(${from eq 'deleteMyTaskByTaskNo'}) {
+					alert("업무 삭제가 완료되었습니다.");
+					
+					document.getElementById('task-tab').click();
+					
+					var link = document.location.href.split("#");
+					var newLink = link[0] + "#task-tab";
+					
+					history.pushState(null, null, newLink);
+				}
 				
 				if(${from eq 'deniedRegistFileSize'}) {
 					alert("파일용량을 초과하였습니다. 메일 전송이 취소되었습니다.");

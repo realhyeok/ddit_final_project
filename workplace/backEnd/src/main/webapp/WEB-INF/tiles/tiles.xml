@@ -53,6 +53,8 @@
 		<put-attribute name="myCss" value="/WEB-INF/tiles/myWork_css.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/web-app/myWork/{1}.jsp"/>
 		<put-attribute name="myScript" value="/WEB-INF/tiles/myWork_script.jsp"/>
-		<put-attribute name="myOverlay" value="/WEB-INF/views/web-app/myWork/myOverlay.jsp"/>
+		<put-attribute name="myMailOverlay" value="/WEB-INF/views/web-app/myWork/myMailOverlay.jsp"/>
+		<put-attribute name="myTaskOverlay" value="/WEB-INF/views/web-app/myWork/myTaskOverlay.jsp"/>
+		<put-attribute name="myTaskModifyOverlay" value="/WEB-INF/views/web-app/myWork/myTaskModifyOverlay.jsp"/>
 	</definition>
 </tiles-definitions>

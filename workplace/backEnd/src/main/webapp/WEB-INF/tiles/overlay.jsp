@@ -19,6 +19,10 @@
 	background-color: white;
 	z-index: 200;
 }
+
+.seokFont{
+font-family: 'Jua', sans-serif;
+}
 </style>
 
 </head>
@@ -27,7 +31,54 @@
 	<div id="popoverlay"></div>
 	<!-- 오버레이 끝 -->
 
-
+<script type="text/x-handlebars-template" id="anyWhereMailRegistFormTemplate">
+	<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">메일 전송</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+				<div class="x_content">
+					<div class="row">
+						<!-- 내용저장 -->
+						<div class="x_content row">
+							<div class="col-sm-12">
+								<form enctype="multipart/form-data" role="form" method="post" action="<%=request.getContextPath()%>/app/myWork/mailRegist" name="overlayAnyWhereMailRegistForm" class="form-horizontal form-label-left">
+									<div class="inbox-body">
+										<input type="hidden" id="anyWhereUserFrom" name="userFrom" value="${userVO.userId}">
+										<input type="hidden" id="anyWhereOverlayDist" name="dist" value="">
+										<input type="text" id="anyWhereMailOverlayUserTo" name="userTo" class="form-control form-control-sm mt-3 sendOverlayAnyWhereUserTo" placeholder="받는 사람:" value="">
+										<br>
+										<input type="text" id="anyWhereMailOverlayTitle" name="title" class="form-control form-control-sm sendOverlayAnyWhereTitle" placeholder="제목:">
+										<br>
+										<textarea id="anyWhereMailOverlayContent" name="content" rows="10" class="form-control content sendOverlayAnyWhereContent overlaySendAnyWhereContent" placeholder="내용을 입력하세요." style="display:none;"></textarea>
+										<br>
+									</div>
+									<div class="card">
+										<div class="card-header" style="background:#f7f7f7;border-bottom:none;">
+											<button class="btn btn-sm btn-primary" onclick="addOverlayAnyWhereFile_go();" type="button" id="addFileBtn">파일첨부</button>
+										</div>
+										<div class="card-body overlayFileAnyWhereInput"></div>
+										<div class="card-footer"></div>
+									</div>
+								</form>
+							</div>
+							<div class="col-sm-12 mt-3 pr-1" style="text-align:right;">
+								<button type="button" id="mailAnyWhereTempSaveButton" class="btn btn-sm btn-dark" onclick="mailOverlayAnyWhereRegist_go('temp');return false;">임시저장</button>
+								<button type="button" id="mailAnyWhereSendButton" class="btn btn-sm btn-primary" onclick="mailOverlayAnyWhereRegist_go('send', '${userVO.nickname}');return false;">전송</button>
+							</div>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
 
 <script type="text/x-handlebars-template" id="issueRegistFormTemplate">
 	<div class="row" style="display:none;" id="fadeInContent">
@@ -714,6 +765,159 @@
 </div>
 </div>
 </script>
+
+
+<!-- chatTest -->
+<script type="text/x-handlebars-template" id="chatTemplate">
+
+
+
+
+
+
+
+ <div id="overlayChat">
+                        <div id="textChat">
+                            <div id="roomWrap">
+                                <div id="roomList">
+                                        <div id="roomCreate" ><span style="font-size: 2.0em;">&nbsp;<i class="fa fa-comments"></i>channel &nbsp;<i class="fa fa-plus-square" data-toggle="modal" data-target="#createRoomModal"></i> </span></div>
+                                     
+
+                                        <div id="roomSelect">
+                    
+                                            <table class="table table-hover">
+
+												{{#each.}}
+                                               		  <tr>
+                                                	    <td class="active" onclick="selectChatRoom('{{this.realRoom}}');"><span class="seokFont" style="font-size: 1.2em;">{{this.title}}</span></td>
+                                              		  </tr>
+												{{/each}}	       	
+
+                                            </table>
+                                            
+                                    
+                                            </div>
+                                </div>
+                            </div>
+                             <span style="font-size: 1.5em;" id="offChatList" onclick="offChatList()">&nbsp;&nbsp;<i class="fa fa-chevron-circle-right"></i>&nbsp;접기</span>
+                       
+                            
+           </div>
+                            
+</div>
+
+
+
+</script>
+
+<script type="text/x-handlebars-template" id="chatModalTemplate">
+
+<!-- 모달 -->
+<div id="createRoomModal" class="modal modal-default fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title">채팅방 생성</h3>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body" data-rno>
+
+				<form role="form" id="createChatForm" method="post" action="/chat/createRoom" name="createForm">
+					<br>
+					<div class="form-group row">
+
+
+						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;채팅방 이름 </span></label>
+						<div class="col-lg-12">
+
+							<input id="title" onclick="button_click();" class="form-control col-md-12 seokid" name="title" value="" placeholder="">
+			
+			            </div>
+							
+					</div>
+
+					
+
+					<div class="form-group row">
+						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;프로젝트 선택</span></label>
+						<div class="col-lg-12">
+			                    <select class="select2_single form-control" name="Ptitle" id="selectProject" tabindex="-1" >
+									<option value=''>==내가속한 프로젝트 리스트==</option>
+			                        {{#each.}}
+										<option value="{{this}}">{{this}}</option>
+									{{/each}}
+			                      
+
+
+			                    </select>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;멤버선택</span></label>
+						<div class="col-lg-12" id="memberInvite">
+
+								
+
+			                       
+						</div>
+					</div>
+					<span id="checkCreateRoom">가이드</span>
+					<div class="float-right">
+						<button type="button" class="btn btn-info" id="replyDelBtn"
+							onclick="createRoom();">생성</button>
+						<button type="button" class="btn btn-dark" data-dismiss="modal">취소</button>
+					</div>	
+					
+				</form>
+			</div>
+
+
+		</div>
+
+		<div class="modal-footer">
+
+			
+		</div>
+	</div>
+</div>
+
+
+</script>
+
+
+<!-- 채팅 테스트 템플릿 -->
+<!-- <div id="overlayChat">
+  <div id="textChat">
+ 	 <div id="roomWrap">
+	  	 <div id="roomList">
+	                <div id="roomCreate" data-toggle="modal" data-target="#createRoomModal">방만들기+</div>
+	                <div id='roomHeader'>채팅 방 목록</div>
+	                <div id="roomSelect">
+
+						
+						{{#each.}}
+							<div class="roomEl" data-id="2" onclick="selectChatRoom('{{this.realRoom}}');">{{this.title}}</div>	
+						{{/each}}	                  	
+
+				
+	              	</div>
+	        </div>
+        </div>
+        
+  <div id="offChatList" onclick="offChatList()">접기</div>
+        
+  </div>
+  	
+</div> -->
+
+
+
+
+
+
+
 
 <!-- 템플레이트
 <div class="row" style="display:none;" id="fadeInContent">

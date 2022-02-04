@@ -16,6 +16,9 @@
 	<tiles:insertAttribute name="footer"/>
 	<tiles:insertAttribute name="script"/>
 	<tiles:insertAttribute name="myScript"/>
-	<tiles:insertAttribute name="myOverlay"/>
+	<tiles:insertAttribute name="overlay"/>
+	<tiles:insertAttribute name="myMailOverlay"/>
+	<tiles:insertAttribute name="myTaskOverlay"/>
+	<tiles:insertAttribute name="myTaskModifyOverlay"/>
 </body>
 </html>

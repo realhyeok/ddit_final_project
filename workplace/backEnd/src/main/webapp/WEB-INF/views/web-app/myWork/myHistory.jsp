@@ -14,6 +14,6 @@
 			<p class="mt-1">#:msg#</p>
 			<p>#:regDate#</p>
 		</div>
-		<button type="button" class="btn btn-sm btn-dark mt-1" style="height:40px;width:38px;" onclick="location.href='<%=request.getContextPath()%>/app/myWork/#:url#'">이동</button>
+		<button type="button" class="btn btn-sm btn-dark mt-1" style="height:40px;width:38px;" onclick="location.href='<%=request.getContextPath()%>/app/#:url#'">이동</button>
 	</div>	
 </script>

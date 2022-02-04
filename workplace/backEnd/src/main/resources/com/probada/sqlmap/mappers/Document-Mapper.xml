@@ -22,9 +22,17 @@
 		<result column="UPDATEDATE" property="modified" />
 
 	</resultMap>
+	
+	
+	
+	<select id="selectProjByTitle" parameterType="str" resultType="str">
+			select proj_no from PROJECT
+				where title = #{title}
 
-
-
+	</select>
+	
+	
+	
 
 
 	<select id="selectDocList" resultMap="DocResultMap">

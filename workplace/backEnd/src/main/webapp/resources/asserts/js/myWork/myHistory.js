@@ -1,6 +1,6 @@
 //히스토리 시작
 window.addEventListener('load', function() {
-	var sessionId = $('#sessionId').val();
+	var sessionId = $("#sessionId").val();
 	
 	var myHistoryTable = $("#myHistory").kendoGrid({
 		dataSource: {

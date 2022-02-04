@@ -18,5 +18,9 @@ public interface TaskService {
 
 	public void modifyTaskDetailByTaskNo(TaskVO taskVO) throws SQLException;
 
+	public void modifyTaskStatus(TaskVO taskVO) throws SQLException;
+
+	public void removeTaskByTaskNo(TaskVO taskVO) throws SQLException;
+
 	public String registTask(TaskVO taskVO) throws SQLException;
 }

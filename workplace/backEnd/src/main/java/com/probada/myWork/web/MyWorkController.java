@@ -22,7 +22,7 @@ public class MyWorkController {
 	
 	@RequestMapping("/myTaskDetail")
 	public String taskDetail() throws Exception {
-		String url = "/web-app/myWork/my-task-detail";
+		String url = "/web-app/myWork/myTaskDetail";
 		
 		return url;
 	}	

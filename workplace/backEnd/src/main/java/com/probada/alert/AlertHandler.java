@@ -43,44 +43,76 @@ public class AlertHandler extends TextWebSocketHandler {
 		protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 			String senderEmail = getId(session);
 			
-			//protocol : cmd , 닉네임, 송신자, 프로젝트넘버
+			//protocol : 누가(nickname) 어디서(분야) 무엇(target)을 curd(어떻게), 프로젝트 넘버
 			String msg = message.getPayload();
 			
 			if(StringUtils.isNotEmpty(msg)) {
 				String[] strs = msg.split(",");
 				
-				for (String string : strs) {
-					System.out.println("msg.split 출력 -> " + string);
-				}
+//				검사용
+//				for (String string : strs) {
+//					System.out.println("msg.split 출력 -> " + string);
+//				}
 				
-				if(strs != null && strs.length == 5) {
+				if(strs != null && strs.length == 6) {
 					String serderNickName = strs[0];
 					String serderWhere = strs[1];
 					String senderTarget = strs[2];
 					String senderWhatToDo = strs[3];
 					String senderProjNo = strs[4];
+					String receiverId = strs[5];
 					
-					// sender가 로그인 해있으면
-					for (WebSocketSession sess : sessions) {
-						List<String> othersProjNoList = userUtil.getUserProjNoList(getId(sess));
-						for (int i = 0; i < othersProjNoList.size(); i++) {
-							
-							if(sess != null && othersProjNoList.get(i).equals(senderProjNo) 
-											&& sess != session) {
-//								protocol : 누가(nickname) 어디서(분야) 무엇(target)을 curd(어떻게) + 상대방 이메일 주소(DB저장용) 
-								System.out.println("getId(sess) => " + getId(sess));
-								TextMessage tmpMsg = new TextMessage(
-																	serderNickName 
-																	+ "," + serderWhere 
-																	+ "," + senderTarget
-																	+ "," + senderWhatToDo 
-																	+ "," + senderProjNo
-																	+ "," + getId(sess));
+					//작성자가 로그인 해서 있다면
+					WebSocketSession receiverSession = userSessionsMap.get(receiverId);
+					
+//					메일을 보내는 경우
+					if(serderWhere.equals("메일") && receiverSession != null) {
+						
+						TextMessage tmpMsg = new TextMessage(
+								serderNickName 
+								+ "," + serderWhere 
+								+ "," + senderTarget
+								+ "," + senderWhatToDo 
+								+ "," + senderProjNo
+								+ "," + getId(receiverSession));
+						
+						receiverSession.sendMessage(tmpMsg);
+						
+					}else if(serderWhere.equals("리퀘스트") && receiverSession != null) {
+						TextMessage tmpMsg = new TextMessage(
+								serderNickName 
+								+ "," + serderWhere 
+								+ "," + senderTarget
+								+ "," + senderWhatToDo 
+								+ "," + senderProjNo
+								+ "," + getId(receiverSession));
+						
+						receiverSession.sendMessage(tmpMsg);
+					}else {
+						// sender가 로그인 해있으면, 프로젝트 넘버가 일치할 경우
+						for (WebSocketSession sess : sessions) {
+							List<String> othersProjNoList = userUtil.getUserProjNoList(getId(sess));
+							for (int i = 0; i < othersProjNoList.size(); i++) {
 								
-								sess.sendMessage(tmpMsg);
+								if(sess != null && othersProjNoList.get(i).equals(senderProjNo) 
+												&& sess != session) {
+//									protocol : 누가(nickname) 어디서(분야) 무엇(target)을 curd(어떻게) + 상대방 이메일 주소(DB저장용) 
+									TextMessage tmpMsg = new TextMessage(
+																		serderNickName 
+																		+ "," + serderWhere 
+																		+ "," + senderTarget
+																		+ "," + senderWhatToDo 
+																		+ "," + senderProjNo
+																		+ "," + getId(sess));
+									
+//									sendMessage()를 하게 되면  alertIndex.js의 sock.onmessage()로 파라미터를 전달하게 됩니다.
+									sess.sendMessage(tmpMsg);
+								}
 							}
 						}
 					}
+					
+					
 				}
 				
 //				if(strs != null && strs.length == 5) {

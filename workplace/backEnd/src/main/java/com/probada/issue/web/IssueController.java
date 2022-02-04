@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.probada.issue.service.IssueService;
 import com.probada.issue.vo.IssueVO;
+import com.probada.task.vo.TaskVO;
 import com.probada.user.vo.UserVO;
 import com.probada.util.IssueUtil;
 import com.probada.util.ProjectUtil;
@@ -98,11 +100,13 @@ public class IssueController {
 
 		LOGGER.debug("[요청받음] => /modifyIssueByIssueNo");
 
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 	try {
 
 		issueService.modifyIssueByIssueNo(issueVO);
+		hashMap.put("issueNo", issueVO.getIssueNo());
 
-		entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.OK);
+		entity = new ResponseEntity<HashMap<String, Object>>(hashMap,HttpStatus.OK);
 
 	} catch(Exception e) {
 		entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -111,6 +115,54 @@ public class IssueController {
 	}
 
 	return entity;
-}
+	}
 
+
+	@RequestMapping("/registIssue")
+	@ResponseBody
+	public ResponseEntity<HashMap<String, Object>> registIssue(IssueVO issueVO) throws SQLException {
+		ResponseEntity<HashMap<String, Object>> entity = null;
+
+		LOGGER.debug("[요청받음] => /registIssue");
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		try {
+
+			issueService.registIssue(issueVO);
+			hashMap.put("issueNo", issueVO.getIssueNo());
+
+			entity = new ResponseEntity<HashMap<String, Object>>(hashMap,HttpStatus.OK);
+
+		} catch(Exception e) {
+			entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+
+		}
+
+		return entity;
+	}
+
+	@RequestMapping("/getIssueRegistInfoByProjNo")
+	@ResponseBody
+	public ResponseEntity<IssueVO> getIssueRegistInfoByProjNo(HttpServletRequest request,String projNo) throws Exception {
+		ResponseEntity<IssueVO> entity = null;
+
+		HttpSession session = request.getSession();
+		IssueVO issueVO = new IssueVO();
+		try {
+
+			UserVO userVO = (UserVO) session.getAttribute("userVO");
+
+			String projTitle = projectUtil.getProjectNameByProjNo(projNo);
+			issueVO.setProjTitle(projTitle);
+			issueVO.setMember(userVO);
+
+			entity = new ResponseEntity<IssueVO>(issueVO, HttpStatus.OK);
+
+		} catch (Exception e) {
+			entity = new ResponseEntity<IssueVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
 }

@@ -3,6 +3,7 @@ var PROJ_NO = getParameterByName("projNo");
 var userId = "seok@ddit.com";
 
 var projectUserVO = {projNo, userId};
+var documentFlag = false;
 
 function readDocument(){
 
@@ -41,7 +42,11 @@ function readDocument(){
 				extend(kendo.ui.filemanager.commands, {DownloadCommand: DownloadCommand});
 				kendo.ui.filemanager.ContextMenu.fn.events.push("open");
 
-				 $("#filemanager").kendoFileManager({
+				if(documentFlag == true){
+					return;
+				}
+
+				 var filemanager = $("#filemanager").kendoFileManager({
 		           dataSource: {
 		        	   transport: {
 		        			read: {
@@ -134,8 +139,7 @@ function readDocument(){
 
 		   }).data("kendoFileManager");
 
-				 readDocument = function () {};
-
+				 documentFlag = true;
 	}
 
 // url 파라미터값 가져오기

@@ -8,6 +8,9 @@
 	<mapper namespace="Chat-Mapper">
 
 
+	
+
+
 	<select id="selectMyProjTitleList" resultType="String" parameterType="String">	
 	
 		select title from user_project a, project b
@@ -26,12 +29,12 @@
 		insert into
 		chatroom 
 		values(
-         #{chatroom_no}
-        ,#{user_id}
-        ,#{proj_no}
+         #{chatroomNo}
+        ,#{userId}
+        ,#{projNo}
         ,#{title}
         ,sysdate
-        ,#{real_room}
+        ,#{realRoom}
         )
 	</update>
 	
@@ -66,7 +69,46 @@
 
 <select id="selectUserInRoom" resultType="str" parameterType="str">
 		 select USER_ID from CHATROOM 
-  				where REAL_ROOM = #{real_room}
+  				where REAL_ROOM = #{realRoom}
+
+</select> 
+
+<select id="selectChatRoom" resultType="com.probada.chat.vo.ChatVO" parameterType="com.probada.chat.vo.ChatVO">
+		 select * from CHATROOM 
+  				where REALROOM = #{realRoom} 
+  					and USER_ID=#{userId}
+
+</select>
+
+
+<select id="selectMessage" resultType="com.probada.chat.vo.ChatMessageVO" parameterType="com.probada.chat.vo.ChatMessageVO">
+		 select  
+		 
+		*
+		 
+		 from CHATROOM_MESSAGE 
+  				where REALROOM = #{realRoom} 
+  			order by regdate
+  		
+</select>
+
+<update id="insertMessage" parameterType="com.probada.chat.vo.ChatMessageVO">
+		insert into
+		CHATROOM_MESSAGE
+		values(
+         #{chatroomMsgNo}
+        ,#{userId}
+        ,#{content}
+        ,sysdate
+        ,1
+        ,#{realRoom}
+        ,#{nickname}
+        )
+	</update>
+	
+
+<select id="selectMessageSeqNext" resultType="str">
+		select 'message'||CHATROOM_MSG_NO_SEQ.NEXTVAL as CHATROOM_MSG_NO from dual
 
 </select>
 

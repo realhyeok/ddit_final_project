@@ -17,7 +17,8 @@
 	    <!-- /footer content -->
 	  </div>
 	</div>
-
+	<%@ include file="/WEB-INF/views/web-app/myWork/summernote.jsp" %>
+	<input type="hidden" id="sessionUserId" value="${userVO.userId}">
 	<!-- floating action button  -->
 	<div class="zoom">
     	<input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
@@ -25,6 +26,7 @@
     <ul class="zoom-menu">
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-person scale-transition scale-out"><i class="fa fa-user"></i></a></li>
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-doc scale-transition scale-out"><i class="fa fa-book"></i></a></li>
+      <li><a class="zoom-fab zoom-btn-sm zoom-btn-report scale-transition scale-out" href="javascript:getOverlayAnyWhereMailRegistTemplate('${userVO.userId}');"><i class="fa fa-envelope-o"></i></a></li>
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-tangram scale-transition scale-out"><i class="fa fa-dashboard"></i></a></li>
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-report scale-transition scale-out" href="javascript:on()"><i class="fa fa-edit"></i></a></li>
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-feedback scale-transition scale-out"><i class="fa fa-bell"></i></a></li>

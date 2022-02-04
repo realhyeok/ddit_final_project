@@ -10,6 +10,19 @@ function off() {
 
 var prevTarget = [];
 
+function getOverlayAnyWhereMailRegistTemplate(userId) {
+	anyWhereMailRegistOverlayMemory(userId);
+	
+	on();
+	
+	var template = document.querySelector("#anyWhereMailRegistFormTemplate").innerText;
+	var bindTemplate = Handlebars.compile(template);
+	var appe = document.querySelector('#popoverlay');
+	appe.innerHTML = bindTemplate();
+	$("#fadeInContent").fadeIn(300);
+	summernote_go($('#anyWhereMailOverlayContent'));
+}
+
 function getOverlayModifyTemplate(templateId, url) {
 
 	on();
@@ -167,4 +180,120 @@ function checkValidate(FormId, targetName) {
 			$('#'+FormId+' [name="'+targetName+'"]').parents('div.custom-validate').attr('class','item form-group custom-validate');
 		}
 
+}
+
+function anyWhereMailRegistOverlayMemory(userIds){
+	var anyWhereMailMemoryCapacity = null;
+	
+	var userId = userIds;
+
+	$.ajax({
+		url: "/app/myWork/getMemoryCapacity",
+		type: "get",
+		async: false,
+		data: {
+			"userId" : userId
+		},
+		success: function(data){
+			anyWhereMailMemoryCapacity = data;
+		},
+		error: function(error){
+			alert(error.status);
+		}
+	});
+	
+	$(document).on('change', '.anyWhereMailOverlayAttachFile', function(event){
+		if(this.files[0].size > anyWhereMailMemoryCapacity * 1024 * 1024){
+			alert("파일 용량은 " + anyWhereMailMemoryCapacity + "MB 이하만 가능합니다.");
+			this.value="";
+			$(this).click();
+			return;
+		}
+	});
+}
+	
+
+var dataNum = 0;
+
+function addOverlayAnyWhereFile_go(){
+	if($('input[class="anyWhereMailOverlayAttachFile"]').length >= 5){
+		alert("파일 추가는 5개 까지만 가능합니다.");
+		return;
+	}
+
+	var div = $('<div>').addClass("inputRow").addClass("mb-1").attr("data-no", dataNum);
+	var input = $('<input>').attr({"type":"file", "name":"attachFile", "class":"anyWhereMailOverlayAttachFile"}).css("display", "inline");
+	
+	div.append(input).append("<button type='button' class='badge bg-red' onclick='removeOverlayAnyWhereAttachFile_go(" + dataNum + ")' style='border:0;outline:0;'>X</button>");
+	$('.overlayFileAnyWhereInput').append(div);
+	
+	dataNum++;
+}
+
+function removeOverlayAnyWhereAttachFile_go(dataNum){
+	$('div[data-no="' + dataNum + '"]').remove();
+}
+
+function mailOverlayAnyWhereRegist_go(dist, userFrom){
+	
+	if(dist == "temp"){
+		$("#anyWhereOverlayDist").val("temp");
+	}else if(dist == "send"){
+		$("#anyWhereOverlayDist").val("send");
+	}
+	
+	var files = $('input[class="anyWhereMailOverlayAttachFile"]');
+	for(var file of files){
+		console.log(file.name + " : " + file.value);
+		if(file.value == ""){
+			alert("파일을 선택해주세요.");
+			file.focus();
+			file.click();
+			return;
+		}
+	}
+
+	if($("input[id='anyWhereMailOverlayTitle']").val() == ""){
+		alert("제목을 입력해주세요.");
+		$("input[id='anyWhereMailOverlayTitle']").focus();
+		return;
+	}
+	if($("textarea[id='anyWhereMailOverlayContent']").val() == ""){
+		alert("내용을 입력해주세요.");
+		$("textarea[id='anyWhereMailOverlayContent']").focus();
+		return;
+	}
+	if(dist == "send"){
+		var receiverId = $("#anyWhereMailOverlayUserTo").val();
+		mailAlarm(receiverId, userFrom);
+	}
+	document.overlayAnyWhereMailRegistForm.submit();
+}
+
+function mailAlarm(rid, userFrom){
+	var nickname   = userFrom;
+	var where      = "메일";
+	var target     = "메일";
+	var whatTodo   = "전송";
+	var projNo     = "0";
+	var receiverId = rid;
+	
+	let socketData = {
+		nickname   : nickname,
+		where      : where,
+		target     : target,
+		whatToDo   : whatTodo,
+		projNo     : projNo,
+		receiverId : receiverId
+	}
+	
+	if(socket){
+		let socketMsg = socketData.nickname 
+				+ "," + socketData.where 
+				+ "," + socketData.target 
+				+ "," + socketData.whatToDo 
+				+ "," + socketData.projNo
+				+ "," + socketData.receiverId;
+		socket.send(socketMsg);
+	}
 }

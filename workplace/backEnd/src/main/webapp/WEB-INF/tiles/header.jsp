@@ -4,7 +4,8 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 변수 선언 시작 -->
-<c:set var="nickname" value="${userVO.nickname }"/>
+<c:set var="nickname" value="${userVO.nickname}"/>
+<c:set var="userId" value="${userVO.userId}"/>
 
 <!-- 변수 선언 끝 -->
 
@@ -39,9 +40,9 @@
                   </li>
                   <li><a href="<%=request.getContextPath()%>/app/collabo-none"><i class="fa fa-group"></i> 콜라보</a>
                   </li>
-                  <li><a href="javascript:meeting_newteb();"><i class="fa fa-video-camera"></i> 온라인 회의</a>
-                  </li>
-                  <li><a><i class="fa fa-comments-o"></i> 채팅</a>
+                  <!-- <li><a href="javascript:meeting_newteb();"><i class="fa fa-video-camera"></i> 온라인 회의</a>
+                  </li> -->
+                  <li><a href="javascript:getOverlayTemplate('chatTemplate');"><i class="fa fa-comments-o"></i> 채팅</a>
                   </li>
                 </ul>
               </div>
@@ -263,8 +264,8 @@
                       <img src="/resources/asserts/images/img.jpg" alt="">${nickname }
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item"  href="javascript:;" id="doingTest"> 프로필</a>
-                      <a class="dropdown-item"  href="javascript:;"><span>알림설정</span></a>
+                      <a class="dropdown-item"  href="<%=request.getContextPath()%>/user/my-page"> 프로필</a>
+                      <a class="dropdown-item"  href="javascript:;" id="doingTest"><span>알림설정</span></a>
                       <a class="dropdown-item"  href="javascript:;">FAQ</a>
                       <a class="dropdown-item" href="<%=request.getContextPath()%>/logout.do" id="logout"><i class="fa fa-sign-out pull-right"></i> 로그아웃</a>
                     </div>
@@ -276,5 +277,78 @@
             </div>
           </div>
         <!-- /top navigation -->
+        
+        
+ <!-- 채팅 모달 테스트 -->
+        <div id="createRoomModal" class="modal modal-default fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<br>
+			<div class="modal-header">
+				<h3 class="modal-title">채팅방 생성</h3>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body" data-rno>
+
+				<form role="form" method="post" action="/chat/createRoom" name="createForm">
+					<br>
+					<div class="form-group row">
+						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;채팅방 이름 </span></label>
+						<div class="col-lg-12">
+
+							<input id="title" onclick="button_click();" class="form-control col-md-12 seokid" name="title" value="" placeholder="">
+			
+			            </div>
+							
+					</div>
+
+					
+
+					<div class="form-group row">
+						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;프로젝트 선택</span></label>
+						<div class="col-lg-12">
+			                    <select class="select2_single form-control" name="Ptitle" id="selectProject" tabindex="-1" >
+									<option value=''>==내가속한 프로젝트 리스트==</option>
+			                       
+
+
+			                    </select>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;멤버선택</span></label>
+						<div class="col-lg-12" id="memberInvite">
+
+								
+
+			                       
+						</div>
+					</div>
+					<span id="checkCreateRoom">가이드</span>
+					<div class="float-right">
+						<button type="button" class="btn btn-danger" id="replyDelBtn"
+							onclick="createRoom();">생성</button>
+						<button type="button" class="btn btn-dark" data-dismiss="modal">취소</button>
+					</div>	
+					
+				</form>
+			</div>
+
+
+		</div>
+
+		<div class="modal-footer">
+
+			
+		</div>
+	</div>
+</div>
+ <!-- 모달 테스트 끝 -->  
+        
+        
+        
+        
 </body>
 </html>

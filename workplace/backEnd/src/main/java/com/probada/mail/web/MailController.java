@@ -167,7 +167,7 @@ public class MailController {
 	@RequestMapping("/attachDownload")
 	public String attachDownload(int attachNo, Model model) throws Exception {
 		String url = "downloadFile";
-		System.out.println(attachNo);
+		
 		AttachVO attachVO = mailService.getAttachByAttachNo(attachNo);
 		String filePath = attachVO.getFilePath();
 		String fileName = attachVO.getFileName();
@@ -190,6 +190,9 @@ public class MailController {
 			if(mailDist.equals("receiveMail")) {
 				mailService.returnReceiveMail(mailNo);
 			}else if(mailDist.equals("sendMail")) {
+				mailService.returnSendMail(mailNo);
+			}else if(mailDist.equals("mineMail")) {
+				mailService.returnReceiveMail(mailNo);
 				mailService.returnSendMail(mailNo);
 			}
 			entity = new ResponseEntity<String>("", HttpStatus.OK);
@@ -252,14 +255,19 @@ public class MailController {
 	@ResponseBody
 	public ResponseEntity<String> deleteMail(int mailNo, String mailDist) throws Exception {
 		ResponseEntity<String> entity = null;
+		
 		try {
 			if(mailDist.equals("tempMail")) {
 				mailService.deleteTempMail(mailNo);
 			}else if(mailDist.equals("trashReceiveMail")) {
 				mailService.deleteTrashReceiveMail(mailNo);
-			}else  if(mailDist.equals("trashSendMail")) {
-				mailService.deleteTrashSendMail(mailNo);				
+			}else if(mailDist.equals("trashSendMail")) {
+				mailService.deleteTrashSendMail(mailNo);		
+			}else if(mailDist.equals("trashMineMail")) {
+				mailService.deleteTrashSendMail(mailNo);
+				mailService.deleteTrashReceiveMail(mailNo);
 			}
+			
 			entity = new ResponseEntity<String>("", HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -286,6 +294,9 @@ public class MailController {
 					mailService.deleteTrashReceiveMail(mailNumbers[i]);
 				}else if(stringMailDist[i].equals("trashSendMail")) {
 					mailService.deleteTrashSendMail(mailNumbers[i]);
+				}else if(stringMailDist[i].equals("trashMineMail")) {
+					mailService.deleteTrashSendMail(mailNumbers[i]);
+					mailService.deleteTrashReceiveMail(mailNumbers[i]);
 				}
 			}
 			entity = new ResponseEntity<String>("", HttpStatus.OK);
@@ -299,7 +310,7 @@ public class MailController {
 	//메일 등록
 	@RequestMapping(value="/mailRegist", method=RequestMethod.POST, produces="text/plain;charset=utf-8")
 	public String mailRegist(MailRegistCommand regData, RedirectAttributes rttr) throws Exception {
-		String url = "redirect:/app/myWork/";
+		String url = "redirect:/app/myWork";
 		
 		String dist = regData.getDist();
 		MailVO mailVO = regData.toMailVO();
@@ -342,7 +353,7 @@ public class MailController {
 	//임시메일 전송
 	@RequestMapping(value="/tempMailRegist", method=RequestMethod.POST, produces="text/plain;charset=utf-8")
 	public String tempMailRegist(TempMailRegistCommand modData, RedirectAttributes rttr) throws Exception {
-		String url = "redirect:/app/myWork/";
+		String url = "redirect:/app/myWork";
 		
 		//사용량
 		String userId = modData.getUserFrom();

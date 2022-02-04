@@ -25,10 +25,9 @@ const mileDataSource = new kendo.data.DataSource({
 
 $('#toolbar').kendoToolBar({
     items: [
-    	{ template: '<span class="k-d-flex k-flex-row k-align-items-center ml-3"><strong>마일스톤</strong></span><br><br>' },
-        { template: '<span class="k-d-flex k-flex-row k-align-items-center ml-3"><span class="status-icon k-icon k-i-warning"></span>&nbsp;5 진행중</span>' },
-        { template: '<span class="k-d-flex k-flex-row k-align-items-center"><span class="status-icon k-icon k-i-check"></span> 0 완료됨</span>' }
-    ]
+    	"search",
+     	{ template: "<a class='k-button' href='javascript:getOverlayIssueRegistTemplate(\"issueRegistFormTemplate\",\"/app/issue/getIssueRegistInfoByProjNo\");'>이슈 등록</a>" }
+      	],
 });
 function readMile() {
 	$("#mileList").empty();
@@ -36,11 +35,15 @@ function readMile() {
 		dataSource:mileDataSource,
 		selectable: true,
 		change: function() {
+
 			var index = this.select().index();
 			var selectedData = this.dataSource.view()[index];
 
 			console.log(selectedData.id);
 			sortingIssueByClick(selectedData.id);
+
+			//한번더 클릭시 해제 이벤트 추가필요
+
 		},
 		height:760,
 		template: $("#mileTemplate").html(),
@@ -59,4 +62,14 @@ function readMile() {
 	});
 }
 
+$('#search-term').on('keyup', function () {
+    var groupIds = $("#groupIds").val();
+    console.log(groupIds);
+    var search = $.trim($(this).val());
+    if (search != "")
+    	mileDataSource.filter({ field: "title", operator: "contains", value: search });
+    else
+    	mileDataSource.filter({});
 
+     return;
+});

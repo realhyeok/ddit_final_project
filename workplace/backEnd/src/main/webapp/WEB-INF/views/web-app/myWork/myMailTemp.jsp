@@ -129,7 +129,7 @@
 			return;
 		}
 	
-		var div = $('<div>').addClass("inputRow").addClass("mb-1").attr("data-no", tempDataNum);
+		var div = $('<div>').addClass("inputRow").addClass("mb-1").attr("tData-no", tempDataNum);
 		var input = $('<input>').attr({"type":"file", "name":"attachFile", "class":"tempAttachFile"}).css("display", "inline");
 		
 		div.append(input).append("<button type='button' class='badge bg-red' onclick='removeTempFile_go(" + tempDataNum + ")' style='border:0;outline:0;'>X</button>");
@@ -139,7 +139,7 @@
 	}
 	
 	function removeTempFile_go(tempDataNum){
-		$('div[data-no="' + tempDataNum + '"]').remove();
+		$('div[tData-no="' + tempDataNum + '"]').remove();
 	}
 
 	function printData(data, target, templateObject){
@@ -260,6 +260,10 @@
 			$("textarea[id='tempContent']").focus();
 			return;
 		}
+		
+		var receiverId = $("#tempUserTo").val();
+		mailAlarm(receiverId);
+		
 		document.tempMailRegistForm.submit();
 	}
 </script>

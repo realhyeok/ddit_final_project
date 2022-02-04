@@ -1,6 +1,6 @@
 //보낸 메일 시작
 window.addEventListener('load', function() {
-	var sessionId = $('#sessionId').val();
+	var sessionId = $("#sessionId").val();
 	
 	var sendMailList = $("#sendMailList").kendoGrid({
 		dataSource: {

@@ -24,7 +24,7 @@
 					<a id="issue-tab" class="nav-link" data-toggle="tab" href="#issue" role="tab" aria-controls="issue" aria-selected="false">이슈</a>
 				</li>
 				<li class="nav-item">
-					<a id="task-tab" class="nav-link" data-toggle="tab" href="#task" role="tab" aria-controls="task" aria-selected="false">업무</a>
+					<a id="task-tab" class="nav-link" data-toggle="tab" href="#task" role="tab" aria-controls="task" aria-selected="false" onclick="readMyTask('${userVO.userId}');">업무</a>
 				</li>
 				<li class="nav-item">
 					<a id="request-tab" class="nav-link" data-toggle="tab" href="#request" role="tab" aria-controls="request" aria-selected="false">리퀘스트</a>
@@ -36,7 +36,10 @@
 					<a id="history-tab" class="nav-link" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">히스토리</a>
 				</li>
 				<li class="nav-item">
-					<a id="document-tab" class="nav-link" data-toggle="tab" href="#document" role="tab" aria-controls="document" aria-selected="false">문서</a>
+					<a id="document-tab" class="nav-link" data-toggle="tab" href="#document" role="tab" aria-controls="document" aria-selected="false" onclick="readMyDocument('${userVO.userId}');">문서</a>
+				</li>
+				<li class="nav-item" style="display:none;" >
+					<a id="myTaskDetail-tab" class="nav-link" data-toggle="tab" href="#myTaskDetail" role="tab" aria-controls="myTaskDetail" aria-selected="false">업무상세</a>
 				</li>
 			</ul>
    
@@ -48,7 +51,7 @@
 					<%@ include file="/WEB-INF/views/web-app/myWork/myIssue.jsp" %>
 				</div>
 				<div id="task" class="tab-pane fade show" role="tabpanel" aria-labelledby="task-tab">
-					<%@ include file="/WEB-INF/views/web-app/myWork/my-task.jsp" %>
+					<%@ include file="/WEB-INF/views/web-app/myWork/myTask.jsp" %>
 				</div>
 				<div id="request" class="tab-pane fade show" role="tabpanel" aria-labelledby="request-tab">
 					<%@ include file="/WEB-INF/views/web-app/myWork/myRequest.jsp" %>
@@ -60,7 +63,10 @@
 					<%@ include file="/WEB-INF/views/web-app/myWork/myHistory.jsp" %>
 				</div>
 				<div id="document" class="tab-pane fade show" role="tabpanel" aria-labelledby="document-tab">
-					<%@ include file="/WEB-INF/views/web-app/myWork/my-document.jsp" %>
+					<%@ include file="/WEB-INF/views/web-app/myWork/myDocument.jsp" %>
+				</div>
+				<div id="myTaskDetail" class="tab-pane fade show" role="tabpanel" aria-labelledby="myTaskDetail-tab">
+					<%@ include file="/WEB-INF/views/web-app/myWork/myTaskDetail.jsp" %>
 				</div>
 			</div>
 		</div>

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.probada.user.vo.UserTotalCountVO;
 import com.probada.user.vo.UserVO;
 
 public class UserDAOImpl implements UserDAO{
@@ -48,8 +49,8 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public void updateAuthstatus(String email) throws SQLException {
-		sqlSession.update("User-Mapper.updateAuthstatus", email);
+	public void updateAuthstatus(String userId) throws SQLException {
+		sqlSession.update("User-Mapper.updateAuthstatus", userId);
 	}
 
 
@@ -109,7 +110,7 @@ public class UserDAOImpl implements UserDAO{
 	public String pwdPicker(String userId) throws SQLException {
 		return sqlSession.selectOne("User-Mapper.pwdPicker", userId);
 	}
-
+	
 	@Override
 	public String selectAuthkey(String userId) throws SQLException {
 		return sqlSession.selectOne("User-Mapper.selectAuthkey", userId);
@@ -120,5 +121,30 @@ public class UserDAOImpl implements UserDAO{
 		sqlSession.update("User-Mapper.setUserPwd", userVO);
 	}
 
+	@Override
+	public void registExternalLogin(UserVO userVO) throws SQLException {
+		sqlSession.update("User-Mapper.insertUser", userVO);
+		sqlSession.update("User-Mapper.updateAuthstatus", userVO.getUserId());
+	}
+	
+//	유저의 총량을 반환하는 메서드
+	@Override
+	public UserTotalCountVO setUserTotalCount(UserTotalCountVO userVO) {
+		int taskTotalCount = (Integer) sqlSession.selectOne("User-Mapper.taskTotalCount", userVO.getUserId());
+		int issueTotalCount = (Integer) sqlSession.selectOne("User-Mapper.issueTotalCount", userVO.getUserId());
+		int mailTotalCount = (Integer) sqlSession.selectOne("User-Mapper.mailTotalCount", userVO.getUserId());
+		int requestTotalCount = (Integer) sqlSession.selectOne("User-Mapper.requestTotalCount", userVO.getUserId());
+		int projectTotalCount = (Integer) sqlSession.selectOne("User-Mapper.projectTotalCount", userVO.getUserId());
+		int collaboTotalCount = (Integer) sqlSession.selectOne("User-Mapper.collaboTotalCount", userVO.getUserId());
+		
+		userVO.setTaskCount(taskTotalCount);
+		userVO.setIssueCount(issueTotalCount);
+		userVO.setMailCount(mailTotalCount);
+		userVO.setRequestCount(requestTotalCount);
+		userVO.setProjectCount(projectTotalCount);
+		userVO.setCollaboCount(collaboTotalCount);
+		
+		return userVO;
+	}
 
 }

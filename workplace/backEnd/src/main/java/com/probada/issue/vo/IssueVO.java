@@ -2,6 +2,8 @@ package com.probada.issue.vo;
 
 import java.util.List;
 
+import com.probada.user.vo.UserVO;
+
 public class IssueVO {
 
 	private String status;
@@ -18,7 +20,30 @@ public class IssueVO {
 	private String enddate;
 
 	private Object mileNo;
+	private String nickname;
 
+	private String projTitle;
+	private UserVO member;
+	
+	
+	public UserVO getMember() {
+		return member;
+	}
+	public void setMember(UserVO member) {
+		this.member = member;
+	}
+	public String getProjTitle() {
+		return projTitle;
+	}
+	public void setProjTitle(String projTitle) {
+		this.projTitle = projTitle;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	public Object getMileNo() {
 		return mileNo;
 	}

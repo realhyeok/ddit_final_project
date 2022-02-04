@@ -86,7 +86,6 @@ public class MailDAOImpl implements MailDAO {
 	//받은메일 삭제(휴지통으로)
 	@Override
 	public void deleteReceiveMailToTrash(int mailNo) throws SQLException {
-		System.out.println(mailNo);
 		sqlSession.update("Mail-Mapper.deleteReceiveMailToTrash", mailNo);
 	}
 	//보낸메일 삭제(휴지통으로)

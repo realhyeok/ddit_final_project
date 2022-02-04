@@ -51,5 +51,10 @@
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/alert/alertIndex.js"></script>
 		<!-- jQuery Tags Input -->
 	    <script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+	    <!-- 채팅 js -->
+	    <script src="<%=request.getContextPath()%>/resources/asserts/js/chat/chatCreate.js"></script>
+	    <script src="<%=request.getContextPath()%>/resources/asserts/js/chat/chatOverlay.js"></script>
+	    
+	    
 	</body>
 </html>

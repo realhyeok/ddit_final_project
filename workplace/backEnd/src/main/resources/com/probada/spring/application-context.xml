@@ -43,6 +43,11 @@
 		  class="com.probada.issue.dao.IssueDAOImpl"
 		  p:sqlSession-ref="sqlSession"
 	/>
+	<bean id="issueReplyDAO"
+		  class="com.probada.issue.dao.IssueReplyDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	
 	<bean id="milestoneDAO"
 		  class="com.probada.milestone.dao.MilestoneDAOImpl"
 		  p:sqlSession-ref="sqlSession"
@@ -64,7 +69,10 @@
 		  class="com.probada.alert.dao.AlertDAOImpl"
 		  p:sqlSession-ref="sqlSession"
 	/>
-
+	<bean id="myTaskDAO"
+		  class="com.probada.myWork.dao.MyTaskDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
 
 	<!-- Service -->
 	<bean id="collaboService"
@@ -99,6 +107,10 @@
 		  class="com.probada.issue.service.IssueServiceImpl"
 		  p:issueDAO-ref="issueDAO"
 	/>
+	<bean id="issueReplyService"
+		  class="com.probada.issue.service.IssueReplyServiceImpl"
+		  p:issueReplyDAO-ref="issueReplyDAO"
+	/>
 	<bean id="milestoneService"
 		  class="com.probada.milestone.service.MilestoneServiceImpl"
 		  p:milestoneDAO-ref="milestoneDAO"
@@ -114,6 +126,10 @@
 	<bean id="alertService"
 		  class="com.probada.alert.service.AlertServiceImpl"
 		  p:alertDAO-ref="alertDAO"
+	/>
+	<bean id="myTaskService"
+		  class="com.probada.myWork.service.MyTaskServiceImpl"
+		  p:myTaskDAO-ref="myTaskDAO"
 	/>
 
 	<!-- utils -->

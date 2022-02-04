@@ -76,4 +76,20 @@ public class TaskServiceImpl implements TaskService {
 		return taskNo;
 	}
 
+
+	@Override
+	public void modifyTaskStatus(TaskVO taskVO) throws SQLException {
+
+		taskDAO.updateTaskStatus(taskVO);
+
+	}
+
+
+	@Override
+	public void removeTaskByTaskNo(TaskVO taskVO) throws SQLException {
+
+		taskDAO.deleteTaskByTaskNo(taskVO);
+
+	}
+
 }

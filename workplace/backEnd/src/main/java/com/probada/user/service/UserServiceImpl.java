@@ -14,6 +14,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import com.probada.user.dao.UserDAO;
 import com.probada.user.mail.MailHandler;
 import com.probada.user.mail.Tempkey;
+import com.probada.user.vo.UserTotalCountVO;
 import com.probada.user.vo.UserVO;
 
 public class UserServiceImpl implements UserService {
@@ -139,14 +140,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String getPwdByUserId(String userId) throws SQLException {
-
 		return userDAO.pwdPiker(userId);
 	}
 
 	@Override
 	public void removeUser(String userId) throws SQLException {
 		userDAO.deleteUser(userId);
-
 	}
 
 	@Override
@@ -163,4 +162,16 @@ public class UserServiceImpl implements UserService {
 	public void setUserPwd(UserVO userVO) throws SQLException {
 		userDAO.setUserPwd(userVO);
 	}
+
+	// 외부 로그인을 회원가입을 승인하는 메서드
+	@Override
+	public void registExternalLogin(UserVO userVO) throws SQLException{
+		userDAO.registExternalLogin(userVO);
+	}
+	
+//	유저의 총량을 반환하는 메서드
+	public UserTotalCountVO setUserTotalCount(UserTotalCountVO userVO) throws SQLException {
+		return userDAO.setUserTotalCount(userVO);
+	}
+	
 }

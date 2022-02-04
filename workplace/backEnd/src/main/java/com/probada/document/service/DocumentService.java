@@ -33,5 +33,7 @@ public interface DocumentService {
 	public List<FileVO> getDocumentListByProjNo(ProjectUserVO user) throws SQLException;
 
 	public List<FileVO> getDocumentListForProjDetail(String projNo) throws SQLException;
+	
+	public String getProjByTitle(String title) throws SQLException;
 
 }

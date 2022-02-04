@@ -2,6 +2,8 @@ package com.probada.alert.web;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +45,14 @@ public class AlertController {
 		List<AlertVO> alertList = new ArrayList<AlertVO>();
 		
 		alertList = userUtil.getUserAlertList(userVO.getUserId());
+		
+//		시간별 내림차순 정렬
+		Collections.sort(alertList, new Comparator<AlertVO>() {
+			@Override
+			public int compare(AlertVO a1, AlertVO a2) {
+				return a1.getWriteTime().compareTo(a2.getWriteTime());
+			}
+		});
 		
 		return alertList;
 	}

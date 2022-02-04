@@ -7,9 +7,9 @@
       	<div class="x_title">
 			<h2><i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;&nbsp;&nbsp;업무 상세	</h2>
 			<div class="clearfix">
-				<button type="button" class="btn btn-sm btn-secondary float-right" onclick="readTask();">목록</button>
+				<button type="button" class="btn btn-sm btn-secondary float-right" onclick="document.getElementById('task-tab').click();">목록</button>
 				<button type="button" class="btn btn-sm btn-primary float-right" onclick="getOverlayTaskModifyTemplate('taskModifyFormTemplate','/app/task/getTaskDetailByTaskNo','{{taskNo}}')">수정</button>
-				<button type="button" class="btn btn-sm btn-danger float-right">삭제</button>
+				<button type="button" class="btn btn-sm btn-danger float-right" onclick="deleteTaskById('/app/task/delete','{{taskNo}}');">삭제</button>
 			</div>
 		</div>
 

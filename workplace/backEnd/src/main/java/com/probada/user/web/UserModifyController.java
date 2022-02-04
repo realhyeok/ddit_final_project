@@ -137,6 +137,7 @@ public class UserModifyController {
 		return getPicture(picture);
 	}
 	
+	
 	@RequestMapping(value="/modify", method= RequestMethod.POST)
 	public ResponseEntity<String> modify(UserVO user, HttpSession session) throws Exception{
 		
@@ -222,9 +223,8 @@ public class UserModifyController {
 		UserVO user = new UserVO();
 		
 //		encodePassword = userUtil.encodePwd(password);
-		encodePassword = ""; // 제가 고쳐야함
 		user.setUserId(userVO.getUserId());
-		user.setPwd(encodePassword);
+//		user.setPwd(encodePassword);
 		
 		
 		userService.modifyUser(user);
