@@ -11,6 +11,8 @@ import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import com.probada.project.vo.ProjectVO;
+import com.probada.task.vo.TaskVO;
 import com.probada.user.dao.UserDAO;
 import com.probada.user.mail.MailHandler;
 import com.probada.user.mail.Tempkey;
@@ -173,5 +175,16 @@ public class UserServiceImpl implements UserService {
 	public UserTotalCountVO setUserTotalCount(UserTotalCountVO userVO) throws SQLException {
 		return userDAO.setUserTotalCount(userVO);
 	}
+
+	@Override
+	public List<TaskVO> getUserTaskList(String userId) throws SQLException {
+		return userDAO.getUserTaskList(userId);
+	}
+
+	@Override
+	public List<ProjectVO> getUserProjectList(String userId) throws SQLException {
+		return userDAO.getUserProjectList(userId);
+	}
+
 	
 }

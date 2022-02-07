@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.probada.project.vo.ProjectVO;
+import com.probada.task.vo.TaskVO;
 import com.probada.user.service.UserService;
 import com.probada.user.vo.EmailVO;
 import com.probada.user.vo.UserTotalCountVO;
@@ -103,7 +105,6 @@ public class UserController {
 		}
 		int userMaxUploadCapacity = userUtil.getUserMaxUploadCapacity(user.getUserId());
 
-		
 		session.setAttribute("userMaxUploadCapacity", userMaxUploadCapacity);
 		session.setAttribute("userVO", user);
 		return retMap;
@@ -334,6 +335,26 @@ public class UserController {
 		
 		return vo;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/app/getListToAsideBar.do", method = RequestMethod.POST)
+	public Map<String, Object> getListToAsideBar(HttpSession session) {
+		
+		Map<String, Object> retMap = new HashMap<>();
+		UserVO userVO = (UserVO) session.getAttribute("userVO");
+		
+		List<TaskVO> taskList = new ArrayList<>();
+		List<ProjectVO> projectList = new ArrayList<>();
+		
+		taskList = userUtil.getUserTaskList(userVO.getUserId());
+		projectList = userUtil.getUserProjectList(userVO.getUserId());
+		
+		retMap.put("taskList", taskList);
+		retMap.put("projectList", projectList);
+		
+		return retMap;
+	}
+	
 	
 	
 

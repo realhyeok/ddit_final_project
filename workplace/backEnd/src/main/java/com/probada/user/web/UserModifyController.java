@@ -45,8 +45,6 @@ public class UserModifyController {
 	
 	
 	
-	
-	
 	@RequestMapping("/my-page")
 	public ModelAndView my_page(ModelAndView mnv, HttpSession session) throws Exception{
 		

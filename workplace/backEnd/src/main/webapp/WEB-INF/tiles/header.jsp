@@ -6,6 +6,7 @@
 <!-- 변수 선언 시작 -->
 <c:set var="nickname" value="${userVO.nickname}"/>
 <c:set var="userId" value="${userVO.userId}"/>
+<c:set var="userPicture" value="${userVO.picture}"/>
 
 <!-- 변수 선언 끝 -->
 
@@ -51,23 +52,27 @@
                 <h3>내 프로젝트</h3>
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-bug"></i> 개인 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
+                    <ul class="nav child_menu user_task_list">
                       <!-- 리스트 추가 -->
+                      <!-- alertIndex.js의 showAsideBarList() 메서드가 처리중..
                       <li><a href="general_elements.html">남양(주) 사이트 유지보수</a></li>
                       <li><a href="media_gallery.html">테슬라 자율주행 렌더링</a></li>
                       <li><a href="typography.html">현대자동차 베터리 용접</a></li>
+                       -->
                     </ul>
                   </li>
                   <li><a><i class="fa fa-windows"></i> 그룹 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
+                    <ul class="nav child_menu user_project_list">
                       <!-- 리스트 추가 -->
+                     <!-- 
                       <li><a href="general_elements.html">구글 자연어 DB 프로젝트</a></li>
                       <li><a href="media_gallery.html">테슬라 공식홈페이지 개편</a></li>
-                      <li><a href="typography.html">대한항공 키오스크 보수</a></li>
+                      <li><a href="typography.html">대한항공 키오스크 보수</a></li> 
+                      -->
                     </ul>
                   </li>
                   <li><a><i class="fa fa-sitemap"></i> 콜라보 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
+                    <ul class="nav child_menu user_collabo_list">
                         <li><a href="#level1_1">마케팅&홍보 프로젝트</a>
                         </li>
                         <li><a>대한항공 키오스크 보수<span class="fa fa-chevron-down"></span></a>
@@ -213,7 +218,7 @@
 				<li role="presentation" class="nav-item dropdown open" style="margin-left: 15px;">
                     <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                       <i class="fa fa-envelope-o"></i>
-                      <span class="badge bg-green">6</span>
+                      <span class="badge bg-green">0</span>
                     </a>
                     <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1" id="alertVOList">
                     
@@ -265,8 +270,8 @@
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item"  href="<%=request.getContextPath()%>/user/my-page"> 프로필</a>
-                      <a class="dropdown-item"  href="javascript:;" id="doingTest"><span>알림설정</span></a>
-                      <a class="dropdown-item"  href="javascript:;">FAQ</a>
+                      <a class="dropdown-item"  href="#" data-toggle="modal" data-target="#alarmModal"><span>알림설정</span></a>
+                      <a class="dropdown-item"  href="javascript:;" id="doingTest">FAQ</a>
                       <a class="dropdown-item" href="<%=request.getContextPath()%>/logout.do" id="logout"><i class="fa fa-sign-out pull-right"></i> 로그아웃</a>
                     </div>
                   </li>

@@ -4,11 +4,18 @@ var socket = null;
 $(document).ready(function (){
 	connectWs();
 	updateAlertList(); // 실시간 알림 리스트 갱신
-	getUserTotalCount(); // 유저 업무, 프로젝트, 이슈, 리퀘스트, 메일 총량 비동기 출력
+	getListToAsideBar(); // 실시간 aside바 리스트들 갱신
+	if(window.location.pathname === "/app/index"){
+		getUserTotalCount(); // 유저 업무, 프로젝트, 이슈, 리퀘스트, 메일 총량 비동기 출력
+	}
+	if(getCookie("allAlertCheckBox")){
+		$('#allAlertCheckBox').prop('checked', true);
+	}
 });
 
 function connectWs(){
-	var sock = new WebSocket("ws://192.168.143.7/app/**");
+//	var sock = new WebSocket("ws://192.168.143.7/app/**");
+	var sock = new WebSocket("ws://localhost/app/**");
 	socket = sock;
 
 	sock.onopen = function(e) {
@@ -34,7 +41,10 @@ function connectWs(){
 				content: "["+ serderWhere +"]\n" + serderNickName + "님이 " + senderTarget + "를(을) " + senderWhatToDo + "했습니다."
 			};
 
-			toastr.success("["+ serderWhere +"]\n" + serderNickName + "님이 " + senderTarget + "를(을) " + senderWhatToDo + "했습니다.");
+			if($('#allAlertCheckBox').is(':checked') == false){
+				toastr.success("["+ serderWhere +"]\n" + serderNickName + "님이 " + senderTarget + "를(을) " + senderWhatToDo + "했습니다.");
+			} 
+
 //			toastr.success("[가나다프로젝트]"+"\n"+"사이고님이 가나다업무를(을) 수정했습니다.");
 
 			$.ajax({
@@ -90,18 +100,19 @@ $.ajax({
 	type: "post",
 	url: "/app/updateAlertList.do",
 	success: function (data) {
+		var alertList = data.alertList;
+		var alertCount = data.alertCount;
 //		console.log("res => " + JSON.stringify(data));
-		if(data.length === 0){
-			let ul = document.querySelector("#alertVOList");
+		$('span.badge.bg-green').html(alertCount);
+		if(alertList.length === 0){
+			let alert_ul = document.querySelector("#alertVOList");
 			const li = document.createElement("li");
 			li.innerHTML =`<li class="nav-item">
              					<strong>해당 내용이 없습니다.</strong>
 				 			</li>`;
-			  if (li.children.length > 0) {
-				    ul.prepend(li.children[0]);
-			  }
+			alert_ul.prepend(li.children[0]);
 		}
-		$(data).each(function(){
+		$(alertList).each(function(){
 			add_alert_li(this);
 //			console.log(this.userId + " " + timeForToday(this.writeTime));
 		});
@@ -146,11 +157,11 @@ function timeForToday(value) {
 //	
 	let socketData = {
 			nickname : "작성자 닉네임(ex.도전자)",
-			where : "어디서 작성했는지(ex.가나다 프로젝트)",
+			where : "메일",
 			target : "무엇을 작성햇는지 (ex.라마바 업무)",
 			whatToDo : "어떤 CRUD를 했는지(수정/삭제/..)",
-			projNo: "3",
-			receiverId : "test29@gmail.com"
+			projNo: "0",
+			receiverId : "test30@example.com"
 	};
 	
 	
@@ -167,7 +178,6 @@ function timeForToday(value) {
 				          + "," + socketData.whatToDo 
 				          + "," + socketData.projNo
 				          + "," + socketData.receiverId;
-          console.log("socketData.receiverId => " + socketData.receiverId);
           
 //        send()하게 되면 alert에 있는 AlertHandler의 handleTextMessage() 메서드로 파라미터를 전달하게 됩니다.
           socket.send(socketMsg);
@@ -202,3 +212,121 @@ function getUserTotalCount(){
 	});
 }
     
+// aside에 있는 리스트를 비동기로 실시간 갱신하여 출력한다.
+function getListToAsideBar() {
+	$.ajax({
+		type: "post",
+		url: "/app/getListToAsideBar.do",
+		success: function (resp) {
+			let taskList = resp.taskList;
+			let projectList = resp.projectList;
+
+			showAsideBarList(taskList, projectList);
+			
+		},error: function (err) {
+			console.log("getTaskListToAsideBar() err status : " + err.status);
+		}
+	});
+}
+
+// aside바에 존재하는 리스트를 갱신해준다.
+function showAsideBarList(taskList, projectList) {
+	let task_list_ul = document.querySelector(".user_task_list");
+	let project_list_ul = document.querySelector(".user_project_list");
+	const li = document.createElement("li");
+
+	// 업무 리스트 조회
+	if(taskList.length === 0){
+		li.innerHTML = `<li><a href="#">참여중인 업무가 존재하지 않습니다.</a></li>`;
+		task_list_ul.prepend(li.children[0]);
+	} else {
+		taskList.forEach(e => {
+			li.innerHTML = `<li><a href="#">${e.title}</a></li>`;
+			while (li.children.length > 0) {
+				task_list_ul.prepend(li.children[0]);
+			}
+		});
+	}
+
+	// 프로젝트 리스트 조회
+	if(projectList.length === 0){
+		li.innerHTML = `<li><a href="#">참여중인 프로젝트가 존재하지 않습니다.</a></li>`;
+		project_list_ul.prepend(li.children[0]);
+	} else {
+		projectList.forEach(e => {
+			li.innerHTML = `<li><a href="#">${e.title}</a></li>`;
+			while (li.children.length > 0) {
+				project_list_ul.prepend(li.children[0]);
+			}
+		});
+	}
+
+	getAlertModalProjectList(projectList);
+
+}
+
+// 알림설정에 프로젝트 리스트 가져오는 메서드
+function getAlertModalProjectList(projectList) {
+
+	let modalList = document.querySelector("#alarmModal .modal-body");
+	const div = document.createElement("div");
+
+	if(projectList.length === 0){
+		div.innerHTML = 	`<div class="form-group row">
+												<div class="col-lg-12">
+													<h5>참여중인 프로젝트가 없습니다.</h5>
+												</div>
+											</div>`;
+		modalList.append(div.children[0]);
+
+	} else {
+		projectList.forEach(e => {
+			div.innerHTML = 	`<div class="form-group row">
+													<div class="col-lg-12">
+														<label class="switch float-right"> <input type="checkbox">
+															<span class="slider round"></span>
+														</label> <i class="fa fa-desktop fa-2x" style="float: left;"></i>
+														<h5>&nbsp;${e.title}</h5>
+													</div>
+												</div> <hr style="margin: 10px;">`;
+			while (div.children.length > 0) {
+				modalList.append(div.children[0]);
+			}
+		});
+	}
+
+
+
+
+
+
+}
+
+function settingAlert() {
+	if($('#allAlertCheckBox').is(':checked') == true){
+		setCookie("allAlertCheckBox", "", 3);
+	} else {
+		setCookie("allAlertCheckBox", "", 0);
+	}
+}
+
+function setCookie(name, value, expiredays) { //쿠키 저장함수
+	var todayDate = new Date();
+	todayDate.setDate(todayDate.getDate() + expiredays);
+	document.cookie = name + "=" + escape(value) + "; path=/; expires="
+					+ todayDate.toGMTString() + ";"
+}
+
+function getCookie(Name) { // 쿠키 불러오는 함수
+	var search = Name + "=";
+	if (document.cookie.length > 0) { // if there are any cookies
+			offset = document.cookie.indexOf(search);
+			if (offset != -1) { // if cookie exists
+					offset += search.length; // set index of beginning of value
+					end = document.cookie.indexOf(";", offset); // set index of end of cookie value
+					if (end == -1)
+							end = document.cookie.length;
+					return unescape(document.cookie.substring(offset, end));
+			}
+	}
+}
