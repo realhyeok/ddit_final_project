@@ -1,5 +1,7 @@
-window.addEventListener('load', function() {
-	var sessionId = $('#sessionId').val();
+function readMyRequest(userId){
+	readMyRequest = function(){};
+	
+	var sessionId = userId;
 	
 	//Your리퀘스트 시작
 	var yourRequestTable = $("#yourRequest").kendoGrid({
@@ -35,6 +37,11 @@ window.addEventListener('load', function() {
 			{ template: "<input type='search' id='yourStatus-category' style='width:120px;vertical-align:middle;'/>"},    		
 	    	"search"
 		],
+		noRecords: {
+			template: function(e) {
+				return "<h2>리퀘스트가 존재하지 않습니다.</h2>";
+			}
+		},
 	   	columns: [
 	   		{ field: "reqNo",    hidden: true },
 	   		{ field: "userFrom", hidden: true },
@@ -115,6 +122,11 @@ window.addEventListener('load', function() {
 			{ template: "<input type='search' id='myStatus-category' style='width:120px;vertical-align:middle;'/>"},    		
 	    	"search"
 		],
+		noRecords: {
+			template: function(e) {
+				return "<h2>리퀘스트가 존재하지 않습니다.</h2>";
+			}
+		},
 	   	columns: [
 	   		{ field: "reqNo",    hidden: true },
 	   		{ field: "userFrom", hidden: true },
@@ -160,4 +172,4 @@ window.addEventListener('load', function() {
 		}
 	});
 	//My리퀘스트 끝
-});
+}

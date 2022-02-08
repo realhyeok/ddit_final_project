@@ -145,6 +145,11 @@
 	}
 	
 	function deleteSendMailAll(){
+		if($(".sendCheck:checked").length == 0){
+			alert("삭제할 메일을 선택해주세요.");
+			return;
+		}
+		
 		deleteAllConfirm = confirm("삭제하시겠습니까?");
 		var mailNo = "";
 		if(deleteAllConfirm){

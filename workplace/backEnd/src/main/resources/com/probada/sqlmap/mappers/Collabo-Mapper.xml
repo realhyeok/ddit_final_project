@@ -20,6 +20,12 @@
 			C_PROJECT
 	</select>
 	
+	<select id="collaboCount" parameterType="int">
+		SELECT COUNT(*)
+		  FROM C_PROJECT_R
+	   	 WHERE USER_ID = {userId} 
+	</select>
+	
 	<select id="selectCollaboByCprojNo" resultType="com.probada.collabo.vo.CollaboVO" parameterType="String">
 			SELECT
 			    CPROJ_NO

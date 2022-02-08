@@ -4,10 +4,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 
 import com.probada.chat.vo.ChatMessageVO;
 import com.probada.chat.vo.ChatVO;
 import com.probada.project.vo.ProjectVO;
+import com.probada.user.vo.UserVO;
 
 public class ChatDAOImpl implements ChatDAO {
 
@@ -24,7 +26,7 @@ public class ChatDAOImpl implements ChatDAO {
 	}
 
 	@Override
-	public List<String> selectMyProjUserList(String projTitle) throws SQLException {
+	public List<UserVO> selectMyProjUserList(String projTitle) throws SQLException {
 		return  sqlSession.selectList("Chat-Mapper.selectMyProjUserList",projTitle);
 	}
 
@@ -114,6 +116,22 @@ public class ChatDAOImpl implements ChatDAO {
 	@Override
 	public void insertMessage(ChatMessageVO message) throws SQLException {
 		sqlSession.insert("Chat-Mapper.insertMessage",message);
+		
+	}
+
+
+	@Override
+	public void updateChatRoom(ChatVO chat) throws SQLException {
+		
+		sqlSession.update("Chat-Mapper.updateChatRoom",chat);
+		
+	}
+
+
+	@Override
+	public void deleteChatRoom(String chatRoomNo) throws SQLException {
+
+		sqlSession.delete("Chat-Mapper.deleteChatRoom",chatRoomNo);
 		
 	}
 

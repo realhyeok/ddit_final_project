@@ -12,6 +12,9 @@ public interface CollaboDAO {
 	
 	public List<CollaboVO> selectCollaboList() throws SQLException;
 	
+	//콜라보 갯수 
+	public int collaboCount(String userId)throws SQLException;
+	
 	public CollaboVO selectCollaboByCprojNo(String cprojNo) throws SQLException;
 	
 	public void updateCollaboDetail(CollaboVO collaboVO) throws SQLException;

@@ -75,6 +75,7 @@
 
 
     <script id="collaboCardTemplate" type="text/x-kendo-template">
+	{{#ifCond cprojNo "!=" null}}
         <div class="collabo-list card">
           <div class="card-body collabo-list">
             <div class="user-block mt-3 mb-3">
@@ -99,4 +100,7 @@
             </div>
           </div>
         </div>
+		{{/ifCond}}
+		{{#ifCond cprojNo "==" null }}
+
     </script>

@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>    
 
+<style>
+	.k-grid-norecords {
+		display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    max-height: 42px;
+	}
+</style>
+
 <div id="trashMail" class="row">
 	<div class="col-md-4">
 		<div id="trashMailList" class="mail_list_column" style="height:auto;"></div>	
@@ -203,6 +212,11 @@
 	}
 	
 	function deleteTrashMailAll(){
+		if($(".trashCheck:checked").length == 0){
+			alert("삭제할 메일을 선택해주세요.");
+			return;
+		}
+		
 		var deleteAllConfirm = confirm("휴지통의 메일은 완전히 삭제됩니다.\n삭제하시겠습니까?");
 		var mailNo = "";
 		var mailDist = "";

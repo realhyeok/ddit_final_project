@@ -14,6 +14,9 @@ public class CollaboVO {
 	private String enddate;
 	private String intro;
 	
+	private String userId;
+	private String projNo;
+	
 	
 	public String getIntro() {
 		return intro;

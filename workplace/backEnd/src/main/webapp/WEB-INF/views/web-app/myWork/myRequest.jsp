@@ -11,10 +11,8 @@
 </div>
 
 <script id="yourRequest-template" type="text/x-kendo-template">
-	<div class="row" style="padding:5px;margin:10px 0px;">
-		<div class="col-2 p-0">
-			<img src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userFrom#" alt="img" style="height:64px;width:64px;border-radius:100%;">
-		</div>
+	<div class="row">
+		<img class="pt-1 pl-2 pr-2" src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userFrom#" alt="img" style="height:64px;width:64px;border-radius:100%;">
 		<div class="col-8 p-0">
 			<div class="row" style="margin:2px;">#:title#</div>
 			<div class="row" style="margin:2px;">
@@ -23,15 +21,13 @@
 			</div>
 			<div class="row" style="margin:2px;">#:content#</div>
 		</div>
-		<div class="col-2 p-0">
 			# if(status == "대기"){ #
-				<button type="button" id="process" class="btn btn-sm btn-success mt-1 ml-1" data-toggle="modal" data-target=".requestProcessModal#:reqNo#" style="height:48px;width:48px;">대기</button>
+				<button type="button" id="process" class="btn btn-sm btn-success mt-2 ml-2" data-toggle="modal" data-target=".requestProcessModal#:reqNo#" style="height:48px;width:48px;">대기</button>
 			# }else if(status == "승낙"){ #
-				<button type="button" id="ok" class="btn btn-sm btn-primary mt-1 ml-1" style="height:48px;width:48px;cursor:default;">승낙<br>완료</button>
+				<button type="button" id="ok" class="btn btn-sm btn-primary mt-2 ml-2" style="height:48px;width:48px;cursor:default;">승낙<br>완료</button>
 			# }else if(status == "거절"){ #
-				<button type="button" id="no" class="btn btn-sm btn-danger mt-1 ml-1" data-toggle="modal" data-target=".requestRejectModal#:reqNo#" style="height:48px;width:48px;">거절<br>완료</button>
+				<button type="button" id="no" class="btn btn-sm btn-danger mt-2 ml-2" data-toggle="modal" data-target=".requestRejectModal#:reqNo#" style="height:48px;width:48px;">거절<br>완료</button>
 			# } #
-		</div>
 	</div>
 
 	<div class="modal fade no-modal-sm requestRejectModal#:reqNo#" tabindex="-1" role="dialog" aria-hidden="true">
@@ -89,10 +85,8 @@
 </script>
 
 <script id="myRequest-template" type="text/x-kendo-template">
-	<div class="row" style="padding:5px;margin:10px 0px;">
-		<div class="col-2 p-0">
-			<img src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userFrom#" alt="img" style="height:64px;width:64px;border-radius:100%;">
-		</div>
+	<div class="row">
+		<img class="pt-1 pl-2 pr-2" src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userFrom#" alt="img" style="height:64px;width:64px;border-radius:100%;">
 		<div class="col-8 p-0">
 			<div class="row" style="margin:2px;">#:title#</div>
 			<div class="row" style="margin:2px;">
@@ -101,16 +95,14 @@
 			</div>
 			<div class="row" style="margin:2px;">#:content#</div>
 		</div>
-		<div class="col-2 p-0">
 			# if(status == "대기"){ #
-				<button type="button" class="btn btn-sm btn-secondary mt-1 ml-1" style="height:48px;width:48px;cursor:default;">대기</button>
+				<button type="button" class="btn btn-sm btn-secondary mt-2 ml-2" style="height:48px;width:48px;cursor:default;">대기</button>
 			# }else if(status == "승낙"){ #
-				<button type="button" class="btn btn-sm btn-primary mt-1 ml-1" style="height:48px;width:48px;cursor:default;">승낙</button>
+				<button type="button" class="btn btn-sm btn-primary mt-2 ml-2" style="height:48px;width:48px;cursor:default;">승낙</button>
 			# }else if(status == "거절"){ #
-				<button type="button" class="btn btn-sm btn-danger mt-1 ml-1" style="height:48px;width:48px;" data-toggle="modal" data-target=".requestRejectModal#:reqNo#">거절</button>
+				<button type="button" class="btn btn-sm btn-danger mt-2 ml-2" style="height:48px;width:48px;" data-toggle="modal" data-target=".requestRejectModal#:reqNo#">거절</button>
 			# } #
 		</div>
-	</div>
 
 	<div class="modal fade no-modal-sm requestRejectModal#:reqNo#" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-sm">

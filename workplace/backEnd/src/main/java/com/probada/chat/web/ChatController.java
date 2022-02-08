@@ -103,8 +103,8 @@ public class ChatController {
 	
 	@RequestMapping("/getProjectUser")
 	@ResponseBody
-	public ResponseEntity<List<String>> getProjectUser(String selectProj,HttpSession session) throws Exception {
-		ResponseEntity<List<String>> entity = null;
+	public ResponseEntity<List<UserVO>> getProjectUser(String selectProj,HttpSession session) throws Exception {
+		ResponseEntity<List<UserVO>> entity = null;
 
 		
 		UserVO userVO= (UserVO)session.getAttribute("userVO");
@@ -114,22 +114,41 @@ public class ChatController {
 		//하드코딩 나는 제외
 		String userId = userVO.getUserId();
 		
-		List<String> userList = new ArrayList<String>();
+		List<UserVO> userList = new ArrayList<UserVO>();
 		
 		
-		
-		
-	
 		try {
-
 			userList = chatService.getMyProjUserList(selectProj);
-			userList.remove(userList.indexOf(userId));
-			LOGGER.debug("제거 되는 지 확인   {}",userList);
+			
+			
+			for (int i = 0; i < userList.size(); i++) {
+				
+				if(userList.get(i).getUserId().equals(userVO.getUserId())) {
+					
+					userList.remove(i);
+					
+				}
+				
+			}
+			
+			/*
+			 * 오브젝트가 같은 걸 어떻게 비교해 시발
+			 */
+				
+			
+			
+			/*LOGGER.debug("userList  {}",userList);
+			LOGGER.debug("index of text  {}",userList.indexOf(userVO));
+			
+			
+			userList.remove(userList.indexOf(userVO));
+		*/
+			LOGGER.debug("유저 리스트  {}",userList);
 
-			entity = new ResponseEntity<List<String>>(userList,HttpStatus.OK);
+			entity = new ResponseEntity<List<UserVO>>(userList,HttpStatus.OK);
 
 		} catch(Exception e) {
-			entity = new ResponseEntity<List<String>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			entity = new ResponseEntity<List<UserVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
 			e.printStackTrace();
 		}
 		return entity;
@@ -174,7 +193,6 @@ public class ChatController {
 		chatService.createChatRoom(chatVO1);
 		
 		LOGGER.debug("chatvo1 {}",chatVO1);
-		
 		
 		for(String user : realUserId) {
 			ChatVO chatVO = new ChatVO();
@@ -239,22 +257,56 @@ public class ChatController {
 	 	
 	 	UserVO userVO= (UserVO)session.getAttribute("userVO");
 	 	
+	 	ChatVO chat = new ChatVO();
+	 	
+	 	chat.setRealRoom(roomNo);
+	 	chat.setUserId(userVO.getUserId());
 	 	
 	 	//String userId = userVO.getUserId();
 	 	
-	 	
+	 	ChatVO realChat = chatService.getRoomByRealRoom(chat);
+	 	LOGGER.debug("realChat  {}",realChat);
 		mnv.addObject("roomNo", roomNo);
 		mnv.addObject("userVO", userVO);
+		mnv.addObject("realChat", realChat);
 		mnv.setViewName(url);
 	 	
 	     return mnv;
 	 }
 	
 	
+	@RequestMapping("/getMessageByDb")
+	@ResponseBody
+	public ResponseEntity<List<ChatMessageVO>> getMessage(HttpSession session,String roomNo) throws Exception {
+		ResponseEntity<List<ChatMessageVO>> entity = null;
+		
+		LOGGER.debug("[요청받음] => /getMessageByDb");
+		UserVO userVO= (UserVO)session.getAttribute("userVO");
+		
+		
+		List<ChatMessageVO> message = new ArrayList<>();
+		ChatMessageVO messageVO = new ChatMessageVO();
+		
+		String userId = userVO.getUserId();
+		
+		messageVO.setRealRoom(roomNo);
+		
+		message = chatService.getMessage(messageVO);
+		LOGGER.debug("db 리스트, {}",message);
+		try {
+			
+			entity = new ResponseEntity<List<ChatMessageVO>>(message,HttpStatus.OK);
+			LOGGER.debug("db, {}",entity);
+		} catch(Exception e) {
+			entity = new ResponseEntity<List<ChatMessageVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
 	
 	
 	
-	@RequestMapping("/getMyChatProject")
+	@RequestMapping("/Read")
 	@ResponseBody
 	public ResponseEntity<List<ChatVO>> getProject(HttpSession session) throws Exception {
 		ResponseEntity<List<ChatVO>> entity = null;
@@ -268,8 +320,6 @@ public class ChatController {
 	 	String userId = userVO.getUserId();
 	 	
 	 	chat = chatService.getRoomList(userId);
-
-	
 
 		try {
 
@@ -286,35 +336,32 @@ public class ChatController {
 	
 	
 	
-	@RequestMapping("/getMessageByDb")
+	@RequestMapping("/Update")
 	@ResponseBody
-	public ResponseEntity<List<ChatMessageVO>> getMessage(HttpSession session,String roomNo) throws Exception {
-		ResponseEntity<List<ChatMessageVO>> entity = null;
+	public void modifyChatTitle(HttpSession session,String chatroomNo,String realRoom, String title,
+			String userId
+			
+			
+			) throws Exception {
+		
+		
 
-		LOGGER.debug("[요청받음] => /getMessageByDb");
+		LOGGER.debug("[요청받음] => /getMyChatProject");
 		UserVO userVO= (UserVO)session.getAttribute("userVO");
+		LOGGER.debug("chatroomNo {}",chatroomNo);
+		LOGGER.debug("userId {}",userId);
+		LOGGER.debug("realRoom {}",realRoom);
+		LOGGER.debug("title {}",title);
+	 	ChatVO chat = new ChatVO();
 	 	
-	
-	 	List<ChatMessageVO> message = new ArrayList<>();
-	 	ChatMessageVO messageVO = new ChatMessageVO();
+	 	chat.setRealRoom(realRoom);
+	 	chat.setTitle(title);
 	 	
-	 	String userId = userVO.getUserId();
+	 	//String userId = userVO.getUserId();
 	 	
-	 	messageVO.setRealRoom(roomNo);
-	 	
-	 	message = chatService.getMessage(messageVO);
-	 	LOGGER.debug("db 리스트, {}",message);
-		try {
-
-			entity = new ResponseEntity<List<ChatMessageVO>>(message,HttpStatus.OK);
-			LOGGER.debug("db, {}",entity);
-		} catch(Exception e) {
-			entity = new ResponseEntity<List<ChatMessageVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
-			e.printStackTrace();
-		}
-		return entity;
+	 	chatService.modifyChatRoom(chat);
+		
 	}
-	
 	
 	
 	

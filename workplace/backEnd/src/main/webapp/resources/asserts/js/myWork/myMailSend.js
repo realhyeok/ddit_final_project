@@ -1,6 +1,7 @@
-//보낸 메일 시작
-window.addEventListener('load', function() {
-	var sessionId = $("#sessionId").val();
+function sendMailBox(userId){
+	sendMailBox = function(){};
+	
+	var sessionId = userId;
 	
 	var sendMailList = $("#sendMailList").kendoGrid({
 		dataSource: {
@@ -21,8 +22,10 @@ window.addEventListener('load', function() {
 			},
 			change: function(e) {
 				var data = e.sender.data();
-				if(data){
+				if(data[0]){
 					sendMailDetail(data[0].mailNo);
+				}else{
+					mailNoDetail("send");
 				}
 			}
 		},
@@ -42,6 +45,11 @@ window.addEventListener('load', function() {
 			},
 			"search"
 		],
+		noRecords: {
+			template: function(e) {
+				return "<h2>메일이 존재하지 않습니다.</h2>";
+			}
+		},
 		columns: [
 			{ field: "mailNo" , hidden: true },    
 			{ field: "title"  , hidden: true },    
@@ -52,5 +60,4 @@ window.addEventListener('load', function() {
 	});
 	
 	$('#sendMailList').find('thead').hide();
-});
-//보낸 메일 끝
+}

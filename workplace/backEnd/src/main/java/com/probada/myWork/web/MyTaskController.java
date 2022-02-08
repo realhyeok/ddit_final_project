@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.probada.myWork.command.myTaskChartCommand;
 import com.probada.myWork.service.MyTaskService;
 import com.probada.task.vo.TaskVO;
 import com.probada.util.ProjectUtil;
@@ -83,5 +84,21 @@ public class MyTaskController {
 		rttr.addFlashAttribute("from", "deleteMyTaskByTaskNo");
 		
 		return url;
+	}
+	
+	@RequestMapping("getMyTaskChartByUserId")
+	@ResponseBody
+	public ResponseEntity<myTaskChartCommand> getMyTaskChartByUserId(String userId) throws Exception {
+		ResponseEntity<myTaskChartCommand> entity = null;
+		myTaskChartCommand myTaskChartData = null;
+		
+		try {
+			myTaskChartData = myTaskService.getMyTaskChartByUserId(userId);
+			entity = new ResponseEntity<myTaskChartCommand>(myTaskChartData, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<myTaskChartCommand>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
 	}
 }

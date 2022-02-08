@@ -43,7 +43,7 @@
               내 작업 
               </div>
             </div>
-            <a class="more" href="/ToDoList">
+            <a class="more" href="<%=request.getContextPath() %>/app/myWork">
               View More <i class="fa fa-arrow-right"></i>
             </a>
           </div>
@@ -64,7 +64,7 @@
               이슈 
               </div>
             </div>
-            <a class="more" href="/Issue">
+            <a class="more" href="<%=request.getContextPath() %>/app/myWork/#issue">
               View More <i class="fa fa-arrow-right"></i>
             </a>
           </div>
@@ -108,7 +108,7 @@
                 메일
               </div>
             </div>
-            <a class="more" href="/ProjectApproval">
+            <a class="more" href="<%=request.getContextPath() %>/app/myWork#mailReceive-tab">
               View More <i class="fa fa-arrow-right"></i>
             </a>
           </div>
@@ -181,22 +181,12 @@
                     <th>상태</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
+                <tbody class="task_list_for_index_page">
+                  <!-- <tr>
                     <th scope="row">러시아 고공낙하 장비 설계</th>
                     <td>한미 지상 훈련 프로젝트</td>
                     <td>진행중</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">매뚜기 수집</th>
-                    <td>대전 생물 연구 프로젝트</td>
-                    <td>진행중</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">모코코 수집 지도 작성</th>
-                    <td>코코모를 위한 지침서</td>
-                    <td>완료</td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
             </div>
@@ -266,7 +256,8 @@
       
               <p>
                 <br/><br/> 해당 계정에서 사용할 수 있는 총 데이터 사용량을 표시합니다. <br/><br/>
-                	현재 <strong>${userVO.nickname}</strong>님은 ${userMaxUploadCapacity}${dataType }중, <br/><strong>${dataValue}${dataType }</strong>를 사용중입니다. <br/><br/> 구독 서비스를 원하시면 <br/> <a href="" style="color: #5C9BD1;">여기</a>를 클릭해주세요.
+                	현재 <strong>${userVO.nickname}</strong>님은 ${userMaxUploadCapacity}${dataType }중, <br/><strong>${dataValue}${dataType }</strong>를 사용중입니다. <br/><br/> 구독 서비스를 원하시면 <br/> 
+                	<a href="<%=request.getContextPath() %>/app/pricing" style="color: #5C9BD1;">여기</a>를 클릭해주세요.
               </p>
       
             </div>
@@ -282,7 +273,7 @@
             <div class="x_content">
               <!-- STACKED BAR CHART -->
               <div>
-                <canvas id="custom_barChart"></canvas>
+                <canvas id="custom_monthBarChart"></canvas>
               </div>
               <!-- /.card -->
             </div>
@@ -297,38 +288,24 @@
         <div class="x_panel_origin">
           <div class="x_title">
             <h2>참여 프로젝트</h2>
-            <span style="float: right;"> <a href="#">more</a> </span>
+            <span style="float: right;"> <a href="<%=request.getContextPath() %>/app/project-list">more</a> </span>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
+                  <th>프로젝트 명</th>
+                  <th>종료일</th>
+                  <th>진행상태</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
+              <tbody class="project_list_for_index_page">
+                <!-- <tr>
                   <th scope="row">1</th>
                   <td>Mark</td>
                   <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
 

@@ -13,6 +13,7 @@ public interface CollaboService {
 	
 	public CollaboVO getCollaboByCprojNo(String cprojNo) throws SQLException;
 	
+	public int getCollaboCount(String userId)throws SQLException;
 	
 	public void modifyCollaboDetail(CollaboVO collaboVO) throws SQLException;
 

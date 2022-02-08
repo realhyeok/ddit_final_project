@@ -6,12 +6,13 @@ import java.util.List;
 import com.probada.chat.vo.ChatMessageVO;
 import com.probada.chat.vo.ChatVO;
 import com.probada.project.vo.ProjectVO;
+import com.probada.user.vo.UserVO;
 
 public interface ChatDAO {
 
 	public List<String> selectMyProjTitleList(String userId) throws SQLException;
 	
-	public List<String> selectMyProjUserList(String projTitle) throws SQLException;
+	public List<UserVO> selectMyProjUserList(String projTitle) throws SQLException;
 	
 	public void createChatRoom(ChatVO chatVO) throws SQLException;
 	
@@ -36,5 +37,11 @@ public interface ChatDAO {
 	String selectMessageSeqNext() throws SQLException;
 	
 	public void insertMessage(ChatMessageVO message) throws SQLException;
+	
+	public void updateChatRoom(ChatVO chat) throws SQLException;
+	
+	public void deleteChatRoom(String chatRoomNo) throws SQLException;
+	
+	
 	
 }

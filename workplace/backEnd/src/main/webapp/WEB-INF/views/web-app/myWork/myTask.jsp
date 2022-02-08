@@ -5,9 +5,9 @@
 <div class="x_content">
 	<div class="row">
 		<div class="col-sm-12">
-			<div class="card-box table-responsive">
+			<div class="card-box">
 				<div id="example">
-					<div class="demo-section wide k-content">
+					<div class="k-content">
 						<div id="myTaskBoard"></div>
 					</div>
 				</div>

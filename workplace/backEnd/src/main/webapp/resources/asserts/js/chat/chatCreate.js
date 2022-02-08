@@ -143,9 +143,13 @@ window.onload = function(){
 		  	 for (var i = 0; i < arg.length; i++) { 
 		  	     
 		  	      userList += 
-		  	    	  "<input type='checkbox' class='member'"+i+" name='userId' value='"+arg[i]+"'>"+arg[i]+"<br>";
+		  	    	  "<option >"+arg[i]+"</option>";
+		  	    	 // "<input type='checkbox' class='member'"+i+" name='userId' value='"+arg[i]+"'>"+arg[i]+"<br>";
+		  	      
 		  	    }
-		  	 document.getElementById('memberInvite').innerHTML=userList;
+		  	 
+		  	
+		  	 document.getElementById('optional').innerHTML=userList;
 		  	
 		  }, 
 		  error : function(arg){
@@ -155,5 +159,30 @@ window.onload = function(){
 	
 
 	});
+	
+	
+	
+	
+	 
+      $("#optional").kendoListBox({
+          connectWith: "selected",
+          toolbar: {
+              tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+          }
+      });
+
+      $("#selected").kendoListBox();
+ 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 };

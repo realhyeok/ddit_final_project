@@ -1,6 +1,6 @@
 //히스토리 시작
-window.addEventListener('load', function() {
-	var sessionId = $("#sessionId").val();
+function readMyHistory(userId){
+	var sessionId = userId;
 	
 	var myHistoryTable = $("#myHistory").kendoGrid({
 		dataSource: {
@@ -33,6 +33,11 @@ window.addEventListener('load', function() {
 			{ template: "<input type='search' id='myHistoryDist-category' style='width:150px;vertical-align:middle;'/>"},    		
 	    	"search"
 		],
+		noRecords: {
+			template: function(e) {
+				return "<h2>히스토리가 존재하지 않습니다.</h2>";
+			}
+		},
 	    columns: [
 	    	{ field: "msg",     hidden:true },
 	    	{ field: "url",     hidden:true },
@@ -102,5 +107,5 @@ window.addEventListener('load', function() {
 			}
 		}
 	});
-});
+}
 // 히스토리 끝

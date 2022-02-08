@@ -3,6 +3,105 @@
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
+<!-- 석기현 테스트 -->
+  	<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.3.1207/styles/kendo.common.min.css"/>
+		<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.3.1207/styles/kendo.default.min.css"/>
+
+
+  <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+ <style>
+     #ChatUserSeok .demo-section {
+        max-width: none;
+        width: 480px;
+    }
+
+    #ChatUserSeok .k-listbox {
+        width: 210px;
+        height: 350px;
+    }
+
+    #ChatUserSeok .k-listbox:first-child {
+        width: 256px;
+        margin-right: 1px;
+    }
+
+    .k-ghost {
+        display:none!important;
+    }
+
+    .custom-placeholder {
+        opacity: 0.4;
+    }
+
+    #ChatUserSeok .k-item {
+        line-height: 1em;
+    }
+
+	.k-reset .k-list .k-item li:hover {
+		background-color: tomato;
+		color: #fff;
+	
+	
+		
+	}
+
+
+    /* Material Theme padding adjustment*/
+
+    .k-material #ChatUserSeok .k-item,
+    .k-material #ChatUserSeok .k-item.k-state-hover,
+    .k-materialblack #ChatUserSeok .k-item,
+    .k-materialblack #ChatUserSeok .k-item.k-state-hover {
+        padding-left: 5px;
+        border-left: 0;
+    }
+
+    .k-item > span {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        display: inline-block;
+        vertical-align: top;
+        margin: 20px 10px 10px 5px;
+    }
+
+    #ChatUserSeok .k-item > span:first-child,
+    .k-item.k-drag-clue > span:first-child {
+        -moz-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+        -webkit-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+        box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+        margin: 10px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+
+    #ChatUserSeok h3,
+    .k-item.k-drag-clue h3 {
+        font-size: 1.2em;
+        font-weight: normal;
+        margin: 0 0 1px 0;
+        padding: 0;
+    }
+
+    #ChatUserSeok p {
+        margin: 0;
+        padding: 0;
+        font-size: .8em;
+    }
+</style>       
+        
+
+
+
+<!-- 석기현 테스트 -->
+
+
+
 <!-- 변수 선언 시작 -->
 <c:set var="nickname" value="${userVO.nickname}"/>
 <c:set var="userId" value="${userVO.userId}"/>
@@ -43,7 +142,7 @@
                   </li>
                   <!-- <li><a href="javascript:meeting_newteb();"><i class="fa fa-video-camera"></i> 온라인 회의</a>
                   </li> -->
-                  <li><a href="javascript:getOverlayTemplate('chatTemplate');"><i class="fa fa-comments-o"></i> 채팅</a>
+                  <li><a href="javascript:getOverlayTemplateChatList('chatTemplate');"><i class="fa fa-comments-o"></i> 채팅</a>
                   </li>
                 </ul>
               </div>
@@ -218,7 +317,7 @@
 				<li role="presentation" class="nav-item dropdown open" style="margin-left: 15px;">
                     <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                       <i class="fa fa-envelope-o"></i>
-                      <span class="badge bg-green">0</span>
+                      <span class="badge bg-green">6</span>
                     </a>
                     <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1" id="alertVOList">
                     
@@ -264,7 +363,7 @@
                   </li>
                   <!-- 알림 리스트 끝 -->
 
-				<li class="nav-item dropdown open" style="padding: 0px 15px;">
+						<li class="nav-item dropdown open" style="padding: 0px 15px;">
                     <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
                       <img src="/resources/asserts/images/img.jpg" alt="">${nickname }
                     </a>
@@ -325,10 +424,15 @@
 					<div class="form-group row">
 						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;멤버선택</span></label>
 						<div class="col-lg-12" id="memberInvite">
-
-								
-
-			                       
+						
+							<div id="ChatUserSeok" role="application" style="display: none;">
+							    <div class="demo-section k-content wide">
+							        <select id="optional"></select>
+							        <select id="selected"></select>
+							    </div>
+						    </div>
+	   								 
+   								 
 						</div>
 					</div>
 					<span id="checkCreateRoom">가이드</span>
@@ -352,6 +456,10 @@
 </div>
  <!-- 모달 테스트 끝 -->  
         
+
+        
+        
+ <!-- 채팅 모달 테스트 -->       
         
         
         

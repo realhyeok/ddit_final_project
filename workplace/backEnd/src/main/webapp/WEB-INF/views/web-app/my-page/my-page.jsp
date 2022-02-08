@@ -6,7 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
     <body>
-    
+
 	 <!-- page content -->
       <div class="right_col" role="main">
         <!-- 내 작업 바디 시작 -->
@@ -307,7 +307,7 @@
 		              </div>
 		             <!-- 모달끝 -->
 		
-					
+					 
 				</div>
 				<!-- 프로필 수정 끝 -->
 	
@@ -693,6 +693,7 @@
 	}
         
     </script>
+    
     
 	
 

@@ -69,4 +69,12 @@ public class CollaboServiceImpl implements CollaboService {
 		collaboDAO.registInviteCollaboMail(cmd);
 	}
 
+	@Override
+	public int getCollaboCount(String userId) throws SQLException {
+		
+		int result = collaboDAO.collaboCount(userId);
+		
+		return result;
+	}
+
 }

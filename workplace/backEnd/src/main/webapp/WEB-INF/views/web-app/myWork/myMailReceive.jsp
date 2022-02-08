@@ -104,6 +104,15 @@
 		});
 	}
 	
+	function mailNoDetail(dist){
+		var dist = "#" + dist + "MailDetail";
+		
+		var noMailMessage = "<div class='text-center'><h2>메일이 존재하지 않습니다.</h2></div>";
+		
+		$(dist).empty();
+		$(dist).append(noMailMessage);
+	}
+	
 	function receiveAllCheck(){
 		all = $("#receiveAllCheckButton").is(":checked");
 		
@@ -138,6 +147,11 @@
 	}
 	
 	function deleteReceiveMailAll(){
+		if($(".receiveCheck:checked").length == 0){
+			alert("삭제할 메일을 선택해주세요.");
+			return;
+		}
+		
 		deleteAllConfirm = confirm("삭제하시겠습니까?");
 		var mailNo = "";
 		if(deleteAllConfirm){

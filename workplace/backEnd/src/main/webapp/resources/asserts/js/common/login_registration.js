@@ -16,7 +16,7 @@ $(document).ready(function () {
 
   // error js
   (function ($) {
-    $(".alert .close").click(function () {
+    $(".alert .close ").click(function () {
       $(this).parent().fadeOut();
     });
   })(jQuery);

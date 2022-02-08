@@ -72,6 +72,13 @@ public class CollaboDAOImpl implements CollaboDAO {
 		int mailNo = sqlSession.selectOne("Collabo-Mapper.selectCollaboMailSequenceNextValue");
 		return mailNo;
 	}
+
+	@Override
+	public int collaboCount(String userId) throws SQLException {
+		
+		int result = sqlSession.selectOne("Collabo-Mapper.collaboCount", userId);
+		return result;
+	}
 	
 
 }

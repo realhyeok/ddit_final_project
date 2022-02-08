@@ -160,7 +160,7 @@ img{ max-width:100%;}
 </head>
 <body>
 <div class="container">
-<h3 class=" text-center">Messaging</h3>
+<h3 class=" text-center">${realChat.title}</h3>
 <div class="messaging">
       <div class="inbox_msg">
       

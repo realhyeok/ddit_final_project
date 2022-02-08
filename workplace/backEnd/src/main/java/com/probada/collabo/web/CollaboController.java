@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -140,7 +141,7 @@ public class CollaboController {
 	
 	@RequestMapping(value = "/sendInviteCollaboMail", method = RequestMethod.POST, produces="text/plain;charset=utf-8")
 	public String sendInviteCollaboMail(CollaboCommand cmd)throws Exception{
-		String url = "/app/index";
+		String url = "redirect:/app/index";
 		
 		LOGGER.debug("[요청받음] => /sendInviteCollaboMail");
 		
@@ -152,6 +153,22 @@ public class CollaboController {
 		return url;
 		
 	}
+	
+	@RequestMapping("/getCollaboCount")
+	@ResponseBody
+	public int getCollaboCount(HttpServletRequest request)throws Exception{
+		
+		LOGGER.debug("[요청받음] => /getCollaboCount");
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("userVO");
+		String userId = userVO.getUserId();
+		
+		int result = collaboService.getCollaboCount(userId);
+		
+		return result;
+	}
+	
 	
 }
 

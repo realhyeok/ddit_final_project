@@ -222,6 +222,7 @@ function getListToAsideBar() {
 			let projectList = resp.projectList;
 
 			showAsideBarList(taskList, projectList);
+			monthProjectGraph(projectList);
 			
 		},error: function (err) {
 			console.log("getTaskListToAsideBar() err status : " + err.status);
@@ -254,7 +255,7 @@ function showAsideBarList(taskList, projectList) {
 		project_list_ul.prepend(li.children[0]);
 	} else {
 		projectList.forEach(e => {
-			li.innerHTML = `<li><a href="#">${e.title}</a></li>`;
+			li.innerHTML = `<li><a href="/app/project/main?projNo=#{projNo}">${e.title}</a></li>`;
 			while (li.children.length > 0) {
 				project_list_ul.prepend(li.children[0]);
 			}
@@ -262,6 +263,10 @@ function showAsideBarList(taskList, projectList) {
 	}
 
 	getAlertModalProjectList(projectList);
+	if(window.location.pathname === "/app/index"){
+		task_list_for_index_page(taskList);
+		project_list_for_index_page(projectList);
+	}
 
 }
 
@@ -294,12 +299,6 @@ function getAlertModalProjectList(projectList) {
 			}
 		});
 	}
-
-
-
-
-
-
 }
 
 function settingAlert() {
@@ -330,3 +329,156 @@ function getCookie(Name) { // 쿠키 불러오는 함수
 			}
 	}
 }
+
+function task_list_for_index_page(taskList) {
+
+	const tbody = document.querySelector(".task_list_for_index_page");
+	
+	if(taskList.length === 0){
+		tbody.innerHTML = `<tr>
+											<td colspan="3">참여중인 업무가 존재하지 않습니다.</td>
+										</tr>`;
+		// tbody.append(tr.children[0]);
+	} else {
+		let cnt = 0;
+		taskList.forEach(e => {
+			if(cnt >= 3){ 
+				return false;
+			}
+			tbody.innerHTML += `<tr>
+												<td scope="row">${e.title}</td>
+												<td>${e.projNo}</td>
+												<td>${e.status}</td>
+											</tr>`;
+			cnt++;
+		});
+	}
+}
+
+function project_list_for_index_page(projectList) {
+
+	const tbody = document.querySelector(".project_list_for_index_page");
+	
+	if(projectList.length === 0){
+		tbody.innerHTML = `<tr>
+											<td colspan="3">참여중인 프로젝트가 존재하지 않습니다.</td>
+										</tr>`;
+	} else {
+		let cnt = 0;
+		projectList.forEach(e => {
+			if(cnt >= 3){ 
+				return false;
+			}
+			tbody.innerHTML += `<tr>
+												<td scope="row">${e.title}</td>
+												<td>${dateFormat(new Date(e.enddate))}</td>
+												<td>${e.status}</td>
+											</tr>`;
+			cnt++;
+		});
+	}
+}
+
+function dateFormat(date) {
+	let year = date.getFullYear();
+	let month = (1 + date.getMonth());
+	month = month >= 10 ? month : '0' + month;
+	let day = date.getDate();
+	day = day >= 10 ? day : '0' + day;
+	return year + '-' + month + '-' + day;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////
+// custom graph
+
+
+var test_data_bar = {
+	type: "bar",
+  data: {
+		labels: [
+			"1월",
+			"2월",
+			"3월",
+			"4월",
+			"5월",
+			"6월",
+			"7월",
+			"8월",
+			"9월",
+			"10월",
+			"11월",
+			"12월",
+		],
+		datasets: [
+			{
+				label: "진행중",
+				backgroundColor: "rgba(75, 192, 192, 0.2)",
+				borderColor: "rgb(75, 192, 192)",
+				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				borderWidth: 1,
+			},
+			{
+				label: "지연",
+				backgroundColor: "rgba(255, 205, 86, 0.2)",
+				borderColor: "rgb(255, 205, 86)",
+				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				borderWidth: 1,
+			},
+			{
+				label: "완료",
+				backgroundColor: "rgba(54, 162, 235, 0.2)",
+				borderColor: "rgb(54, 162, 235)",
+				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				borderWidth: 1,
+			},
+			{
+				label: "파기요청",
+				backgroundColor: "rgba(255, 99, 132, 0.2)",
+				borderColor: "rgb(255, 99, 132)",
+				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				borderWidth: 1,
+			},
+		],
+	},
+	options: {
+		scales: {
+			y: {
+				stacked: true,
+			},
+			x: {
+				stacked: true,
+			},
+		},
+	},
+};
+
+
+function monthProjectGraph(projectList) {
+  let dataset = test_data_bar.data.datasets;
+	let labels = test_data_bar.data.labels;
+
+  projectList.forEach(project => {
+		let month = (new Date(project.enddate).getMonth()) + 1;
+		
+		// 프로젝트 상태와 비교하기 위한 for문
+    for (let i = 0; i < dataset.length; i++) {
+			// 프로젝트 상태와 같다면 if문으로 이동
+			if(project.status === dataset[i].label){
+				// 1월부터 12월까지 for문을 돌린다.
+        for (let j = 0; j < labels.length; j++) {
+					// 프로젝트 종료일까지 데이터 넣어주고, 나머진 0으로 처리
+          if(j < month){
+            dataset[i].data[j] += 1;
+          }
+        }
+      }
+    }
+  });
+	// canvas 드로잉
+	const custom_monthBarChart = new Chart(
+		document.getElementById("custom_monthBarChart"),
+		test_data_bar
+	);
+};
+

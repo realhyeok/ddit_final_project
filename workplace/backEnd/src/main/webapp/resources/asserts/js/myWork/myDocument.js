@@ -1,5 +1,6 @@
-
+//내 문서 시작
 function readMyDocument(userId){
+	readMyDocument = function(){};
 	
 	var baseUrl = "/app/myWork/";
 	 var kendo = window.kendo, extend = $.extend, Class = kendo.Class;
@@ -166,4 +167,4 @@ function readMyDocument(userId){
 	    }).data("kendoFileManager");
 
 }	
-	
+//내 문서 끝	
