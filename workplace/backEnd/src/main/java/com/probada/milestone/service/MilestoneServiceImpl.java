@@ -13,7 +13,12 @@ public class MilestoneServiceImpl implements MilestoneService {
 	public void setMilestoneDAO(MilestoneDAO milestoneDAO) {
 		this.milestoneDAO = milestoneDAO;
 	}
-
+	
+	@Override
+	public List<MilestoneVO> getMilestoneListByUserId(String userId) throws SQLException {
+		List<MilestoneVO> milestoneList = milestoneDAO.selectMilestoneListByUserId(userId);
+		return milestoneList;
+	}
 
 	@Override
 	public List<MilestoneVO> getMilestoneListByProjNo(String projNo) throws SQLException {
@@ -85,5 +90,4 @@ public class MilestoneServiceImpl implements MilestoneService {
 		milestoneDAO.insertMilestoneDetail(milestoneVO);
 
 	}
-
 }

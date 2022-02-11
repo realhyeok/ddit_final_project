@@ -7,6 +7,11 @@ import com.probada.issue.vo.IssueVO;
 import com.probada.issue.vo.MileIssueVO;
 
 public interface IssueDAO {
+	public List<IssueVO> selectIssueSortByUserId(String userId) throws SQLException;
+	
+	public List<IssueVO> selectIssueListByUserId(String userId) throws SQLException;
+	
+	public List<IssueVO> selectIssueListByProjNoAndUserId(IssueVO issueVO) throws SQLException;
 
 	public List<IssueVO> selectIssueListByProjNo(String projNo) throws SQLException;
 

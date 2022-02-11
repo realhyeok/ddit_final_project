@@ -20,7 +20,6 @@ public class FileVO {
 	private String etc="1";
 	private int size =  20;
 
-
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date createdUtc = new Date();
 

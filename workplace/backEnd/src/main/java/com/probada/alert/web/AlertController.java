@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,12 +40,16 @@ public class AlertController {
 	
 	@ResponseBody
 	@RequestMapping(value="/app/updateAlertList.do", method = RequestMethod.POST)
-	public List<AlertVO> updateAlertList(HttpSession session) {
-		UserVO userVO = (UserVO)session.getAttribute("userVO");
+	public Map<String, Object> updateAlertList(HttpSession session) {
 		
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		UserVO userVO = (UserVO)session.getAttribute("userVO");
+				
+		int alertCount = 0;
 		List<AlertVO> alertList = new ArrayList<AlertVO>();
 		
 		alertList = userUtil.getUserAlertList(userVO.getUserId());
+		alertCount = userUtil.getAlertCount(userVO.getUserId());
 		
 //		시간별 내림차순 정렬
 		Collections.sort(alertList, new Comparator<AlertVO>() {
@@ -54,6 +59,10 @@ public class AlertController {
 			}
 		});
 		
-		return alertList;
+		retMap.put("alertList", alertList);
+		retMap.put("alertCount", alertCount);
+		
+		return retMap;
 	}
+	
 }

@@ -17,6 +17,12 @@ public class MilestoneDAOImpl implements MilestoneDAO {
 	}
 
 	@Override
+	public List<MilestoneVO> selectMilestoneListByUserId(String userId) throws SQLException {
+		List<MilestoneVO> milestoneList = sqlSession.selectList("Milestone-Mapper.selectMilestoneListByUserId", userId);
+		return milestoneList;
+	}
+	
+	@Override
 	public List<MilestoneVO> selectMilestoneListByProjNo(String projNo) throws SQLException {
 
 		List<MilestoneVO> milestoneList =
@@ -83,5 +89,4 @@ public class MilestoneDAOImpl implements MilestoneDAO {
 		sqlSession.update("Milestone-Mapper.insertMilestoneDetail", milestoneVO);
 
 	}
-
 }

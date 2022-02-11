@@ -3,6 +3,7 @@ package com.probada.myWork.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.probada.myWork.command.myTaskChartCommand;
 import com.probada.myWork.dao.MyTaskDAO;
 import com.probada.task.vo.TaskVO;
 
@@ -37,5 +38,12 @@ public class MyTaskServiceImpl implements MyTaskService {
 	@Override
 	public void modifyMyTaskStatus(TaskVO taskVO) throws SQLException {
 		myTaskDAO.updateMyTaskStatus(taskVO);
+	}
+	
+	//대시보드 업무 차트 출력
+	@Override
+	public myTaskChartCommand getMyTaskChartByUserId(String userId) throws SQLException {
+		myTaskChartCommand myTaskChartData = myTaskDAO.selectMyTaskChartByUserId(userId);
+		return myTaskChartData;
 	}
 }

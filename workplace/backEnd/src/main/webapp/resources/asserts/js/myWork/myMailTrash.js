@@ -1,6 +1,7 @@
-//휴지통 메일 시작
-window.addEventListener('load', function() {
-	var sessionId = $("#sessionId").val();
+function trashMailBox(userId){
+	trashMailBox = function(){};
+	
+	var sessionId = userId;
 	
 	var trashMailList = $("#trashMailList").kendoGrid({
 		dataSource: {
@@ -23,8 +24,10 @@ window.addEventListener('load', function() {
 			},
 			change: function(e) {
 				var data = e.sender.data();
-				if(data){
+				if(data[0]){
 					trashMailDetail(data[0].mailNo);
+				}else{
+					mailNoDetail("trash");
 				}
 			}
 		},
@@ -47,7 +50,7 @@ window.addEventListener('load', function() {
 		],
 		noRecords: {
 			template: function(e) {
-				return "No data available on current page. Current page is: ";
+				return "<h2>메일이 존재하지 않습니다.</h2>";
 			}
 		},
 		columns: [
@@ -62,5 +65,4 @@ window.addEventListener('load', function() {
 	});
 	
 	$('#trashMailList').find('thead').hide();
-});
-//휴지통 메일 끝
+}	

@@ -14,7 +14,12 @@
 <script id="receiveMailList-template" type="text/x-kendo-template">
 	<div class="mail_list m-0 border-bottom-0">
 		<div class="left">
-			<input class="receiveCheck" type="checkbox" value="#:mailNo#">
+			# if(userFrom == userTo){ #
+				<input class="receiveCheck" type="checkbox" value="#:mailNo#" dist="mineMail">
+			# }else if(userFrom != userTo){ #
+				<input class="receiveCheck" type="checkbox" value="#:mailNo#" dist="receiveMail">
+			# } #
+
 			# if(attachList.length != 0){ #
 				<i class="fa fa-paperclip"></i>
 			# } #
@@ -33,7 +38,7 @@
 			<div class="col-md-8">
 				<div class="btn-group">
 					<button type="button" class="btn btn-sm btn-dark" onclick="getOverlayMailRegistTemplate('{{userFrom}}');"><i class="fa fa-reply"></i>&nbsp;&nbsp;답장</button>
-					<button type="button" class="btn btn-sm btn-dark btn-append" onclick="deleteReceiveMailOne({{mailNo}});"><i class="fa fa-times-circle-o"></i>&nbsp;&nbsp;삭제</button>	
+					<button type="button" class="btn btn-sm btn-dark btn-append" onclick="deleteReceiveMailOne('{{mailNo}}', '{{userFrom}}', '{{userTo}}');"><i class="fa fa-times-circle-o"></i>&nbsp;&nbsp;삭제</button>	
 				</div>
 			</div>
 			<div class="col-md-4 text-right">
@@ -104,6 +109,15 @@
 		});
 	}
 	
+	function mailNoDetail(dist){
+		var dist = "#" + dist + "MailDetail";
+		
+		var noMailMessage = "<div class='text-center'><h2>메일이 존재하지 않습니다.</h2></div>";
+		
+		$(dist).empty();
+		$(dist).append(noMailMessage);
+	}
+	
 	function receiveAllCheck(){
 		all = $("#receiveAllCheckButton").is(":checked");
 		
@@ -114,7 +128,14 @@
 		}
 	}
 	
-	function deleteReceiveMailOne(mailNo){
+	function deleteReceiveMailOne(mailNo, userFrom, userTo){
+		var mailDist = null;
+		if(userFrom == userTo){
+			mailDist = "mineMail";
+		}else{
+			mailDist = "receiveMail";
+		}
+		
 		deleteOneConfirm = confirm("삭제하시겠습니까?");
 		
 		if(deleteOneConfirm){
@@ -123,11 +144,12 @@
 				type: "get",
 				data: {
 					"mailNo"   : mailNo,
-					"mailDist" : "receiveMail"
+					"mailDist" : mailDist
 				},
 				success: function(data){
 					alert("성공");
 					$('#receiveMailList').data("kendoGrid").dataSource.read();
+					$('#sendMailList').data("kendoGrid").dataSource.read();
 					$('#trashMailList').data("kendoGrid").dataSource.read();
 				},
 				error: function(error){
@@ -138,11 +160,19 @@
 	}
 	
 	function deleteReceiveMailAll(){
+		if($(".receiveCheck:checked").length == 0){
+			alert("삭제할 메일을 선택해주세요.");
+			return;
+		}
+		
 		deleteAllConfirm = confirm("삭제하시겠습니까?");
 		var mailNo = "";
+		var mailDist = "";
+		
 		if(deleteAllConfirm){
 			$(".receiveCheck:checked").each(function(){
 				mailNo += $(this).val() + ",";
+				mailDist += $(this).attr("dist") + ",";
 			});
 			
 			$.ajax({
@@ -150,13 +180,14 @@
 				type: "get",
 				data: {
 					"mailNo" : mailNo,
-					"mailDist" : "receiveMail"	
+					"mailDist" : mailDist
 				},
 				success: function(data){
 					$("#receiveAllCheckButton").prop("checked", false);
 					alert("성공");
 		
 					$('#receiveMailList').data("kendoGrid").dataSource.read();
+					$('#sendMailList').data("kendoGrid").dataSource.read();
 					$('#trashMailList').data("kendoGrid").dataSource.read();
 				},
 				error: function(error){

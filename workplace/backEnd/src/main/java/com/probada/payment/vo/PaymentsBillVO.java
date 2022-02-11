@@ -10,7 +10,6 @@ public class PaymentsBillVO {
 	private Date paidDate = new Date();
 	private Date endDate = new Date();
 
-	
 	public int getBillNo() {
 		return billNo;
 	}
@@ -41,6 +40,5 @@ public class PaymentsBillVO {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	
 	
 }

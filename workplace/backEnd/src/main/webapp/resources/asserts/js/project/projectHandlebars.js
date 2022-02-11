@@ -163,12 +163,6 @@ var endPointBefore = "";
 $(document).ready(function(){
 	var endPoint = window.location.search;
 
-	if(getCookie('endPoint')){
-		if(getCookie('endPoint') != endPoint){
-			delCookie('endPoint');
-		}
-	}
-
 	document.cookie = "endPoint="+endPoint;
 
 	if(getCookie('projTab')){

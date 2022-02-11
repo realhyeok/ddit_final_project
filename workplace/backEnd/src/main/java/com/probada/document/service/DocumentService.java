@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.probada.document.vo.FileVO;
 import com.probada.document.vo.ProjectUserVO;
+import com.probada.task.vo.TaskVO;
 
 
 
@@ -33,7 +34,9 @@ public interface DocumentService {
 	public List<FileVO> getDocumentListByProjNo(ProjectUserVO user) throws SQLException;
 
 	public List<FileVO> getDocumentListForProjDetail(String projNo) throws SQLException;
-	
+
 	public String getProjByTitle(String title) throws SQLException;
+
+	public List<FileVO> getDocumentListBytaskTitleANDprojNo(TaskVO taskVO) throws SQLException;
 
 }

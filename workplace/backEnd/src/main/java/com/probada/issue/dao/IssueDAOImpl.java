@@ -17,6 +17,24 @@ public class IssueDAOImpl implements IssueDAO {
 	}
 
 	@Override
+	public List<IssueVO> selectIssueSortByUserId(String userId) throws SQLException {
+		List<IssueVO> issueSort = sqlSession.selectList("Issue-Mapper.selectIssueSortByUserId", userId);
+		return issueSort;
+	}
+	
+	@Override
+	public List<IssueVO> selectIssueListByUserId(String userId) throws SQLException {
+		List<IssueVO> issueList = sqlSession.selectList("Issue-Mapper.selectIssueListByUserId", userId);
+		return issueList;
+	}
+	
+	@Override
+	public List<IssueVO> selectIssueListByProjNoAndUserId(IssueVO issueVO) throws SQLException {
+		List<IssueVO> issueList = sqlSession.selectList("Issue-Mapper.selectIssueListByProjNoAndUserId", issueVO);
+		return issueList;
+	}
+	
+	@Override
 	public List<IssueVO> selectIssueListByProjNo(String projNo) throws SQLException {
 
 		List<IssueVO> issueList = sqlSession.selectList("Issue-Mapper.selectIssueListByProjNo", projNo);
@@ -59,5 +77,4 @@ public class IssueDAOImpl implements IssueDAO {
 		
 		return seq;
 	}
-
 }

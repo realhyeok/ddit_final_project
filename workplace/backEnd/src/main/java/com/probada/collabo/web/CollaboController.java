@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ public class CollaboController {
 	public ResponseEntity<List<CollaboVO>> getCollaboList() throws SQLException{
 		ResponseEntity<List<CollaboVO>> entity = null;
 		
-		LOGGER.debug("[요청받음] : /getCollaboList ");
+		LOGGER.debug("[요청받음] => /getCollaboList ");
 		
 		List<CollaboVO> collaboList = new ArrayList<CollaboVO>();
 		
@@ -62,13 +63,41 @@ public class CollaboController {
 		return entity;
 	}
 	
+	@RequestMapping("/getCollaboListByUserId")
+	@ResponseBody
+	public ResponseEntity<List<CollaboVO>> getCollaboListByUserId(HttpServletRequest request)throws Exception{
+		ResponseEntity<List<CollaboVO>> entity = null;
+		
+		LOGGER.debug("[요청받음] => /getCollaboListByUserId ");
+		
+		List<CollaboVO> collaboList = new ArrayList<CollaboVO>();
+		HttpSession session = request.getSession();
+		
+		try {
+			UserVO userVO = (UserVO) session.getAttribute("userVO");
+			String userId = userVO.getUserId();
+			
+			collaboList = collaboService.getCollaboListByUserId(userId);
+			//태그 및 멤버추가 추후 추가
+			
+			entity = new ResponseEntity<List<CollaboVO>>(collaboList, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<CollaboVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		
+		return entity;
+		
+	}
+	
+	
 	@RequestMapping("/getCollaboByCprojNo")
 	@ResponseBody
 	public ResponseEntity<CollaboVO> getCollaboByCprojNo(@RequestParam(defaultValue="") String cprojNo)throws Exception{
 		
 		ResponseEntity<CollaboVO> entity = null;
 		
-		LOGGER.debug("[요청받음] : /getCollaboByCprojNo ");
+		LOGGER.debug("[요청받음] => /getCollaboByCprojNo ");
 		
 		CollaboVO collaboVO = new CollaboVO();
 		
@@ -82,12 +111,35 @@ public class CollaboController {
 		return entity;
 	}
 	
+	@RequestMapping("/getCollaboSubProj")
+	@ResponseBody
+	public ResponseEntity<List<CollaboVO>> getCollaboSubProj(@RequestParam(defaultValue="")String cprojNo, HttpServletRequest request)throws Exception{
+		ResponseEntity<List<CollaboVO>> entity = null;
+		
+		LOGGER.debug("[요청받음] => /getCollaboSubProj ");
+		
+		List<CollaboVO> collaboList = new ArrayList<CollaboVO>();
+		
+		try {
+			collaboList = collaboService.getCollaboSubProj(cprojNo);
+			LOGGER.debug("[collaboVO] => " + collaboList.toString());
+			entity = new ResponseEntity<List<CollaboVO>>(collaboList, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<CollaboVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		
+		return entity;
+	}
+	
+	
 	@RequestMapping(value="/modifyCollaboDetail",method= RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<HashMap<String, Object>> modifyCollaboDetail(CollaboVO collaboVO) throws Exception{
 		
 		ResponseEntity<HashMap<String, Object>> entity = null;
-		
+		LOGGER.debug("[요청받음] => /modifyCollaboDetail ");
+		LOGGER.debug("Controller modify" + collaboVO);
 		try {
 			collaboService.modifyCollaboDetail(collaboVO);
 			entity = new ResponseEntity<HashMap<String,Object>>(HttpStatus.OK);
@@ -115,24 +167,22 @@ public class CollaboController {
 		return entity;
 	}
 	
-	@RequestMapping("/getProjectTitle")
-	public ResponseEntity<List<String>> getProjectTitle(HttpSession session)throws Exception{
-		ResponseEntity<List<String>> entity = null;
+	@RequestMapping("/getProjectTitleCollabo")
+	public ResponseEntity<List<CollaboVO>> getProjectTitle(HttpSession session)throws Exception{
+		ResponseEntity<List<CollaboVO>> entity = null;
 		
-		LOGGER.debug("[요청받음] => /getProjectTitle");
+		LOGGER.debug("[요청받음] => /getProjectTitleCollabo");
 		
 		UserVO userVO = (UserVO) session.getAttribute("userVO");
-		
 		String userId = userVO.getUserId();
-		
-		List<String> projTitle = null;
+		List<CollaboVO> projTitle = new ArrayList<CollaboVO>();
 		
 		try {
-			projTitle = collaboService.getProjectTitle(userId);
-			LOGGER.debug("[프로젝트 제목] => ", projTitle);
-			entity = new ResponseEntity<List<String>>(projTitle,HttpStatus.OK);
+			projTitle = collaboService.getProjectTitleCollabo(userId);
+			LOGGER.debug("[프로젝트 제목] projTitle=> " + projTitle);
+			entity = new ResponseEntity<List<CollaboVO>>(projTitle,HttpStatus.OK);
 		} catch (Exception e) {
-			entity = new ResponseEntity<List<String>>(HttpStatus.INTERNAL_SERVER_ERROR); 
+			entity = new ResponseEntity<List<CollaboVO>>(HttpStatus.INTERNAL_SERVER_ERROR); 
 			e.printStackTrace();
 		}
 		return entity;
@@ -140,7 +190,7 @@ public class CollaboController {
 	
 	@RequestMapping(value = "/sendInviteCollaboMail", method = RequestMethod.POST, produces="text/plain;charset=utf-8")
 	public String sendInviteCollaboMail(CollaboCommand cmd)throws Exception{
-		String url = "/app/index";
+		String url = "redirect:/app/index";
 		
 		LOGGER.debug("[요청받음] => /sendInviteCollaboMail");
 		
@@ -152,6 +202,24 @@ public class CollaboController {
 		return url;
 		
 	}
+	
+	//@RequestMapping(value = "/getCollaboCount", method = RequestMethod.POST)
+	@RequestMapping("/getCollaboCount")
+	@ResponseBody
+	public int getCollaboCount(HttpServletRequest request)throws Exception{
+		
+		LOGGER.debug("[요청받음] => /getCollaboCount");
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("userVO");
+		
+		String userId = userVO.getUserId();
+		
+		int result = collaboService.getCollaboCount(userId);
+		
+		return result;
+	}
+	
 	
 }
 

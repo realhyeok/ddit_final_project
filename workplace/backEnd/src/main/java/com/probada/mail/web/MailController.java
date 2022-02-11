@@ -192,8 +192,7 @@ public class MailController {
 			}else if(mailDist.equals("sendMail")) {
 				mailService.returnSendMail(mailNo);
 			}else if(mailDist.equals("mineMail")) {
-				mailService.returnReceiveMail(mailNo);
-				mailService.returnSendMail(mailNo);
+				mailService.returnMineMail(mailNo);
 			}
 			entity = new ResponseEntity<String>("", HttpStatus.OK);
 		} catch (Exception e) {
@@ -214,6 +213,8 @@ public class MailController {
 				mailService.deleteReceiveMailToTrash(mailNo);
 			}else if(mailDist.equals("sendMail")) {
 				mailService.deleteSendMailToTrash(mailNo);
+			}else if(mailDist.equals("mineMail")) {
+				mailService.deleteMineMailToTrash(mailNo);
 			}
 			entity = new ResponseEntity<String>("", HttpStatus.OK);
 		} catch (Exception e) {
@@ -231,15 +232,16 @@ public class MailController {
 		
 		String stringMailNo[] = mailNo.split(",");
 		int mailNumbers[] = Arrays.stream(stringMailNo).mapToInt(Integer::parseInt).toArray();
+		String stringMailDist[] = mailDist.split(",");
 		
 		try {
-			if(mailDist.equals("receiveMail")) {
-				for(int i = 0; i < mailNumbers.length; i++) {
+			for(int i = 0; i < mailNumbers.length; i++) {
+				if(stringMailDist[i].equals("receiveMail")) {
 					mailService.deleteReceiveMailToTrash(mailNumbers[i]);
-				}
-			}else if(mailDist.equals("sendMail")) {
-				for(int i = 0; i < mailNumbers.length; i++) {
+				}else if(stringMailDist[i].equals("sendMail")) {
 					mailService.deleteSendMailToTrash(mailNumbers[i]);
+				}else if(stringMailDist[i].equals("mineMail")) {
+					mailService.deleteMineMailToTrash(mailNumbers[i]);
 				}
 			}
 			entity = new ResponseEntity<String>("", HttpStatus.OK);
@@ -264,8 +266,7 @@ public class MailController {
 			}else if(mailDist.equals("trashSendMail")) {
 				mailService.deleteTrashSendMail(mailNo);		
 			}else if(mailDist.equals("trashMineMail")) {
-				mailService.deleteTrashSendMail(mailNo);
-				mailService.deleteTrashReceiveMail(mailNo);
+				mailService.deleteTrashMineMail(mailNo);
 			}
 			
 			entity = new ResponseEntity<String>("", HttpStatus.OK);

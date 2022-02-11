@@ -7,7 +7,9 @@ import com.probada.issue.vo.IssueVO;
 import com.probada.milestone.vo.MilestoneVO;
 
 public interface MilestoneService {
-
+	
+	public List<MilestoneVO> getMilestoneListByUserId(String userId) throws SQLException;
+	
 	public List<MilestoneVO> getMilestoneListByProjNo(String projNo) throws SQLException;
 
 	public MilestoneVO getMilestoneByMileNo(String mileNo) throws SQLException;

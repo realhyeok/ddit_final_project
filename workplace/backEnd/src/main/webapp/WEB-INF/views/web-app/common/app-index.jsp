@@ -5,17 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- 변수 선언 시작 -->
-<c:set var="dataUsage" value="${userVO.userUploadUsage/userMaxUploadCapacity*100}"/>
-<c:choose>
-	<c:when test="${userVO.userUploadUsage >= 1000}">
-		<c:set var="dataType" value="GB"/>
-		<fmt:formatNumber var="dataValue" value="${userVO.userUploadUsage/1000}" pattern="#.#"/>
-	</c:when>
-	<c:otherwise>
-		<c:set var="dataType" value="MB"/>
-		<c:set var="dataValue" value="${userVO.userUploadUsage}"/>
-	</c:otherwise>
-</c:choose>
+
 <!-- 변수 선언 끝 -->
 
 <!-- page content -->
@@ -43,8 +33,8 @@
               내 작업 
               </div>
             </div>
-            <a class="more" href="/ToDoList">
-              View More <i class="fa fa-arrow-right"></i>
+            <a class="more" href="<%=request.getContextPath() %>/app/myWork">
+              더보기 <i class="fa fa-arrow-right"></i>
             </a>
           </div>
 
@@ -64,8 +54,8 @@
               이슈 
               </div>
             </div>
-            <a class="more" href="/Issue">
-              View More <i class="fa fa-arrow-right"></i>
+            <a class="more" href="<%=request.getContextPath() %>/app/myWork/#issue">
+              더보기 <i class="fa fa-arrow-right"></i>
             </a>
           </div>
 
@@ -87,7 +77,7 @@
               </div>
             </div>
             <a class="more" href="/ProjectChangeRequest">
-              View More <i class="fa fa-arrow-right"></i>
+              더보기 <i class="fa fa-arrow-right"></i>
             </a>
           </div>
 
@@ -108,8 +98,8 @@
                 메일
               </div>
             </div>
-            <a class="more" href="/ProjectApproval">
-              View More <i class="fa fa-arrow-right"></i>
+            <a class="more" href="<%=request.getContextPath() %>/app/myWork#mailReceive-tab">
+              더보기 <i class="fa fa-arrow-right"></i>
             </a>
           </div>
 
@@ -130,7 +120,7 @@
               </div>
             </div>
             <a class="more" href="/File">
-              View More <i class="fa fa-arrow-right"></i>
+              더보기 <i class="fa fa-arrow-right"></i>
             </a>
           </div>
 
@@ -151,7 +141,7 @@
               </div>
             </div>
             <a class="more" href="<%=request.getContextPath() %>/app/project-list">
-              View More <i class="fa fa-arrow-right"></i>
+              더보기 <i class="fa fa-arrow-right"></i>
             </a>
           </div>
 
@@ -169,34 +159,27 @@
           <div class="x_panel_origin">
             <div class="x_title">
               <h2>내 업무 </h2>
-              <span style="float: right;"> <a href="#">more</a> </span>
+              <a class="more float-right mt-2" href="#">
+                더보기
+                <i class="fa fa-arrow-right"></i>
+              </a>
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>업무</th>
-                    <th>프로젝트</th>
+                    <th>업무 명</th>
+                    <th>프로젝트 명</th>
                     <th>상태</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
+                <tbody class="task_list_for_index_page">
+                  <!-- <tr>
                     <th scope="row">러시아 고공낙하 장비 설계</th>
                     <td>한미 지상 훈련 프로젝트</td>
                     <td>진행중</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">매뚜기 수집</th>
-                    <td>대전 생물 연구 프로젝트</td>
-                    <td>진행중</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">모코코 수집 지도 작성</th>
-                    <td>코코모를 위한 지침서</td>
-                    <td>완료</td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
             </div>
@@ -209,35 +192,23 @@
           <div class="x_panel_origin">
             <div class="x_title">
               <h2>최근 작성한 문서</h2>
-      
-              <span style="float: right;"> <a href="#">more</a> </span>
+              <a class="more float-right mt-2" href="#">
+                더보기
+                <i class="fa fa-arrow-right"></i>
+              </a>
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>업무</th>
-                    <th>프로젝트</th>
+                    <th>업무 명</th>
+                    <th>프로젝트 명</th>
                     <th>상태</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                  </tr>
+                <tbody class="recent_task_list_for_index_page">
+                <!-- alertIndex.js의 recent_task_list_for_index_page를 참고하세요 -->
                 </tbody>
               </table>
             </div>
@@ -246,7 +217,7 @@
         <!-- dashboard-table right end -->
       </div>
       <!-- 그래프 row start -->
-      <div class="row">
+      <div class="row" style="flex-wrap: nowrap;">
         <div class="col-md-3 widget widget_tally_box x_panel_origin widget_data">
           <div class="ui-ribbon-container" style="height: 440px;">
             <div class="x_title">
@@ -256,7 +227,7 @@
             <div class="x_content">
       
               <div style="text-align: center; margin-bottom: 17px">
-                <span class="chart" data-percent="${dataUsage }">
+                <span class="chart" id="dataUsageChart" data-percent="">
                   <span class="percent"></span>
                 </span>
               </div>
@@ -264,9 +235,7 @@
               <h3 class="name_title">데이터 사용량</h3>
               <div class="divider"></div>
       
-              <p>
-                <br/><br/> 해당 계정에서 사용할 수 있는 총 데이터 사용량을 표시합니다. <br/><br/>
-                	현재 <strong>${userVO.nickname}</strong>님은 ${userMaxUploadCapacity}${dataType }중, <br/><strong>${dataValue}${dataType }</strong>를 사용중입니다. <br/><br/> 구독 서비스를 원하시면 <br/> <a href="" style="color: #5C9BD1;">여기</a>를 클릭해주세요.
+              <p id="showUserDataUsage">
               </p>
       
             </div>
@@ -282,7 +251,7 @@
             <div class="x_content">
               <!-- STACKED BAR CHART -->
               <div>
-                <canvas id="custom_barChart"></canvas>
+                <canvas id="custom_monthBarChart"></canvas>
               </div>
               <!-- /.card -->
             </div>
@@ -297,38 +266,27 @@
         <div class="x_panel_origin">
           <div class="x_title">
             <h2>참여 프로젝트</h2>
-            <span style="float: right;"> <a href="#">more</a> </span>
+            <a class="more float-right mt-2" href="<%=request.getContextPath() %>/app/project-list">
+              더보기
+              <i class="fa fa-arrow-right"></i>
+            </a>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
+                  <th>프로젝트 명</th>
+                  <th>종료일</th>
+                  <th>진행상태</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
+              <tbody class="project_list_for_index_page">
+                <!-- <tr>
                   <th scope="row">1</th>
                   <td>Mark</td>
                   <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
 

@@ -2,9 +2,12 @@ package com.probada.payment.service;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 import com.probada.payment.dao.PaymentsBillDAO;
+import com.probada.payment.vo.PaySuccessVO;
 import com.probada.payment.vo.PaymentsBillVO;
+import com.probada.payment.vo.PaymentsPlanVO;
 
 public class PaymentsBillServiceImpl implements PaymentsBillService{
 	
@@ -42,6 +45,26 @@ public class PaymentsBillServiceImpl implements PaymentsBillService{
 	@Override
 	public int getMemoryCapacity(String planNo) throws SQLException {
 		return paymentsBillDAO.getMemoryCapacity(planNo);
+	}
+
+	@Override
+	public PaymentsPlanVO getPaymentsPlanVO(String planNo) throws SQLException {
+		return paymentsBillDAO.getPaymentsPlanVO(planNo);
+	}
+
+	@Override
+	public void updateUserPlan(PaymentsBillVO pbvo) throws SQLException {
+		paymentsBillDAO.updateUserPlan(pbvo);
+	}
+
+	@Override
+	public void addPaymentHistory(PaySuccessVO psvo) throws SQLException {
+		paymentsBillDAO.insertPaymentHistory(psvo);
+	}
+
+	@Override
+	public List<PaySuccessVO> getPaymentHistoryList(String userId) throws SQLException {
+		return paymentsBillDAO.getPaymentHistoryList(userId);
 	}
 
 }

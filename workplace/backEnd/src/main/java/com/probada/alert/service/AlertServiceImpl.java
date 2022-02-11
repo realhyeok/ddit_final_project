@@ -25,4 +25,9 @@ public class AlertServiceImpl implements AlertService{
 		return alertDAO.getUserAlertList(userId);
 	}
 
+	@Override
+	public int getAlertCount(String userId) throws SQLException {
+		return alertDAO.getAlertCount(userId);
+	}
+
 }

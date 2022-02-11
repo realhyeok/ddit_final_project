@@ -2,6 +2,8 @@ package com.probada.user.web;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.probada.collabo.vo.CollaboVO;
+import com.probada.project.vo.ProjectVO;
+import com.probada.task.vo.TaskVO;
 import com.probada.user.service.UserService;
 import com.probada.user.vo.EmailVO;
 import com.probada.user.vo.UserTotalCountVO;
@@ -37,7 +42,7 @@ public class UserController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	@Autowired
 	private UserUtil userUtil;
 	@Resource(name="taskUtil")
@@ -101,10 +106,7 @@ public class UserController {
 		else {
 			retMap.put("success", "success");
 		}
-		int userMaxUploadCapacity = userUtil.getUserMaxUploadCapacity(user.getUserId());
-
 		
-		session.setAttribute("userMaxUploadCapacity", userMaxUploadCapacity);
 		session.setAttribute("userVO", user);
 		return retMap;
 	}
@@ -335,6 +337,71 @@ public class UserController {
 		return vo;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/app/getListToAsideBar.do", method = RequestMethod.POST)
+	public Map<String, Object> getListToAsideBar(HttpSession session) {
+		
+		Map<String, Object> retMap = new HashMap<>();
+		UserVO userVO = (UserVO) session.getAttribute("userVO");
+		
+		List<TaskVO> taskList = new ArrayList<>();
+		List<ProjectVO> projectList = new ArrayList<>();
+		List<CollaboVO> collaboList = new ArrayList<>();
+		
+		try {
+			taskList = taskUtil.getFormatTaskListByUserId(userVO.getUserId());
+			projectList = userUtil.getUserProjectList(userVO.getUserId());
+			collaboList = userUtil.getUserCollaboList(userVO.getUserId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		retMap.put("taskList", taskList);
+		retMap.put("projectList", projectList);
+		retMap.put("collaboList", collaboList);
+		
+		return retMap;
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="/getUserMaxUploadCapacity.do", method = RequestMethod.POST)
+	public Map<String, Object> getUserDataUsage(HttpSession session) {
+		Map<String, Object> retMap = new HashMap<>();
+		
+		int maxDataUsage = 0;
+		
+		UserVO userVO = (UserVO) session.getAttribute("userVO");
+		
+		maxDataUsage = userUtil.getUserMaxUploadCapacity(userVO.getUserId());
+		
+		retMap.put("userVO", userVO);
+		retMap.put("userMaxUploadCapacity", maxDataUsage);
+		
+		return retMap;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getRecentTaskList.do", method = RequestMethod.POST)
+	public List<TaskVO> getRecentTaskList(HttpSession session){
+		List<TaskVO> recentTaskList = new ArrayList<>();
+		
+		UserVO userVO = (UserVO) session.getAttribute("userVO");
+		
+		try {
+			recentTaskList = taskUtil.getFormatTaskListByUserId(userVO.getUserId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+//		시간별 내림차순 정렬
+		Collections.sort(recentTaskList, new Comparator<TaskVO>() {
+			@Override
+			public int compare(TaskVO a1, TaskVO a2) {
+				return a1.getUpdatedate().compareTo(a2.getUpdatedate());
+			}
+		});
+		
+		return recentTaskList;
+	}
 
 }

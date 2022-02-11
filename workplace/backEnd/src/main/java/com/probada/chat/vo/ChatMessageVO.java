@@ -14,6 +14,18 @@ public class ChatMessageVO {
 	private String docContNo;
 	private String realRoom;
 	private String nickname;
+	private String picture;
+	
+	
+	
+	
+	
+	public String getPicture() {
+		return picture;
+	}
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
 	public String getChatroomMsgNo() {
 		return chatroomMsgNo;
 	}
@@ -60,8 +72,9 @@ public class ChatMessageVO {
 	public String toString() {
 		return "ChatMessageVO [chatroomMsgNo=" + chatroomMsgNo + ", userId=" + userId + ", content=" + content
 				+ ", regdate=" + regdate + ", docContNo=" + docContNo + ", realRoom=" + realRoom + ", nickname="
-				+ nickname + "]";
+				+ nickname + ", picture=" + picture + "]";
 	}
+	
 	
 
 	

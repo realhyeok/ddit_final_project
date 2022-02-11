@@ -84,4 +84,9 @@ public class TaskDAOImpl implements TaskDAO {
 
 	}
 
+	@Override
+	public List<TaskVO> selectFormatTaskListByUserId(String userId) throws SQLException {
+		return sqlSession.selectList("Task-Mapper.selectFormatTaskListByUserId", userId);
+	}
+
 }

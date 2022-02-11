@@ -14,6 +14,23 @@ public class IssueServiceImpl implements IssueService {
 		this.issueDAO = issueDAO;
 	}
 
+	@Override
+	public List<IssueVO> getIssueSortByUserId(String userId) throws SQLException {
+		List<IssueVO> issueSort= issueDAO.selectIssueSortByUserId(userId);
+		return issueSort;
+	}
+
+	@Override
+	public List<IssueVO> getIssueListByUserId(String userId) throws SQLException {
+		List<IssueVO> issueList= issueDAO.selectIssueListByUserId(userId);
+		return issueList;
+	}
+
+	@Override
+	public List<IssueVO> getIssueListByProjNoAndUserId(IssueVO issueVO) throws SQLException {
+		List<IssueVO> issueList= issueDAO.selectIssueListByProjNoAndUserId(issueVO);
+		return issueList;
+	}
 
 	@Override
 	public List<IssueVO> getIssueListByProjNo(String projNo) throws SQLException {
@@ -57,5 +74,4 @@ public class IssueServiceImpl implements IssueService {
 		
 		return issueNo;
 	}
-
 }

@@ -8,11 +8,12 @@ function getParameterByName(name) {
 
 var cprojNo = getParameterByName("cprojNo");
 console.log(cprojNo);
+
 //콜라보 리스트 데이터소스
 const cprojDataSource = new kendo.data.DataSource({
       type: "json",
       transport: {
-          read: "/app/collabo/getCollaboList"
+          read: "/app/collabo/getCollaboListByUserId"
       },
       schema: {
           model: {
@@ -40,10 +41,10 @@ const cprojList = $("#collabo-list").kendoGrid({
     	{ field: "status",hidden:true },
 		{ field: "startdate",hidden:true},
 		{
-			template: $("#collaboCardTemplate").html()
+			template: $("#collaboCardTemplate").html(),
 		},
 	],
-	dataSource: cprojDataSource,
+	dataSource: cprojDataSource
 });
 
 function xssPurify(html) {

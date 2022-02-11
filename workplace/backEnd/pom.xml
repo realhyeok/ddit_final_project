@@ -109,6 +109,14 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+		<!-- wls혁 -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20210307</version>
+		</dependency>
+
+
 
 
 		<!-- jdbc -->

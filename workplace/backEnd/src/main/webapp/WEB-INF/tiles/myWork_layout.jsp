@@ -13,6 +13,7 @@
 <body>
 	<tiles:insertAttribute name="header"/>
 	<tiles:insertAttribute name="body"/>
+	<tiles:insertAttribute name="modal"/>
 	<tiles:insertAttribute name="footer"/>
 	<tiles:insertAttribute name="script"/>
 	<tiles:insertAttribute name="myScript"/>
@@ -20,5 +21,6 @@
 	<tiles:insertAttribute name="myMailOverlay"/>
 	<tiles:insertAttribute name="myTaskOverlay"/>
 	<tiles:insertAttribute name="myTaskModifyOverlay"/>
+	<tiles:insertAttribute name="myIssueOverlay"/>
 </body>
 </html>

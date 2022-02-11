@@ -2,10 +2,13 @@ package com.probada.payment.dao;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.probada.payment.vo.PaySuccessVO;
 import com.probada.payment.vo.PaymentsBillVO;
+import com.probada.payment.vo.PaymentsPlanVO;
 
 public class PaymentsBillDAOImpl implements PaymentsBillDAO{
 
@@ -43,5 +46,25 @@ public class PaymentsBillDAOImpl implements PaymentsBillDAO{
 	@Override
 	public int getMemoryCapacity(String planNo) throws SQLException {
 		return sqlSession.selectOne("PaymentsBill-Mapper.getMemoryCapacity", planNo);
+	}
+
+	@Override
+	public PaymentsPlanVO getPaymentsPlanVO(String planNo) throws SQLException {
+		return sqlSession.selectOne("PaymentsBill-Mapper.getPaymentsPlanVO", planNo);
+	}
+
+	@Override
+	public void updateUserPlan(PaymentsBillVO pbvo) throws SQLException {
+		sqlSession.update("PaymentsBill-Mapper.updateUserPlan", pbvo);
+	}
+
+	@Override
+	public void insertPaymentHistory(PaySuccessVO psvo) throws SQLException {
+		sqlSession.insert("PaymentsBill-Mapper.insertPaymentHistory", psvo);
+	}
+
+	@Override
+	public List<PaySuccessVO> getPaymentHistoryList(String userId) throws SQLException {
+		return sqlSession.selectList("PaymentsBill-Mapper.selectPaymentHistoryListByUserId", userId);
 	}
 }

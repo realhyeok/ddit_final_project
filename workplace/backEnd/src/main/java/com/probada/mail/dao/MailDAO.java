@@ -35,11 +35,17 @@ public interface MailDAO {
 	//보낸메일 복구
 	public void returnSendMail(int mailNo) throws SQLException;
 	
+	//내게 쓴 메일 복구
+	public void returnMineMail(int mailNo) throws SQLException;
+	
 	//받은메일 삭제(휴지통으로)
 	public void deleteReceiveMailToTrash(int mailNo) throws SQLException;
 
 	//보낸메일 삭제(휴지통으로)
 	public void deleteSendMailToTrash(int mailNo) throws SQLException;
+	
+	//내게 쓴 메일 삭제(휴지통으로)
+	public void deleteMineMailToTrash(int mailNo) throws SQLException;
 	
 	//임시메일 삭제(완전 삭제)
 	public void deleteTempMail(int mailNo) throws SQLException;
@@ -49,6 +55,9 @@ public interface MailDAO {
 	
 	//휴지통 삭제(보낸 메일)
 	public void deleteTrashSendMail(int mailNo) throws SQLException;
+	
+	//휴지통 삭제(내게 쓴 메일)
+	public void deleteTrashMineMail(int mailNo) throws SQLException;
 	
 	//메일 등록
 	public void registMail(MailVO mailVO) throws SQLException;

@@ -92,4 +92,10 @@ public class TaskServiceImpl implements TaskService {
 
 	}
 
+
+	@Override
+	public List<TaskVO> getFormatTaskListByUserId(String userId) throws SQLException {
+		return taskDAO.selectFormatTaskListByUserId(userId);
+	}
+
 }

@@ -6,6 +6,9 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.probada.collabo.vo.CollaboVO;
+import com.probada.project.vo.ProjectVO;
+import com.probada.task.vo.TaskVO;
 import com.probada.user.vo.UserTotalCountVO;
 import com.probada.user.vo.UserVO;
 
@@ -145,6 +148,28 @@ public class UserDAOImpl implements UserDAO{
 		userVO.setCollaboCount(collaboTotalCount);
 		
 		return userVO;
+	}
+
+	@Override
+	public List<TaskVO> getUserTaskList(String userId) throws SQLException {
+		return sqlSession.selectList("Task-Mapper.selectTaskListByUserId", userId);
+	}
+
+	@Override
+	public List<ProjectVO> getUserProjectList(String userId) throws SQLException {
+		return sqlSession.selectList("Project-Mapper.selectProjectListByUserId", userId);
+	}
+
+	
+	@Override
+	public List<UserVO> selectTotalUserByPrivacy() throws SQLException {
+		
+		return sqlSession.selectList("User-Mapper.selectTotalUserByPrivacy");
+	}
+
+	@Override
+	public List<CollaboVO> selectCollaboListByUserId(String userId) throws SQLException {
+		return sqlSession.selectList("Collabo-Mapper.selectCollaboListByUserId", userId);
 	}
 
 }

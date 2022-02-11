@@ -1,5 +1,5 @@
 /*collabo css*/
-.form-control {
+.form-control-collabo {
   display: block;
   width: 100%;
   height: calc(2.25rem + 2px);
@@ -23,7 +23,7 @@
   border-radius: 0;
   box-shadow: inherit;
 }
-.form-group {
+.form-group-collabo {
   font-size: 20px;
   color: black;
 }
@@ -51,7 +51,7 @@
 }
 
 /*콜라보 모달*/
-.modal-content {
+.modal-content-collabo {
   width: 650px;
 }
 
@@ -162,7 +162,7 @@ spoonLi
   display: flex;
   justify-content: center;
 }
-.form-group{
+.form-group-collabo{
   display: flex;
   justify-content: center;
 }

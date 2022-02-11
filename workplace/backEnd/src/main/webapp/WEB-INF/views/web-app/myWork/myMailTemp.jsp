@@ -197,6 +197,11 @@
 	}
 	
 	function deleteTempMailAll(){
+		if($(".tempCheck:checked").length == 0){
+			alert("삭제할 메일을 선택해주세요.");
+			return;
+		}
+		
 		deleteAllConfirm = confirm("임시저장된 메일은 완전히 삭제됩니다.\n삭제하시겠습니까?");
 		var mailNo = "";
 		var mailDist = "";

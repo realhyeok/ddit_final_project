@@ -5,9 +5,14 @@
 	<select id="selectReceiveMailList" resultType="mailVO">
 		SELECT MAIL_NO
 			 , TITLE
+			 , USER_TO
 			 , USER_FROM
 			 , CONTENT
 			 , REGDATE
+			 , STATUS
+			 , DIST
+			 , RECV_DEL
+			 , SENT_DEL
 		  FROM MAIL
 		 WHERE USER_TO = #{userTo}
 		   AND DIST = 'B901'
@@ -191,6 +196,13 @@
 		 WHERE MAIL_NO = #{mailNo}
 	</update>
 	
+	<update id="returnMineMail">
+		UPDATE MAIL
+		   SET SENT_DEL = '1'
+		     , RECV_DEL = '1'
+		 WHERE MAIL_NO = #{mailNo}
+	</update>
+	
 	<update id="deleteReceiveMailToTrash">
 		UPDATE MAIL
 		   SET RECV_DEL = '2'
@@ -200,6 +212,13 @@
 	<update id="deleteSendMailToTrash">
 		UPDATE MAIL
 		   SET SENT_DEL = '2'
+		 WHERE MAIL_NO = #{mailNo}
+	</update>
+	
+	<update id="deleteMineMailToTrash">
+		UPDATE MAIL
+		   SET SENT_DEL = '2'
+		     , RECV_DEL = '2'
 		 WHERE MAIL_NO = #{mailNo}
 	</update>
 	
@@ -218,6 +237,13 @@
 	<update id="deleteTrashSendMail">
 		UPDATE MAIL
 		   SET SENT_DEL = '3'
+		 WHERE MAIL_NO = #{mailNo}
+	</update>
+	
+	<update id="deleteTrashMineMail">
+		UPDATE MAIL
+		   SET SENT_DEL = '3'
+		     , RECV_DEL = '3'
 		 WHERE MAIL_NO = #{mailNo}
 	</update>
 	

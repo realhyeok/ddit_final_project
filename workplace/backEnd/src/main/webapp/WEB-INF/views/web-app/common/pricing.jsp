@@ -48,7 +48,7 @@
                         </div>
                       </div>
                       <div class="pricing_footer">
-                        <a href="javascript:void(0);" class="btn btn-secondary btn-block" role="button"> <del>이용하기</del> </a>
+                        <button class="btn btn-secondary btn-block" style="pointer-events: none;"> <del>이용하기</del> </button>
                       </div>
                     </div>
                   </div>
@@ -78,7 +78,7 @@
                         </div>
                       </div>
                       <div class="pricing_footer">
-                        <a href="javascript:void(0);" class="btn btn-success btn-block" role="button">이용하기</a>
+                        <a href="javascript:stratPay(2, ${userId });" class="btn btn-success btn-block" role="button">이용하기</a>
                       </div>
                     </div>
                   </div>
@@ -108,7 +108,7 @@
                         </div>
                       </div>
                       <div class="pricing_footer">
-                        <a href="javascript:void(0);" class="btn btn-success btn-block" role="button">이용하기</a>
+                        <a href="javascript:stratPay(3, ${userId });" class="btn btn-success btn-block" role="button">이용하기</a>
                       </div>
                     </div>
                   </div>

@@ -26,4 +26,5 @@ public interface TaskDAO {
 
 	public void insertTask(TaskVO taskVO) throws SQLException;
 
+	public List<TaskVO> selectFormatTaskListByUserId(String userId) throws SQLException;
 }

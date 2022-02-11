@@ -43,6 +43,10 @@ public class EchoHandler extends TextWebSocketHandler {
 	    
 	private Map<WebSocketSession, String> sessionList = new HashMap<WebSocketSession, String>();
 	
+	private Map<String, List<String>> onoffCheckUser = new HashMap<String, List<String>>();
+	
+	
+	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		
@@ -72,13 +76,21 @@ public class EchoHandler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
+		List<String> temp = new ArrayList<>();
 	
-		
+		String checkRealRoom ="";
+		String checkNickName="";
 		String msg = message.getPayload();
+		LOGGER.debug("지금 확읺라고 싶은 msg =>{}",msg);
 		
 		ChatMessageVO chatMessage = objectMapper.readValue(msg,ChatMessageVO.class);
 		
 		LOGGER.debug("chatMessage =>{}",chatMessage);
+		
+		checkRealRoom = chatMessage.getRealRoom();
+		checkNickName = chatMessage.getNickname();
+		temp.add(checkNickName);
+		onoffCheckUser.put(checkRealRoom,temp);
 		
 		ChatVO commandChat = new ChatVO();
 		commandChat.setUserId(chatMessage.getUserId());
@@ -91,7 +103,8 @@ public class EchoHandler extends TextWebSocketHandler {
 		LOGGER.debug("chatRoom =>{}",chatRoom);
 		
 		if(RoomList.get(chatRoom.getRealRoom()) == null && chatMessage.getContent().equals("ENTER-CHAT") && chatRoom != null) {
-            
+            //test
+			TextMessage textMessage3 = new TextMessage(chatMessage.getUserId() + ","+chatMessage.getNickname()+","+ chatMessage.getContent()+","+chatMessage.getRegdate()+","+chatMessage.getPicture());
             // 채팅방에 들어갈 session들
             ArrayList<WebSocketSession> sessionTwo = new ArrayList<>();
             // session 추가
@@ -100,16 +113,30 @@ public class EchoHandler extends TextWebSocketHandler {
             sessionList.put(session, chatRoom.getRealRoom());
             // RoomList에 추가
             RoomList.put(chatRoom.getRealRoom(), sessionTwo);
+            //test
+            for(WebSocketSession sess : RoomList.get(chatRoom.getRealRoom())) {
+                sess.sendMessage(textMessage3);
+            }
+            //test
             LOGGER.debug("채팅방 생성");
         }
         
         // 채팅방이 존재 할 때
         else if(RoomList.get(chatRoom.getRealRoom()) != null && chatMessage.getContent().equals("ENTER-CHAT") && chatRoom != null) {
-            
+        	
+        	TextMessage textMessage1 = new TextMessage(chatMessage.getUserId() + ","+chatMessage.getNickname()+",님이 참가하였습니다.,"+chatMessage.getRegdate()+","+chatMessage.getPicture());
             // RoomList에서 해당 방번호를 가진 방이 있는지 확인.
             RoomList.get(chatRoom.getRealRoom()).add(session);
             // sessionList에 추가
             sessionList.put(session, chatRoom.getRealRoom());
+            
+            LOGGER.debug("입장 메시지 전송ㄱㄱ");
+            
+            for(WebSocketSession sess : RoomList.get(chatRoom.getRealRoom())) {
+                sess.sendMessage(textMessage1);
+            }
+            
+            
             LOGGER.debug("채팅방 입장");
         }
         
@@ -120,7 +147,7 @@ public class EchoHandler extends TextWebSocketHandler {
         	LOGGER.debug("채팅 매시지 입력 메서드 실행");
         	
             // 메세지에 이름, 내용을 담는다.
-            TextMessage textMessage = new TextMessage(chatMessage.getUserId() + ","+chatMessage.getNickname()+","+ chatMessage.getContent()+","+chatMessage.getRegdate());
+            TextMessage textMessage = new TextMessage(chatMessage.getUserId() + ","+chatMessage.getNickname()+","+ chatMessage.getContent()+","+chatMessage.getRegdate()+","+chatMessage.getPicture());
             
             
             // 현재 session 수

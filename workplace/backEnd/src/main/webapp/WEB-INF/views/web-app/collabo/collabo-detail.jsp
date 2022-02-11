@@ -74,7 +74,7 @@
 				<div class="panel">
 					<a class="panel-heading collabo-detail-a" role="tab" id="headingOne1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne1" aria-expanded="true"
 						aria-controls="collapseOne">
-						<h4 class="panel-title">
+						<h4 class="panel-title" onclick="subProjList('{{cprojNo}}');">
 							<i class="fa fa-object-group"></i> 연관 프로젝트
 						</h4>
 					</a>
@@ -82,7 +82,7 @@
 						<div class="panel-body">
 							<table class="table table-striped">
 
-								<tbody>
+								<tbody id="selectSubProject">
 									<tr>
 										<td><a href="" class="collabo-detail-a">하위 프로젝트 1</a></td>
 									</tr>
@@ -99,7 +99,7 @@
           		  		<!-- end of accordion -->
 						</script>
 			<!-- 프로젝트 소개 끝 -->
-
+			
 			
 
 			<!-- 프로젝트 공지사항 본문 시작 -->
@@ -455,7 +455,7 @@
     </button> -->
 <div class="modal" id="collabo-notice-regist" data-backdrop="static">
 	<div class="modal-dialog">
-		<div class="modal-content">
+		<div class="modal-content-collabo">
 			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title modalTitle">공지사항 등록</h4>
@@ -471,15 +471,15 @@
 						<p>프로젝트 공지사항을 입력하는 공간입니다.</p>
 						<p>프로젝트에는 하나의 공지사항만 등록할 수 있습니다.</p>
 						<div class="card-body">
-							<div class="form-group">
+							<div class="form-group-collabo">
 								<label for="notice_title_input">공지사항 제목</label> <input
-									type="text" class="form-control" id="notice_title_input"
+									type="text" class="form-control-collabo" id="notice_title_input"
 									placeholder="제목을 입력해주세요." />
 							</div>
 							<!-- textarea -->
-							<div class="form-group">
+							<div class="form-group-collabo">
 								<label>공지사항 내용</label>
-								<textarea class="form-control" rows="5" placeholder="내용을 입력해주세요"></textarea>
+								<textarea class="form-control-collabo" rows="5" placeholder="내용을 입력해주세요"></textarea>
 							</div>
 						</div>
 						<!-- /.card-body -->
@@ -496,7 +496,7 @@
 <!-- 프로젝트 구성원 추가 모달 시작-->
 <div class="modal" id="collabo-member-add" data-backdrop="static">
 	<div class="modal-dialog">
-		<div class="modal-content">
+		<div class="modal-content-collabo">
 			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title modalTitle">구성원 초대</h4>
@@ -511,14 +511,14 @@
 					<form>
 						<p>프로젝트를 함께 할 구성원들을 초대해보세요.</p>
 						<div class="card-body">
-							<div class="form-group">
+							<div class="form-group-collabo">
 								<label for="exampleInputEmail1">이메일로 초대</label> <input
-									type="email" class="form-control" id="exampleInputEmail1"
+									type="email" class="form-groupcollabo" id="exampleInputEmail1"
 									placeholder="상대방의 이메일을 입력하세요." />
 							</div>
 							<!-- select -->
-							<div class="form-group">
-								<label>접근 권한</label> <select class="form-control">
+							<div class="form-group-collabo">
+								<label>접근 권한</label> <select class="form-control-collabo">
 									<option value="" disabled selected hidden>접근 권한을 설정해
 										주세요.</option>
 									<option>Observer</option>
@@ -528,9 +528,9 @@
 								</select>
 							</div>
 							<!-- textarea -->
-							<div class="form-group">
+							<div class="form-group-collabo">
 								<label>보낼 메세지</label>
-								<textarea class="form-control" rows="3" placeholder="내용을 입력해주세요"></textarea>
+								<textarea class="form-control-collabo" rows="3" placeholder="내용을 입력해주세요"></textarea>
 							</div>
 						</div>
 						<!-- /.card-body -->
@@ -547,7 +547,7 @@
 <!-- 프로젝트 수정 모달 시작-->
 <div class="modal" id="collabo-modify" data-backdrop="static">
 	<div class="modal-dialog">
-		<div class="modal-content">
+		<div class="modal-content-collabo">
 			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title modalTitle">프로젝트정보 수정</h4>
@@ -562,14 +562,14 @@
 					<form>
 						<p>프로젝트 정보를 수정할 수 있습니다.</p>
 						<div class="card-body">
-							<div class="form-group">
+							<div class="form-group-collabo">
 								<label for="collabo-name-for-modify">프로젝트명</label> <input
-									type="text" class="form-control" id="collabo-name-for-modify"
+									type="text" class="form-control-collabo" id="collabo-name-for-modify"
 									value="남양(주) 사이트 유지보수" />
 							</div>
 							<!-- select -->
-							<div class="form-group">
-								<label>공개범위</label> <select class="form-control">
+							<div class="form-group-collabo">
+								<label>공개범위</label> <select class="form-control-collabo">
 									<option value="" disabled selected hidden>공개범위을 설정해
 										주세요.</option>
 									<option>Public</option>
@@ -578,9 +578,9 @@
 								</select>
 							</div>
 							<!-- textarea -->
-							<div class="form-group">
+							<div class="form-group-collabo">
 								<label>프로젝트 소개</label>
-								<textarea class="form-control" rows="10"> 주식회사 남양의 사이트 유지보수를 진행하는 프로젝트 입니다. 프론트엔드와 백엔드 각각 3명씩 구성되어 있으며, 2022년 2월까지 프로젝트 마감 예정입니다. 모르는게 있으면 서로 물어보며 진행하는 팀 분위기를 만들어 갑니다.
+								<textarea class="form-control-collabo" rows="10"> 주식회사 남양의 사이트 유지보수를 진행하는 프로젝트 입니다. 프론트엔드와 백엔드 각각 3명씩 구성되어 있으며, 2022년 2월까지 프로젝트 마감 예정입니다. 모르는게 있으면 서로 물어보며 진행하는 팀 분위기를 만들어 갑니다.
                   </textarea>
 							</div>
 						</div>
@@ -598,7 +598,7 @@
 <!-- 구성원 권한부여 모달 시작-->
 <div class="modal" id="collabo-member-modify" data-backdrop="static">
 	<div class="modal-dialog">
-		<div class="modal-content">
+		<div class="modal-content-collabo">
 			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title modalTitle">구성원 권한부여</h4>
@@ -617,13 +617,13 @@
 						<!-- 팀장 설정시 visible로 -->
 						<div class="card-body">
 							<div class="xtitle">
-								<div class="form-group">
+								<div class="form-group-collabo">
 									<p>유저명 : RealHyukPL</p>
 								</div>
 							</div>
 							<!-- select -->
-							<div class="form-group">
-								<label>권한 : </label> <select class="form-control">
+							<div class="form-group-collabo">
+								<label>권한 : </label> <select class="form-control-collabo">
 									<option value="" disabled selected hidden>변경할 권한을
 										설정해주세요</option>
 									<option>방문자</option>
@@ -646,7 +646,7 @@
 <!-- 구성원 제명 모달 시작-->
 <div class="modal" id="collabo-member-delete" data-backdrop="static">
 	<div class="modal-dialog">
-		<div class="modal-content">
+		<div class="modal-content-collabo">
 			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title modalTitle">구성원 제명</h4>
@@ -663,21 +663,21 @@
 						<span class="font-weight-bold">정말로 해당 구성원을 제명하시겠습니까?</span>
 						<p>*해당 구성원이 작성한 업무와 문서는 삭제되지 않습니다.</p>
 						<div class="card-body">
-							<div class="form-group">
+							<div class="form-group-collabo">
 								<p>유저명 : RealHyukPL</p>
 							</div>
 							<!-- textarea -->
-							<div class="form-group">
+							<div class="form-group-collabo">
 								<label>제명 사유</label>
-								<textarea class="form-control" rows="10"
+								<textarea class="form-control-collabo" rows="10"
 									placeholder="제명 사유를 적어주세요."></textarea>
 							</div>
 							<!-- textarea -->
-							<div class="form-group">
+							<div class="form-group-collabo">
 								<label for="collabo-member-delete">확인을 위해 "<strong
 									class="text-danger">프로젝트 탈퇴</strong>" 를 입력해주세요.
-								</label> <input type="text" class="form-control"
-									id="collabo-member-delete" />
+								</label> <input type="text" class="form-control-collabo"
+									id="collabo-member-delete"/>
 							</div>
 
 						</div>

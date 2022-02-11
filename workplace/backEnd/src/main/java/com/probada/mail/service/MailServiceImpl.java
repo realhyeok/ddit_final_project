@@ -104,6 +104,12 @@ public class MailServiceImpl implements MailService {
 		mailDAO.returnSendMail(mailNo);
 	}
 	
+	//내게 쓴메일 복구
+	@Override
+	public void returnMineMail(int mailNo) throws SQLException {
+		mailDAO.returnMineMail(mailNo);
+	}
+	
 	//받은메일 삭제(휴지통으로)
 	@Override
 	public void deleteReceiveMailToTrash(int mailNo) throws SQLException {
@@ -114,6 +120,12 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public void deleteSendMailToTrash(int mailNo) throws SQLException {
 		mailDAO.deleteSendMailToTrash(mailNo);
+	}
+	
+	//내게 쓴 메일 삭제(휴지통으로)	
+	@Override
+	public void deleteMineMailToTrash(int mailNo) throws SQLException {
+		mailDAO.deleteMineMailToTrash(mailNo);
 	}
 	
 	//임시메일 삭제(완전 삭제)
@@ -132,6 +144,12 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public void deleteTrashSendMail(int mailNo) throws SQLException {
 		mailDAO.deleteTrashSendMail(mailNo);
+	}
+	
+	//휴지통 삭제(내게 쓴 메일)
+	@Override
+	public void deleteTrashMineMail(int mailNo) throws SQLException {
+		mailDAO.deleteTrashMineMail(mailNo);
 	}
 	
 	//메일 및 첨부파일 등록

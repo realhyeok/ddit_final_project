@@ -20,6 +20,34 @@
 			C_PROJECT
 	</select>
 	
+	<select id="selectCollaboListByUserId" parameterType="String" resultType="com.probada.collabo.vo.CollaboVO">
+		SELECT
+			A.CPROJ_NO
+			,A.TITLE
+			,A.STARTDATE
+			,A.ENDDATE
+			,<include refid="privacyForCollaboA"/>
+			,A.NOTICE
+			,A.NOTICE_CONT
+			,A.UPDATEDATE
+			,<include refid="statusForCollaboA"/>
+			,A.INTRO
+			,A.DOC_CONT_NO
+			,A.LIKE_COUNT
+		FROM
+			C_PROJECT A
+        JOIN
+        	C_PROJECT_R B ON(A.CPROJ_NO = B.CPROJ_NO)
+        WHERE
+        	B.USER_ID = #{userId}
+	</select>
+	
+	<select id="collaboCount" resultType="String" parameterType="String">
+		SELECT COUNT(*) as CPROJ_NO
+		  FROM C_PROJECT_R
+	   	 WHERE USER_ID = #{userId} 
+	</select>
+	
 	<select id="selectCollaboByCprojNo" resultType="com.probada.collabo.vo.CollaboVO" parameterType="String">
 			SELECT
 			    CPROJ_NO
@@ -39,6 +67,19 @@
 			WHERE CPROJ_NO = #{cprojNo}    
 	</select>
 	
+	<select id="selectCollaboSubProj" parameterType="String" resultType="com.probada.collabo.vo.CollaboVO">
+		SELECT A.PROJ_NO
+      		  ,A.TITLE
+              ,B.CPROJ_NO
+		  FROM 
+     		   PROJECT A
+		  JOIN 
+    		   C_PROJECT_R B ON (A.PROJ_NO = B.PROJ_NO)
+		 WHERE
+    		   B.CPROJ_NO = #{cprojNo}
+	
+	</select>
+	
 	<select id="selectCollaboTagList">
 		DELETE FROM C_PROJECT
 		      WHERE
@@ -46,7 +87,7 @@
 		
 	</select>
 	
-	<select id="updateCollaboDetail">
+	<select id="updateCollaboDetail" parameterType="com.probada.collabo.vo.CollaboVO">
 		UPDATE C_PROJECT 
 		   SET 
 		        TITLE = #{title}
@@ -57,7 +98,7 @@
 		  WHERE CPROJ_NO = #{cprojNo}   
 	</select>
 	
-	<select id="updateCollaboNotice">
+	<select id="updateCollaboNotice" parameterType="com.probada.collabo.vo.CollaboVO">
 		UPDATE C_PROJECT
     	   SET
          	   NOTICE = #{notice}
@@ -66,7 +107,7 @@
 		WHERE CPROJ_NO = #{cprojNo}
 	</select>
 	
-	<update id="registInviteCollaboMail">
+	<update id="registInviteCollaboMail" parameterType="com.probada.collabo.command.CollaboCommand">
 		INSERT INTO MAIL (
 			  MAIL_NO
 			, TITLE
@@ -99,8 +140,9 @@
 		  FROM DUAL
 	</select>
 	
-	<select id="selectProjectTitle" resultType="String" parameterType="String">
+	<select id="selectProjectTitleCollabo" resultType="com.probada.collabo.vo.CollaboVO" parameterType="com.probada.collabo.vo.CollaboVO">
 		SELECT TITLE
+			  ,A.PROJ_NO
 		  FROM USER_PROJECT A, PROJECT B
 	     WHERE A.PROJ_NO = B.PROJ_NO
 		   AND A.USER_ID = #{userId} 	
@@ -115,6 +157,15 @@
             WHERE
             	COMMON_CODE.CODE_NO = C_PROJECT.STATUS) AS STATUS
 	</sql>
+	
+	<sql id="statusForCollaboA">
+			(SELECT
+				CODE_NAME
+			FROM
+				COMMON_CODE
+            WHERE
+            	COMMON_CODE.CODE_NO = A.STATUS) AS STATUS
+	</sql>
 
 	<sql id="privacyForCollabo">
 			(SELECT
@@ -125,6 +176,14 @@
             	COMMON_CODE.CODE_NO = C_PROJECT.PRIVACY) AS PRIVACY
 	</sql>
 	
+	<sql id="privacyForCollaboA">
+			(SELECT
+				CODE_NAME
+			FROM
+				COMMON_CODE
+            WHERE
+            	COMMON_CODE.CODE_NO = A.PRIVACY) AS PRIVACY
+	</sql>
 
 
 </mapper>

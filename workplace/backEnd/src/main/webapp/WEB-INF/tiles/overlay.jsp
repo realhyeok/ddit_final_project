@@ -774,33 +774,50 @@ font-family: 'Jua', sans-serif;
 
 
 
-
-
  <div id="overlayChat">
                         <div id="textChat">
                             <div id="roomWrap">
                                 <div id="roomList">
-                                        <div id="roomCreate" ><span style="font-size: 2.0em;">&nbsp;<i class="fa fa-comments"></i>channel &nbsp;<i class="fa fa-plus-square" data-toggle="modal" data-target="#createRoomModal"></i> </span></div>
-                                     
+
+										<div class="row">
+										  <div class="col-lg-6">
+                                   			 <div id="roomCreate" ><span style="font-size: 2.0em;">&nbsp;&nbsp;<i class="fa fa-comments"></i>채팅 &nbsp;<i class="fa fa-plus-square" data-toggle="modal" data-target="#createRoomModal"></i> </span></div>
+                              			  </div>
+                               			  <div class="col-lg-6">
+                                   				 <span style="margin-right:6%;  font-size: 2.0em; float:right;" id="offChatList" onclick="offChatList()">&nbsp;&nbsp;<i class="fa fa-chevron-circle-right"></i>&nbsp;접기</span>
+                             			 </div>
+										</div>
 
                                         <div id="roomSelect">
-                    
-                                            <table class="table table-hover">
-
-												{{#each.}}
-                                               		  <tr>
-                                                	    <td class="active" onclick="selectChatRoom('{{this.realRoom}}');"><span class="seokFont" style="font-size: 1.2em;">{{this.title}}</span></td>
-                                              		  </tr>
-												{{/each}}	       	
-
-                                            </table>
+                    					
+   									    <div id="chatListSeok"></div>
                                             
                                     
-                                            </div>
+                                       </div>
                                 </div>
                             </div>
-                             <span style="font-size: 1.5em;" id="offChatList" onclick="offChatList()">&nbsp;&nbsp;<i class="fa fa-chevron-circle-right"></i>&nbsp;접기</span>
-                       
+							<br>
+							
+							<div class="accordion" id="accordion1" role="tablist" aria-multiselectable="true">
+                  				  <div class="panel">
+                       				 <span class="panel-heading collapsed" role="tab" id="headingOne1" data-toggle="collapse" data-parent="#accordion1"
+                         			   href="#collapseOne1Chat" aria-expanded="false" aria-controls="collapseOne">
+                         			   <h4 class="panel-title"><i class="fa fa-check-circle"></i>가이드</h4>
+                     			    </span>
+                      			  <div id="collapseOne1Chat" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                         			   <div class="panel-body">
+                             		   
+
+										
+                               		   				<img style="width:420px; height:380px; margin-left:10%;" class="Gpicture" src="/resources/seok/ezgif.com-gif-maker.gif" alt="Grapefruit slice atop a pile of other slices"><br>
+                                				
+										
+                            		   </div>
+                       			  </div>
+                                  </div>
+               				 </div>
+
+                          
                             
            </div>
                             
@@ -811,8 +828,37 @@ font-family: 'Jua', sans-serif;
 </script>
 
 <script type="text/x-handlebars-template" id="chatModalTemplate">
+  <base href="https://demos.telerik.com/kendo-ui/listbox/index">
+  <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+ <style>
+    .demo-section label {
+        margin-bottom: 5px;
+        font-weight: bold;
+        display: inline-block;
+    }
 
-<!-- 모달 -->
+    #employees {
+        width: 270px;
+    }
+
+    #example .demo-section {
+        max-width: none;
+        width: 600px;
+    }
+
+    #example .k-listbox {
+        width: 236px;
+        height: 350px;
+    }
+
+    #example .k-listbox:first-of-type {
+        width: 270px;
+        margin-right: 1px;
+    }
+</style>
+
+
+
 <div id="createRoomModal" class="modal modal-default fade" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
@@ -837,8 +883,8 @@ font-family: 'Jua', sans-serif;
 							
 					</div>
 
-					
 
+		
 					<div class="form-group row">
 						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;프로젝트 선택</span></label>
 						<div class="col-lg-12">
@@ -847,21 +893,34 @@ font-family: 'Jua', sans-serif;
 			                        {{#each.}}
 										<option value="{{this}}">{{this}}</option>
 									{{/each}}
-			                      
-
-
 			                    </select>
 						</div>
 					</div>
-					
+			
 					<div class="form-group row">
 						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;멤버선택</span></label>
 						<div class="col-lg-12" id="memberInvite">
 
-								
 
-			                       
+	
+							    <div id="example" role="application">	
+   									 <div class="demo-section k-content wide">	
+      									  <div>
+           										 <label for="optional" id="employees">Employees</label>
+         										   <label for="selected">Developers</label>
+          											  <br />
+          									  <select id="optional" >
+           									   </select>
+            					<select id="selected"></select>
+        									</div>
+   									 </div>	
+   								 </div>	
+
+
 						</div>
+
+
+
 					</div>
 					<span id="checkCreateRoom">가이드</span>
 					<div class="float-right">
@@ -912,7 +971,52 @@ font-family: 'Jua', sans-serif;
   	
 </div> -->
 
+<!-- 채팅 기존 템플릿
 
+ <div id="overlayChat">
+                        <div id="textChat">
+                            <div id="roomWrap">
+                                <div id="roomList">
+                                        <div id="roomCreate" ><span style="font-size: 2.0em;">&nbsp;<i class="fa fa-comments"></i>channel &nbsp;<i class="fa fa-plus-square" data-toggle="modal" data-target="#createRoomModal"></i> </span></div>
+                                     
+
+                                        <div id="roomSelect">
+                    
+                                            <table class="table table-hover">
+
+												{{#each.}}
+                                               		  <tr>
+                                                	    <td class="active" onclick="selectChatRoom('{{this.realRoom}}');"><span class="seokFont" style="font-size: 1.2em;">{{this.title}}</span></td>
+                                              		  </tr>
+												{{/each}}	       	
+
+                                            </table>
+                                            
+                                    
+                                            </div>
+                                </div>
+                            </div>
+                             <span style="font-size: 1.5em;" id="offChatList" onclick="offChatList()">&nbsp;&nbsp;<i class="fa fa-chevron-circle-right"></i>&nbsp;접기</span>
+                       
+                            
+           </div>
+                            
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ --> 
 
 
 

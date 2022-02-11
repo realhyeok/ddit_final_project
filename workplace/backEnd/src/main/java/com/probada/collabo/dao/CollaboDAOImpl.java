@@ -42,7 +42,8 @@ public class CollaboDAOImpl implements CollaboDAO {
 
 	@Override
 	public void updateCollaboDetail(CollaboVO collaboVO) throws SQLException {
-
+		LOGGER.debug("DAO modify" + collaboVO);
+		
 		sqlSession.update("Collabo-Mapper.updateCollaboDetail", collaboVO);
 	}
 
@@ -53,9 +54,9 @@ public class CollaboDAOImpl implements CollaboDAO {
 	}
 
 	@Override
-	public List<String> selectProjectTitle(String userId) throws SQLException {
+	public List<CollaboVO> selectProjectTitleCollabo(String userId) throws SQLException {
 		
-		List<String> projTitle = sqlSession.selectList("Collabo-Mapper.selectProjectTitle", userId);
+		List<CollaboVO> projTitle = sqlSession.selectList("Collabo-Mapper.selectProjectTitleCollabo", userId);
 		
 		return projTitle;
 	}
@@ -71,6 +72,28 @@ public class CollaboDAOImpl implements CollaboDAO {
 		
 		int mailNo = sqlSession.selectOne("Collabo-Mapper.selectCollaboMailSequenceNextValue");
 		return mailNo;
+	}
+
+	@Override
+	public int collaboCount(String userId) throws SQLException {
+		int result =Integer.parseInt(sqlSession.selectOne("Collabo-Mapper.collaboCount", userId));
+		System.out.println("다오 임플 result =>" + result );
+		return result;
+	}
+
+	@Override
+	public List<CollaboVO> selectCollaboListByUserId(String userId) throws SQLException {
+		
+		List<CollaboVO> collaboList = sqlSession.selectList("Collabo-Mapper.selectCollaboListByUserId", userId);
+		return collaboList;
+	}
+
+	@Override
+	public List<CollaboVO> selectCollaboSubProj(String cprojNo) throws SQLException {
+		
+		List<CollaboVO> collaboList = sqlSession.selectList("Collabo-Mapper.selectCollaboSubProj",cprojNo);
+		
+		return collaboList;
 	}
 	
 

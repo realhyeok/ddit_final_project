@@ -47,6 +47,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<!-- toastr js -->
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/common/toastr.min.js"></script>
+		<!-- 결제 시스템 iamport.payment.js -->
+		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 		<!-- alertIndex js 알림리스트 제공 -->
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/alert/alertIndex.js"></script>
 		<!-- jQuery Tags Input -->
@@ -54,7 +56,6 @@
 	    <!-- 채팅 js -->
 	    <script src="<%=request.getContextPath()%>/resources/asserts/js/chat/chatCreate.js"></script>
 	    <script src="<%=request.getContextPath()%>/resources/asserts/js/chat/chatOverlay.js"></script>
-	    
-	    
+	   
 	</body>
 </html>

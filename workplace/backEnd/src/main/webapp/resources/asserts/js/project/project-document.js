@@ -6,7 +6,9 @@ var projectUserVO = {projNo, userId};
 var documentFlag = false;
 
 function readDocument(){
-
+		if(documentFlag == true){
+			$("#filemanager").empty();
+		}
 		var baseUrl = "/document/";
 		var kendo = window.kendo, extend = $.extend, Class = kendo.Class;
 
@@ -41,10 +43,6 @@ function readDocument(){
 
 				extend(kendo.ui.filemanager.commands, {DownloadCommand: DownloadCommand});
 				kendo.ui.filemanager.ContextMenu.fn.events.push("open");
-
-				if(documentFlag == true){
-					return;
-				}
 
 				 var filemanager = $("#filemanager").kendoFileManager({
 		           dataSource: {

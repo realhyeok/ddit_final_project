@@ -15,7 +15,7 @@
          WHERE A.PROJ_NO = B.PROJ_NO
            AND A.DIST = C.CODE_NO
            AND USER_ID = #{userId}
-		 ORDER BY REGDATE DESC
+		 ORDER BY HISTORY_NO DESC
 	</select>
 	
 	<select id="selectMyHistoryProjectSort" resultType="historyVO">

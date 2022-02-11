@@ -186,4 +186,3 @@ function deleteTaskById(url, taskNo){
 	}
 
 }
-

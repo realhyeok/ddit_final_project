@@ -11,6 +11,7 @@ import com.probada.chat.vo.ChatMessageVO;
 import com.probada.chat.vo.ChatVO;
 import com.probada.project.dao.ProjectDAO;
 import com.probada.project.vo.ProjectVO;
+import com.probada.user.vo.UserVO;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -33,10 +34,11 @@ public class ChatServiceImpl implements ChatService {
 		
 		return list;
 	}
+	
 	@Override
-	public List<String> getMyProjUserList(String projTitle) throws SQLException {
+	public List<UserVO> getMyProjUserList(String projTitle) throws SQLException {
 		
-		List<String> list = new ArrayList<>();
+		List<UserVO> list = new ArrayList<>();
 		
 		list = chatDAO.selectMyProjUserList(projTitle);
 		
@@ -168,6 +170,48 @@ public class ChatServiceImpl implements ChatService {
 		
 		
 		chatDAO.insertMessage(message);
+	}
+
+
+
+
+	@Override
+	public void modifyChatRoom(ChatVO chat) throws SQLException {
+		chatDAO.updateChatRoom(chat);
+		
+	}
+
+
+
+
+	@Override
+	public void removeChatRoom(String chatRoomNo) throws SQLException {
+		chatDAO.deleteChatRoom(chatRoomNo);
+	}
+
+
+
+
+	@Override
+	public ChatVO getChatByChatNo(String chatRoomNo) throws SQLException {
+		
+		ChatVO chatVO = new ChatVO();
+		chatVO = chatDAO.selectChatByChatRoomNo(chatRoomNo);
+		
+		return chatVO;
+	}
+
+
+
+
+	@Override
+	public List<UserVO> getUserVOByrealRoomNo(String realRoom) throws SQLException {
+		
+		List<UserVO> user = new ArrayList<>();
+		
+		user = chatDAO.selectUserVOByRoomId(realRoom);
+		
+		return user;
 	}
 
 

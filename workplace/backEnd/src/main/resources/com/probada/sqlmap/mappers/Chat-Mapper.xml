@@ -5,6 +5,9 @@
 
 <!-- mybatis는 namespace가 필수다. -->
 <!-- select문 안에는 주석도 text로 인식하기 때문에 주석쓰면 안된다 -->
+	<!--	select user_id from user_project a, project b
+				where a.PROJ_NO = b.PROJ_NO
+				and b.title = #{title}-->
 	<mapper namespace="Chat-Mapper">
 
 
@@ -18,11 +21,13 @@
 			and a.USER_ID=#{userId}
 	</select>
 
-	<select id="selectMyProjUserList" resultType="String" parameterType="String">	
+	<select id="selectMyProjUserList" resultType="USER" parameterType="String">	
 	
-		select user_id from user_project a, project b
+		select  c.* from user_project a, project b, "USER" c
 				where a.PROJ_NO = b.PROJ_NO
+                and c.USER_ID = a.USER_ID
 				and b.title = #{title}
+	
 	</select>
 	
 	<update id="createChatRoom" parameterType="com.probada.chat.vo.ChatVO">
@@ -61,6 +66,18 @@
 
 
 
+
+
+<select id="selectUserVOByRoomId" resultType="User" parameterType="String">	
+		
+		select b.* from CHATROOM a, "USER" b
+			where a.REALROOM = #{realRoom} 
+			and a.USER_ID = b.user_id
+		
+</select>
+
+
+
 <select id="selectRealChatSeqNext" resultType="str">
 		select 'realChat'||REAL_CHAT_REQ.NEXTVAL as REALCHATROOM_NO from dual
 
@@ -79,6 +96,16 @@
   					and USER_ID=#{userId}
 
 </select>
+
+
+<select id="selectChatByChatRoomNo" resultType="com.probada.chat.vo.ChatVO" parameterType="str">
+
+		select * from chatroom 
+			where CHATROOM_NO = #{chatroomNo}
+
+</select>
+
+
 
 
 <select id="selectMessage" resultType="com.probada.chat.vo.ChatMessageVO" parameterType="com.probada.chat.vo.ChatMessageVO">
@@ -103,6 +130,7 @@
         ,1
         ,#{realRoom}
         ,#{nickname}
+        ,#{picture}
         )
 	</update>
 	
@@ -111,6 +139,32 @@
 		select 'message'||CHATROOM_MSG_NO_SEQ.NEXTVAL as CHATROOM_MSG_NO from dual
 
 </select>
+
+
+
+<update id="updateChatRoom" parameterType="com.probada.chat.vo.ChatMessageVO">
+
+	
+	UPDATE chatroom
+		SET
+		title = #{title}
+		WHERE
+		REALROOM = #{realRoom}
+		
+</update>
+
+
+<update id="deleteChatRoom" parameterType="str">
+
+	
+	delete
+		from chatroom
+		where CHATROOM_NO = #{chatroomNo}
+		
+</update>
+
+
+
 
 
 	<!-- <select id="selectMemberList" resultType="member">

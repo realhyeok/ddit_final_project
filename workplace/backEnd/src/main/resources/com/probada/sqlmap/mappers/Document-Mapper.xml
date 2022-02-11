@@ -22,17 +22,17 @@
 		<result column="UPDATEDATE" property="modified" />
 
 	</resultMap>
-	
-	
-	
+
+
+
 	<select id="selectProjByTitle" parameterType="str" resultType="str">
 			select proj_no from PROJECT
 				where title = #{title}
 
 	</select>
-	
-	
-	
+
+
+
 
 
 	<select id="selectDocList" resultMap="DocResultMap">
@@ -182,6 +182,17 @@
 			UPLOADPATH LIKE '%'||'중요첨부/'||'%'
 	</select>
 
+<select id="selectDocumentListBytaskTitleANDprojNo" resultMap="DocResultMap" parameterType="task">
+		SELECT
+			*
+		FROM
+			DOCUMENT
+		WHERE
+			 PROJ_NO = #{projNo}
+		AND
+			UPLOADPATH LIKE '%'||'/업무/'||#{title}||'/%'
+
+	</select>
 	<!-- <select id="selectMemberList" resultType="member">
 		select
 		*

@@ -9,6 +9,7 @@ import java.util.Set;
 import com.probada.document.dao.DocumentDAO;
 import com.probada.document.vo.FileVO;
 import com.probada.document.vo.ProjectUserVO;
+import com.probada.task.vo.TaskVO;
 
 
 public class DocumentServiceImpl implements DocumentService{
@@ -149,6 +150,15 @@ public class DocumentServiceImpl implements DocumentService{
 	public String getProjByTitle(String title) throws SQLException {
 		String list = documentDAO.selectProjByTitle(title);
 		return list;
+	}
+
+
+	@Override
+	public List<FileVO> getDocumentListBytaskTitleANDprojNo(TaskVO taskVO) throws SQLException {
+
+		List<FileVO> fileList = documentDAO.selectDocumentListBytaskTitleANDprojNo(taskVO);
+
+		return fileList;
 	}
 
 

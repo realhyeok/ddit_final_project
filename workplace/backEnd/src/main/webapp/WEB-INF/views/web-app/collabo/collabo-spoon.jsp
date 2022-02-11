@@ -12,10 +12,10 @@
 
       <div class="x_content spoon">
         <p>'스푼' 기능을 이용해 자료를 가져오세요.</p>
-        <div class="form-group row spoon mt-5">
+        <div class="form-group-collabo row spoon mt-5">
           <div class="spoon-select-bar">
             <div class="spoon-select">
-              <select class="select2_group form-control" style="width: 400px;">
+              <select class="select2_group form-control-collabo" style="width: 400px;">
                 <option value="" disabled selected hidden>산하 프로젝트의 자료를 선택하세요.</option>
                 <option value="">김진혁 우간다 국제 결혼 프로젝트</option>
                 <option value="">김진혁 앙골라 국제 결혼 프로젝트</option>
@@ -24,7 +24,7 @@
             </div>
             <div class="empty" style="width: 103px;"></div>
             <div class="spoon-select">
-              <select class="select2_group form-control" style="width: 400px;">
+              <select class="select2_group form-control-collabo" style="width: 400px;">
                 <option value="" disabled selected hidden>콜라보 프로젝트를 선택하세요.</option>
                 <option value="">김진혁 국제 결혼 진행 프로젝트</option>
                 <option value="">콜라보 2</option>

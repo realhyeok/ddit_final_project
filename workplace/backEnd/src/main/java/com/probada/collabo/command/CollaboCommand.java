@@ -25,6 +25,12 @@ public class CollaboCommand {
 	private String sentDel;
 	
 	
+	@Override
+	public String toString() {
+		return "CollaboCommand [userId=" + userId + ", projNo=" + projNo + ", title=" + title + ", mailNo=" + mailNo
+				+ ", userTo=" + userTo + ", userFrom=" + userFrom + ", content=" + content + ", regDate=" + regDate
+				+ ", status=" + status + ", dist=" + dist + ", recvDel=" + recvDel + ", sentDel=" + sentDel + "]";
+	}
 	public int getMailNo() {
 		return mailNo;
 	}

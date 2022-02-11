@@ -93,6 +93,7 @@ const custom_barChart = new Chart(
   config_bar
 );
 
+
 //▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰ DONUT CHART ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰
 const data_doughnut = {
 labels: [
@@ -121,6 +122,7 @@ const custom_doughnutChart = new Chart(
 document.getElementById('custom_doughnutChart'),
 config_doughnut
 );
+
 
 //▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰ ISSEUE BAR CHART ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰
 const labels_issueBar = [
@@ -177,3 +179,4 @@ const custom_issueChart = new Chart(
   document.getElementById("custom_issueBarChart"),
   config_issueBar
 );
+

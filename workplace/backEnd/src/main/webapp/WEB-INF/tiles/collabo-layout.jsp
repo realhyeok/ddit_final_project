@@ -13,9 +13,11 @@
 <body>
 	<tiles:insertAttribute name="header"/>
 	<tiles:insertAttribute name="body"/>
+	<tiles:insertAttribute name="modal"/>
 	<tiles:insertAttribute name="footer"/>
 	<tiles:insertAttribute name="script"/>
 	<tiles:insertAttribute name="collabo-script"/>
 	<tiles:insertAttribute name="overlay"/>
+	<tiles:insertAttribute name="collabo-overlay"/>
 </body>
 </html>

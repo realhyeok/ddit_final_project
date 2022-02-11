@@ -450,7 +450,7 @@
 				<div class="x_content">
 					<div class="row">
 							<div class="x_content">
-								<form id="registTaskForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<form id="registTaskForm" method="post" enctype="multipart/form-data" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
 								<!-- 프로젝트명 -->
 								<div class="item form-group">
 									<label class="col-form-label col-md-3 col-sm-3 label-align"
@@ -459,7 +459,8 @@
 									</label>
 								<div class="col-md-6 col-sm-6 ">
 									<input type="text" id="projTitle" required="required" class="form-control form-control-sm"
-										name="projTitle" value="{{projTitle}}" disabled>
+										name="projTitle" value="{{projTitle}}" readonly>
+									<input type="hidden" value="{{projNo}}">
 								</div>
 							</div>
 									<div class="item form-group">
@@ -474,11 +475,12 @@
             								</select>
 										</div>
         							</div>
-									<div class="item form-group">
-          								<label class="col-form-label col-md-3 col-sm-3 label-align for="important">
+									<div class="row d-flex justify-content-center">
+									<div class="item form-group" style="margin-right:65px;">
+          								<label class="col-form-label mr-3 label-align for="important">
 											중요도
 										</label>
-										<div class="col-md-6 col-sm-6 ">
+										<div class="">
             								<select class="form-control form-control-sm" id="important" name="important">
               									<option value="B101">낮음</option>
               									<option value="B102">보통</option>
@@ -487,10 +489,10 @@
 										</div>
         							</div>
 									<div class="item form-group">
-          								<label class="col-form-label col-md-3 col-sm-3 label-align for="status">
+          								<label class="col-form-label mr-3 label-align for="status">
 											진행상태
 										</label>
-										<div class="col-md-6 col-sm-6 ">
+										<div class="">
             								<select class="form-control form-control-sm" id="status" name="status">
               									<option value="B201">예정</option>
               									<option value="B202">진행중</option>
@@ -499,6 +501,7 @@
             								</select>
 										</div>
         							</div>
+									</div>
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align"
 											for="startdate">시작일
@@ -524,9 +527,11 @@
 										</div>
 									</div>
 									<div class=form-group">
-										<label class=" label-align"> 업무내용 </label>
 										<textarea class="projSummnote" name="content" ></textarea>
 									</div>
+									 <div style="width:100%; float:left">
+           								 <input name="files" id="projectTaskUpload" type="file" aria-label="files" />
+        							</div>
 									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
 										<button type="button" class="btn btn-success" onclick='registTask()'>등록</button>
 										<button class="btn btn-primary" type="button">취소</button>
@@ -582,11 +587,12 @@
             								</select>
 										</div>
         							</div>
-									<div class="item form-group">
-          								<label class="col-form-label col-md-3 col-sm-3 label-align for="important">
+									<div class="row d-flex justify-content-center">
+									<div class="item form-group" style="margin-right:65px;">
+          								<label class="col-form-label mr-3 label-align for="important">
 											중요도
 										</label>
-										<div class="col-md-6 col-sm-6 ">
+										<div class="">
             								<select class="form-control form-control-sm" id="important" name="important">
               									<option value="B101">낮음</option>
               									<option value="B102">보통</option>
@@ -595,10 +601,10 @@
 										</div>
         							</div>
 									<div class="item form-group">
-          								<label class="col-form-label col-md-3 col-sm-3 label-align for="status">
+          								<label class="col-form-label mr-3 label-align for="status">
 											진행상태
 										</label>
-										<div class="col-md-6 col-sm-6 ">
+										<div class="">
             								<select class="form-control form-control-sm" id="status" name="status">
               									<option value="B201">예정</option>
               									<option value="B202" selected>진행중</option>
@@ -607,6 +613,7 @@
             								</select>
 										</div>
         							</div>
+									</div>
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align"
 											for="startdate">시작일
@@ -635,6 +642,9 @@
 										<label class=" label-align"> 업무내용 </label>
 										<textarea class="projSummnote" name="content" >{{{content}}}</textarea>
 									</div>
+									<div style="width:100%; float:left">
+           								 <input name="files" id="projectTaskUpload" type="file" aria-label="files" />
+        							</div>
 									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
 										<button type="button" class="btn btn-success" onclick='modifyTaskDetail()'>수정</button>
 										<button class="btn btn-primary" type="button">취소</button>

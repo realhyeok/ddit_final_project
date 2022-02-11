@@ -5,18 +5,20 @@
 	<head>
 	</head>
 	<body>
-		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myDocument.js"></script>
-		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myHistory.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myDashboard.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myTask.js"></script>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myOverlay.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailAlert.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailReceive.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailSend.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailTemp.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailTrash.js"></script>
-		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMailAlert.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myHistory.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myDocument.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myRequest.js"></script>
-		<script	src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myOverlay.js"></script>
-		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myTask.js"></script>
-		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-issue.js"></script>
-		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/my-dash-doughnut.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myIssue.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myIssueReply.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMile.js"></script>
 		<input type="hidden" id="sessionId" value="${userVO.userId}">
 		
 		<script>

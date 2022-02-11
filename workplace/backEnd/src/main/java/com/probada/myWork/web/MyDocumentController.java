@@ -221,26 +221,36 @@ public class MyDocumentController {
 	private FileVO update (String target, String path, String doc_NO, String name, String extension,HttpServletResponse res,HttpSession session) throws Exception{
 
 		UserVO userVO= (UserVO) session.getAttribute("userVO");
+		String projectTitle= null;
+		String projNo = null;
 		
+		FileVO doc = new FileVO();
+		doc = documentService.getDocOne(doc_NO);
 		
 		if(target == null) {
 			path = name;
 		}else {
 			path = target+"/"+name+extension;
+			projectTitle= doc.getPath().substring(0,target.indexOf("/"));
+			projNo = documentService.getProjByTitle(projectTitle);
 		}
 
-		FileVO doc = new FileVO();
-		doc = documentService.getDocOne(doc_NO);
+		
 
 		File originFile = new File("c:/"+doc.getPath());
-
 		
-		String projectTitle= doc.getPath().substring(0,target.indexOf("/"));
+		LOGGER.debug("update target : {}",target);
+		LOGGER.debug("update path : {}",path);
+		LOGGER.debug("update name : {}",name);
+		LOGGER.debug("update extension : {}",extension);
+		LOGGER.debug("update doc_NO : {}",doc_NO);
+		
+		
 		
 		
 		LOGGER.debug("projectTitle : {}",projectTitle);
 		
-		String projNo = documentService.getProjByTitle(projectTitle);
+		
 		
 		if(projNo == null) {
 			
@@ -254,7 +264,7 @@ public class MyDocumentController {
 		//세션에서 가지고 올 id
 		//프로젝트 넘버는 받아서 온다.
 		doc.setPROJ_NO(projNo);
-		doc.setUSER_ID("seok@ddit.com");
+		doc.setUSER_ID(userVO.getUserId());
 		doc.setPath(path);
 		doc.setName(name);
 		doc.setExtension(extension);

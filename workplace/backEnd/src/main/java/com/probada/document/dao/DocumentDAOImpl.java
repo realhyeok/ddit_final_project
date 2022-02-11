@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.probada.document.vo.FileVO;
 import com.probada.document.vo.ProjectUserVO;
+import com.probada.task.vo.TaskVO;
 
 
 
@@ -18,11 +19,11 @@ public class DocumentDAOImpl implements DocumentDAO{
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
-	
+
 	@Override
 	public List<FileVO> selectDocList() throws SQLException {
-		
-			
+
+
 		List<FileVO> DocList = sqlSession.selectList("Document-Mapper.selectDocList");
 
 
@@ -74,7 +75,7 @@ public class DocumentDAOImpl implements DocumentDAO{
 
 
 		List<FileVO> DocList = sqlSession.selectList("Document-Mapper.selectDocumentByUserId",userId);
-		System.out.println("dao1=>"+DocList);
+	
 		return DocList;
 	}
 
@@ -82,7 +83,7 @@ public class DocumentDAOImpl implements DocumentDAO{
 	public List<FileVO> selectDefaultDirectoryMyProject(String userId) throws SQLException {
 
 		List<FileVO> DocList = sqlSession.selectList("Document-Mapper.selectDefaultDirectoryMyProject",userId);
-		System.out.println("dao2=>"+DocList);
+	
 		return DocList;
 
 
@@ -93,7 +94,7 @@ public class DocumentDAOImpl implements DocumentDAO{
 
 
 		List<FileVO> DocList = sqlSession.selectList("Document-Mapper.selectDirectoryMyProject",userId);
-		System.out.println("dao3=>"+DocList);
+	
 		return DocList;
 
 
@@ -142,6 +143,14 @@ public class DocumentDAOImpl implements DocumentDAO{
 	@Override
 	public String selectProjByTitle(String title) throws SQLException {
 		return  sqlSession.selectOne("Document-Mapper.selectProjByTitle",title);
+	}
+
+	@Override
+	public List<FileVO> selectDocumentListBytaskTitleANDprojNo(TaskVO taskVO) throws SQLException {
+
+		List<FileVO> fileList = sqlSession.selectList("Document-Mapper.selectDocumentListBytaskTitleANDprojNo",taskVO);
+
+		return fileList;
 	}
 
 

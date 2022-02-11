@@ -13,4 +13,7 @@ public interface AlertDAO {
 	
 	// 해당 유저이 알림 리스트를 조회한다.
 	public List<AlertVO> getUserAlertList(String userId) throws SQLException;
+	
+	// alert가 몇 개인지 조회하는 메서드
+	public int getAlertCount(String userId)throws SQLException;
 }

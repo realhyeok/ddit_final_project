@@ -1,11 +1,11 @@
 package com.probada.task.web;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -13,16 +13,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.probada.document.vo.FileVO;
-import com.probada.document.vo.ProjectUserVO;
 import com.probada.task.service.TaskService;
 import com.probada.task.vo.TaskVO;
 import com.probada.user.vo.UserVO;
+import com.probada.util.DocumentUtil;
 import com.probada.util.ProjectUtil;
 
 @Controller
@@ -35,7 +38,8 @@ public class TaskController {
 	TaskService taskService;
 	@Resource(name = "projectUtil")
 	ProjectUtil projectUtil;
-
+	@Resource(name = "documentUtil")
+	DocumentUtil documentUtil;
 
 	@RequestMapping("/getTaskListByProjNo")
 	@ResponseBody
@@ -118,6 +122,7 @@ public class TaskController {
 			throws Exception {
 		ResponseEntity<TaskVO> entity = null;
 		TaskVO detailVO = new TaskVO();
+
 		try {
 
 			detailVO = taskService.getTaskDetailByTaskNo(taskVO);
@@ -127,6 +132,8 @@ public class TaskController {
 			detailVO.setUserList(userList);
 			detailVO.setProjNo(taskVO.getProjNo());
 
+			detailVO = documentUtil.readTaskDocByTaskTitleANDprojNo(detailVO);
+			LOGGER.debug("detailVO => "+detailVO);
 			entity = new ResponseEntity<TaskVO>(detailVO, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -159,10 +166,10 @@ public class TaskController {
 
 	@RequestMapping("/registTask")
 	@ResponseBody
-	public ResponseEntity<HashMap<String, Object>> registTask(TaskVO taskVO) throws Exception {
+	public ResponseEntity<HashMap<String, Object>> registTask(@RequestPart(value="files",required = false) List<MultipartFile> files, HttpServletResponse response, HttpServletRequest request, TaskVO taskVO) throws Exception {
 		ResponseEntity<HashMap<String, Object>> entity = null;
 
-		LOGGER.debug("[요청받음] => /registTask");
+		LOGGER.debug("[요청받음] => /registTask" + files);
 
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
@@ -170,6 +177,7 @@ public class TaskController {
 
 			String taskNo = taskService.registTask(taskVO);
 
+			documentUtil.taskUpload(files, request, response, taskVO);
 			hashMap.put("taskNo", taskNo);
 
 			entity = new ResponseEntity<HashMap<String, Object>>(hashMap,HttpStatus.OK);
@@ -180,8 +188,6 @@ public class TaskController {
 		}
 		return entity;
 	}
-
-
 
 
 	@PostMapping(value="/read")
@@ -259,4 +265,22 @@ public class TaskController {
 		taskService.removeTaskByTaskNo(taskVO);
 
 	}
+
+	@RequestMapping("/taskDownload")
+	public String taskDownload(String path, Model model) throws Exception {
+
+		LOGGER.debug("[요청받음] => /taskDownload => " + path);
+
+		String url = "downloadFile";
+
+		//디렉토리는 다운이 되지 않으니 무조건 패스가 있는 파일만 /유무 판단 안해도 가능
+		String FileName = path.substring(path.lastIndexOf("/")+1);
+
+		model.addAttribute("savedPath", path);
+		model.addAttribute("fileName", FileName);
+		// path = 3조 PMS probada/업무/circle-dot-o.png
+
+		return url;
+	}
+
 }

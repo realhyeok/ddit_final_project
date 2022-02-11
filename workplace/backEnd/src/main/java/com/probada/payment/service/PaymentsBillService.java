@@ -2,8 +2,11 @@ package com.probada.payment.service;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
+import com.probada.payment.vo.PaySuccessVO;
 import com.probada.payment.vo.PaymentsBillVO;
+import com.probada.payment.vo.PaymentsPlanVO;
 
 public interface PaymentsBillService {
 	
@@ -53,4 +56,34 @@ public interface PaymentsBillService {
 	 * @throws SQLException
 	 */
 	public int getMemoryCapacity(String planNo) throws SQLException;
+	
+	/**
+	 * planNo를 받아서 해당 유료 플랜 vo를 리턴한다.
+	 * @param String planNo
+	 * @return PaymentsPlanVO
+	 * @throws SQLException
+	 */
+	public PaymentsPlanVO getPaymentsPlanVO(String planNo) throws SQLException;
+	
+	/**
+	 * 플랜 결제가 성공적으로 완료가 되면 유저의 유료 플랜을 변경시켜주는 메서드
+	 * @param PaymentsBillVO pbvo
+	 * @throws SQLException
+	 */
+	public void updateUserPlan(PaymentsBillVO pbvo) throws SQLException;
+	
+	/**
+	 * PAYMENTS_HISTORY 테이블에 데이터를 저장한다.
+	 * @param PaySuccessVO psvo
+	 * @throws SQLException
+	 */
+	public void addPaymentHistory(PaySuccessVO psvo) throws SQLException;
+	
+	/**
+	 * 유저 아이디를 참조하여 PAYMENTS_HISTORY 테이블에서 해당 데이터 리스트를 리턴한다.
+	 * @param String userId
+	 * @return List<PaySuccessVO>
+	 * @throws SQLException
+	 */
+	public List<PaySuccessVO> getPaymentHistoryList(String userId) throws SQLException;
 }

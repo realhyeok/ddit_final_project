@@ -79,6 +79,7 @@ function getOverlayRegistTaskTemplate(templateId, url) {
 			appe.innerHTML = html;
 			$("#fadeInContent").fadeIn(300);
 			summernote_go($('.projSummnote'));
+			uploadForm('projectTaskUpload');
 		},
 		error : function(error) {
 			console.log("Handlebars error!!");
@@ -441,16 +442,17 @@ function registProject() {
 }
 
 function registTask() {
-	var taskVO = $('#registTaskForm').serialize();
-
-	taskVO += '&projNo='+projNo;
+	var taskVO = $('#registTaskForm')[0];
+	var formData = new FormData(taskVO);
+	formData.append("projNo",projNo);
+	
 	console.log(taskVO);
+	console.log(formData);
 
 	$.ajax({
 		url : "/app/task/registTask",
 		type : 'POST',
-		datatype : 'text',
-		data : taskVO,
+		data : formData,
 		success : function(data) {
 			alert("등록에 성공했습니다.");
 			if(getCookie('projTab') == 'task-tab'){
@@ -462,7 +464,10 @@ function registTask() {
 		}, // success
 		error : function(xhr, status) {
 			alert("등록에 실패하였습니다.");
-		}
+		},
+		cache:false,
+		contentType:false,
+		processData:false
 	});
 
 }

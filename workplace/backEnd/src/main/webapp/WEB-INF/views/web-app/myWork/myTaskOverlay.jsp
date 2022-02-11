@@ -168,7 +168,7 @@
 			});
 			
 			function cancelMyTask(){
-				off('#myTaskOverlay');
+				myOverlayOff('#myTaskOverlay');
 			}
 			
 			function registMyTask() {
@@ -185,7 +185,7 @@
 					success : function(data) {
 						alert("등록에 성공했습니다.");
 						
-						off();
+						myOverlayOff('#myTaskOverlay');
 						
 						location.reload();
 					},

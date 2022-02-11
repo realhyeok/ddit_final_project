@@ -42,7 +42,7 @@ public class CollaboServiceImpl implements CollaboService {
 	@Override
 	public void modifyCollaboDetail(CollaboVO collaboVO) throws SQLException {
 		
-		LOGGER.debug("modify" + collaboVO);
+		LOGGER.debug("SERVICE modify" + collaboVO);
 		
 		collaboDAO.updateCollaboDetail(collaboVO);
 	}
@@ -54,9 +54,9 @@ public class CollaboServiceImpl implements CollaboService {
 	}
 
 	@Override
-	public List<String> getProjectTitle(String userId) throws SQLException {
+	public List<CollaboVO> getProjectTitleCollabo(String userId) throws SQLException {
 		
-		List<String> projTitle = collaboDAO.selectProjectTitle(userId);
+		List<CollaboVO> projTitle = collaboDAO.selectProjectTitleCollabo(userId);
 		return projTitle;
 	}
 
@@ -67,6 +67,29 @@ public class CollaboServiceImpl implements CollaboService {
 		cmd.setMailNo(mailNo);
 		
 		collaboDAO.registInviteCollaboMail(cmd);
+	}
+
+	@Override
+	public int getCollaboCount(String userId) throws SQLException {
+		int result = collaboDAO.collaboCount(userId);
+		System.out.println("서비스 임플 result =>" + result);
+		return result;
+	}
+
+	@Override
+	public List<CollaboVO> getCollaboListByUserId(String userId) throws SQLException {
+		
+		List<CollaboVO> collaboList = collaboDAO.selectCollaboListByUserId(userId);
+		
+		return collaboList;
+	}
+
+	@Override
+	public List<CollaboVO> getCollaboSubProj(String cprojNo) throws SQLException {
+		
+		List<CollaboVO> collaboList = collaboDAO.selectCollaboSubProj(cprojNo);
+		
+		return collaboList;
 	}
 
 }

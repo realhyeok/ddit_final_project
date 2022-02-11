@@ -6,18 +6,12 @@ import com.probada.issue.vo.IssueVO;
 
 public class MilestoneVO {
 
-	private String status;
-	private String userId;
 	private String mileNo;
 	private String title;
-	@Override
-	public String toString() {
-		return "MilestoneVO [status=" + status + ", userId=" + userId + ", mileNo=" + mileNo + ", title=" + title
-				+ ", content=" + content + ", projNo=" + projNo + ", regdate=" + regdate + ", projTitle=" + projTitle
-				+ ", nickname=" + nickname + ", issueList=" + issueList + ", issueNoList=" + issueNoList + "]";
-	}
-	private String content;
+	private String userId;
 	private String projNo;
+	private String content;
+	private String status;
 	private String regdate;
 
 	private String projTitle;
@@ -26,31 +20,41 @@ public class MilestoneVO {
 	private List<IssueVO> issueList;
 	private List<String> issueNoList;
 
-
-
-	public List<String> getIssueNoList() {
-		return issueNoList;
+	public String getMileNo() {
+		return mileNo;
 	}
-	public void setIssueNoList(List<String> issueNoList) {
-		this.issueNoList = issueNoList;
+	public void setMileNo(String mileNo) {
+		this.mileNo = mileNo;
 	}
-	public List<IssueVO> getIssueList() {
-		return issueList;
+	public String getTitle() {
+		return title;
 	}
-	public void setIssueList(List<IssueVO> issueList) {
-		this.issueList = issueList;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public String getNickname() {
-		return nickname;
+	public String getUserId() {
+		return userId;
 	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public String getProjTitle() {
-		return projTitle;
+	public String getProjNo() {
+		return projNo;
 	}
-	public void setProjTitle(String projTitle) {
-		this.projTitle = projTitle;
+	public void setProjNo(String projNo) {
+		this.projNo = projNo;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public String getRegdate() {
 		return regdate;
@@ -58,41 +62,36 @@ public class MilestoneVO {
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public String getProjTitle() {
+		return projTitle;
 	}
-	public String getStatus() {
-		return status;
+	public void setProjTitle(String projTitle) {
+		this.projTitle = projTitle;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public String getNickname() {
+		return nickname;
 	}
-	public String getUserId() {
-		return userId;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
-	public void setMileNo(String mileNo) {
-		this.mileNo = mileNo;
+	
+	public List<IssueVO> getIssueList() {
+		return issueList;
 	}
-	public String getMileNo() {
-		return mileNo;
+	public void setIssueList(List<IssueVO> issueList) {
+		this.issueList = issueList;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public List<String> getIssueNoList() {
+		return issueNoList;
 	}
-	public String getTitle() {
-		return title;
+	public void setIssueNoList(List<String> issueNoList) {
+		this.issueNoList = issueNoList;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	
+	@Override
+	public String toString() {
+		return "MilestoneVO [status=" + status + ", userId=" + userId + ", mileNo=" + mileNo + ", title=" + title
+				+ ", content=" + content + ", projNo=" + projNo + ", regdate=" + regdate + ", projTitle=" + projTitle
+				+ ", nickname=" + nickname + ", issueList=" + issueList + ", issueNoList=" + issueNoList + "]";
 	}
-	public String getContent() {
-		return content;
-	}
-	public void setProjNo(String projNo) {
-		this.projNo = projNo;
-	}
-	public String getProjNo() {
-		return projNo;
-	}
-
 }

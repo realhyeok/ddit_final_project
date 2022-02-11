@@ -36,6 +36,22 @@ public class MilestoneController {
 	@Resource(name="projectUtil")
 	ProjectUtil projectUtil;
 
+	@RequestMapping("/getMilestoneListByUserId")
+	@ResponseBody
+	public ResponseEntity<List<MilestoneVO>> getMilestoneListByUserId(@RequestParam(defaultValue="") String userId) throws Exception {
+		ResponseEntity<List<MilestoneVO>> entity = null;
+		List<MilestoneVO> milestoneList = null;
+
+		try {
+			milestoneList = milestoneService.getMilestoneListByUserId(userId);
+			entity = new ResponseEntity<List<MilestoneVO>>(milestoneList, HttpStatus.OK);
+		} catch(Exception e) {
+			entity = new ResponseEntity<List<MilestoneVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+	
 	@RequestMapping("/getMilestoneListByProjNo")
 	@ResponseBody
 	public ResponseEntity<List<MilestoneVO>> getMilestoneListByProjNo(@RequestParam(defaultValue="") String projNo) throws Exception {

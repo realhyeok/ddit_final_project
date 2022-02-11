@@ -4,6 +4,7 @@
 	<definition name="base" template="/WEB-INF/tiles/default_layout.jsp">
 		<put-attribute name="css" value="/WEB-INF/tiles/css.jsp"/>
 		<put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+		<put-attribute name="modal" value="/WEB-INF/tiles/modal.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp"/>
 		<put-attribute name="script" value="/WEB-INF/tiles/script.jsp"/>
 		<put-attribute name="overlay" value="/WEB-INF/tiles/overlay.jsp"/>
@@ -41,12 +42,14 @@
 		<put-attribute name="collabo-css" value="/WEB-INF/tiles/collabo-css.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/web-app/collabo/{1}.jsp"/>
 		<put-attribute name="collabo-script" value="/WEB-INF/tiles/collabo-script.jsp"/>
+		<put-attribute name="collabo-overlay" value="/WEB-INF/tiles/collabo-overlay.jsp"/>
 	</definition>
 
 	<definition name="/web-app/collabo/getCollaboList" extends="base" template="/WEB-INF/tiles/collabo-layout.jsp">
 		<put-attribute name="collabo-css" value="/WEB-INF/tiles/collabo-css.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/web-app/collabo/collabo-list.jsp"/>
 		<put-attribute name="collabo-script" value="/WEB-INF/tiles/collabo-script.jsp"/>
+		<put-attribute name="collabo-overlay" value="/WEB-INF/tiles/collabo-overlay.jsp"/>
 	</definition>
 	
 	<definition name="/web-app/myWork/*" extends="base" template="/WEB-INF/tiles/myWork_layout.jsp">
@@ -56,5 +59,6 @@
 		<put-attribute name="myMailOverlay" value="/WEB-INF/views/web-app/myWork/myMailOverlay.jsp"/>
 		<put-attribute name="myTaskOverlay" value="/WEB-INF/views/web-app/myWork/myTaskOverlay.jsp"/>
 		<put-attribute name="myTaskModifyOverlay" value="/WEB-INF/views/web-app/myWork/myTaskModifyOverlay.jsp"/>
+		<put-attribute name="myIssueOverlay" value="/WEB-INF/views/web-app/myWork/myIssueOverlay.jsp"/>
 	</definition>
 </tiles-definitions>

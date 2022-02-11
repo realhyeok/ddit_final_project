@@ -26,4 +26,9 @@ public class AlertDAOImpl implements AlertDAO{
 		return sqlSession.selectList("Alert-Mapper.getUserAlertList", userId);
 	}
 
+	@Override
+	public int getAlertCount(String userId) throws SQLException {
+		return sqlSession.selectOne("Alert-Mapper.getAlertCount", userId);
+	}
+
 }

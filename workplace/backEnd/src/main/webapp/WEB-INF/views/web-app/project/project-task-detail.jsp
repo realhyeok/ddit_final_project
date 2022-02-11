@@ -58,16 +58,32 @@
 			</div>
 		</div>
 
-		<div class="form-group row">
-			<div class="col-sm-12">
-				<label>첨부파일 :</label>
-				<div class="form-control form-control-sm form-control-view"
-					style="height: 120px;">
-					<li><i class="glyphicon glyphicon-floppy-disk"></i> <span>지시사항.md</span>
-					</li>
-					<li><i class="glyphicon glyphicon-floppy-disk"></i> <span>jabra.html</span>
-					</li>
+		<div class="project-detail-body p-3">
+					<div class="x_title">
+						<h2 class="title">
+							<i class="glyphicon glyphicon-hdd"></i> 첨부파일
+						</h2>
+						<div class="clearfix"></div>
+					</div>
+					<div class="col-sm-12">
+						<ul class="row list-unstyled task-files">
+						{{#ifCond fileList.length "!=" 0}}
+							{{#each fileList}}
+							<li class="d-flex align-items-center">
+								<div class="btn files-btn d-flex flex-wrap flex-column align-items-center justify-content-center"  style="width:200px;height:140px">
+									<a style="cursor:pointer;" onclick="taskDocumentDownload('{{{name}}}{{{extension}}}','{{{../title}}}','{{{../projTitle}}}');"><i class="fa fa-file-text fa-5x text-dark"></i></a>
+									<div class="mt-2 d-flex"><span class="text-truncate" style="display:inline-block;max-width:70px;">{{{name}}}</span><span>{{{extension}}}</span></div>
+								</div>
+							</li>
+							{{/each}}
+						{{/ifCond}}
+						{{#ifCond fileList.length "==" 0}}
+							<div>
+								<span>첨부파일이 없습니다.</span>
+							<div>
+						{{/ifCond}}
+						</ul>
+						</div>
+					<br />
 				</div>
-			</div>
-		</div>
 	</script>

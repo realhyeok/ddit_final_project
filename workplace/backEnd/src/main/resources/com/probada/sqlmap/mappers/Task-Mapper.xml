@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Task-Mapper">
-
+	<select id="selectMyTaskChartByUserId" parameterType="str" resultType="myTaskChart">
+		SELECT DISTINCT
+			   (SELECT COUNT(STATUS) FROM TASK WHERE STATUS = 'B201' AND USER_ID = #{userId}) AS B201
+			 , (SELECT COUNT(STATUS) FROM TASK WHERE STATUS = 'B202' AND USER_ID = #{userId}) AS B202
+			 , (SELECT COUNT(STATUS) FROM TASK WHERE STATUS = 'B203' AND USER_ID = #{userId}) AS B203
+			 , (SELECT COUNT(STATUS) FROM TASK WHERE STATUS = 'B204' AND USER_ID = #{userId}) AS B204
+		  FROM TASK
+	</select>
+	
 	<update id="deleteMyTaskByTaskNo" parameterType="str">
 		DELETE
 		  FROM TASK
@@ -151,6 +159,48 @@
 		SELECT
 			TASK_SEQ.NEXTVAL AS TASK_NO FROM DUAL
 	</select>
+	
+	<select id="selectFormatTaskListByUserId" parameterType="str" resultType="task">
+		SELECT A.TASK_NO
+			 , <include refid="formatProjNo"/>
+			 , A.TITLE
+			 , A.USER_ID
+			 , A.CONTENT
+			 , <include refid="importantForTask"/>
+			 , A.REGDATE
+			 , A.UPDATEDATE
+			 , <include refid="formatStatus"/>
+			 , A.DOC_CONT_NO
+			 , A.STARTDATE
+			 , A.ENDDATE
+	      FROM TASK A
+	     WHERE A.USER_ID = #{userId}
+	</select>
+	
+	<sql id="formatStatus">
+			(SELECT 
+				CODE_NAME
+			FROM 
+				COMMON_CODE
+            WHERE 
+            	COMMON_CODE.CODE_NO = A.STATUS) AS STATUS
+	</sql>
+	<sql id="formatProjNo">
+			(SELECT 
+				TITLE
+			FROM 
+				PROJECT
+			WHERE 
+				PROJ_NO = A.PROJ_NO) AS PROJ_NO
+	</sql>
+	<sql id="importantForTask">
+			(SELECT
+				CODE_NAME
+			FROM
+				COMMON_CODE
+            WHERE
+            	COMMON_CODE.CODE_NO = A.IMPORTANT) AS IMPORTANT
+	</sql>
 
 
 </mapper>

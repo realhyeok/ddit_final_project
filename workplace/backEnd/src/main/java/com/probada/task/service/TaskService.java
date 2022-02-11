@@ -23,4 +23,6 @@ public interface TaskService {
 	public void removeTaskByTaskNo(TaskVO taskVO) throws SQLException;
 
 	public String registTask(TaskVO taskVO) throws SQLException;
+	
+	public List<TaskVO> getFormatTaskListByUserId(String userId) throws SQLException;
 }

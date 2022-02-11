@@ -11,10 +11,8 @@
 </div>
 
 <script id="yourRequest-template" type="text/x-kendo-template">
-	<div class="row" style="padding:5px;margin:10px 0px;">
-		<div class="col-2 p-0">
-			<img src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userFrom#" alt="img" style="height:64px;width:64px;border-radius:100%;">
-		</div>
+	<div class="row">
+		<img class="pt-1 pl-2 pr-2" src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userFrom#" alt="img" style="height:64px;width:64px;border-radius:100%;">
 		<div class="col-8 p-0">
 			<div class="row" style="margin:2px;">#:title#</div>
 			<div class="row" style="margin:2px;">
@@ -23,15 +21,13 @@
 			</div>
 			<div class="row" style="margin:2px;">#:content#</div>
 		</div>
-		<div class="col-2 p-0">
 			# if(status == "대기"){ #
-				<button type="button" id="process" class="btn btn-sm btn-success mt-1 ml-1" data-toggle="modal" data-target=".requestProcessModal#:reqNo#" style="height:48px;width:48px;">대기</button>
+				<button type="button" id="process" class="btn btn-sm btn-success mt-2 ml-2 mr-0" data-toggle="modal" data-target=".requestProcessModal#:reqNo#" style="height:48px;width:48px;">대기</button>
 			# }else if(status == "승낙"){ #
-				<button type="button" id="ok" class="btn btn-sm btn-primary mt-1 ml-1" style="height:48px;width:48px;cursor:default;">승낙<br>완료</button>
+				<button type="button" id="ok" class="btn btn-sm btn-primary mt-2 ml-2 mr-0" style="height:48px;width:48px;cursor:default;">승낙<br>완료</button>
 			# }else if(status == "거절"){ #
-				<button type="button" id="no" class="btn btn-sm btn-danger mt-1 ml-1" data-toggle="modal" data-target=".requestRejectModal#:reqNo#" style="height:48px;width:48px;">거절<br>완료</button>
+				<button type="button" id="no" class="btn btn-sm btn-danger mt-2 ml-2 mr-0" data-toggle="modal" data-target=".requestRejectModal#:reqNo#" style="height:48px;width:48px;">거절<br>완료</button>
 			# } #
-		</div>
 	</div>
 
 	<div class="modal fade no-modal-sm requestRejectModal#:reqNo#" tabindex="-1" role="dialog" aria-hidden="true">
@@ -75,9 +71,9 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<button id="reject#:reqNo#" type="button" class="btn btn-danger" onclick="reject(#:reqNo#);">거절</button>
-						<button id="accept#:reqNo#" type="button" class="btn btn-primary" onclick="accept(#:reqNo#);">승낙</button>
-						<button id="cancel#:reqNo#" type="button" class="btn btn-primary" onclick="cancel(#:reqNo#);" style="display:none;">취소</button>
+						<button id="reject#:reqNo#" type="button" class="btn btn-danger" onclick="reject('#:reqNo#');">거절</button>
+						<button id="accept#:reqNo#" type="button" class="btn btn-primary" onclick="accept('#:reqNo#');">승낙</button>
+						<button id="cancel#:reqNo#" type="button" class="btn btn-primary" onclick="cancel('#:reqNo#');" style="display:none;">취소</button>
 					</div>
 					<div id="taZone#:reqNo#" class="row mr-3" style="display:none;">
 						<textarea id="ta#:reqNo#" rows="10" class="form-control" style="width:100%;" placeholder="1~500글자 이내로 거절 사유를 입력해주세요."></textarea>
@@ -89,10 +85,8 @@
 </script>
 
 <script id="myRequest-template" type="text/x-kendo-template">
-	<div class="row" style="padding:5px;margin:10px 0px;">
-		<div class="col-2 p-0">
-			<img src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userFrom#" alt="img" style="height:64px;width:64px;border-radius:100%;">
-		</div>
+	<div class="row">
+		<img class="pt-1 pl-2 pr-2" src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userFrom#" alt="img" style="height:64px;width:64px;border-radius:100%;">
 		<div class="col-8 p-0">
 			<div class="row" style="margin:2px;">#:title#</div>
 			<div class="row" style="margin:2px;">
@@ -101,16 +95,14 @@
 			</div>
 			<div class="row" style="margin:2px;">#:content#</div>
 		</div>
-		<div class="col-2 p-0">
 			# if(status == "대기"){ #
-				<button type="button" class="btn btn-sm btn-secondary mt-1 ml-1" style="height:48px;width:48px;cursor:default;">대기</button>
+				<button type="button" class="btn btn-sm btn-secondary mt-2 ml-2 mr-0" style="height:48px;width:48px;cursor:default;">대기</button>
 			# }else if(status == "승낙"){ #
-				<button type="button" class="btn btn-sm btn-primary mt-1 ml-1" style="height:48px;width:48px;cursor:default;">승낙</button>
+				<button type="button" class="btn btn-sm btn-primary mt-2 ml-2 mr-0" style="height:48px;width:48px;cursor:default;">승낙</button>
 			# }else if(status == "거절"){ #
-				<button type="button" class="btn btn-sm btn-danger mt-1 ml-1" style="height:48px;width:48px;" data-toggle="modal" data-target=".requestRejectModal#:reqNo#">거절</button>
+				<button type="button" class="btn btn-sm btn-danger mt-2 ml-2 mr-0" style="height:48px;width:48px;" data-toggle="modal" data-target=".requestRejectModal#:reqNo#">거절</button>
 			# } #
 		</div>
-	</div>
 
 	<div class="modal fade no-modal-sm requestRejectModal#:reqNo#" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-sm">
@@ -122,7 +114,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<h4>답변자 : #:userFrom#</h4>
+					<h4>답변자 : #:userTo#</h4>
 					<p class="float-right">#:regDate#</p>
 					<br>
 					<p>요청 : #:title#</p>
@@ -153,14 +145,13 @@
 				dataType:'json',
 				success: function(msg){
 					alert(msg);
-
+					
 					$("#requestModal" + reqNo).modal("hide");
 					
-					var requestGrid = $('#yourRequest').data('kendoGrid');
-					requestGrid.dataSource.read();
-					var requestDropDown = $("#yourStatus-category").data("kendoDropDownList");
-					requestDropDown.dataSource.read();
-					
+					$('#yourRequest').data('kendoGrid').dataSource.read();
+					$("#yourStatus-category").data("kendoDropDownList").dataSource.read();
+
+					$('#yourRequestDashboard').data('kendoGrid').dataSource.read();
 				},
 				error: function(error){
 					alert(error.status);
@@ -193,10 +184,10 @@
 						
 						$("#requestModal" + reqNo).modal("hide");
 						
-						var requestGrid = $('#yourRequest').data('kendoGrid');
-						requestGrid.dataSource.read();
-						var requestDropDown = $("#yourStatus-category").data("kendoDropDownList");
-						requestDropDown.dataSource.read();
+						$('#yourRequest').data('kendoGrid').dataSource.read();
+						$("#yourStatus-category").data("kendoDropDownList").dataSource.read();
+
+						$('#yourRequestDashboard').data('kendoGrid').dataSource.read();
 					},
 					error: function(error){
 						alert(error.status);

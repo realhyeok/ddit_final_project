@@ -14,10 +14,20 @@ public class UserVO {
 	private int likeCount;
 	private int authStatus;
 	private int userUploadUsage;
-
+	
 	private int taskCount;
 	private int projectCount;
 	private String projNo;
+	
+	private String cprojNo;
+
+	public String getCprojNo() {
+		return cprojNo;
+	}
+
+	public void setCprojNo(String cprojNo) {
+		this.cprojNo = cprojNo;
+	}
 
 	@Override
 	public String toString() {

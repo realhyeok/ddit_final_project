@@ -10,38 +10,6 @@ function off() {
 
 var prevTarget = [];
 
-function getOverlayModifyTemplate(templateId, url) {
-
-	on();
-	
-	console.log("templateId" + templateId);
-	console.log("url" + url);
-	
-	$.ajax({
-		type : 'GET',
-		url : url,
-		dataType : "JSON",
-		data : {
-			"cprojNo" : cprojNo
-		},
-		success : function(data) {
-			console.log("Handlebars success!!");
-			var template = document.querySelector("#" + templateId).innerText;
-			var bindTemplate = Handlebars.compile(template);
-			var appe = document.querySelector('#popoverlay');
-			var html = bindTemplate(data);
-			console.log(html);
-			appe.innerHTML = html;
-			$("#fadeInContent").fadeIn(300);
-			summernote_go($('.cprojSummnote'));
-		},
-		error : function(error) {
-			console.log("Handlebars error!!");
-		},
-	});
-
-}
-
 function getOverlayTemplate(templateId) {
 
 	on();
@@ -61,6 +29,39 @@ function getOverlayTemplate(templateId) {
 
 }
 
+function getOverlayModifyTemplate(templateId, url) {
+
+	on();
+	
+	console.log("templateId" + templateId);
+	console.log("url" + url);
+	
+	$.ajax({
+		type : 'GET',
+		url : url,
+		dataType : "JSON",
+		data : {
+			"cprojNo" : cprojNo
+		},
+		success : function(data) {
+			console.log("Handlebars success!!");
+			console.log(document.querySelector("#" + templateId));
+			var template = document.querySelector("#" + templateId).innerText;
+			var bindTemplate = Handlebars.compile(template);
+			var appe = document.querySelector('#popoverlay');
+			var html = bindTemplate(data);
+			console.log(html);
+			appe.innerHTML = html;
+			$("#fadeInContent").fadeIn(300);
+			summernote_go($('.cprojSummernote'));
+		},
+		error : function(error) {
+			console.log("Handlebars error!!");
+		},
+	});
+
+}
+
 function modifyCollaboDetail() {
 	var collaboVO = $('#modifyCollaboForm').serialize();
 	collaboVO += '&cprojNo='+cprojNo;
@@ -73,7 +74,7 @@ function modifyCollaboDetail() {
 		data : collaboVO,
 		success : function(data) {
 			alert("수정에 성공했습니다.");
-			getTemplate('/app/collabo/getCollboByProjNo','collaboDetailIntro','collaboDetailIntroTarget');
+			getTemplate('/app/collabo/getCollaboByCprojNo','collaboDetailIntro','collaboDetailIntroTarget');
 			off();
 			location.reload();
 		}, // success

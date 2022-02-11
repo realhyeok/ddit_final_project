@@ -14,7 +14,12 @@
 <script id="sendMailList-template" type="text/x-kendo-template">
 	<div class="mail_list m-0 border-bottom-0">
 		<div class="left">
-			<input class="sendCheck" type="checkbox" value="#:mailNo#">
+			# if(userFrom == userTo){ #
+				<input class="sendCheck" type="checkbox" value="#:mailNo#" dist="mineMail">
+			# }else if(userFrom != userTo){ #
+				<input class="sendCheck" type="checkbox" value="#:mailNo#" dist="sendMail">
+			# } #
+			
 			# if(attachList.length != 0){ #
 				<i class="fa fa-paperclip"></i>
 			# } #
@@ -31,7 +36,7 @@
 	<div class="inbox-body">
 		<div class="mail_heading row">
 			<div class="col-md-8">
-				<button type="button" class="btn btn-sm btn-dark" onclick="deleteSendMailOne({{mailNo}});"><i class="fa fa-times-circle-o"></i>&nbsp;&nbsp;삭제</button>
+				<button type="button" class="btn btn-sm btn-dark" onclick="deleteSendMailOne('{{mailNo}}', '{{userFrom}}', '{{userTo}}');"><i class="fa fa-times-circle-o"></i>&nbsp;&nbsp;삭제</button>
 			</div>
 			<div class="col-md-4 text-right">
 				<p class="date">{{regDate}}</p>
@@ -121,7 +126,14 @@
 		}
 	}
 	
-	function deleteSendMailOne(mailNo){
+	function deleteSendMailOne(mailNo, userFrom, userTo){
+		var mailDist = null;
+		if(userFrom == userTo){
+			mailDist = "mineMail";
+		}else{
+			mailDist = "sendMail";
+		}
+		
 		deleteOneConfirm = confirm("삭제하시겠습니까?");
 		
 		if(deleteOneConfirm){
@@ -130,10 +142,11 @@
 				type: "get",
 				data: {
 					"mailNo"   : mailNo,
-					"mailDist" : "sendMail"	
+					"mailDist" : mailDist
 				},
 				success: function(data){
 					alert("성공");
+					$('#receiveMailList').data("kendoGrid").dataSource.read();
 					$('#sendMailList').data("kendoGrid").dataSource.read();
 					$('#trashMailList').data("kendoGrid").dataSource.read();
 				},
@@ -145,12 +158,20 @@
 	}
 	
 	function deleteSendMailAll(){
+		if($(".sendCheck:checked").length == 0){
+			alert("삭제할 메일을 선택해주세요.");
+			return;
+		}
+		
 		deleteAllConfirm = confirm("삭제하시겠습니까?");
 		var mailNo = "";
+		var mailDist = "";
+		
 		if(deleteAllConfirm){
 			
 			$(".sendCheck:checked").each(function(){
 				mailNo += $(this).val() + ",";
+				mailDist += $(this).attr("dist") + ",";
 			});
 			
 			$.ajax({
@@ -158,12 +179,12 @@
 				type: "get",
 				data: {
 					"mailNo"   : mailNo,
-					"mailDist" : "sendMail"	
+					"mailDist" : mailDist	
 				},
 				success: function(data){
 					$("#sendAllCheckButton").prop("checked", false);
 					alert("성공");
-					
+					$('#receiveMailList').data("kendoGrid").dataSource.read();
 					$('#sendMailList').data("kendoGrid").dataSource.read();
 					$('#trashMailList').data("kendoGrid").dataSource.read();
 				},

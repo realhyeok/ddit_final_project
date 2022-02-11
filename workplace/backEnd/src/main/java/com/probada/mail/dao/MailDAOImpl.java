@@ -83,15 +83,28 @@ public class MailDAOImpl implements MailDAO {
 		sqlSession.update("Mail-Mapper.returnSendMail", mailNo);
 	}
 	
+	//내게 쓴 메일 복구
+	@Override
+	public void returnMineMail(int mailNo) throws SQLException {
+		sqlSession.update("Mail-Mapper.returnMineMail", mailNo);
+	}
+	
 	//받은메일 삭제(휴지통으로)
 	@Override
 	public void deleteReceiveMailToTrash(int mailNo) throws SQLException {
 		sqlSession.update("Mail-Mapper.deleteReceiveMailToTrash", mailNo);
 	}
+	
 	//보낸메일 삭제(휴지통으로)
 	@Override
 	public void deleteSendMailToTrash(int mailNo) throws SQLException {
 		sqlSession.update("Mail-Mapper.deleteSendMailToTrash", mailNo);
+	}
+	
+	//내게 쓴 메일 삭제(휴지통으로)
+	@Override
+	public void deleteMineMailToTrash(int mailNo) throws SQLException {
+		sqlSession.update("Mail-Mapper.deleteMineMailToTrash", mailNo);
 	}
 	
 	//임시메일 삭제(완전 삭제)
@@ -110,6 +123,12 @@ public class MailDAOImpl implements MailDAO {
 	@Override
 	public void deleteTrashSendMail(int mailNo) throws SQLException {
 		sqlSession.update("Mail-Mapper.deleteTrashSendMail", mailNo);
+	}
+	
+	//휴지통 삭제(보낸 메일)
+	@Override
+	public void deleteTrashMineMail(int mailNo) throws SQLException {
+		sqlSession.update("Mail-Mapper.deleteTrashMineMail", mailNo);
 	}
 	
 	//메일 등록

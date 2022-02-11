@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.probada.document.vo.FileVO;
 import com.probada.document.vo.ProjectUserVO;
+import com.probada.task.vo.TaskVO;
 
 
 
@@ -52,6 +53,7 @@ public interface DocumentDAO {
 
 	public List<FileVO> selectDocumentListForProjDetail(String projNo) throws SQLException;
 
+	public List<FileVO> selectDocumentListBytaskTitleANDprojNo(TaskVO taskVO) throws SQLException;
 
 
 

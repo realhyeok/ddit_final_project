@@ -1,130 +1,139 @@
-function on() {
+function onChatList() {
 	$("#popoverlay").fadeIn(300);
 }
 
-function off() {
+function offChatList() {
 	$("#popoverlay").fadeOut(300);
-}
-
-var prevTarget = [];
-
-function offChatList(){
 	
-	off();
-	chatFlag = false;
+	
 }
+
+
 chatFlag = false; 
 
-function getOverlayTemplate(templateId) {
-
+function getOverlayTemplateChatList(templateId) {
+	
 	
 	if(chatFlag==false){
 		
 	
 	
 	
-	 on();
-
-		$.ajax({
-			type: "POST",
-		    url : "/chat/getMyChatProject",
-		    success : function(data) {
+		onChatList();
 		        console.log("Handlebars success!!");
 		        var template = document.querySelector("#" + templateId).innerText;
 		        var bindTemplate = Handlebars.compile(template);
 		        var appe = document.querySelector('#popoverlay');
-		        var html = bindTemplate(data);
+		        var html = bindTemplate();
 		        appe.innerHTML = html;
 		        $("#fadeInContent").fadeIn(300);
+		        chatFlag = true;
+		        openChatList();
 		        
-		        
-		    },
-		    error : function(error) {
-		        console.log("Handlebars error!!");
-		    },
-		});
-		chatFlag = true;
 	}else{
 		
-		off();
+		offChatList();
 		chatFlag = false;
 		
 	}
 	 
 	   /*getModalTemplate(chatModalTemplate);*/
-	   
-	 
     
 }
 
 
-/*
-function getModalTemplate(templateId) {
+function openChatList(){
 	
-	
-	 
-	 $.ajax({
-	    	type: "POST",
-	        url :"/chat/getProjectTitle",
-	        success : function(title) {
-	        	
-	            console.log("Handlebars success!!");
-	            console.log(title);
-	       
-		        var template = document.querySelector("#" + templateId).innerText;
-		        var bindTemplate = Handlebars.compile(template);
-		        var appe = document.querySelector('#popoverlay');
-		        var html = bindTemplate(data);
-		        appe.innerHTML = html;
-		        $("#fadeInContent").fadeIn(300);
-	            
-	            
-	        },
-	        error : function(error) {
-	            console.log("Handlebars error!!");
-	        },
-	    });
+		var crudServiceBaseUrlSeok="/chat/"
+		var seokListTemplate = "<span onclick='selectChatRoom('#: realRoom # ')'> #: title #</span>";
+			
+          var dataSource = new kendo.data.DataSource({
+                 transport: {
+                     read: {
+                    
+                         url: crudServiceBaseUrlSeok + "Read",
+                         dataType: "json"
+                     },
+                     
+                     update: {
+                         url: crudServiceBaseUrlSeok + "Update",
+                         contentType: "application/json",
+                         type: "POST",
+                         dataType: "json"
+                     },
+                     
+            
+                     destroy: {
+                    	 url: crudServiceBaseUrlSeok + "Destroy",
+                         contentType: "application/json",
+                         type: "POST",
+                         dataType: "json"
+                     },
+                  
+                     parameterMap: function (options, operation) {
+                        if (operation !== "read" && options.models) {
+                            // return { models: kendo.stringify(options.models) };
+                        	 return JSON.stringify(options);                         
+                        }
+                     }
+                     
+                 },
+                 batch: true,
+                 pageSize: 8,
+                 schema: {
+                     model: {
+                         id: "chatroomNo",
+                         fields: {
+                        	 chatroomNo: { editable: false, type: "String" },
+                             title: {
+                                 validation: {
+                                     required: true
+                                     //productnamevalidation: function (input) {
+                                     //    if (input.is("[name='ProductName']") && input.val() != "") {
+                                      //       input.attr("data-productnamevalidation-msg", "Product Name should start with capital letter");
+                                       //      return /^[A-Z]/.test(input.val());
+                                      //   }
 
+                                       //  return true;
+                                     //}
+                                 }
+                             },
+                             projNo: { editable: true, type: "String"},
+    	                     realRoom: { editable: true, type: "String"},
+    	                     userId: { editable: true, type: "String"},
+    	                     regdate: { editable: true, type: "String"}	
+                         }
+                     }
+                 }
+             });
 
-}*/
+         $("#chatListSeok").kendoGrid({
+             dataSource: dataSource,
+             pageable: true,
+             width:500,
+             height: 400,
+             columns: [
+                
+            	 {
+	                 field: "title",
+	                 title: "팀원들과 소통해 보아요.",
+	                 template: "<span onclick=selectChatRoom('#=realRoom #')> #:title #</span>",
+	                 width: 200,
+	                 encoded: false,
+	             },
+            	 
+            	 
+            	 { 
+            		 command: ["edit", "destroy"], 
+            		 title: "&nbsp;", 
+            		 width: "200px"
+            	 }
+                 
+                 ],
+             editable: "inline"
+         });
 
-
-/*alert("request.contextPath 이거 안탈 수 도 있음");
-$.ajax({
-	    url: "/chat/getMyChatProject",
-	    type: "POST", 
-	    success : function(arg) {
-	   
-	    	var projectTitle ="";
-	    	
-	    		//없는 경우 추가하기
-	    		for(var i=0 in arg){  
-	    		
-	    		var realRoom = "'"+arg[i].realRoom+"'";
-	    			
-	    		 projectTitle += 
-	    	    	  '<div class="roomEl" data-id="2" onclick="selectChatRoom('+realRoom+');">'+arg[i].title+'</div>';
-	    	    }
-	    		alert(projectTitle);
-	    	
-	    	 document.getElementById('roomSelect').innerHTML=projectTitle;
-	    }, 
-	    error : function(arg){
-		alert("통신실패시에만 실행"+arg.status);
-	    }
-	});	   
- */
- 
- 
-/*//모달을 열시 
-	
- 
-	
-
-	
-
-})*/
-
+}
 
 
 

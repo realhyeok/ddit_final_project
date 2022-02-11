@@ -94,10 +94,18 @@ public class UserModifyController {
 			String uploadPath = "c:/member/picture";
 			File storeFile = new File(uploadPath, fileName);
 			
-			storeFile.mkdirs();
+		
 			
-			//local HDD에 저장
-			multi.transferTo(storeFile);
+			if(storeFile.exists()) { 
+				
+			}else{
+				storeFile.mkdirs();
+				multi.transferTo(storeFile);
+			}
+
+
+			
+		
 			
 			
 		}

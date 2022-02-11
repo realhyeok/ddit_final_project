@@ -65,9 +65,21 @@ public class AlertHandler extends TextWebSocketHandler {
 					//작성자가 로그인 해서 있다면
 					WebSocketSession receiverSession = userSessionsMap.get(receiverId);
 					
-//					메일을 보내는 경우
-					if(serderWhere.equals("메일") && receiverSession != null) {
+//					채팅을 보내는 경우
+					if(serderWhere.equals("채팅") && receiverSession != null) {
 						
+						TextMessage tmpMsg = new TextMessage(
+								serderNickName 
+								+ "," + serderWhere 
+								+ "," + senderTarget
+								+ "," + senderWhatToDo 
+								+ "," + senderProjNo
+								+ "," + getId(receiverSession));
+						
+						receiverSession.sendMessage(tmpMsg);
+						
+					}else if(serderWhere.equals("메일") && receiverSession != null) {
+//						메일을 보내는 경우
 						TextMessage tmpMsg = new TextMessage(
 								serderNickName 
 								+ "," + serderWhere 

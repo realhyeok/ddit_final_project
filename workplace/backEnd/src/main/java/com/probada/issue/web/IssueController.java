@@ -37,6 +37,63 @@ public class IssueController {
 	ProjectUtil projectUtil;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(IssueController.class);
+	
+	@RequestMapping("/getIssueSortByUserId")
+	@ResponseBody
+	public ResponseEntity<List<IssueVO>> getIssueSortByUserId(@RequestParam(defaultValue="") String userId) throws SQLException {
+		ResponseEntity<List<IssueVO>> entity = null;
+		List<IssueVO> issueSort = null;
+
+		try {
+			issueSort = issueService.getIssueSortByUserId(userId);
+
+			entity = new ResponseEntity<List<IssueVO>>(issueSort,HttpStatus.OK);
+		} catch(Exception e) {
+			entity = new ResponseEntity<List<IssueVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+	
+	@RequestMapping("/getIssueListByUserId")
+	@ResponseBody
+	public ResponseEntity<List<IssueVO>> getIssueListByUserId(@RequestParam(defaultValue="") String userId) throws SQLException {
+		ResponseEntity<List<IssueVO>> entity = null;
+		List<IssueVO> issueList = null;
+		
+		try {
+			issueList = issueService.getIssueListByUserId(userId);
+			issueList = issueUtil.getMileListByIssueList(issueList);
+			
+			entity = new ResponseEntity<List<IssueVO>>(issueList,HttpStatus.OK);
+		} catch(Exception e) {
+			entity = new ResponseEntity<List<IssueVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+	
+	@RequestMapping("/getIssueListByProjNoAndUserId")
+	@ResponseBody
+	public ResponseEntity<List<IssueVO>> getIssueListByProjNoAndUserId(@RequestParam(defaultValue="") String userId, String projNo) throws SQLException {
+		ResponseEntity<List<IssueVO>> entity = null;
+		List<IssueVO> issueList = null;
+		IssueVO issueVO = new IssueVO();
+		
+		try {
+			issueVO.setUserId(userId);
+			issueVO.setProjNo(projNo);
+			
+			issueList = issueService.getIssueListByProjNoAndUserId(issueVO);
+			issueList = issueUtil.getMileListByIssueList(issueList);
+			
+			entity = new ResponseEntity<List<IssueVO>>(issueList,HttpStatus.OK);
+		} catch(Exception e) {
+			entity = new ResponseEntity<List<IssueVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
 
 	@RequestMapping("/getIssueListByProjNo")
 	@ResponseBody

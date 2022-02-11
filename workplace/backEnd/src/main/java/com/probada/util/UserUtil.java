@@ -18,8 +18,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 
 import com.probada.alert.service.AlertService;
 import com.probada.alert.vo.AlertVO;
+import com.probada.collabo.vo.CollaboVO;
 import com.probada.payment.service.PaymentsBillService;
 import com.probada.payment.vo.PaymentsBillVO;
+import com.probada.project.vo.ProjectVO;
+import com.probada.task.vo.TaskVO;
 import com.probada.user.mail.MailHandler;
 import com.probada.user.mail.Tempkey;
 import com.probada.user.service.UserService;
@@ -38,9 +41,9 @@ public class UserUtil {
 	@Autowired
 	private PaymentsBillService paymentsBillService;
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	@Autowired
-	AlertService alertService;
+	private AlertService alertService;
 	@Autowired
 	private JavaMailSender mailSender;
 
@@ -318,5 +321,51 @@ public class UserUtil {
 		return userVO;
 	}
 	
+	public int getAlertCount(String userId) {
+		int ret = 0;
+		try {
+			ret = alertService.getAlertCount(userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
 	
+	public List<TaskVO> getUserTaskList(String userId){
+		List<TaskVO> retList = new ArrayList<TaskVO>();
+		
+		try {
+			retList = userService.getUserTaskList(userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return retList;
+	}
+	
+	public List<ProjectVO> getUserProjectList(String userId){
+		List<ProjectVO> retList = new ArrayList<>();
+		
+		try {
+			retList = userService.getUserProjectList(userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return retList;
+	}
+	
+	public List<CollaboVO> getUserCollaboList(String userId){
+		List<CollaboVO> retList = new ArrayList<>();
+		
+		try {
+			retList = userService.getCollaboListByUserId(userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return retList;
+	}
+	
+ 	
 }

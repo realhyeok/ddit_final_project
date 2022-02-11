@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.probada.myWork.command.myTaskChartCommand;
 import com.probada.task.vo.TaskVO;
 
 public class MyTaskDAOImpl implements MyTaskDAO {
@@ -38,5 +39,12 @@ public class MyTaskDAOImpl implements MyTaskDAO {
 	@Override
 	public void updateMyTaskStatus(TaskVO taskVO) throws SQLException {
 		sqlSession.update("Task-Mapper.updateTaskStatus",taskVO);
+	}
+	
+	//대시보드 업무 차트 출력
+	@Override
+	public myTaskChartCommand selectMyTaskChartByUserId(String userId) throws SQLException {
+		myTaskChartCommand myTaskChartData = sqlSession.selectOne("Task-Mapper.selectMyTaskChartByUserId", userId);
+		return myTaskChartData;
 	}
 }

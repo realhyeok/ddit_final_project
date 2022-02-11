@@ -213,8 +213,8 @@ function checkInputs() {
 	}
 	
 	if(!agree_term.checked){
-		 $('.label-agree-term').css('border-bottom', '1px solid red');
-		 setErrorFor(agree_term, "이용약관에 체크해 주세요.");
+		$('.label-agree-term').css('border-bottom', '1px solid red');
+		setErrorFor(agree_term, "이용약관에 체크해 주세요.");
 	}else {
 		$('.label-agree-term').css('border', 'none');
 		setSuccessFor(agree_term);

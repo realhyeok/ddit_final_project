@@ -1,10 +1,9 @@
 package com.probada.task.vo;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.probada.document.vo.FileVO;
 import com.probada.user.vo.UserVO;
 
 public class TaskVO {
@@ -27,6 +26,8 @@ public class TaskVO {
 	private List<UserVO> userList = new ArrayList<UserVO>();
 	private String nickname = "";
 
+	private List<FileVO> fileList = new ArrayList<FileVO>();
+
 
 
 	@Override
@@ -34,7 +35,14 @@ public class TaskVO {
 		return "TaskVO [projNo=" + projNo + ", taskNo=" + taskNo + ", status=" + status + ", docContNo=" + docContNo
 				+ ", startdate=" + startdate + ", enddate=" + enddate + ", regdate=" + regdate + ", important="
 				+ important + ", userId=" + userId + ", title=" + title + ", updatedate=" + updatedate + ", content="
-				+ content + ", projTitle=" + projTitle + ", userList=" + userList + ", nickname=" + nickname + "]";
+				+ content + ", projTitle=" + projTitle + ", userList=" + userList + ", nickname=" + nickname
+				+ ", fileList=" + fileList + "]";
+	}
+	public List<FileVO> getFileList() {
+		return fileList;
+	}
+	public void setFileList(List<FileVO> fileList) {
+		this.fileList = fileList;
 	}
 	public String getNickname() {
 		return nickname;

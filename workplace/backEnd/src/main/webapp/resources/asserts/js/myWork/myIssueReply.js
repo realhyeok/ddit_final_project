@@ -1,4 +1,4 @@
-// 이슈 시작
+/*// 이슈 시작
 $(document).ready(function () {
 	var dataBase = [
 		  {
@@ -167,7 +167,7 @@ $(document).ready(function () {
         }, {
             field: "MileName",
             title: "마일스톤",
-            /* editor: clientCategoryEditor, */
+             editor: clientCategoryEditor, 
             groupHeaderTemplate: "마일스톤: <a href='' style='color:black;'>#=data.value#</a> ",
             width: 200
         },  {
@@ -190,4 +190,4 @@ $(document).ready(function () {
 function returnFalse() {
     return false;
 }
-// 이슈 끝
+// 이슈 끝*/

@@ -1,11 +1,13 @@
 package com.probada.util;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import com.probada.task.service.TaskService;
+import com.probada.task.vo.TaskVO;
 import com.probada.user.vo.UserVO;
 
 public class TaskUtil {
@@ -35,6 +37,23 @@ public class TaskUtil {
 		}
 
 		return userList;
+	}
+	
+	
+	
+	/**
+	 * PROJ_NO와 IMPORTANT, STATUS를 이름 형식으로 format하여 List<TaskVO>를 반환한다.
+	 * @param String userId
+	 * @return List<TaskVO>
+	 * @throws SQLException
+	 */
+	public List<TaskVO> getFormatTaskListByUserId(String userId) throws SQLException {
+		
+		List<TaskVO> formatTaskList = new ArrayList<TaskVO>();
+		
+		formatTaskList = taskService.getFormatTaskListByUserId(userId);
+		
+		return formatTaskList;
 	}
 
 }

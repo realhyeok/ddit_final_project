@@ -11,6 +11,9 @@ import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import com.probada.collabo.vo.CollaboVO;
+import com.probada.project.vo.ProjectVO;
+import com.probada.task.vo.TaskVO;
 import com.probada.user.dao.UserDAO;
 import com.probada.user.mail.MailHandler;
 import com.probada.user.mail.Tempkey;
@@ -55,6 +58,7 @@ public class UserServiceImpl implements UserService {
 			sendMail.setSubject("[probada] 회원가입 인증메일");
 			sendMail.setText(new StringBuffer().append("<h1>test 가입 메일인증 입니다</h1>")
 					.append("<a href='http://localhost/emailConfirm?userId=").append(user.getUserId())
+//					.append("<a href='http://192.168.143.7/emailConfirm?userId=").append(user.getUserId())
 					.append("' target='_blenk'>가입 완료를 위해 이메일 이곳을 눌러주세요</a>").toString());
 //			.append("&key=").append(key)
 			sendMail.setFrom("probadahelp@gmail.com", "probada");
@@ -173,5 +177,27 @@ public class UserServiceImpl implements UserService {
 	public UserTotalCountVO setUserTotalCount(UserTotalCountVO userVO) throws SQLException {
 		return userDAO.setUserTotalCount(userVO);
 	}
+
+	@Override
+	public List<TaskVO> getUserTaskList(String userId) throws SQLException {
+		return userDAO.getUserTaskList(userId);
+	}
+
+	@Override
+	public List<ProjectVO> getUserProjectList(String userId) throws SQLException {
+		return userDAO.getUserProjectList(userId);
+	}
+
+	@Override
+	public List<UserVO> getPriUser() throws SQLException {
+		
+		return userDAO.selectTotalUserByPrivacy();
+	}
+
+	@Override
+	public List<CollaboVO> getCollaboListByUserId(String userId) throws SQLException {
+		return userDAO.selectCollaboListByUserId(userId);
+	}
+
 	
 }

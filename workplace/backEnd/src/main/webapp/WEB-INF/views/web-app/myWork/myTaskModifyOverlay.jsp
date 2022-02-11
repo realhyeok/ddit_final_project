@@ -88,7 +88,6 @@
 													<label class="col-form-label col-md-2 col-sm-2 label-align" for="startdate">시작일</label>
 													<div class="col-md-10 col-sm-10">
 														<input type="date" id="startdate" name="startdate" class="form-control form-control-sm">
-{{startdate}}
 													</div>
 												</div>
 												<div class="item form-group">
@@ -135,12 +134,12 @@
 			}
 			
 			function cancelMyTaskModify(){
-				off('#myTaskModifyOverlay');
+				myOverlayOff('#myTaskModifyOverlay');
 			}
 			
 			function modifyMyTask() {
 				var taskVO = $('#modifyMyTaskForm').serialize();
-				alert(taskVO);
+				
 				$.ajax({
 					url : "<%=request.getContextPath()%>/app/task/modifyTaskDetailByTaskNo",
 					type : 'POST',
@@ -149,7 +148,9 @@
 					success : function(data) {
 						alert("수정에 성공했습니다.");
 						myTaskDetail(data.taskNo, data.projNo);
-						off('#myTaskModifyOverlay');
+						myOverlayOff('#myTaskModifyOverlay');
+						document.getElementById('mailReceive-tab').click();
+						
 					},
 					error : function(status) {
 						alert("수정에 실패하였습니다.");
