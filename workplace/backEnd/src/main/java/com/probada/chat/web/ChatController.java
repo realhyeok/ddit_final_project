@@ -177,14 +177,15 @@ public class ChatController {
 		String[] realUserId = userId.split(",");
 		
 		
-		UserVO userVO= (UserVO)session.getAttribute("userVO");
+		UserVO userVO= (UserVO)session.getAttribute("userVO");				
 		String realRoom = chatService.seqRealChat();
 		
 		
 		LOGGER.debug("[요청받음] => /createRoom");
 		String seq=null;
-		//하드코딩
+
 		String myId=userVO.getUserId();
+		
 		//프로젝트가 중복될 경우 배제한 코드
 		String projNo = chatService.getProjNoByTitle(ptitle);
 		
@@ -225,10 +226,10 @@ public class ChatController {
 		LOGGER.debug(" testChat {}",testChat);*/
 	
 		
-		String realRoomNo = "0";
+		
 		
 		try {
-			entity = new ResponseEntity<String>(realRoomNo,HttpStatus.OK);
+			entity = new ResponseEntity<String>(myId,HttpStatus.OK);
 
 		} catch(Exception e) {
 			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);

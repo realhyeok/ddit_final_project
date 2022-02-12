@@ -27,6 +27,6 @@ public interface MilestoneDAO {
 	public void insertMileIssueRelation(IssueVO issueVO) throws SQLException;
 
 	public void deleteMileIssueRelation(IssueVO issueVO) throws SQLException;
-
-
+	
+	public void removeMilestone(String mileNo) throws SQLException;
 }

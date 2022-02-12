@@ -87,13 +87,13 @@
 												<div class="item form-group">
 													<label class="col-form-label col-md-2 col-sm-2 label-align" for="startdate">시작일</label>
 													<div class="col-md-10 col-sm-10">
-														<input type="date" id="startdate" name="startdate" class="form-control form-control-sm">
+														<input type="date" id="startdate" name="startdate" class="form-control form-control-sm" value="{{formatTime startdate "yyyy-MM-DD"}}">
 													</div>
 												</div>
 												<div class="item form-group">
 													<label class="col-form-label col-md-2 col-sm-2 label-align" for="enddate">마감일</label>
 													<div class="col-md-10 col-sm-10">
-														<input type="date" id="enddate" name="enddate" class="form-control form-control-sm">
+														<input type="date" id="enddate" name="enddate" class="form-control form-control-sm" value="{{formatTime enddate "yyyy-MM-DD"}}">
 													</div>
 												</div>
 												<div class="item form-group">
@@ -122,6 +122,13 @@
 		</script>
 		
 		<script>
+			window.addEventListener('load', function() {
+				Handlebars.registerHelper('formatTime', function (date, format) {
+				    var mmnt = moment(date);
+				    return mmnt.format(format);
+				});
+			});
+			
 			function printData(data, target, templateObject){
 				var template = Handlebars.compile(templateObject.html());
 				

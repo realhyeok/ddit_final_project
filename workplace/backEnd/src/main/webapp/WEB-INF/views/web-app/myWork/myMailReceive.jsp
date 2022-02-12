@@ -25,8 +25,8 @@
 			# } #
 		</div>
 		<div class="right" style="height:40px;">
-			<h3>#:userFrom#<small>#:regDate#</small></h3>
-			<a href="javascript:receiveMailDetail(#:mailNo#);"><p>#:title#</p></a>
+			<h3 style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:userFrom#<small>#:regDate#</small></h3>
+			<a href="javascript:receiveMailDetail(#:mailNo#);"><p style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:title#</p></a>
 		</div>
 	</div>
 </script>

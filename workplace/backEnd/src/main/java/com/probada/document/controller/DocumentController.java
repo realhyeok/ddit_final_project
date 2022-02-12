@@ -268,6 +268,7 @@ public class DocumentController {
 		//내 작업 문서관리
 		//List<FileVO> result = myWork(target,"seok2@ddit.com");
 
+		LOGGER.debug(target);
 		//프로젝트 문서관리
 		List<FileVO> fileVO = new ArrayList<FileVO>();
 		fileVO = documentService.getDocumentListByProjNo(projectUserVO);

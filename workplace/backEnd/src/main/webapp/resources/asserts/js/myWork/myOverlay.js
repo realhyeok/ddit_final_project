@@ -11,23 +11,65 @@ function myOverlayOff(dist) {
 var prevTarget = [];
 
 function getOverlayMyMileRegistTemplate(userId) {
+	$("#myMileOverlay").empty();
 	myOverlayOn("#myMileOverlay");
+	
 	$.ajax({
 		type    : "GET",
-		url     : "/app/issue/getIssueListByUserId",
-		dataType: "JSON",
+		url     : "/app/issue/getIssueSortByUserId",
 		data    : {"userId" : userId},
+		dataType: "JSON",
 		success : function(data){
 			myMileRegistForm(data);
 			summernote_go($('.myMileRegistSummernote'));
 			changeProjectAndIssue();
 		},
 		error   : function(error){
+			alert("짜증");
 			console.log("MyMile RegistForm - Handlebars error!!");
 		}
-	});	
+	});
 }
 
+function getOverlayMyMileModifyTemplate(mileNo) {
+	$("#myMileOverlay").empty();
+	myOverlayOn("#myMileOverlay");
+	
+	var mileVO = { "mileNo": mileNo };
+	
+	$.ajax({
+		type    : "GET",
+		url     : "/app/milestone/getMilestoneByMileNo",
+		dataType: "JSON",
+		data    : mileVO,
+		success : function(data){
+			myMileModifyForm(data);
+			summernote_go($('.myMileModifySummernote'));
+			
+			var issueTitle = [];
+			var issueNo = [];
+			
+			if(data.mileVO.issueList != null){
+				for(var i = 0; i < data.mileVO.issueList.length; i++){
+					issueTitle.push(data.mileVO.issueList[i].title);
+					issueNo.push(data.mileVO.issueList[i].issueNo);
+					console.log(issueTitle);
+				}
+				$("#myMileModifyIssueTag").kendoMultiSelect({
+					autoClose: false,
+					value:issueNo,
+				});
+			} else {
+				$("#myMileModifyIssueTag").kendoMultiSelect({
+					autoClose: false
+				});
+			}
+		},
+		error   : function(error){
+			console.log("MyMile ModifyForm - Handlebars error!!");
+		}
+	});
+}
 
 function getOverlayMailRegistTemplate(userFrom) {
 	myOverlayOn("#myPopOverlay");
@@ -39,11 +81,8 @@ function getOverlayMailRegistTemplate(userFrom) {
 
 function getOverlayTaskRegistTemplate(userFrom) {
 	myOverlayOn("#myTaskOverlay");
-	/*var appe = document.querySelector('#myTaskOverlay');
-	appe.innerHTML = html;*/
 	$("#fadeInTaskContent").fadeIn(300);
-	
-	summernote_go($('.taskOverlayContent'));
+	uploadForm('myTaskRegistUpload');
 }
 
 function getOverlayTaskModifyTemplate(taskNo, projNo) {
@@ -128,8 +167,6 @@ function changeProjectAndIssue(){
 	});
 }
 
-
-
 function registMyMilestone() {
 	var userId = $('#registMyMileForm select[name="userId"]').val();
 	var projNo = $('#registMyMileForm select[name="projNo"]').val();
@@ -137,6 +174,19 @@ function registMyMilestone() {
 	var title = $('#registMyMileForm input[name="title"]').val();
 	var content = $('#registMyMileForm textarea[name="content"]').val();
 	var issueNoList = $('#registMyMileForm select[id="myMileIssueTag"]').val();
+	
+	if(!title){
+		alert("제목을 입력해주세요.");
+		return;
+	}
+	if(!content){
+		alert("내용을 입력해주세요.");
+		return;
+	}
+	if(!issueNoList){
+		alert("이슈를 선택해주세요.");
+		return;
+	}
 	
 	var mileVO = {
 		"userId"      : userId,
@@ -164,22 +214,77 @@ function registMyMilestone() {
 	});
 }
 
+function modifyMyMilestone() {
+	var mileNo = $('#modifyMyMileForm input[name="mileNo"]').val();
+	var userId = $('#modifyMyMileForm select[name="userId"]').val();
+	var status = $('#modifyMyMileForm select[name="status"]').val();
+	var title = $('#modifyMyMileForm input[name="title"]').val();
+	var content = $('#modifyMyMileForm textarea[name="content"]').val();
+	var projNo = $('#modifyMyMileForm input[name="projNo"]').val();
+	var issueNoList = $('#modifyMyMileForm select[name="issueList"]').val();
+	
+	if(!title){
+		alert("제목을 입력해주세요.");
+		return;
+	}
+	if(!content){
+		alert("내용을 입력해주세요.");
+		return;
+	}
+	if(content == "<p><br></p>"){
+		alert("내용을 입력해주세요.");
+		return;
+	}
+	if(!issueNoList){
+		alert("이슈를 선택해주세요.");
+		return;
+	}
+	
+	var mileVO = {
+		"mileNo":mileNo,
+		"userId":userId,
+		"status":status,
+		"title":title,
+		"content":content,
+		"projNo":projNo,
+		"issueNoList":issueNoList
+	}
+	
+	$.ajax({
+		url        : "/app/milestone/modifyMilestoneByMileNo",
+		type       : 'POST',
+		data       : JSON.stringify(mileVO),
+		contentType:'application/json;charset=UTF-8',
+		success    : function(data) {
+			alert("수정에 성공했습니다.");
+			document.getElementById('issue-tab').click();
+			myOverlayOff('#myMileOverlay');
+		},
+		error      : function(xhr, status) {
+			alert("fail");
+			alert(xhr + " : " + status);
+		}
+	});
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function removeMyMilestone(mileNo){
+	var removeMyMilestoneConfirm = confirm("삭제하시겠습니까?");
+	
+	if(removeMyMilestoneConfirm){
+		$.ajax({
+			url     : "/app/milestone/removeMilestone",
+			type    : 'GET',
+			data    : {"mileNo" : mileNo},
+			success : function(data) {
+				if(data == "success"){
+					alert("삭제 성공했습니다.");
+				}
+				document.getElementById('issue-tab').click();
+			},
+			error   : function(xhr, status) {
+				alert("fail");
+				alert(xhr + " : " + status);
+			}
+		});
+	}
+}

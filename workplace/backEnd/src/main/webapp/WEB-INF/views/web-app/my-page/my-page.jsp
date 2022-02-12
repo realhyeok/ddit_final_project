@@ -450,28 +450,40 @@
 								var infoCheck = document
 										.getElementById('infoCheck');
 
-								if (input_nickName == "") {
+							
+								/* if (input_nickName == "") {
 									nickNameCheck.innerHTML = "닉네임이 공백입니다."
 									return false;
-								}
-
-								$.ajax({
-									type : "POST",
-									url : "/user/modify.do",
-									data : $("#modify-form").serialize(),
+								} */
+								
+									$.ajax({
+										type : "POST",
+										url : "/user/modify.do",
+										data : $("#modify-form").serialize(),
+											
+										success : function(res) {
+											
 										
-									//dataType : "json",
-									success : function(res) {
-
-										alert("성공적! 근데 모달로 해요?");
-										location.href ="<%=request.getContextPath()%>/user/my-page";
-									},
-									error : function(err) {
-										alert("에러" + err.status);
-									}
-								});
-
+												
+											alert("수정 성공");
+											location.href ="<%=request.getContextPath()%>/user/my-page";
+											
+											
+										},
+										error : function(err) {
+											alert("닉네임이 중복됩니다.");
+											location.href ="<%=request.getContextPath()%>/user/my-page";
+										}
+									});
+							
+								
+								
 							}
+							
+							
+							
+							
+							
 
 							function modifyPwd_go() {
 
@@ -688,7 +700,7 @@
 					    data: {"passwords" : firePassword.value},
 					    success: function (res) {
 					    
-					    	alert("이거 모달로 띄우니 겹침");
+					    	alert("탈퇴");
 					    	window.location.href = 'https:/naver.com';
 					    },
 					    error: function (err) {

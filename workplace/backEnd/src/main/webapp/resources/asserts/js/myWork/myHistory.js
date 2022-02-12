@@ -33,6 +33,11 @@ function readMyHistory(userId){
 			{ template: "<input type='search' id='myHistoryDist-category' style='width:150px;vertical-align:middle;'/>"},    		
 	    	"search"
 		],
+		messages: {
+			commands: {
+				search: "검색"
+		    }
+		},
 		noRecords: {
 			template: function(e) {
 				return "<h2>히스토리가 존재하지 않습니다.</h2>";

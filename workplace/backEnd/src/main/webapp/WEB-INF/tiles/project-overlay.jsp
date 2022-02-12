@@ -562,7 +562,7 @@
 				<div class="x_content">
 					<div class="row">
 							<div class="x_content">
-								<form id="modifyTaskForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<form id="modifyTaskForm" method="post" enctype="multipart/form-data" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
 								<!-- 프로젝트명 -->
 								<div class="item form-group">
 									<label class="col-form-label col-md-3 col-sm-3 label-align"
@@ -639,7 +639,6 @@
 										</div>
 									</div>
 									<div class=form-group">
-										<label class=" label-align"> 업무내용 </label>
 										<textarea class="projSummnote" name="content" >{{{content}}}</textarea>
 									</div>
 									<div style="width:100%; float:left">

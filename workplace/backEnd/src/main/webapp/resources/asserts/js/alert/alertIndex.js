@@ -1,7 +1,26 @@
 //전역변수 선언-모든 홈페이지에서 사용 할 수 있게 index에 저장
+// <!-- 콜라보 none or list로 보내는 함수 -->        
+	window.addEventListener('load', function () {
+		$.ajax({
+	        type: "post",
+	        url: "/app/collabo/getCollaboCount",
+	        success: function (result) {
+	            // 성공하면 해당 컨트롤러에서 int result을 받아올 것이다.
+	            if(result > 0){
+	                $('#OwnCollabo').attr('href', "/app/collabo-list");
+	                $('#OwnCollabo-tab').attr('href', "/app/collabo-list");
+	            } else { // 콜라보를 가지고 있지 않은 경우
+	                $('#OwnCollabo').attr('href', "/app/collabo-none");
+	                $('#OwnCollabo-tab').attr('href', "/app/collabo-none");
+	            }
+	        }
+	    });
+	});
+
 var socket = null;
 
 $(document).ready(function (){
+	$('.k-input').attr('placeholder', '검색...');
 	connectWs();
 	updateAlertList(); // 실시간 알림 리스트 갱신
 	getListToAsideBar(); // 실시간 aside바 리스트들 갱신
@@ -197,7 +216,6 @@ function timeForToday(value) {
 function getUserTotalCount(){
 	let taskTotalCount = document.querySelector('.dash-board-boxes .dashboard-stat .details .taskTotalCount');
 	let issueTotalCount = document.querySelector('.dash-board-boxes .dashboard-stat .details .issueTotalCount');
-	let requestTotalCount = document.querySelector('.dash-board-boxes .dashboard-stat .details .requestTotalCount');
 	let mailTotalCount = document.querySelector('.dash-board-boxes .dashboard-stat .details .mailTotalCount');
 	let collaboTotalCount = document.querySelector('.dash-board-boxes .dashboard-stat .details .collaboTotalCount');
 	let projectTotalCount = document.querySelector('.dash-board-boxes .dashboard-stat .details .projectTotalCount');
@@ -208,7 +226,6 @@ function getUserTotalCount(){
 		success: function (res) {
 			taskTotalCount.innerHTML = res.taskCount;
 			issueTotalCount.innerHTML = res.issueCount;
-			requestTotalCount.innerHTML = res.requestCount;
 			mailTotalCount.innerHTML = res.mailCount;
 			collaboTotalCount.innerHTML = res.collaboCount;
 			projectTotalCount.innerHTML = res.projectCount;
@@ -232,6 +249,7 @@ function getListToAsideBar() {
 			showAsideBarList(taskList, projectList, collaboList);
 			if(window.location.pathname === "/app/index"){
 				monthProjectGraph(projectList);
+				
 			}
 		},error: function (err) {
 			console.log("getTaskListToAsideBar() err status : " + err.status);
@@ -417,8 +435,8 @@ function task_list_for_index_page(taskList) {
 				return false;
 			}
 			tbody.innerHTML += `<tr>
-												<td scope="row">${e.title}</td>
-												<td>${e.projNo}</td>
+												<td scope="row" class="text-truncate" style="max-width: 150px;">${e.title}</td>
+												<td class="text-truncate" style="max-width: 60px;">${e.projNo}</td>
 												<td>${e.status}</td>
 											</tr>`;
 			cnt++;
@@ -432,19 +450,47 @@ function project_list_for_index_page(projectList) {
 	
 	if(projectList.length === 0){
 		tbody.innerHTML = `<tr>
-											<td colspan="3">참여중인 프로젝트가 존재하지 않습니다.</td>
-										</tr>`;
+												<td colspan="3">참여중인 프로젝트가 존재하지 않습니다.</td>
+											</tr>`;
 	} else {
 		let cnt = 0;
 		projectList.forEach(e => {
+
+
 			if(cnt >= 3){ 
 				return false;
 			}
-			tbody.innerHTML += `<tr>
-												<td scope="row">${e.title}</td>
-												<td>${dateFormat(new Date(e.enddate))}</td>
-												<td>${e.status}</td>
-											</tr>`;
+
+			$.ajax({
+				type: "get",
+				url: "/app/task/getTaskListByProjNo",
+				data: {"projNo" : e.projNo},
+				success: function (res) {
+					let advancement = 0;
+					let projTaskCount = 0;
+					res.forEach(taskEle => {
+						if(taskEle.status === "B204"){ // 완료일 경우
+							advancement++;
+						}
+						projTaskCount++;
+					});
+					let achievementPercent = (advancement / projTaskCount) * 100;
+					if(isNaN(achievementPercent)){
+						achievementPercent = 0;
+					}
+					tbody.innerHTML += `<tr>
+														<td scope="row" class="text-truncate" style="max-width: 150px;">${e.title}</td>
+														<td>${e.status}</td>
+														<td>${dateFormat(new Date(e.startdate))}</td>
+														<td>${dateFormat(new Date(e.enddate))}</td>
+														<td>${Math.floor(achievementPercent)}</td>
+													</tr>`;
+				},
+				error: function (err) {
+					console.log("project_list_for_index_page() err status : " + err.status);
+				}
+			});
+
 			cnt++;
 		});
 	}
@@ -788,8 +834,8 @@ function requestPay(ppvo, userId) {
 							return false;
 						}
 						tbody.innerHTML += `<tr>
-															<td scope="row">${e.title}</td>
-															<td>${e.projNo}</td>
+															<td scope="row" class="text-truncate" style="max-width: 150px;">${e.title}</td>
+															<td class="text-truncate" style="max-width: 60px;">${e.projNo}</td>
 															<td>${e.status}</td>
 														</tr>`;
 						cnt++;

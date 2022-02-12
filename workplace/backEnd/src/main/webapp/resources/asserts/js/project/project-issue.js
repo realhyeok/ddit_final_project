@@ -71,7 +71,7 @@ function readIssue() {
 	             },  ],
 	         });
 			issueGridSetOpt();
-			
+
 			issueGridFlag = true;
 }
 
@@ -113,3 +113,31 @@ const sortingIssueByClick = function(tData) {
 			setTimeout(readIssue,200);
 			setTimeout(readMile,200);
 		}
+
+/*핸들바스관련 CRUD*/
+function deleteIssueByNo(url, issueNo){
+
+	var issueVO = {"issueNo":issueNo, "projNo":projNo};
+	console.log(issueVO);
+
+	if(window.confirm("정말로 삭제하시겠습니까?")){
+
+		$.ajax({
+			url : url,
+			type : 'POST',
+			datatype : 'text',
+			data : issueVO,
+			success : function(data) {
+				alert("삭제가 완료되었습니다.")
+				document.getElementById('issue-tab').click();
+			}, // success
+			error : function(xhr, status) {
+				alert("삭제에 실패하였습니다.");
+			}
+		});
+
+	} else {
+		return;
+	}
+
+}

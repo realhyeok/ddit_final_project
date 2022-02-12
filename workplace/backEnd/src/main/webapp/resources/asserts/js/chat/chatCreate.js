@@ -67,7 +67,7 @@ function createRoom(){
 
 					console.log("성공!");
 				
-					//알림테스트
+				    //알림테스트
 					for(var i=0;i<arr_Season.length;i++){
 						console.log("채팅방 성공에 id=>"+arr_Season[i].innerText);
 						console.log("채팅방 성공에 title"+chatTitle);
@@ -93,6 +93,7 @@ function createRoom(){
 					        }
 				    
 				    }
+				     
 			  	    //알림   
 					
 

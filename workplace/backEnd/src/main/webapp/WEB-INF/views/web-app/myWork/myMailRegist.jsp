@@ -7,7 +7,6 @@
 			<div class="col-md-12 col-sm-12" style="text-align:right;">
 				<button type="button" class="btn btn-sm btn-dark" onclick="mailRegist_go('temp');">임시저장</button>
 				<button id="mailSendButton" type="button" class="btn btn-sm btn-primary" onclick="mailRegist_go('send');">전송</button>
-				<button type="button" class="btn btn-sm btn-secondary" onclick="history.go(-1);">취소</button>
 			</div>
 		</div>
 		<div class="col-sm-12">

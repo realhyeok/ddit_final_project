@@ -14,16 +14,24 @@ public class CollaboVO {
 	private String enddate;
 	private String intro;
 	
+	
 	@Override
 	public String toString() {
 		return "CollaboVO [notice=" + notice + ", status=" + status + ", startdate=" + startdate + ", privacy="
 				+ privacy + ", noticeCont=" + noticeCont + ", cprojNo=" + cprojNo + ", title=" + title + ", updatedate="
 				+ updatedate + ", likeCount=" + likeCount + ", enddate=" + enddate + ", intro=" + intro + ", userId="
-				+ userId + ", projNo=" + projNo + ", href=" + "]";
+				+ userId + ", projNo=" + projNo + ", role=" + role + "]";
 	}
 	private String userId;
 	private String projNo;
+	private String role;
 	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public String getUserId() {
 		return userId;
 	}

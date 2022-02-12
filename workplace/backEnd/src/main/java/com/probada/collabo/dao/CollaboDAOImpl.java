@@ -95,6 +95,27 @@ public class CollaboDAOImpl implements CollaboDAO {
 		
 		return collaboList;
 	}
+
+	@Override
+	public int selectCollaboSeqNext() throws SQLException {
+		
+		int result = sqlSession.selectOne("Collabo-Mapper.selectCollaboSeqNext");
+		
+		return result;
+	}
+
+	@Override
+	public void insertCollabo(CollaboVO collaboVO) throws SQLException {
+		
+		sqlSession.update("Collabo-Mapper.insertCollabo", collaboVO);
+		
+	}
+
+	@Override
+	public void insertCollaboUserRelation(CollaboVO collaboVO) throws SQLException {
+
+		sqlSession.update("Collabo-Mapper.insertCollaboUserRelation", collaboVO);
+	}
 	
 
 }

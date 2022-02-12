@@ -16,10 +16,16 @@ public interface CollaboDAO {
 	
 	public List<CollaboVO> selectCollaboSubProj(String cprojNo)throws SQLException;
 	
+	public int selectCollaboSeqNext()throws SQLException;
+	
+	public void insertCollaboUserRelation(CollaboVO collaboVO)throws SQLException;
+	
 	//콜라보 갯수 
 	public int collaboCount(String userId)throws SQLException;
 	
 	public CollaboVO selectCollaboByCprojNo(String cprojNo) throws SQLException;
+	
+	public void insertCollabo(CollaboVO collaboVO)throws SQLException;
 	
 	public void updateCollaboDetail(CollaboVO collaboVO) throws SQLException;
 
@@ -33,5 +39,7 @@ public interface CollaboDAO {
 	
 	//메일 번호 시퀀스
 	public int selectCollaboMailSequenceNextValue()throws SQLException;
+	
+	
 
 }

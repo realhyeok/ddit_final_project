@@ -7,7 +7,47 @@
 
 <!-- 석기현 테스트 -->
 
-  <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+  <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }
+  
+  
+  /* 프로젝트 입력 창 */
+     /* 자동 완성창 덮는 것 */
+     .autocomplete-items {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      border-bottom: none;
+      border-top: none;
+      z-index: 99;
+      /*position the autocomplete items to be the same width as the container:*/
+      top: 100%;
+      left: 0;
+      right: 0;
+    }
+
+    /* 자동 완성창 CSS */
+    .autocomplete-items div {
+      padding: 10px;
+      cursor: pointer;
+      background-color: #fff;
+      border-bottom: 1px solid #d4d4d4;
+    }
+
+    /* 자동 완성창 hover*/
+    .autocomplete-items div:hover {
+      background-color: #e9e9e9;
+    }
+
+    /*when navigating through the items using the arrow keys:*/
+    .autocomplete-active {
+      background-color: DodgerBlue !important;
+      color: #ffffff;
+    }
+  
+  
+  
+
+  
+  </style>
 
 
 <!-- 석기현 테스트 -->
@@ -256,7 +296,7 @@
 
 						<li class="nav-item dropdown open" style="padding: 0px 15px;">
                     <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                      <img src="/resources/asserts/images/img.jpg" alt="">${nickname }
+                      <img src="<%=request.getContextPath()%>/user/getPictureById?userId=${userVO.userId}" alt="">${nickname }
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item"  href="<%=request.getContextPath()%>/user/my-page"> 프로필</a>
@@ -274,97 +314,9 @@
         <!-- /top navigation -->
         
         
- <!-- 채팅 모달 테스트 -->
-        <div id="createRoomModal" class="modal modal-default fade" role="dialog">
-	<div class="modal-dialog">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<br>
-			<div class="modal-header">
-				<h3 class="modal-title">채팅방 생성</h3>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-			<div class="modal-body" data-rno>
-
-				<form role="form" method="post" action="/chat/createRoom" name="createForm">
-					<br>
-					<div class="form-group row">
-						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;채팅방 이름 </span></label>
-						<div class="col-lg-12">
-
-							<input id="title" onclick="button_click();" class="form-control col-md-12 seokid" name="title" value="" placeholder="">
-			
-			            </div>
-							
-					</div>
-
-					
-
-					<div class="form-group row">
-						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;프로젝트 선택</span></label>
-						<div class="col-lg-12">
-			                    <select class="select2_single form-control" name="Ptitle" id="selectProject" tabindex="-1" >
-									<option value=''>==내가속한 프로젝트 리스트==</option>
-			                       
 
 
-			                    </select>
-						</div>
-					</div>
-					
-					<div class="form-group row">
-						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;멤버선택</span></label>
-						<div class="col-lg-12" id="memberInvite">
-						
-							<div id="ChatUserSeok" role="application" style="display: none;">
-							    <div class="demo-section k-content wide">
-							        <select id="optionalSeok"></select>
-							        <select id="selectedSeok"></select>
-							    </div>
-						    </div>
-	   								 
-   								 
-						</div>
-					</div>
-					<span id="checkCreateRoom">가이드</span>
-					<div class="float-right">
-						<button type="button" class="btn btn-danger" id="replyDelBtn"
-							onclick="createRoom();">생성</button>
-						<button type="button" class="btn btn-dark" data-dismiss="modal">취소</button>
-					</div>	
-					
-				</form>
-			</div>
 
-
-		</div>
-
-		<div class="modal-footer">
-
-			
-		</div>
-	</div>
-</div>
- <!-- 모달 테스트 끝 -->  
-
-<!-- 콜라보 none or list로 보내는 함수 -->        
-<script type="text/javascript">
-	window.addEventListener('load', function () {
-		$.ajax({
-	        type: "post",
-	        url: "/app/collabo/getCollaboCount",
-	        success: function (result) {
-	            // 성공하면 해당 컨트롤러에서 int result을 받아올 것이다.
-	            if(result > 0){
-	                $('#OwnCollabo').attr('href', "/app/collabo-list");
-	            } else { // 콜라보를 가지고 있지 않은 경우
-	                $('#OwnCollabo').attr('href', "/app/collabo-none");
-	            }
-	        }
-	    });
-	});
-
-</script>
         
         
  <!-- 채팅 모달 테스트 -->       

@@ -11,14 +11,10 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.probada.document.service.DocumentService;
 import com.probada.document.vo.FileVO;
-import com.probada.document.vo.ProjectUserVO;
 import com.probada.task.vo.TaskVO;
 import com.probada.user.vo.UserVO;
 
@@ -127,6 +123,19 @@ public class DocumentUtil {
 		detailVO.setFileList(fileList);
 
 		return detailVO;
+
+	}
+
+	public void documentRemoveResolver(FileVO fileVO) throws Exception{
+
+
+		String path = fileVO.getPath();
+		String docId = fileVO.getDOC_NO();
+		File originFile = new File("c:/"+path);
+		LOGGER.debug(path +"/"+ docId);
+
+		originFile.delete();
+		documentService.removeDocument(docId);
 
 	}
 

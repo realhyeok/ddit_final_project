@@ -90,16 +90,6 @@ public class AlertHandler extends TextWebSocketHandler {
 						
 						receiverSession.sendMessage(tmpMsg);
 						
-					}else if(serderWhere.equals("리퀘스트") && receiverSession != null) {
-						TextMessage tmpMsg = new TextMessage(
-								serderNickName 
-								+ "," + serderWhere 
-								+ "," + senderTarget
-								+ "," + senderWhatToDo 
-								+ "," + senderProjNo
-								+ "," + getId(receiverSession));
-						
-						receiverSession.sendMessage(tmpMsg);
 					}else {
 						// sender가 로그인 해있으면, 프로젝트 넘버가 일치할 경우
 						for (WebSocketSession sess : sessions) {

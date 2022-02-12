@@ -90,4 +90,9 @@ public class MilestoneServiceImpl implements MilestoneService {
 		milestoneDAO.insertMilestoneDetail(milestoneVO);
 
 	}
+	
+	@Override
+	public void removeMilestone(String mileNo) throws SQLException {
+		milestoneDAO.removeMilestone(mileNo);
+	}
 }

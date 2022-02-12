@@ -50,7 +50,7 @@
 				# } #
 				<small>#:regDate#</small>
 			</h3>
-			<a href="javascript:trashMailDetail(#:mailNo#);"><p>#:title#</p></a>
+			<a href="javascript:trashMailDetail(#:mailNo#);"><p style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:title#</p></a>
 		</div>
 	</div>
 </script>

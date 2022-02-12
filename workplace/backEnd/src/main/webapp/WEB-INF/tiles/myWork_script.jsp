@@ -19,15 +19,22 @@
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myIssue.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myIssueReply.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myMile.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/myWork/myUpload.js"></script>
 		<input type="hidden" id="sessionId" value="${userVO.userId}">
 		
 		<script>
 			window.onload = function(){
 				summernote_go($('textarea.content'));
-		   		
 				if(getCookie('tab')){
 					var curTab = getCookie('tab');
-					document.getElementById(curTab).click();
+					
+					if(curTab == "myIssueDetail-tab"){
+						document.getElementById('issue-tab').click();
+					}else if(curTab == "myTaskDetail-tab"){
+						document.getElementById('task-tab').click();
+					}else{
+						document.getElementById(curTab).click();
+					}
 				} else {
 					document.getElementById('home-tab').click();
 				}

@@ -87,6 +87,31 @@
 		
 	</select>
 	
+	<select id="insertCollabo" parameterType="com.probada.collabo.vo.CollaboVO">
+		INSERT INTO C_PROJECT (
+		            CPROJ_NO
+		           ,STARTDATE
+		           
+		) VALUES (
+		            {cprojNo}
+		           ,SYSDATE
+		        );
+	</select>
+	
+	<select id="insertCollaboUserRelation" parameterType="com.probada.collabo.vo.CollaboVO">
+		INSERT INTO C_PROJECT_R (
+				    USER_ID
+				   ,PROJ_NO
+				   ,CPROJ_NO
+				   ,ROLE
+				) VALUES (
+				    {userId}
+				   ,{projNo}
+				   ,{cprojNo}
+				   ,{role}
+				);
+	</select>
+	
 	<select id="updateCollaboDetail" parameterType="com.probada.collabo.vo.CollaboVO">
 		UPDATE C_PROJECT 
 		   SET 
@@ -134,6 +159,8 @@
 			, '1'
 			)
 	</update>
+	
+	
 	
 	<select id="selectCollaboMailSequenceNextValue" resultType="int">
 		SELECT MAIL_SEQ.NEXTVAL AS MAIL_NO
@@ -184,6 +211,12 @@
             WHERE
             	COMMON_CODE.CODE_NO = A.PRIVACY) AS PRIVACY
 	</sql>
+	
+	<select id="selectCollaboSeqNext">
+			SELECT C_PROJECT_R.NEXTVAL
+  			  FROM DUAL
+	</select>
+	
 
 
 </mapper>

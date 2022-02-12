@@ -13,11 +13,12 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/fonts/material-icon/css/material-design-iconic-font.min.css">
     <!-- Main css -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/css/common/login_registration.css">
-   
 </head>
 <body>
-
-    <div class="main">
+	<div id="loading">
+		<div class="loader"></div>
+	</div>
+	<div class="main">
 		<c:if test="${not empty param.welcome}">
 			<h1 class="welcome_title">probada에 오신 걸 환영합니다!</h1>
 			<canvas id="canvas"></canvas>
@@ -98,6 +99,7 @@
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script src="<%=request.getContextPath()%>/resources/asserts/js/common/login_registration.js"></script>
+     
 </body>
 </html>
 

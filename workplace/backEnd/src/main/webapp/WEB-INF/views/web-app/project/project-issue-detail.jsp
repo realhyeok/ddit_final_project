@@ -8,7 +8,7 @@
         <div class="clearfix">
 			<button type="button" class="btn btn-sm btn-secondary float-right" onclick="readMileIssue();">목록</button>
         	<button type="button" class="btn btn-sm btn-primary float-right" onclick="getOverlayIssueModifyTemplate('issueModifyFormTemplate','/app/issue/getIssueByIssueNo','{{issueVO.issueNo}}')">수정</button>
-        	<button type="button" class="btn btn-sm btn-danger float-right">삭제</button>
+        	<button type="button" class="btn btn-sm btn-danger float-right" onclick="deleteIssueByNo('/app/issue/removeIssue','{{issueVO.issueNo}}');">삭제</button>
 		</div>
       </div>
       <!-- 제목 끝 -->
@@ -93,7 +93,7 @@
         </div>
       </div>
       <!-- 댓글 작성폼 끝 -->
-    
+
     <script type="text/x-handlebars-template" id="issueReplyForm">
 				{{#each .}}
                   <div class="block bg-light d-flex" style="margin:0px 40px;padding:10px 50px;">
@@ -111,15 +111,15 @@
                         <button type="button" class="btn btn-sm btn-danger float-right" onclick="confirm('삭제 하시겠습니까?');">삭제</button>
                         <button type="button" class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target=".modify-modal-lg">수정</button>
                       </div>
-						
+
                       <br>
 					  </div>
-                      
+
                     </div>
                   </div>
 				{{/each}}
 	</script>
-	
+
       <!-- 댓글 수정폼 시작 -->
       <div class="modal fade modify-modal-lg" tabindex="-1" role="dialog" aria-modal="true" >
         <div class="modal-dialog modal-lg">
@@ -140,4 +140,3 @@
         </div>
       </div>
       <!-- 댓글 수정폼 끝 -->
-      

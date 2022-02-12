@@ -81,7 +81,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		String checkRealRoom ="";
 		String checkNickName="";
 		String msg = message.getPayload();
-		LOGGER.debug("지금 확읺라고 싶은 msg =>{}",msg);
+		LOGGER.debug(" msg =>{}",msg);
 		
 		ChatMessageVO chatMessage = objectMapper.readValue(msg,ChatMessageVO.class);
 		
@@ -130,18 +130,16 @@ public class EchoHandler extends TextWebSocketHandler {
             // sessionList에 추가
             sessionList.put(session, chatRoom.getRealRoom());
             
-            LOGGER.debug("입장 메시지 전송ㄱㄱ");
+            LOGGER.debug("입장 메시지 전송");
             
             for(WebSocketSession sess : RoomList.get(chatRoom.getRealRoom())) {
                 sess.sendMessage(textMessage1);
             }
-            
-            
             LOGGER.debug("채팅방 입장");
         }
         
         // 채팅 메세지 입력 시
-        else if(RoomList.get(chatRoom.getRealRoom()) != null && !chatMessage.getContent().equals("ENTER-CHAT") && chatRoom != null) {
+        else if(RoomList.get(chatRoom.getRealRoom()) != null && !chatMessage.getContent().equals("ENTER-CHAT") && chatRoom != null && !chatMessage.getContent().equals("CLOSE-CHAT")) {
             
         	
         	LOGGER.debug("채팅 매시지 입력 메서드 실행");
@@ -169,6 +167,18 @@ public class EchoHandler extends TextWebSocketHandler {
             LOGGER.debug("chatMessage=>{}",chatMessage);
             chatService.createMessage(chatMessage);
             
+        } else if(RoomList.get(chatRoom.getRealRoom()) != null && chatRoom != null && chatMessage.getContent().equals("CLOSE-CHAT")  ) {
+        	
+        	
+        		LOGGER.debug("CLOSE 메서드 실행");
+        	
+            // 메세지에 이름, 내용을 담는다.
+            TextMessage textMessage4 =new TextMessage(chatMessage.getUserId() + ","+chatMessage.getNickname()+","+ chatMessage.getContent()+","+chatMessage.getRegdate()+","+chatMessage.getPicture());
+        	
+            for(WebSocketSession sess : RoomList.get(chatRoom.getRealRoom())) {
+                sess.sendMessage(textMessage4);
+            }
+        	
         }
 		
 		
@@ -191,6 +201,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		
 		  if(sessionList.get(session) != null) {
+			  
 	            // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 ArrayList<session>에서 해당 session을 지운다.
 	            RoomList.get(sessionList.get(session)).remove(session);
 	            sessionList.remove(session);
@@ -198,6 +209,11 @@ public class EchoHandler extends TextWebSocketHandler {
 		
 		
 	}
+	
+	
+	
+	
+	
 	
 	//웹소켓 id 가져오기
 	private String getId(WebSocketSession session) {

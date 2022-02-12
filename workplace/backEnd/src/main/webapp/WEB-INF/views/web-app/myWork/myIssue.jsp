@@ -40,12 +40,77 @@
 				<div class="text-right">
 					<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"></a>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="javascript:getOverlayMileModifyTemplate('mileStoneModifyFormTemplate','/app/milestone/getMilestoneByMileNo','#:id#')">수정</a>
-							<a class="dropdown-item" href="">삭제</a>
+							<a class="dropdown-item" href="javascript:getOverlayMyMileModifyTemplate('#:id#')">수정</a>
+							<a class="dropdown-item" href="javascript:removeMyMilestone('#:id#');">삭제</a>
 						</div>
 				</div>
     	</div>
         <p class="m-0"><small>#:xssPurify(content)#</small></p>
         <p class="m-0"><small>#:kendo.toString(regdate,"yyyy-MM-dd")#</small></p>
     </div>
+</script>
+
+<script>
+	Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+	    switch (operator) {
+	        case '==':
+	            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+	        case '===':
+	            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+	        case '!=':
+	            return (v1 != v2) ? options.fn(this) : options.inverse(this);
+	        case '!==':
+	            return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+	        case '<':
+	            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+	        case '<=':
+	            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+	        case '>':
+	            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+	        case '>=':
+	            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+	        case '&&':
+	            return (v1 && v2) ? options.fn(this) : options.inverse(this);
+	        case '||':
+	            return (v1 || v2) ? options.fn(this) : options.inverse(this);
+	        default:
+	            return options.inverse(this);
+	    }
+	});
+	
+	function xssPurify(html) {
+	    const extractTextPattern = /(<([^>]+)>)/gi;
+	    var newhtml = html.replace(extractTextPattern, "");
+	    return newhtml;
+	}
+	
+	function printData(data, target, templateObject){
+		var template = Handlebars.compile(templateObject.html());
+		
+		var html = template(data);
+		target.html('').html(html);
+	}
+	
+	function myIssueDetail(issueNo, projNo){
+		$.ajax({
+			type     : "GET",
+		    url      : "<%=request.getContextPath()%>/app/issue/getIssueByIssueNo",
+		    dataType : "JSON",
+		    data : {
+		    	"issueNo" : issueNo,
+		    	"projNo" : projNo
+		    },
+		    success : function(data) {
+		    	console.log(data);
+		    	myIssueReply(issueNo, projNo);
+		    	
+		    	printData(data, $('#myIssueDetailFormTarget'), $('#myIssueDetailForm'));
+		    	
+		    	document.getElementById('myIssueDetail-tab').click();
+		    },
+		    error : function(error) {
+		    	console.log("Handlebars error!!");
+		    }
+		});
+	}
 </script>

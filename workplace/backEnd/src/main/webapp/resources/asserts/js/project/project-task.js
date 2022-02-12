@@ -87,6 +87,11 @@ const projList = $("#project-list").kendoGrid({
 		{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"projRegistTypeTemplate\");'>프로젝트 등록</a>" }
 		,{ template: "<div class='k-spacer'>&nbsp;</div>"},"search","pdf"
 	],
+	messages: {
+	    commands: {
+	      search: "검색"
+	    }
+	  },
     columns: [
     	{ field: "title", hidden:true},
     	{ field: "status", hidden:true },
@@ -113,12 +118,15 @@ function readTask() {
 	        { text: "지연", status: "B203" },
 	        { text: "완료", status: "B204" }
 	    ],
+	    messages: {
+	    	search: "검색"
+	    },
 	    toolbar: {
 	        items: [
 	        	{ template: "<button class='k-button' type='button' onclick='getOverlayRegistTaskTemplate(\"taskRegistFormTemplate\",\"/app/task/getTaskRegistInfoByProjNo\")'>업무 등록</button>" },
 	            "spacer",
 	            "search"
-	        ]
+	        ],
 	    },
 	    dataSource: taskDataSource,
 	    dataStatusField: "status",
@@ -128,6 +136,7 @@ function readTask() {
 	    	width:260,
 	         buttons: []
 	      },
+
 	    moveEnd: function (ev) {
 	    	var taskNo = ev.card.get("taskNo");
 	    	var status = ev.column.get("status");
@@ -162,18 +171,15 @@ function getParameterByName(name) {
 /*핸들바스관련 CRUD*/
 function deleteTaskById(url, taskNo){
 
-	var taskVO = {"taskNo":taskNo, "projNo":projNo};
-	console.log(taskVO);
-
 	if(window.confirm("정말로 삭제하시겠습니까?")){
 
 		$.ajax({
 			url : url,
 			type : 'POST',
 			datatype : 'text',
-			data : taskVO,
+			data : taskNo,
 			success : function(data) {
-				alert("삭제가 완료되었습니다.")
+				alert("삭제가 완료되었습니다.");
 				document.getElementById('task-tab').click();
 			}, // success
 			error : function(xhr, status) {

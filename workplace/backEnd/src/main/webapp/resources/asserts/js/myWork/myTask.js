@@ -49,6 +49,7 @@ function readMyTask(uid){
 	    			title      : { type: "string" },
 	    			content    : { type: "string" },
 	    			projTitle  : { type: "string" },
+	    			nickname   : { type: "string" },	    			
 	    			regdate    : { type: "date", format:"{0:yy-MM-dd}"},
 	    			startdate  : { type: "date", format:"{0:yy-MM-dd}"},
 	    			enddate    : { type: "date", format:"{0:yy-MM-dd}"},
@@ -69,12 +70,15 @@ function readMyTask(uid){
 	    ],
 	   	toolbar: {
 	   		items: [
-	   			{ template: "<button type='button' class='btn btn-sm btn-dark' onclick='getOverlayTaskRegistTemplate(\"{{userFrom}}\")'>업무 등록</button>" },
+	   			{ template: "<button type='button' class='k-button' onclick='getOverlayTaskRegistTemplate(\"{{userFrom}}\")'>업무 등록</button>" },
 	   			"spacer",
 	   			{ template: "<input type='search' id='myTaskProject-category' style='width: 170px;vertical-align:middle;'/>" },
 	    		"search"
 	    	]
     	},
+    	messages: {
+            search: "검색"
+        },
     	dataSource: myTaskDataSource,
     	dataStatusField: "status",
     	height: 750,

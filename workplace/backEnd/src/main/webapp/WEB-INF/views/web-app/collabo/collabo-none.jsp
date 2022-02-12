@@ -387,75 +387,7 @@
 		
 });
   
-/* function invite_go(){
-		alert("보내기 버튼");
-		//let userTo = $("#tags_1").val();
-		let userTo = document.getElementById('tags_1').value;
-		alert("userTo :" + userTo);
-		let myProj = document.getElementById('selectOwnProject').value;
-		alert("myProj :" + myProj);
-		let text = document.getElementById('sendMessage').value;
-		alert("text :" + text);
-		let title = document.getElementById('CollboMailTitle').value;
-		alert("title :" + CollboMailTitle);
-		
-		if (userTo == "") {
-			alert("초대할 유저를 입력하세요.")	
-			return false;
-		}
-		if (myProj == "") {
-			alert("프로젝트를 선택하세요.")	
-			return false;
-		}
-		if (text == "") {
-			alert("메세지를 입력하세요.")	
-			return false;
-		}
-		
-		let content = inviteMailForm(userTo,myProj,text);
-		console.log(text);
-		document.getElementById('collaboContent').value = content;
-		console.log(document.getElementById('collaboContent').value);
-		document.collaboMailRegist.submit();
-	}
-	
-	
-	
-	function inviteMailForm(userTo,myProj,text) {
-		var content = ""
-		content += 
-			`<div class="x_content">
-			  <br>
-			    <div class="item form-group-collabo">
-			      <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name"><span class="required">보낸 사람 : <a href="">`+ userTo +`</a></span>
-			        
-			      </label>
-			    </div>
-			    
-			    <div class="item form-group-collabo">
-			      <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name"><span
-			          class="required">보낸 사람의 프로젝트 : <a href="">`+ myProj +`</a></span>
-			        
-			      </label>
-			    </div>
-			    
-			    <div class="item form-group-collabo">
-			      <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">메세지 : 
-			      <span>`+ text +`</span>
-			      </label>
-			    </div>
-		   
-		    <div class="ln_solid"></div>
-		    <div class="item form-group-collabo">
-		      <div class="col-md-6 col-sm-6 offset-md-3">
-		        <button class="btn btn-primary" type="button">수락</button>
-		        <button class="btn btn-primary" type="reset">거절</button>
-		      </div>
-		    </div>
-		</div>`;
-		
-		return content;
-	}	 */
+
 		
 	
   </script>

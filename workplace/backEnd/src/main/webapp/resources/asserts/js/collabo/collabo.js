@@ -11,29 +11,23 @@ window.onload = function() {
 	
 }
 
-//콜라보 제안 모달 함수
+//콜라보 제안 modal 함수
 function invite_go(){
 	alert("보내기 버튼");
-	//let userTo = $("#tags_1").val();
-	let userTo = document.getElementById('tags_1').value;
-	alert("userTo :" + userTo);
+	let userToCproj = document.getElementById('tags_1').value;
 	
 	let myProj = document.getElementById('selectOwnProject').value;
-	alert("myProj :" + myProj);
 	
 	let myProjNo = $('#selectOwnProject option:selected').attr('idxno');
-	alert("myProjNo :" + myProjNo);
 	
 	let text = document.getElementById('sendMessage').value;
-	alert("text :" + text);
 	
-	let userFrom = document.getElementById('userFrom').value;
-	alert("userFrom : " + userFrom);
+	let userFromCproj = document.getElementById('CollaboUserFrom').value;
 	
-	let title = document.getElementById('CollboMailTitle').value;
-	alert("title :" + title);
 	
-	if (userTo == "") {
+	console.log("userToCproj =>" + userToCproj + "userFromCproj =>" + userFromCproj);
+	
+	if (userToCproj == "") {
 		alert("초대할 유저를 입력하세요.")	
 		return false;
 	}
@@ -46,16 +40,22 @@ function invite_go(){
 		return false;
 	}
 	
-	let content = inviteMailForm(userTo,myProj,text,myProjNo);
-	console.log(text);
+	let title = document.getElementById('CollboMailTitle').value + "제안 메일입니다.";
+	console.log("title =>" + title);
+	
+	let content = inviteMailForm(userFromCproj,userToCproj,myProj,text,myProjNo);
+	
 	document.getElementById('collaboContent').value = content;
 	console.log(document.getElementById('collaboContent').value);
+	
+	document.getElementById('CollboMailTitle').value = title;
+	
 	document.collaboMailRegist.submit();
 }
 
 
 
-function inviteMailForm(userTo,myProj,text,myProjNo) {
+function inviteMailForm(userFromCproj,userToCproj,myProj,text,myProjNo) {
 	
 	alert("메일 안에서 프로젝트 번호" + myProjNo);
 	
@@ -65,14 +65,14 @@ function inviteMailForm(userTo,myProj,text,myProjNo) {
 		`<div class="x_content">
 		  <br>
 		    <div class="item form-group-collabo">
-		      <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name"><span class="required">보낸 사람 : <a href="">`+ userTo +`</a></span>
-		        
+		      <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name"><span class="required">보낸 사람 : <a id="cprojReplyUserFrom" href="">`+ userFromCproj +`</a></span>
+		      <input type="hidden" id="cprojReplyUserTo" name="userFrom" value="`+userToCproj+`">  
 		      </label>
 		    </div>
 		    
 		    <div class="item form-group-collabo">
 		      <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name"><span
-		          class="required">보낸 사람의 프로젝트 : <a href="`+url+myProjNo+`">`+ myProj +`</a></span>
+		       class="required">보낸 사람의 프로젝트 : <a href="`+ url+myProjNo+`">`+ myProj +`</a></span>
 		        
 		      </label>
 		    </div>
@@ -86,14 +86,20 @@ function inviteMailForm(userTo,myProj,text,myProjNo) {
 	    <div class="ln_solid"></div>
 	    <div class="item form-group-collabo">
 	      <div class="col-md-6 col-sm-6 offset-md-3">
-	        <button class="btn btn-primary" type="button">수락</button>
+		     
+	        <button class="btn btn-primary" type="button" onclick="acceptCollabo()">수락</button>
 	        <button class="btn btn-primary" type="reset">거절</button>
 	      </div>
 	    </div>
 	</div>`;
 	
+	
 	return content;
 }	
+
+
+
+
 
 
 // 업무 시작

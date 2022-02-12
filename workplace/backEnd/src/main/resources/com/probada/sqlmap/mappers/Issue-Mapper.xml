@@ -3,13 +3,12 @@
 <mapper namespace="Issue-Mapper">
 	<select id="selectIssueSortByUserId" resultType="issue" parameterType="String">
 		SELECT DISTINCT B.TITLE AS PROJ_TITLE
-			 , A.ISSUE_NO
-			 , A.PROJ_NO 
+			 , A.PROJ_NO
 		  FROM ISSUE A, PROJECT B
 		 WHERE A.PROJ_NO = B.PROJ_NO
 		   AND A.USER_ID = #{userId}
 	</select>
-	
+
 	<select id="selectIssueListByUserId" resultType="issue" parameterType="String">
 		SELECT A.ISSUE_NO
 			 , A.PROJ_NO
@@ -29,7 +28,7 @@
 		   AND A.PROJ_NO = C.PROJ_NO
 		   AND A.USER_ID = #{userId}
 	</select>
-	
+
 	<select id="selectIssueListByProjNoAndUserId" resultType="issue" parameterType="issue">
 		SELECT A.ISSUE_NO
 			 , A.PROJ_NO
@@ -50,7 +49,7 @@
 		   AND A.USER_ID = #{userId}
 		   AND A.PROJ_NO = #{projNo}
 	</select>
-	
+
 	<select id="selectIssueListByProjNo" resultType="issue" parameterType="String">
 		SELECT
 			A.ISSUE_NO,
@@ -116,8 +115,15 @@
        		ISSUE_NO = #{issueNo}
 	</update>
 
+	<delete id="deleteIssueByIssueNo" parameterType="issue">
+		DELETE FROM
+			ISSUE
+		WHERE
+			ISSUE_NO = #{issueNo}
+	</delete>
+
 	<insert id="insertIssue" parameterType="issue">
-		INSERT INTO 
+		INSERT INTO
 			ISSUE (
   		  	ISSUE_NO, PROJ_NO, USER_ID, TITLE, CONTENT,
     		IMPORTANT, REGDATE, STARTDATE, ENDDATE, UPDATEDATE,
@@ -127,7 +133,7 @@
     		#{important}, sysdate, #{startdate}, #{enddate}, sysdate,
     		#{status}, 1
 		)
-	
+
 	</insert>
 	<sql id="statusForIssue">
 			(SELECT
@@ -146,7 +152,7 @@
             WHERE
             	COMMON_CODE.CODE_NO = A.IMPORTANT) AS IMPORTANT
 	</sql>
-	
+
 	<select id="selectIssueSeqNext" resultType="int">
 		SELECT
 			ISSUE_SEQ.NEXTVAL AS ISSUE_NO FROM DUAL

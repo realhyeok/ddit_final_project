@@ -781,10 +781,10 @@ font-family: 'Jua', sans-serif;
 
 										<div class="row">
 										  <div class="col-lg-6">
-                                   			 <div id="roomCreate" ><span style="font-size: 2.0em;">&nbsp;&nbsp;<i class="fa fa-comments"></i>채팅 &nbsp;<i class="fa fa-plus-square" data-toggle="modal" data-target="#createRoomModal"></i> </span></div>
+                                   			 <div id="roomCreate" ><span style="font-size: 2.0em; ">&nbsp;&nbsp;<i class="fa fa-comments"></i>채팅 &nbsp;<i style="cursor : pointer;" class="fa fa-plus-square" data-toggle="modal" data-target="#createRoomModal"></i> </span></div>
                               			  </div>
                                			  <div class="col-lg-6">
-                                   				 <span style="margin-right:6%;  font-size: 2.0em; float:right;" id="offChatList" onclick="offChatList()">&nbsp;&nbsp;<i class="fa fa-chevron-circle-right"></i>&nbsp;접기</span>
+                                   				 <span style="margin-right:6%; cursor : pointer; font-size: 2.0em; float:right;" id="offChatList" onclick="offChatList()">&nbsp;&nbsp;<i class="fa fa-chevron-circle-right"></i>&nbsp;접기</span>
                              			 </div>
 										</div>
 
@@ -800,7 +800,7 @@ font-family: 'Jua', sans-serif;
 							
 							<div class="accordion" id="accordion1" role="tablist" aria-multiselectable="true">
                   				  <div class="panel">
-                       				 <span class="panel-heading collapsed" role="tab" id="headingOne1" data-toggle="collapse" data-parent="#accordion1"
+                       				 <span style="cursor : pointer;" class="panel-heading collapsed" role="tab" id="headingOne1" data-toggle="collapse" data-parent="#accordion1"
                          			   href="#collapseOne1Chat" aria-expanded="false" aria-controls="collapseOne">
                          			   <h4 class="panel-title"><i class="fa fa-check-circle"></i>가이드</h4>
                      			    </span>

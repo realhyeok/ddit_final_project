@@ -229,47 +229,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-6 col-sm-6">
-		<div class="x_panel_origin" style="min-height:325px; max-height:325px;">
-			<div class="x_title">
-				<h2>
-					최근 리퀘스트
-				</h2>
-				<a class="more float-right mt-2" href="javascript:document.getElementById('request-tab').click();">
-					더보기
-					<i class="fa fa-arrow-right"></i>
-				</a>
-				<div class="clearfix"></div>
-			</div>
-			
-			<div class="x_content">
-				<div id="requestDashboard" class="carousel slide" data-ride="carousel" style="height:225px;">
-
-					<!-- Indicators -->
-					<ul class="carousel-indicators">
-						<li data-target="#requestDashboard" data-slide-to="0" class="active bg-secondary"></li>
-						<li data-target="#requestDashboard" data-slide-to="1" class="bg-secondary"></li>
-					</ul>
-	
-					<!-- The slideshow -->
-					<div class="carousel-inner">
-						<div class="carousel-item active">
-							<div class="col-md-12">
-	    						<div id="yourRequestDashboard"></div>	
-							</div>
-						</div>
-						<div class="carousel-item">
-							<div class="col-md-12">	
-	    						<div id="myRequestDashboard"></div>	
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="col-md-6 col-sm-6">
+	<div class="col-md-12 col-sm-12">
 		<div class="x_panel_origin" style="min-height:325px; max-height:325px;">
 			<div class="x_title">
 				<h2>

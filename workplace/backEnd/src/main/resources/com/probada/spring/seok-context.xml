@@ -33,6 +33,12 @@
 	
 	/>
 
+	<bean id="searchDAO" class="com.probada.totalSearch.dao.SearchDAOImpl"
+		p:sqlSession-ref="sqlSession"
+	
+	/>
+
+
 
 
 
@@ -47,7 +53,12 @@
 	/>
 
 
-
+	
+	<bean id="searchService" class="com.probada.totalSearch.service.SearchServiceImpl"
+		p:searchDAO-ref="searchDAO"
+	/>
+	
+	
 
 	
 

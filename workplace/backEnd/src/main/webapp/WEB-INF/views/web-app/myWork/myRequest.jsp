@@ -3,9 +3,11 @@
 
 <div id="RequestDiv" class="row">
 	<div class="col-md-6">
-	    <div id="yourRequest"></div>	
+		<h3>요청받은 리퀘스트</h3>
+		<div id="yourRequest"></div>	
 	</div>
-	<div class="col-md-6">	
+	<div class="col-md-6">
+		<h3>요청한 리퀘스트</h3>	
 	    <div id="myRequest"></div>	
 	</div>
 </div>
@@ -14,19 +16,19 @@
 	<div class="row">
 		<img class="pt-1 pl-2 pr-2" src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userFrom#" alt="img" style="height:64px;width:64px;border-radius:100%;">
 		<div class="col-8 p-0">
-			<div class="row" style="margin:2px;">#:title#</div>
+			<div class="row" style="margin:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:title#</div>
 			<div class="row" style="margin:2px;">
 				<div class="col-6 p-0">#:projNo#</div>
-				<div class="col-6 p-0 text-right">#:regDate#</div>
+				<div class="col-6 p-0 text-right">#:regDate#&nbsp;&nbsp;&nbsp;</div>
 			</div>
-			<div class="row" style="margin:2px;">#:content#</div>
+			<div class="row" style="margin:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:content#</div>
 		</div>
 			# if(status == "대기"){ #
-				<button type="button" id="process" class="btn btn-sm btn-success mt-2 ml-2 mr-0" data-toggle="modal" data-target=".requestProcessModal#:reqNo#" style="height:48px;width:48px;">대기</button>
+				<button type="button" id="process" class="btn btn-sm btn-success mt-2 m-0" data-toggle="modal" data-target=".requestProcessModal#:reqNo#" style="height:48px;width:48px;">대기</button>
 			# }else if(status == "승낙"){ #
-				<button type="button" id="ok" class="btn btn-sm btn-primary mt-2 ml-2 mr-0" style="height:48px;width:48px;cursor:default;">승낙<br>완료</button>
+				<button type="button" id="ok" class="btn btn-sm btn-primary mt-2 m-0" style="height:48px;width:48px;cursor:default;">승낙<br>완료</button>
 			# }else if(status == "거절"){ #
-				<button type="button" id="no" class="btn btn-sm btn-danger mt-2 ml-2 mr-0" data-toggle="modal" data-target=".requestRejectModal#:reqNo#" style="height:48px;width:48px;">거절<br>완료</button>
+				<button type="button" id="no" class="btn btn-sm btn-danger mt-2 m-0" data-toggle="modal" data-target=".requestRejectModal#:reqNo#" style="height:48px;width:48px;">거절<br>완료</button>
 			# } #
 	</div>
 
@@ -88,19 +90,19 @@
 	<div class="row">
 		<img class="pt-1 pl-2 pr-2" src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userFrom#" alt="img" style="height:64px;width:64px;border-radius:100%;">
 		<div class="col-8 p-0">
-			<div class="row" style="margin:2px;">#:title#</div>
+			<div class="row" style="margin:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:title#</div>
 			<div class="row" style="margin:2px;">
 				<div class="col-6 p-0">#:projNo#</div>
-				<div class="col-6 p-0 text-right">#:regDate#</div>
+				<div class="col-6 p-0 text-right">#:regDate#&nbsp;&nbsp;&nbsp;</div>
 			</div>
-			<div class="row" style="margin:2px;">#:content#</div>
+			<div class="row" style="margin:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:content#</div>
 		</div>
 			# if(status == "대기"){ #
-				<button type="button" class="btn btn-sm btn-secondary mt-2 ml-2 mr-0" style="height:48px;width:48px;cursor:default;">대기</button>
+				<button type="button" class="btn btn-sm btn-secondary mt-2 m-0" style="height:48px;width:48px;cursor:default;">대기</button>
 			# }else if(status == "승낙"){ #
-				<button type="button" class="btn btn-sm btn-primary mt-2 ml-2 mr-0" style="height:48px;width:48px;cursor:default;">승낙</button>
+				<button type="button" class="btn btn-sm btn-primary mt-2 m-0" style="height:48px;width:48px;cursor:default;">승낙</button>
 			# }else if(status == "거절"){ #
-				<button type="button" class="btn btn-sm btn-danger mt-2 ml-2 mr-0" style="height:48px;width:48px;" data-toggle="modal" data-target=".requestRejectModal#:reqNo#">거절</button>
+				<button type="button" class="btn btn-sm btn-danger mt-2 m-0" style="height:48px;width:48px;" data-toggle="modal" data-target=".requestRejectModal#:reqNo#">거절</button>
 			# } #
 		</div>
 

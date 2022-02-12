@@ -25,5 +25,6 @@ public interface MilestoneService {
 	public void registMileIssueRelation(IssueVO issueVO) throws SQLException;
 
 	public void removeMileIssueRelation(IssueVO issueVO) throws SQLException;
-
+	
+	public void removeMilestone(String mileNo) throws SQLException;
 }

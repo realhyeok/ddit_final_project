@@ -138,6 +138,7 @@
 	<bean id="projectUtil" class="com.probada.util.ProjectUtil"/>
 	<bean id="issueUtil" class="com.probada.util.IssueUtil"/>
 	<bean id="documentUtil" class="com.probada.util.DocumentUtil"/>
+	<bean id="collaboUtil" class="com.probada.util.CollaboUtil"/>
 
 
 	<!-- mail -->

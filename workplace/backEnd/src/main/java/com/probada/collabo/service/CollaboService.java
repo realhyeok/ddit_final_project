@@ -6,6 +6,7 @@ import java.util.List;
 import com.probada.collabo.command.CollaboCommand;
 import com.probada.collabo.vo.CollaboVO;
 import com.probada.mail.vo.MailVO;
+import com.probada.project.vo.ProjectVO;
 
 public interface CollaboService {
 	
@@ -18,6 +19,10 @@ public interface CollaboService {
 	public CollaboVO getCollaboByCprojNo(String cprojNo) throws SQLException;
 	
 	public int getCollaboCount(String userId)throws SQLException;
+	
+	public String registCollabo(CollaboVO collaboVO)throws SQLException;
+	
+	public void registProjectUserRelation(CollaboVO collaboVO) throws SQLException; 
 	
 	public void modifyCollaboDetail(CollaboVO collaboVO) throws SQLException;
 

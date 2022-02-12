@@ -27,9 +27,6 @@
 					<a id="task-tab" class="nav-link" data-toggle="tab" href="#task" role="tab" aria-controls="task" aria-selected="false" onclick="readMyTask('${userVO.userId}');">업무</a>
 				</li>
 				<li class="nav-item">
-					<a id="request-tab" class="nav-link" data-toggle="tab" href="#request" role="tab" aria-controls="request" aria-selected="false" onclick="readMyRequest('${userVO.userId}');">리퀘스트</a>
-				</li>
-				<li class="nav-item">
 					<a id="mail-tab" class="nav-link" data-toggle="tab" href="#mail" role="tab" aria-controls="mail" aria-selected="false">메일</a>
 				</li>
 				<li class="nav-item">
@@ -55,9 +52,6 @@
 				</div>
 				<div id="task" class="tab-pane fade show" role="tabpanel" aria-labelledby="task-tab">
 					<%@ include file="/WEB-INF/views/web-app/myWork/myTask.jsp" %>
-				</div>
-				<div id="request" class="tab-pane fade show" role="tabpanel" aria-labelledby="request-tab">
-					<%@ include file="/WEB-INF/views/web-app/myWork/myRequest.jsp" %>
 				</div>
 				<div id="mail" class="tab-pane fade show" role="tabpanel" aria-labelledby="mail-tab">
 					<%@ include file="/WEB-INF/views/web-app/myWork/myMail.jsp" %>

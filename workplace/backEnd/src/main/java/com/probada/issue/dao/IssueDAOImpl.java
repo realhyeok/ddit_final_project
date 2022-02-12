@@ -21,19 +21,19 @@ public class IssueDAOImpl implements IssueDAO {
 		List<IssueVO> issueSort = sqlSession.selectList("Issue-Mapper.selectIssueSortByUserId", userId);
 		return issueSort;
 	}
-	
+
 	@Override
 	public List<IssueVO> selectIssueListByUserId(String userId) throws SQLException {
 		List<IssueVO> issueList = sqlSession.selectList("Issue-Mapper.selectIssueListByUserId", userId);
 		return issueList;
 	}
-	
+
 	@Override
 	public List<IssueVO> selectIssueListByProjNoAndUserId(IssueVO issueVO) throws SQLException {
 		List<IssueVO> issueList = sqlSession.selectList("Issue-Mapper.selectIssueListByProjNoAndUserId", issueVO);
 		return issueList;
 	}
-	
+
 	@Override
 	public List<IssueVO> selectIssueListByProjNo(String projNo) throws SQLException {
 
@@ -72,9 +72,17 @@ public class IssueDAOImpl implements IssueDAO {
 
 	@Override
 	public int selectIssueSeqNext() throws SQLException {
-		
+
 		int seq = sqlSession.selectOne("Issue-Mapper.selectIssueSeqNext");
-		
+
 		return seq;
 	}
+
+	@Override
+	public void deleteIssue(IssueVO issueVO) throws SQLException {
+
+		sqlSession.delete("Issue-Mapper.deleteIssueByIssueNo",issueVO);
+
+	}
+
 }

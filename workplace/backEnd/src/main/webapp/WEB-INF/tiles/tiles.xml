@@ -19,6 +19,13 @@
 		<put-attribute name="body" value="/WEB-INF/views/web-app/my-page/{1}.jsp"/>
 	</definition>
 
+
+	<definition name="/web-app/Search/*" extends="base" template="/WEB-INF/tiles/seok.jsp">
+		<put-attribute name="seokCss" value="/WEB-INF/tiles/seok_css.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/web-app/Search/{1}.jsp"/>
+	</definition>
+
+
 	<definition name="/web-app/chat/*" extends="base" template="/WEB-INF/tiles/seok.jsp">
 		<put-attribute name="seokCss" value="/WEB-INF/tiles/seok_css.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/web-app/chat/{1}.jsp"/>

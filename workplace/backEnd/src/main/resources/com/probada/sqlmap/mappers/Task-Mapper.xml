@@ -26,20 +26,22 @@
 	</select>
 
 	<select id="selectTaskListByUserId" parameterType="str" resultType="task">
-		SELECT TASK_NO
-			 , PROJ_NO
-			 , TITLE
-			 , USER_ID
-			 , CONTENT
-			 , IMPORTANT
-			 , REGDATE
-			 , UPDATEDATE
-			 , STATUS
-			 , DOC_CONT_NO
-			 , STARTDATE
-			 , ENDDATE
-	      FROM TASK
-	     WHERE USER_ID = #{userId}
+		SELECT A.TASK_NO
+			 , A.PROJ_NO
+			 , A.TITLE
+			 , A.USER_ID
+			 , A.CONTENT
+			 , A.IMPORTANT
+			 , A.REGDATE
+			 , A.UPDATEDATE
+			 , A.STATUS
+			 , A.DOC_CONT_NO
+			 , A.STARTDATE
+			 , A.ENDDATE
+			 , B.NICKNAME
+	      FROM TASK A, "USER" B
+	     WHERE A.USER_ID = B.USER_ID
+	       AND A.USER_ID = #{userId}
 	</select>
 
 

@@ -64,10 +64,7 @@ public class DocumentServiceImpl implements DocumentService{
 	@Override
 	public void removeDocument(String docId) throws SQLException {
 
-
-
 		documentDAO.deleteDocument(docId);
-
 
 	}
 

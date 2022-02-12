@@ -178,6 +178,25 @@ public class ProjectController {
 	}
 
 
+	@RequestMapping(value = "/removeProjectNotice", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<HashMap<String, Object>> removeProjectNotice(ProjectVO projectVO) throws Exception {
+		ResponseEntity<HashMap<String, Object>> entity = null;
+
+		try {
+
+			projectService.modifyProjectNotice(projectVO);
+
+			entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.OK);
+
+		} catch(Exception e) {
+			entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+
+
 
 /*
 	@RequestMapping("/getProjectDashCard")

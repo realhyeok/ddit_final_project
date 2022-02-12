@@ -17,7 +17,9 @@ function readMyIssue(uid){
 					userId    : { from:"userId"    , type: "string" },
 					updatedate: { from:"updatedate", type: "date"   },
 					status    : { from:"status"    , type: "string" },
-					mileNo    : { from:"mileNo"    , type: "string" }
+					mileNo    : { from:"mileNo"    , type: "string" },
+					issueNo   : { from:"issueNo"   , type: "string" },
+					projNo    : { from:"projNo"    , type: "string" }
 				}
 			}
 		}
@@ -35,6 +37,11 @@ function readMyIssue(uid){
 			{ template: "<input type='search' id='myIssueProject-category' style='width: 170px;vertical-align:middle;'/>" },
 			"search"
 		],
+		messages: {
+			commands: {
+				search: "검색"
+		    }
+		},
 		columns: [
 			{
 				selectable: true,
@@ -50,7 +57,7 @@ function readMyIssue(uid){
 			{
 				field: "title",
 				title: "이슈 제목",
-				template: "<a href=\"javascript:getIssueTemplate('/app/issue/getIssueByIssueNo','#:issueNo#','issueDetailForm','issueDetailFormTarget')\" class='text-dark'>#:title#</a>",
+				template: "<a href=\"javascript:myIssueDetail('#:issueNo#', '#:projNo#')\" class='text-dark'>#:title#</a>",
 				width: 200,
 				encoded: false
 			},

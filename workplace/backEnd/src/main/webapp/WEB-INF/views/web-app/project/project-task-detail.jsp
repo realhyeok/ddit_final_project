@@ -70,7 +70,8 @@
 						{{#ifCond fileList.length "!=" 0}}
 							{{#each fileList}}
 							<li class="d-flex align-items-center">
-								<div class="btn files-btn d-flex flex-wrap flex-column align-items-center justify-content-center"  style="width:200px;height:140px">
+								<div class="btn files-btn d-flex flex-wrap flex-column align-items-center justify-content-center"  style="width:140px;height:140px">
+								<button type="button" class="badge badge-danger" style="margin-left:85px" onclick="deleteDocument('{{doc_NO}}','{{{path}}}','{{../taskNo}}');">X</button>
 									<a style="cursor:pointer;" onclick="taskDocumentDownload('{{{name}}}{{{extension}}}','{{{../title}}}','{{{../projTitle}}}');"><i class="fa fa-file-text fa-5x text-dark"></i></a>
 									<div class="mt-2 d-flex"><span class="text-truncate" style="display:inline-block;max-width:70px;">{{{name}}}</span><span>{{{extension}}}</span></div>
 								</div>

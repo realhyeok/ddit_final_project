@@ -24,7 +24,7 @@
 					<div class="quote2  bg-light text-truncate mb-2">#:xssPurify(content)#</div>
 				</div>
 				<div class="d-flex justify-content-between px-3 align-items-center pb-2">
-					<div class="d-flex justify-content-start align-items-center"> <i class="mdi mdi-calendar-clock date"></i> <span class="quote2"><small><i class="fa fa-user"></i> #:userId#</small></span> </div>
+					<div class="d-flex justify-content-start align-items-center"> <i class="mdi mdi-calendar-clock date"></i> <span class="quote2"><small><i class="fa fa-user"></i> #:nickname#</small></span> </div>
 					<div class="d-flex justify-content-start align-items-center"> <i class="mdi mdi-calendar-clock date"></i> <span class="quote2 pr-3"><small><i class="fa fa-clock-o"></i> #:kendo.toString(regdate,"yyyy-MM-dd")#</small></span> </div>
 				</div>
 			</div>

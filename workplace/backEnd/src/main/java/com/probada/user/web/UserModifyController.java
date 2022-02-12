@@ -149,42 +149,117 @@ public class UserModifyController {
 	@RequestMapping(value="/modify", method= RequestMethod.POST)
 	public ResponseEntity<String> modify(UserVO user, HttpSession session) throws Exception{
 		
+	/*	A201	전체공개
+		A202	비공개*/
+		
+		
 		ResponseEntity<String> entity = null;
 		
-		
 		UserVO userVO= (UserVO)session.getAttribute("userVO");
-		//하드코딩
+
 		user.setUserId(userVO.getUserId());
 		user.setAuthStatus(1);
 		user.setPwd(null);
 		LOGGER.debug("user=>{}",user);
+
+		int pri;
+
+		pri = userService.nicknameCheck(user.getNickname());
+		
+		LOGGER.debug("pri=>{}",pri);
+		
+		if(pri==0) {
+			entity = new ResponseEntity<String>("no",HttpStatus.BAD_GATEWAY);
+			return entity;
+			
+		}
+		
+
+		LOGGER.debug("pri=>{}",pri);
 		
 		
-	/*	A201	전체공개
-		A202	비공개*/
-		int let;
-		let = userService.nicknameCheck(user.getNickname());
-		LOGGER.debug("let=>{}",let);
-		if(let==0) {
-			entity = new ResponseEntity<String>("닉네임없음",HttpStatus.OK);
-		}else {
+		 
 			userService.modifyUser(user);
-			entity =  new ResponseEntity<String>("성공적으로 수정완료!",HttpStatus.OK);
+			entity =  new ResponseEntity<String>("yes",HttpStatus.OK);
+			
 			//세션 적용 수정한 회원 세션 적용
 			UserVO loginUser = (UserVO) session.getAttribute("userVO");
 			if(loginUser != null && loginUser.getUserId().equals(loginUser.getUserId())) {
 				
 				loginUser = userService.getUser(user.getUserId());
 				session.setAttribute("userVO", loginUser);
-			}
-			
-			
-		}
+		    }
+		
 		return entity;
 	}
 	
 	
 		
+	
+	@RequestMapping(value="/nickNameCheck", method= RequestMethod.POST)
+	public ResponseEntity<String> nickNameCheck(UserVO user, HttpSession session) throws Exception{
+		
+		ResponseEntity<String> entity = null;
+		int pri;
+		
+		UserVO userVO= (UserVO)session.getAttribute("userVO");
+		//하드코딩
+		user.setUserId(userVO.getUserId());
+		user.setAuthStatus(1);
+		user.setPicture(null);
+		user.setIntro(null);
+		user.setPwd(null);
+
+		LOGGER.debug("user=>{}",user);
+	/*	A201	전체공개
+		A202	비공개*/
+		userService.modifyUser(user);
+		
+		pri = userService.nicknameCheck(user.getNickname());
+	
+		
+		
+		LOGGER.debug("pri=>{}",pri);
+		
+		if(pri==0) {
+			entity = new ResponseEntity<String>("no",HttpStatus.OK);
+		}else {
+			userService.modifyUser(user);
+			entity =  new ResponseEntity<String>("yes",HttpStatus.OK);
+	
+		}
+		
+		return entity;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	@RequestMapping(value="/passwordCheck", method= RequestMethod.POST)

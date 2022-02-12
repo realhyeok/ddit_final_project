@@ -216,4 +216,20 @@ public class MilestoneController {
 		}
 		return entity;
 	}
+	
+	@RequestMapping("/removeMilestone")
+	@ResponseBody
+	public ResponseEntity<String> removeMilestone(String mileNo) throws Exception {
+		ResponseEntity<String> entity = null;
+		
+		try {
+			milestoneService.removeMilestone(mileNo);
+			System.out.println("삭제 성공했는데 왜 그러냐");
+			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+		} catch(Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
 }

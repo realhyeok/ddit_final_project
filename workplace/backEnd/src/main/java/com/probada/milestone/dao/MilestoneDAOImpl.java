@@ -89,4 +89,10 @@ public class MilestoneDAOImpl implements MilestoneDAO {
 		sqlSession.update("Milestone-Mapper.insertMilestoneDetail", milestoneVO);
 
 	}
+
+	@Override
+	public void removeMilestone(String mileNo) throws SQLException {
+		sqlSession.update("Milestone-Mapper.deleteMileIssue", mileNo);
+		sqlSession.update("Milestone-Mapper.deleteMilestone", mileNo);
+	}
 }

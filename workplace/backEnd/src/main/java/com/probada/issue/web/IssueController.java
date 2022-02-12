@@ -37,7 +37,7 @@ public class IssueController {
 	ProjectUtil projectUtil;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(IssueController.class);
-	
+
 	@RequestMapping("/getIssueSortByUserId")
 	@ResponseBody
 	public ResponseEntity<List<IssueVO>> getIssueSortByUserId(@RequestParam(defaultValue="") String userId) throws SQLException {
@@ -54,17 +54,16 @@ public class IssueController {
 		}
 		return entity;
 	}
-	
+
 	@RequestMapping("/getIssueListByUserId")
 	@ResponseBody
 	public ResponseEntity<List<IssueVO>> getIssueListByUserId(@RequestParam(defaultValue="") String userId) throws SQLException {
 		ResponseEntity<List<IssueVO>> entity = null;
 		List<IssueVO> issueList = null;
-		
+
 		try {
 			issueList = issueService.getIssueListByUserId(userId);
 			issueList = issueUtil.getMileListByIssueList(issueList);
-			
 			entity = new ResponseEntity<List<IssueVO>>(issueList,HttpStatus.OK);
 		} catch(Exception e) {
 			entity = new ResponseEntity<List<IssueVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -72,21 +71,21 @@ public class IssueController {
 		}
 		return entity;
 	}
-	
+
 	@RequestMapping("/getIssueListByProjNoAndUserId")
 	@ResponseBody
 	public ResponseEntity<List<IssueVO>> getIssueListByProjNoAndUserId(@RequestParam(defaultValue="") String userId, String projNo) throws SQLException {
 		ResponseEntity<List<IssueVO>> entity = null;
 		List<IssueVO> issueList = null;
 		IssueVO issueVO = new IssueVO();
-		
+
 		try {
 			issueVO.setUserId(userId);
 			issueVO.setProjNo(projNo);
-			
+
 			issueList = issueService.getIssueListByProjNoAndUserId(issueVO);
 			issueList = issueUtil.getMileListByIssueList(issueList);
-			
+
 			entity = new ResponseEntity<List<IssueVO>>(issueList,HttpStatus.OK);
 		} catch(Exception e) {
 			entity = new ResponseEntity<List<IssueVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -158,20 +157,44 @@ public class IssueController {
 		LOGGER.debug("[요청받음] => /modifyIssueByIssueNo");
 
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-	try {
 
-		issueService.modifyIssueByIssueNo(issueVO);
-		hashMap.put("issueNo", issueVO.getIssueNo());
+		try {
 
-		entity = new ResponseEntity<HashMap<String, Object>>(hashMap,HttpStatus.OK);
+			issueService.modifyIssueByIssueNo(issueVO);
+			hashMap.put("issueNo", issueVO.getIssueNo());
 
-	} catch(Exception e) {
-		entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
-		e.printStackTrace();
+			entity = new ResponseEntity<HashMap<String, Object>>(hashMap,HttpStatus.OK);
 
+		} catch(Exception e) {
+			entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+
+		}
+			return entity;
 	}
 
-	return entity;
+	@RequestMapping("/removeIssue")
+	@ResponseBody
+	public ResponseEntity<HashMap<String, Object>> removeIssue(IssueVO issueVO) throws SQLException {
+		ResponseEntity<HashMap<String, Object>> entity = null;
+
+		LOGGER.debug("[요청받음] => /removeIssue");
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		try {
+
+
+			issueService.removeIssue(issueVO);
+
+			entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.OK);
+
+		} catch(Exception e) {
+			entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+
+		}
+
+		return entity;
 	}
 
 

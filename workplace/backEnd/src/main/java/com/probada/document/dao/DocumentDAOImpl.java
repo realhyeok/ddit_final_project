@@ -54,9 +54,7 @@ public class DocumentDAOImpl implements DocumentDAO{
 	@Override
 	public void deleteDocument(String docId) throws SQLException {
 
-
 		sqlSession.delete("Document-Mapper.deleteDocument", docId);
-
 
 	}
 
@@ -75,7 +73,7 @@ public class DocumentDAOImpl implements DocumentDAO{
 
 
 		List<FileVO> DocList = sqlSession.selectList("Document-Mapper.selectDocumentByUserId",userId);
-	
+
 		return DocList;
 	}
 
@@ -83,7 +81,7 @@ public class DocumentDAOImpl implements DocumentDAO{
 	public List<FileVO> selectDefaultDirectoryMyProject(String userId) throws SQLException {
 
 		List<FileVO> DocList = sqlSession.selectList("Document-Mapper.selectDefaultDirectoryMyProject",userId);
-	
+
 		return DocList;
 
 
@@ -94,7 +92,7 @@ public class DocumentDAOImpl implements DocumentDAO{
 
 
 		List<FileVO> DocList = sqlSession.selectList("Document-Mapper.selectDirectoryMyProject",userId);
-	
+
 		return DocList;
 
 

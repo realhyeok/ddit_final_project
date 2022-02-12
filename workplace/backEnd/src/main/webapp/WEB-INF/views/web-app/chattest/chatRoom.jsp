@@ -218,6 +218,20 @@ img{ max-width:100%;}
   overflow-y: auto;
 } */
 
+
+.chatImage{
+
+
+margin:5px 10px 0px 3px; 
+height:40px; 
+width:100px; 
+border-radius:100%;
+
+
+
+}
+
+
 html {overflow:hidden;} 
 
 
@@ -380,11 +394,12 @@ height: 8%;
 <body>
 <div class="container">
 <br>
-<h3 class=" text-center">${realChat.title}</h3>
+<h3 class=" text-center">${realChat.title}</h3><button onclick="closeTabClick()">새창 닫기</button>
 <br>
 <div class="messaging">
       <div class="inbox_msg">
       
+		
       <!-- 참여중인 시작 -->
         <div class="inbox_people">
           <div class="headind_srch">
@@ -411,7 +426,7 @@ height: 8%;
 		                  
 		              <div class="chat_list active_chat">
 			              <div class="chat_people">
-			                <div class="chat_img"> <img src="/user/getPicture.do?picture=${chat.picture}" alt="sunil" style="border-radius:50%;"> </div>
+			                <div class="chat_img"> <img src="/user/getPicture.do?picture=${chat.picture}" alt="sunil" style="margin:5px 10px 5px 3px; height:50px; width:50px; border-radius:100%;"> </div>
 			                <div class="chat_ib">
 			                
 			               
@@ -496,7 +511,30 @@ height: 8%;
 <script>
 const messagesTop = document.getElementById('messages-top');
 const realRoomNo = "${roomNo}"; 
+let sock;	
+
+
+function closeTabClick() {
 	
+		 const data = {
+                 "realRoom":"${roomNo}",
+                 "userId":"${userVO.userId}",
+                 "nickname":"${ userVO.nickname }",
+              	 "content":"CLOSE-CHAT"
+         };
+         let jsonData = JSON.stringify(data);
+         sock.send(jsonData);
+         
+         //소켓 메시지 보내기
+         //sock.onmessage = onMessage;
+		
+		 window.close(); 
+
+	     sock.onclose = onClose;
+	
+
+}
+
 
 
 
@@ -535,7 +573,7 @@ window.addEventListener('load', function(){
 	    				
 	    				 
 	    	        	   temp+='<div class="incoming_msg">';
-	    	        	   temp+='<div class="incoming_msg_img"> <img src="/user/getPicture.do?picture='+arg[i].picture+'" style="border-radius:50%"></div>';
+	    	        	   temp+='<div class="incoming_msg_img"> <img src="/user/getPicture.do?picture='+arg[i].picture+'" style="margin:5px 10px 0px 3px; height:40px; width:100px; border-radius:100%;"></div>';
 	    	        	   temp+='<div class="received_msg">';
 	    	        	   temp+='<div class="received_withd_msg">';
 	    	        	   temp+='<p>'+arg[i].nickname+" : "+arg[i].content+'</p>';
@@ -558,10 +596,11 @@ window.addEventListener('load', function(){
 	
 
 	
-	let sock;
+
 
 		
 	    sock = new SockJS("/chat");
+	    //채팅방 입장과 동시에 실행
 	    sock.onopen = function (){
 	       
 	    	
@@ -579,6 +618,11 @@ window.addEventListener('load', function(){
 	   
 	    
 	    }
+	    
+	    
+	    
+	    
+	    
 	    
 	//    sock.onerror = function (e) {
 	//        alert('연결에 실패하였습니다.');
@@ -646,6 +690,25 @@ window.addEventListener('load', function(){
                    "regDate":receive[3],
                    "picture":receive[4]
            };
+           
+           
+           if(receive[2] =='CLOSE-CHAT'){
+        	   
+        	  alert(receive[1]+"님이 퇴장하셨습니다");
+        	  var chatUserId = receive[1]+"onoff";
+              document.getElementById(chatUserId).innerText = "오프라인";
+
+              new PNotify({
+                  
+                  text: receive[1]+'님이 퇴장하였습니다.',
+                  type: 'info',
+                  hide: false,
+                  styling: 'bootstrap3'
+                 });
+        	  
+        	  
+        	   return false;
+           }
             
            
            /* 
@@ -720,7 +783,10 @@ window.addEventListener('load', function(){
 
                   img.src='/user/getPicture.do?picture='+receive[4];
                   img.alt='sunil'; 
-                  img.style='style="border-radius:50%;"';
+                  img.className="chatImage";
+
+        
+                  
                   
               
                   messageReceived.className='received_msg';

@@ -16,141 +16,125 @@
   <div class="row dash-board-boxes">
     <div class="col-md-12 col-sm-12">
 
-      <!-- dashboard-stat start -->
-      <div class="row">
+			<!-- dashboard-stat start -->
+			<div class="row">
 
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12"
+					style="max-width: 20%; flex: 20%;">
 
-          <div class="dashboard-stat bordered grey-cararra fadeInDown animated">
-            <div class="visual">
-              <i class="fa fa-tasks"></i>
-            </div>
-            <div class="details">
-              <h3 style="color:#5C9BD1;">
-              <span title="활동중인 업무" class="taskTotalCount">0</span>
-              </h3>
-              <div class="noti-desc"> 
-              내 작업 
-              </div>
-            </div>
-            <a class="more" href="<%=request.getContextPath() %>/app/myWork">
-              더보기 <i class="fa fa-arrow-right"></i>
-            </a>
-          </div>
+					<div
+						class="dashboard-stat bordered grey-cararra fadeInDown animated">
+						<div class="visual">
+							<i class="fa fa-tasks"></i>
+						</div>
+						<div class="details">
+							<h3 style="color: #5C9BD1;">
+								<span title="활동중인 업무" class="taskTotalCount">0</span>
+							</h3>
+							<div class="noti-desc">내 작업</div>
+						</div>
+						<a class="more"
+							href="<%=request.getContextPath()%>/app/myWork?#home-tab">
+							더보기 <i class="fa fa-arrow-right"></i>
+						</a>
+					</div>
 
-        </div>
+				</div>
 
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12"
+					style="max-width: 20%; flex: 20%;">
 
-          <div class="dashboard-stat bordered grey-cararra fadeInDown animated">
-            <div class="visual">
-              <i class="fa fa-thumb-tack"></i>
-            </div>
-            <div class="details">
-              <h3 style="color:#8877a9;">
-              	<span title="받은 요청" class="issueTotalCount">0</span>
-              </h3>
-              <div class="noti-desc"> 
-              이슈 
-              </div>
-            </div>
-            <a class="more" href="<%=request.getContextPath() %>/app/myWork/#issue">
-              더보기 <i class="fa fa-arrow-right"></i>
-            </a>
-          </div>
+					<div
+						class="dashboard-stat bordered grey-cararra fadeInDown animated">
+						<div class="visual">
+							<i class="fa fa-thumb-tack"></i>
+						</div>
+						<div class="details">
+							<h3 style="color: #8877a9;">
+								<span title="받은 요청" class="issueTotalCount">0</span>
+							</h3>
+							<div class="noti-desc">이슈</div>
+						</div>
+						<a class="more"
+							href="<%=request.getContextPath()%>/app/myWork?#issue-tab">
+							더보기 <i class="fa fa-arrow-right"></i>
+						</a>
+					</div>
 
-        </div>
+				</div>
 
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12"
+					style="max-width: 20%; flex: 20%;">
 
-          <div class="dashboard-stat bordered grey-cararra fadeInDown animated">
-            <div class="visual">
-              <i class="fa fa-pencil-square"></i>
-            </div>
-            <div class="details">
-              <h3 style="color:#4DB3A2;">
-              	<span title="받은 요청" class="requestTotalCount">0</span>
-              </h3>
-              <div class="noti-desc">
-	
-                변경요청
-              </div>
-            </div>
-            <a class="more" href="/ProjectChangeRequest">
-              더보기 <i class="fa fa-arrow-right"></i>
-            </a>
-          </div>
+					<div
+						class="dashboard-stat bordered grey-cararra fadeInDown animated">
+						<div class="visual">
+							<i class="fa fa-laptop"></i>
+						</div>
+						<div class="details">
+							<h3 style="color: #5e738b;">
+								<span title="참여중인 프로젝트" class="projectTotalCount">0</span>
+							</h3>
+							<div class="noti-desc">프로젝트</div>
+						</div>
+						<a class="more"
+							href="<%=request.getContextPath()%>/app/project-list"> 더보기 <i
+							class="fa fa-arrow-right"></i>
+						</a>
+					</div>
 
-        </div>
+				</div>
 
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12"
+					style="max-width: 20%; flex: 20%;">
 
-          <div class="dashboard-stat bordered grey-cararra fadeInDown animated">
-            <div class="visual">
-              <i class="fa fa-send"></i>
-            </div>
-            <div class="details">
-              <h3 style="color:#f36a5a;">
-                <span title="받은 메일" class="mailTotalCount">0</span>
-              </h3>
-              <div class="noti-desc">
+					<div
+						class="dashboard-stat bordered grey-cararra fadeInDown animated">
+						<div class="visual">
+							<i class="fa fa-group"></i>
+						</div>
+						<div class="details">
+							<h3 style="color: #bfd042;">
+								<span title="참여중인 콜라보" class="collaboTotalCount">0</span>
+							</h3>
+							<div class="noti-desc">콜라보</div>
+						</div>
+						<a id="OwnCollabo-tab" class="more" href=""> 더보기 <i
+							class="fa fa-arrow-right"></i>
+						</a>
+					</div>
 
-                메일
-              </div>
-            </div>
-            <a class="more" href="<%=request.getContextPath() %>/app/myWork#mailReceive-tab">
-              더보기 <i class="fa fa-arrow-right"></i>
-            </a>
-          </div>
+				</div>
 
-        </div>
+				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12"
+					style="max-width: 20%; flex: 20%;">
 
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+					<div
+						class="dashboard-stat bordered grey-cararra fadeInDown animated">
+						<div class="visual">
+							<i class="fa fa-send"></i>
+						</div>
+						<div class="details">
+							<h3 style="color: #f36a5a;">
+								<span title="받은 메일" class="mailTotalCount">0</span>
+							</h3>
+							<div class="noti-desc">메일</div>
+						</div>
+						<a class="more"
+							href="<%=request.getContextPath()%>/app/myWork#mailReceive-tab">
+							더보기 <i class="fa fa-arrow-right"></i>
+						</a>
+					</div>
 
-          <div class="dashboard-stat bordered grey-cararra fadeInDown animated">
-            <div class="visual">
-              <i class="fa fa-group"></i>
-            </div>
-            <div class="details">
-              <h3 style="color:#bfd042;">
-                <span title="참여중인 콜라보" class="collaboTotalCount">0</span>
-              </h3>
-              <div class="noti-desc">
-                콜라보
-              </div>
-            </div>
-            <a class="more" href="/File">
-              더보기 <i class="fa fa-arrow-right"></i>
-            </a>
-          </div>
-
-        </div>
-
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
-
-          <div class="dashboard-stat bordered grey-cararra fadeInDown animated">
-            <div class="visual">
-              <i class="fa fa-laptop"></i>
-            </div>
-            <div class="details">
-              <h3 style="color:#5e738b;">
-                <span title="참여중인 프로젝트" class="projectTotalCount">0</span>
-              </h3>
-              <div class="noti-desc">
-                프로젝트
-              </div>
-            </div>
-            <a class="more" href="<%=request.getContextPath() %>/app/project-list">
-              더보기 <i class="fa fa-arrow-right"></i>
-            </a>
-          </div>
-
-        </div>
+				</div>
 
 
 
-      </div>
-      <!-- dashboard-stat end -->
+
+
+
+			</div>
+			<!-- dashboard-stat end -->
 
       <!-- dashboard-table start -->
       <div class="row">
@@ -277,8 +261,10 @@
               <thead>
                 <tr>
                   <th>프로젝트 명</th>
-                  <th>종료일</th>
                   <th>진행상태</th>
+                  <th>시작일</th>
+                  <th>종료일</th>
+                  <th>진척율(%)</th>
                 </tr>
               </thead>
               <tbody class="project_list_for_index_page">

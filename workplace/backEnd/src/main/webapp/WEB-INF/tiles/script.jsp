@@ -56,6 +56,8 @@
 	    <!-- 채팅 js -->
 	    <script src="<%=request.getContextPath()%>/resources/asserts/js/chat/chatCreate.js"></script>
 	    <script src="<%=request.getContextPath()%>/resources/asserts/js/chat/chatOverlay.js"></script>
-	   
+	    <!-- 통합검색 js -->
+	    <script src="<%=request.getContextPath()%>/resources/asserts/js/search/totalSearch.js"></script>
+
 	</body>
 </html>

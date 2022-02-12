@@ -258,6 +258,11 @@ function mailOverlayAnyWhereRegist_go(dist, userFrom){
 		$("input[id='anyWhereMailOverlayTitle']").focus();
 		return;
 	}
+	if($("input[id='anyWhereMailOverlayUserTo']").val() == ""){
+		alert("메일을 입력해주세요.");
+		$("input[id='anyWhereMailOverlayUserTo']").focus();
+		return;
+	}
 	if($("textarea[id='anyWhereMailOverlayContent']").val() == ""){
 		alert("내용을 입력해주세요.");
 		$("textarea[id='anyWhereMailOverlayContent']").focus();

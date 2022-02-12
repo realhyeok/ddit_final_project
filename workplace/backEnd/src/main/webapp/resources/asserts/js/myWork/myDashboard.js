@@ -104,9 +104,9 @@ function readMyDashboard(userId){
 			}
 		},
 		columns: [
-			{ field: "title"   , title: "제목"   , headerAttributes: { style: 'text-align: center' }},
+			{ field: "title"   , title: "제목"   , headerAttributes: { style: 'text-align: center' }, attributes: { style: 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'}},
 			{ field: "userFrom", title: "보낸사람", headerAttributes: { style: 'text-align: center' }},
-			{ field: "regDate" , title: "보낸날짜", width: 120, headerAttributes: { style: 'text-align: center' }, attributes: { style: 'text-align: center'}}
+			{ field: "regDate" , title: "보낸날짜", width: 130, headerAttributes: { style: 'text-align: center' }, attributes: { style: 'text-align: center'}}
 		]
 	});
 	//내 메일 끝

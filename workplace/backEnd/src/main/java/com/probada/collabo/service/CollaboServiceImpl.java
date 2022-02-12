@@ -3,6 +3,7 @@ package com.probada.collabo.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.velocity.runtime.directive.Parse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +12,7 @@ import com.probada.collabo.dao.CollaboDAO;
 import com.probada.collabo.vo.CollaboVO;
 import com.probada.collabo.web.CollaboController;
 import com.probada.mail.vo.MailVO;
+import com.probada.project.vo.ProjectVO;
 
 public class CollaboServiceImpl implements CollaboService {
 	
@@ -90,6 +92,28 @@ public class CollaboServiceImpl implements CollaboService {
 		List<CollaboVO> collaboList = collaboDAO.selectCollaboSubProj(cprojNo);
 		
 		return collaboList;
+	}
+
+	@Override
+	public String registCollabo(CollaboVO collaboVO) throws SQLException {
+		
+		int seqNo = collaboDAO.selectCollaboSeqNext();
+		
+		String cprojNo = Integer.toString(seqNo);
+		
+		collaboVO.setCprojNo(cprojNo);
+		
+		collaboDAO.insertCollabo(collaboVO);
+		
+		return cprojNo;
+		
+	}
+
+	@Override
+	public void registProjectUserRelation(CollaboVO collaboVO) throws SQLException {
+		
+		collaboDAO.insertCollaboUserRelation(collaboVO);
+		
 	}
 
 }

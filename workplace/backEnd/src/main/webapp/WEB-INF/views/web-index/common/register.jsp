@@ -16,6 +16,10 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/css/common/login_registration.css">
 </head>
 <body>
+	<div id="loading">
+		<div class="loader"></div>
+	</div>
+
 
     <div class="main">
 
@@ -77,5 +81,6 @@
     <!-- JS -->
     <script src="<%=request.getContextPath()%>/resources/bootstrap/ddit-vendor/jquery/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/resources/asserts/js/common/login_registration.js"></script>
+    
 </body>
 </html>

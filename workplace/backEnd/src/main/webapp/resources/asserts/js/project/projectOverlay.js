@@ -114,6 +114,7 @@ function getOverlayTaskModifyTemplate(templateId, url, taskNo) {
 			appe.innerHTML = html;
 			$("#fadeInContent").fadeIn(300);
 			summernote_go($('.projSummnote'));
+			modifyUploadForm('projectTaskUpload',data);
 		},
 		error : function(error) {
 			console.log("Handlebars error!!");
@@ -240,9 +241,11 @@ function getOverlayMileModifyTemplate(templateId, url, mileNo) {
 			appe.innerHTML = html;
 			$("#fadeInContent").fadeIn(300);
 			summernote_go($('.projSummnote'));
+
 			var issueTitle = [];
 			var issueNo = [];
 			console.log(data.mileVO.issueList);
+
 			if(data.mileVO.issueList != null){
 				for(var i = 0; i < data.mileVO.issueList.length; i++){
 					issueTitle.push(data.mileVO.issueList[i].title);
@@ -294,16 +297,14 @@ function modifyProjectDetail() {
 }
 
 function modifyTaskDetail() {
-	var taskVO = $('#modifyTaskForm').serialize();
-	console.log(taskVO);
-	taskVO += '&projNo='+projNo;
-	console.log(taskVO);
+	var taskVO = $('#modifyTaskForm')[0];
+	var formData = new FormData(taskVO);
+	formData.append("projNo",projNo);
 
 	$.ajax({
 		url : "/app/task/modifyTaskDetailByTaskNo",
 		type : 'POST',
-		datatype : 'text',
-		data : taskVO,
+		data : formData,
 		success : function(data) {
 			alert("수정에 성공했습니다.");
 			getTaskTemplate('/app/task/getTaskDetailByTaskNo',data.taskNo,'taskDetailForm','taskDetailFormTarget')
@@ -311,8 +312,10 @@ function modifyTaskDetail() {
 		}, // success
 		error : function(xhr, status) {
 			alert("fail");
-			alert(xhr + " : " + status);
-		}
+		},
+		cache:false,
+		contentType:false,
+		processData:false
 	});
 }
 
@@ -445,7 +448,7 @@ function registTask() {
 	var taskVO = $('#registTaskForm')[0];
 	var formData = new FormData(taskVO);
 	formData.append("projNo",projNo);
-	
+
 	console.log(taskVO);
 	console.log(formData);
 

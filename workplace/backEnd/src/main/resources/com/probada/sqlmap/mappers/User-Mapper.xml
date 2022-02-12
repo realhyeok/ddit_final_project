@@ -20,6 +20,7 @@
 		SELECT *
 		FROM "USER"
 		WHERE  PRIVACY='A201'
+		ORDER BY LIKE_COUNT DESC
 	</select>
 
 
@@ -79,15 +80,15 @@
 				,pwd=#{pwd}
 			</if>
 
-			<if test="nickname != null">
+			<if test="nickname != null and nickname != '' ">
 				,nickname=#{nickname}
 			</if>
 
-			<if test="picture != null">
+			<if test="picture != null and picture != ''">
 				,picture=#{picture}
 			</if>
 
-			<if test="intro != null">
+			<if test="intro != null and intro != '' ">
 				,intro=#{intro}
 			</if>
 

@@ -106,6 +106,18 @@
 		AND
 			ISSUE_NO = #{issueNo}
 	</delete>
+	
+	<update id="deleteMilestone" parameterType="String">
+		DELETE
+		  FROM MILE
+		 WHERE MILE_NO = #{mileNo}
+	</update>
+
+	<update id="deleteMileIssue" parameterType="String">
+		DELETE
+		  FROM MILE_ISSUE
+		 WHERE MILE_NO = #{mileNo}
+	</update>
 
 	<select id="selectMileSeqNext" resultType="int">
 		SELECT

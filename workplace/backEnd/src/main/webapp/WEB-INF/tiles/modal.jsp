@@ -81,8 +81,8 @@
                   <div class="control-group row">
                     <label class="control-label col-md-3 col-sm-3 ">이메일 입력</label>
                     <div class="col-md-9 col-sm-9 ">
-                      <input type="hidden" id="userFrom" name="userFrom" value="${userVO.userId}">
-                      <input type="hidden" id="CollboMailTitle" name="title" value="${userVO.userId}의 콜라보 제안 메일입니다.">
+                      <input type="hidden" id="CollaboUserFrom" name="userFrom" value="${userVO.userId}">
+                      <input type="hidden" id="CollboMailTitle" name="title" value="${userVO.userId}의 콜라보">
                       <input type="hidden" id="dist" name="dist" value="">
                       <input id="tags_1" name="userTo" type="text" class="tags form-control-collabo" value=""/> 
                       <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>

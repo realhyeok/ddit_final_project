@@ -9,7 +9,7 @@ function trashMailBox(userId){
 			transport: {
 				read: "/app/myWork/getTrashMailList?userId=" + sessionId
 			},
-			pageSize: 9,
+			pageSize: 7,
 			schema: {
 				model: {
 					fields: {
@@ -36,7 +36,7 @@ function trashMailBox(userId){
 		pageable: {
 	        alwaysVisible: false
 	    },
-	    height: 600,
+	    height: 580,
 		toolbar: [
 			{ template:
 				"<div class='btn-group'>" +
@@ -48,6 +48,11 @@ function trashMailBox(userId){
 			},
 			"search"
 		],
+		messages: {
+			commands: {
+				search: "검색"
+		    }
+		},
 		noRecords: {
 			template: function(e) {
 				return "<h2>메일이 존재하지 않습니다.</h2>";

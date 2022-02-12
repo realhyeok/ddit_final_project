@@ -39,11 +39,11 @@
 		<div class="form-group row">
 			<div class="col-sm-6">
 				<label>시작일 :</label> <input type="text" class="form-control form-control-sm form-control-view"
-					value="{{startdate}}">
+					value="{{formatTime startdate "YYYY년 MM월 DD일"}}">
 			</div>
 			<div class="col-sm-6">
 				<label>마감일 :</label> <input type="text" class="form-control form-control-sm form-control-view"
-					value="{{enddate}}">
+					value="{{formatTime enddate "YYYY년 MM월 DD일"}}">
 			</div>
 		</div>
 
@@ -59,18 +59,36 @@
 		<div class="form-group row">
 			<div class="col-sm-12">
 				<label>첨부파일 :</label>
-				<div class="form-control form-control-sm form-control-view"
-					style="height: 120px;">
-					<li><i class="glyphicon glyphicon-floppy-disk"></i> <span>지시사항.md</span>
-					</li>
-					<li><i class="glyphicon glyphicon-floppy-disk"></i> <span>jabra.html</span>
-					</li>
+				<div class="form-control form-control-sm form-control-view" style="height: 150px;">
+					<ul class="row list-unstyled task-files">
+					{{#ifCond fileList.length "!=" 0}}
+						{{#each fileList}}
+							<li class="d-flex align-items-center">
+								<div class="btn files-btn d-flex flex-wrap flex-column align-items-center justify-content-center"  style="width:200px;height:140px">
+									<a style="cursor:pointer;" onclick="taskDocumentDownload('{{{name}}}{{{extension}}}','{{{../title}}}','{{{../projTitle}}}');"><i class="fa fa-file-text fa-5x text-dark"></i></a>
+									<div class="mt-2 d-flex"><span class="text-truncate" style="display:inline-block;max-width:70px;">{{{name}}}</span><span>{{{extension}}}</span></div>
+								</div>
+							</li>
+						{{/each}}
+					{{/ifCond}}
+					{{#ifCond fileList.length "==" 0}}
+						<div class="m-3">
+							<span>첨부파일이 없습니다.</span>
+						<div>
+					{{/ifCond}}
+					</ul>
 				</div>
 			</div>
 		</div>
 	</script>
 	
 	<script>
+		window.addEventListener('load', function() {
+			Handlebars.registerHelper('formatTime', function (date, format) {
+			    var mmnt = moment(date);
+			    return mmnt.format(format);
+			});
+		});
 		function deleteMyTaskByTaskNo(taskNo){
 			var myTaskDeleteConfirm = confirm("삭제하시겠습니까?");
 			

@@ -133,6 +133,7 @@ public class TaskController {
 			detailVO.setProjNo(taskVO.getProjNo());
 
 			detailVO = documentUtil.readTaskDocByTaskTitleANDprojNo(detailVO);
+
 			LOGGER.debug("detailVO => "+detailVO);
 			entity = new ResponseEntity<TaskVO>(detailVO, HttpStatus.OK);
 
@@ -145,16 +146,17 @@ public class TaskController {
 
 	@RequestMapping("/modifyTaskDetailByTaskNo")
 	@ResponseBody
-	public ResponseEntity<TaskVO> modifyTaskDetailByTaskNo(TaskVO taskVO)
+	public ResponseEntity<TaskVO> modifyTaskDetailByTaskNo(@RequestPart(value="files",required = false) List<MultipartFile> files,
+			HttpServletRequest request, HttpServletResponse response, TaskVO taskVO)
 			throws Exception {
 		ResponseEntity<TaskVO> entity = null;
-		System.out.println(taskVO.getProjNo() + "zzzzz");
 		LOGGER.debug("[요청받음] => /modifyTaskDetailByTaskNo");
 
 		try {
 
 			taskService.modifyTaskDetailByTaskNo(taskVO);
-
+			documentUtil.taskUpload(files, request, response, taskVO);
+			
 			entity = new ResponseEntity<TaskVO>(taskVO,HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -166,10 +168,9 @@ public class TaskController {
 
 	@RequestMapping("/registTask")
 	@ResponseBody
-	public ResponseEntity<HashMap<String, Object>> registTask(@RequestPart(value="files",required = false) List<MultipartFile> files, HttpServletResponse response, HttpServletRequest request, TaskVO taskVO) throws Exception {
+	public ResponseEntity<HashMap<String, Object>> registTask(@RequestPart(value="files",required = false) List<MultipartFile> files,
+			HttpServletResponse response, HttpServletRequest request, TaskVO taskVO) throws Exception {
 		ResponseEntity<HashMap<String, Object>> entity = null;
-
-		LOGGER.debug("[요청받음] => /registTask" + files);
 
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
@@ -283,4 +284,44 @@ public class TaskController {
 		return url;
 	}
 
+
+	@RequestMapping("/taskDocumentRead")
+	@ResponseBody
+	public ResponseEntity<TaskVO> taskDocumentRead(TaskVO taskVO) throws Exception{
+
+		ResponseEntity<TaskVO> entity = null;
+		TaskVO resultVO = new TaskVO();
+	try {
+
+		resultVO = documentUtil.readTaskDocByTaskTitleANDprojNo(taskVO);
+
+		entity = new ResponseEntity<TaskVO>(resultVO,HttpStatus.OK);
+
+	} catch (Exception e) {
+		entity = new ResponseEntity<TaskVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+		e.printStackTrace();
+	}
+	return entity;
+	}
+
+	@RequestMapping("/taskDocumentRemove")
+	@ResponseBody
+	public ResponseEntity<FileVO> taskDocumentRemove(FileVO fileVO) throws Exception{
+
+		LOGGER.debug("[요청받음] => /taskDocumentRemove => " + fileVO);
+
+		ResponseEntity<FileVO> entity = null;
+
+		try {
+
+			documentUtil.documentRemoveResolver(fileVO);
+
+			entity = new ResponseEntity<FileVO>(HttpStatus.OK);
+
+		} catch (Exception e) {
+			entity = new ResponseEntity<FileVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+			LOGGER.error(e.getMessage());
+		}
+		return entity;
+	}
 }

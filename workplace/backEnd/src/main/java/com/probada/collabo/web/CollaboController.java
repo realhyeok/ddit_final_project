@@ -27,6 +27,7 @@ import com.probada.collabo.service.CollaboService;
 import com.probada.collabo.vo.CollaboVO;
 import com.probada.mail.vo.MailVO;
 import com.probada.user.vo.UserVO;
+import com.probada.util.CollaboUtil;
 
 @Controller
 @RequestMapping("/app/collabo")
@@ -34,6 +35,8 @@ public class CollaboController {
 
 	@Resource(name="collaboService")
 	CollaboService collaboService;
+	@Resource(name="collaboUtil")
+	CollaboUtil collaboUtil;
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(CollaboController.class);
 	
@@ -58,7 +61,9 @@ public class CollaboController {
 			entity = new ResponseEntity<List<CollaboVO>>(collaboList, HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity<List<CollaboVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
-			e.printStackTrace();
+			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(),e); // e.printStackTrace(); 보다 LOGGER 쓸 것
+			LOGGER.error("/getCollaboList 시 에러가 발생했습니다.",e); 
 		}
 		return entity;
 	}
@@ -130,6 +135,23 @@ public class CollaboController {
 		}
 		
 		return entity;
+	}
+	
+	@RequestMapping(value = "/registCollabo", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<HashMap<String, Object>> registCollabo(HttpServletRequest request, CollaboVO collaboVO)throws Exception{
+		
+		LOGGER.debug("[요청받음] => /registCollabo ");
+		ResponseEntity<HashMap<String, Object>> entity = null;
+		
+		HashMap<String,Object> hashmap = new HashMap<String,Object>();
+		HttpSession session = request.getSession();
+		
+		String cprojNo = collaboService.registCollabo(collaboVO);
+		
+		
+		return null;
+		
 	}
 	
 	

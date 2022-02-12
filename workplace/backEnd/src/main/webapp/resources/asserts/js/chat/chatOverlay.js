@@ -45,7 +45,7 @@ function getOverlayTemplateChatList(templateId) {
 function openChatList(){
 	
 		var crudServiceBaseUrlSeok="/chat/"
-		var seokListTemplate = "<span onclick='selectChatRoom('#: realRoom # ')'> #: title #</span>";
+		var seokListTemplate = "<span style='cursor : pointer;' onclick='selectChatRoom('#: realRoom # ')'> #: title #</span>";
 			
           var dataSource = new kendo.data.DataSource({
                  transport: {
@@ -117,7 +117,7 @@ function openChatList(){
             	 {
 	                 field: "title",
 	                 title: "팀원들과 소통해 보아요.",
-	                 template: "<span onclick=selectChatRoom('#=realRoom #')> #:title #</span>",
+	                 template: "<span style='cursor : pointer;' onclick=selectChatRoom('#=realRoom #')> #:title #</span>",
 	                 width: 200,
 	                 encoded: false,
 	             },

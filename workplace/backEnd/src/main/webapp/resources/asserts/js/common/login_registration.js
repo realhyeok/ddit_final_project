@@ -5,7 +5,13 @@
 
   
  */
-
+	window.onbeforeunload = function () { 
+		$('#loading').show(); 
+}  // 현재 페이지에서 다른 페이지로 넘어갈 때 표시해주는 기능
+	window.onload = function () {          // 페이지가 로드 되면 로딩 화면을 없애주는 것
+      $('#loading').hide();
+};
+        
 $(document).ready(function () {
   if (getCookie("rememberId")) {
     // getCookie함수로 rememberId라는 이름의 쿠키를 불러와서 있을 경우
@@ -142,12 +148,14 @@ $('#register-form').submit(function (e) {
   if(!checkInputError()){
     return false;
   }
+	$('#loading').show(); 
   $.ajax({
 	    type: "POST",
 	    url: "/home/register.do",
 	    data: $("#register-form").serialize(),
 	    dataType: "json",
 	    success: function (res) {
+				$('#loading').hide();
 	    	if(res.idCheck === "false") { setErrorFor(email, '이미 가입된 이메일입니다.'); return false; }
 	    	if(res.nicknameCheck === "false"){ setErrorFor(username, '중복된 닉네임을 사용할 수 없습니다.'); return false; }
 	    	else {

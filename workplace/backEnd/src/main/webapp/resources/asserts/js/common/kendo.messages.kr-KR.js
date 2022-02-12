@@ -54,6 +54,85 @@
       });
   }
 
+  if (kendo.ui.FileManager) {
+  kendo.ui.FileManager.prototype.options.messages =
+	  $.extend(true, kendo.ui.FileManager.prototype.options.messages, {
+      toolbar: {
+        createFolder: "새 폴더",
+        upload: "업로드",
+        sortDirection: "정렬",
+        sortDirectionAsc: "오름차순 정렬",
+        sortDirectionDesc: "내림차순 정렬",
+        sortField: "정렬",
+        nameField: "파일명",
+        sizeField: "파일 크기",
+        typeField: "파일타입",
+        dateModifiedField: "수정일짜",
+        dateCreatedField: "생성날짜",
+        listView: "List View",
+        gridView: "Grid View",
+        search: "검색",
+        details: "파일 정보보기",
+        detailsChecked: "On",
+        detailsUnchecked: "Off",
+        delete: "삭제",
+        rename: "파일명 수정",
+      },
+      views: {
+        nameField: "파일명",
+        sizeField: "파일 크기",
+        typeField: "타입",
+        dateModifiedField: "수정날짜",
+        dateCreatedField: "생성날짜",
+        items: "파일",
+        listLabel: "리스트",
+        gridLabel: "그리드",
+        treeLabel: "트리",
+      },
+      dialogs: {
+        upload: {
+          title: "파일 업로드",
+          clear: "리스트 지우기",
+          done: "확인",
+        },
+        moveConfirm: {
+          title: "컨펌",
+          content:
+            "<p style='text-align: center;'>이동 혹은 복사 하시겠습니까?</p>",
+          okText: "복사",
+          cancel: "이동",
+          close: "닫기",
+        },
+        deleteConfirm: {
+          title: "확인",
+          content:
+            "<p style='text-align: center;'>선택한 파일을 정말로 삭제 하시겠습니까??</p>",
+          okText: "삭제",
+          cancel: "취소",
+          close: "닫기",
+        },
+        renamePrompt: {
+          title: "수정",
+          content:
+            "<p style='text-align: center;'>엔터키를 누르면 수정이 가능합니다.</p>",
+          okText: "수정",
+          cancel: "취소",
+          close: "닫기",
+        },
+      },
+      previewPane: {
+        noFileSelected: "No File Selected",
+        extension: "타입",
+        size: "사이즈",
+        created: "생성 날짜",
+        createdUtc: "생성 날짜",
+        modified: "수정 날짜",
+        modifiedUtc: "수정 날짜",
+        items: "items",
+      },
+    });
+  }
+
   /* FilterCell messages */
 
   if (kendo.ui.FilterCell) {

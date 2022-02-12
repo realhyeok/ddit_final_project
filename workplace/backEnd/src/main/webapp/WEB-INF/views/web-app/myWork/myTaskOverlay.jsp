@@ -39,7 +39,7 @@
 								<!-- 내용저장 -->
 								<div class="x_content row">
 									<div class="col-sm-12">
-										<form id="registMyTaskForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+										<form id="registMyTaskForm" method="post" enctype="multipart/form-data" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
 											<!-- 프로젝트명 -->
 											<div class="item form-group">
 												<label class="col-form-label col-md-2 col-sm-2 label-align" for="projNo">프로젝트</label>
@@ -90,13 +90,15 @@
 											<div class="item form-group">
 												<label class="col-form-label col-md-2 col-sm-2 label-align" for="title">업무명</label>
 												<div class="col-md-10 col-sm-10">
-													<input type="text" id="title" class="form-control form-control-sm" name="title">
+													<input type="text" id="myTaskOverlayTitle" class="form-control form-control-sm" name="title">
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-form-label col-md-2 col-sm-2 label-align">업무내용</label>
-												<div class="col-md-10 col-sm-10"></div>
-												<textarea class="taskOverlayContent" name="content"></textarea>
+												<div class="col-md-12 col-sm-12"></div>
+												<textarea id="myTaskOverlayContent" class="taskOverlayContent" name="content"></textarea>
+											</div>
+											<div style="width:100%; float:left">
+												<input name="files" id="myTaskRegistUpload" type="file" aria-label="files" />
 											</div>
 											<div class="col-md-12 col-sm-12 m-1 p-1 text-right">
 												<button type="button" class="btn btn-primary" onclick="registMyTask();">등록</button>
@@ -115,6 +117,8 @@
 		
 		<script>
 			window.addEventListener('load', function() {
+				summernote_go($('.taskOverlayContent'));
+				
 				var sessionId = $("#sessionId").val();
 				var selectedProjNo = null;
 				$("#taskUserId").val(sessionId);
@@ -142,29 +146,6 @@
 						alert(error.status);
 					}
 				});
-				
-				<%-- $.ajax({
-					url : "<%=request.getContextPath()%>/app/task/getTaskRegistInfoByProjNo",
-					type : 'POST',
-					datatype : 'text',
-					data : {"projNo" : selectedProjNo},
-					async : false,
-					success : function(data) {
-						$('#taskUserId').empty();
-						var userList = data.userList;
-						
-						for(var i = 0; i < userList.length; i++){
-							var option = "<option value='" + userList[i].userId + "'>" + userList[i].nickname + "</option>";
-							
-							$('#taskUserId').append(option);
-							
-							$("#taskUserId option:eq(0)").prop("selected", true);
-						}
-					},
-					error : function(error) {
-						alert(error.status);
-					}
-				}); --%>
 			});
 			
 			function cancelMyTask(){
@@ -172,16 +153,33 @@
 			}
 			
 			function registMyTask() {
-				var taskVO = $('#registMyTaskForm').serialize();
-				var selectedProjTitle = $("#projTitle option:selected").text();
+				if(!$("#myTaskOverlayContent").val()){
+					alert("업무내용을 입력해주세요.");
+					return;
+				}
+				if(!$("#myTaskOverlayTitle").val()){
+					alert("업무명을 입력해주세요.");
+					return;
+				}
+				if(!$("#startdate").val()){
+					alert("시작일을 입력해주세요.");
+					return;
+				}
+				if(!$("#enddate").val()){
+					alert("종료일을 입력해주세요.");
+					return;
+				}
 				
-				taskVO += "&projTitle=" + selectedProjTitle;
+				var	projNo = $("#projTitle option:selected").val();
+				var projTitle = $("#projTitle option:selected").text();
+				var taskVO = $('#registMyTaskForm')[0];
+				var formData = new FormData(taskVO);
+				formData.append("projTitle", projTitle);
 				
 				$.ajax({
 					url : "<%=request.getContextPath()%>/app/task/registTask",
 					type : 'POST',
-					datatype : 'text',
-					data : taskVO,
+					data : formData,
 					success : function(data) {
 						alert("등록에 성공했습니다.");
 						
@@ -191,8 +189,11 @@
 					},
 					error : function(status) {
 						alert("등록에 실패하였습니다.");
-					}
-				});
+					},
+					cache:false,
+					contentType:false,
+					processData:false
+				}); 
 			}
 		</script>
 	</body>
