@@ -338,7 +338,7 @@
                       <br>
                       <p class="text-center">콜라보 하고 싶은 프로젝트의 리더에게 제안해보세요.</p>
                       <div class="mid_center d-flex justify-content-center">
-                        <div class="btn create-btn collabo-none-btn" data-toggle="modal" data-target="#createCollabo">
+                        <div class="btn create-btn collabo-none-btn" data-toggle="modal" data-target="#createCollabo" onclick="createCollabo()">
                           <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
                             class="bi bi-plus" viewBox="0 0 16 16">
                             <path
@@ -365,31 +365,60 @@
   </div>
   
   <script>
-  window.addEventListener('load', function() {
-	  
-	  $.ajax({
-			url : "/app/collabo/getProjectTitleCollabo.do",
+/*   
+//나의 프로젝트 셀렉트 함수  
+function createCollabo() {
+	$.ajax({
+		url : "/app/collabo/getProjectTitleCollabo.do",
+		type : "POST",
+		success : function(arg) {
+			console.log("나의 프로젝트 arg => " + arg)
+			let projTitle = "<option value='' disabled selected hidden>프로젝트를 선택해주세요.</option>";
+			
+			for (var i = 0; i < arg.length; i++) {
+				console.log("arg[i] => " + arg[i].title + arg[i].projNo);
+				projTitle += "<option class='projNoIdx' idxNo='"+arg[i].projNo+"' value='"+arg[i].title+"'>"+arg[i].title+"</option>";
+			}
+			document.getElementById('selectOwnProject').innerHTML= projTitle;
+		},
+		error : function(arg) {
+			alert("리스트 출력 에러임" + arg.status + "메세지" + arg.responseText);
+		}
+	})
+};  
+
+//상대방의 프로젝트 셀렉트 함수 
+function selectOtherProj(){
+	if (window.event.keyCode == 13) {
+    	alert("ddddd");
+		let userName = document.getElementById('tags_1').value;
+		document.getElementById("name1").innerHTML = userName;
+		
+				
+		 $.ajax({
+			url : "/app/collabo/getProjectTitleOther.do",
 			type : "POST",
+			data : {"userId" : userName},
+			
 			success : function(arg) {
-				let projTitle = "<option value='' disabled selected hidden>프로젝트를 선택해주세요.</option>";
+				console.log("arg => " + arg)
+				let projTitle = "<option value='' disabled hidden>프로젝트를 선택해주세요.</option>";
 				
 				for (var i = 0; i < arg.length; i++) {
-					console.log("arg[i] => " + arg[i].title + arg[i].projNo);
+					console.log("콜라보 Other arg[i] => " + arg[i].title + arg[i].projNo);
+					
 					projTitle += "<option class='projNoIdx' idxNo='"+arg[i].projNo+"' value='"+arg[i].title+"'>"+arg[i].title+"</option>";
 				}
-				document.getElementById('selectOwnProject').innerHTML= projTitle;
+				document.getElementById('selectOtherProject').innerHTML= projTitle;
 			},
 			error : function(arg) {
 				alert("리스트 출력 에러임" + arg.status + "메세지" + arg.responseText);
 			}
+			
 		})
-	
-		
-});
-  
+    }
+}; */
 
-		
-	
   </script>
 
 

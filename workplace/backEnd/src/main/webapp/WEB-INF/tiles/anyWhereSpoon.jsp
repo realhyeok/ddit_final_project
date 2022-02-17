@@ -22,19 +22,19 @@
                   <div class="form-group row ">
                     <label class="control-label col-md-3 col-sm-3 ">프로젝트 명</label>
                     <div class="col-md-9 col-sm-9 ">
-                      <input type="text" class="form-control" readonly="readonly" placeholder="Default Input" value="">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="control-label col-md-3 col-sm-3 ">업무 명 </label>
-                    <div class="col-md-9 col-sm-9 ">
-                      <input type="text" class="form-control" readonly="readonly" placeholder="Disabled Input" value="">
+                      <input type="text" class="form-control" readonly="readonly" value="">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="control-label col-md-3 col-sm-3 ">담당자</label>
                     <div class="col-md-9 col-sm-9 ">
-                      <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="">
+                      <input type="text" class="form-control" readonly="readonly" placeholder="담당자를 선택해주세요." value="">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="control-label col-md-3 col-sm-3 ">업무 명 </label>
+                    <div class="col-md-9 col-sm-9 ">
+                      <input type="text" class="form-control" readonly="readonly" placeholder="업무를 선택해주세요." value="">
                     </div>
                   </div>
 

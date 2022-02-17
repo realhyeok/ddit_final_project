@@ -24,7 +24,7 @@
 		<!-- 오버레이 시작 -->
 		<div id="myMileOverlay"></div>
 		<!-- 오버레이 끝 -->
-		
+
 		<script type="text/x-handlebars-template" id="myMileRegistFormTemplate">
 			<div class="row" id="fadeInMyIssueContent">
 				<div class="col-md-12">
@@ -45,7 +45,6 @@
 										<div class="item form-group">
 											<label class="col-form-label col-md-3 col-sm-3 label-align" for="projTitle">프로젝트명	</label>
 											<div class="col-md-6 col-sm-6 ">
-													{{projNo}}
 												<select class="form-control form-control-sm" id="myProjTitle" name="projNo">
 													{{#each .}}
 														<option value="{{projNo}}">{{projTitle}}</option>
@@ -65,8 +64,7 @@
 		          							<label class="col-form-label col-md-3 col-sm-3 label-align for="status">마일스톤 상태</label>
 											<div class="col-md-6 col-sm-6 ">
 		            							<select class="form-control form-control-sm" id="status" name="status">
-		              								<option	value="B301">미완료</option>
-		              								<option	value="B302">완료</option>
+		              								<option	value="B301">미해결</option>
 		            							</select>
 											</div>
 		        						</div>
@@ -84,9 +82,10 @@
 											<select id="myMileIssueTag" name="myIssueList" multiple="multiple" data-placeholder="추가하실 이슈를 선택해주세요.">
 		        							</select>
 										</div>
-										<div class="col-md-12 col-sm-12 mt-3" style="text-align:center;">
+										<div class="col-md-12 col-sm-12 mt-3" style="text-align:right;">
 											<button type="button" class="btn btn-success" onclick="registMyMilestone();">등록</button>
-											<button class="btn btn-primary" type="button" onclick="cancelMyMilestone();">취소</button>
+											<button type="button" class="btn btn-primary" onclick="cancelMyMilestone();">취소</button>
+											<button type="reset" class="btn btn-info">리셋</button>
 										</div>
 									</form>
 								</div>
@@ -138,12 +137,12 @@
 														{{#ifCond mileVO.status "==" "B301"}}
 															selected
 														{{/ifCond}}
-													value="B301">미완료</option>
+													value="B301">미해결</option>
               										<option
 														{{#ifCond mileVO.status "==" "B302"}}
               												selected
 														{{/ifCond}}
-													value="B302">완료</option>
+													value="B302">해결</option>
 												</select>
 											</div>
 										</div>
@@ -164,9 +163,10 @@
 												{{/each}}
 											</select>
 										</div>
-										<div class="col-md-7 col-sm-7 offset-md-3 mt-3" style="text-align:center;">
+										<div class="col-md-7 col-sm-7 offset-md-3 mt-3" style="text-align:right;">
 											<button type="button" class="btn btn-success" onclick='modifyMyMilestone();'>수정</button>
 											<button type="button" class="btn btn-primary" onclick="cancelMyMilestone();">취소</button>
+											<button type="reset" class="btn btn-info">리셋</button>
 										</div>
 									</form>
 								</div>
@@ -177,11 +177,228 @@
 			</div>
 		</script>
 	
+		<script type="text/x-handlebars-template" id="myIssueRegistFormTemplate">
+			<div class="row" id="fadeInMyIssueContent">
+				<div class="col-md-12">
+					<div class="x_panel">
+						<div class="x_title row d-flex justify-content-between">
+							<h5 class="title">
+								<i class="fa fa-clone"></i> <span class="task-bold task-sm">이슈 등록</span>
+							</h5>
+							<div class="clearfix">
+								<button onclick="cancelMyMilestone();" class="btn btn-primary btn-sm">X</button>
+							</div>
+						</div>
+						<div class="x_content">
+							<div class="row">
+								<div class="x_content">
+									<form id="registMyIssueForm" method="post" enctype="multipart/form-data" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+										<!-- 프로젝트명 -->
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="projTitle">프로젝트명</label>
+											<div class="col-md-6 col-sm-6 ">
+												<select class="form-control form-control-sm" id="myIssueRegistProjTitle" name="projNo">
+													{{#each .}}
+														<option value="{{projNo}}">{{projTitle}}</option>
+													{{/each}}
+		            							</select>
+											</div>
+										</div>
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align for="userNickname">제기자</label>
+											<div class="col-md-6 col-sm-6 ">
+												<select class="form-control form-control-sm" id="myIssueRegistUserNickname" name="userId" reaonly>
+		              								<option value="${userVO.userId}">${userVO.nickname}</option>
+		            							</select>
+											</div>
+										</div>
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align for="important">중요도</label>
+											<div class="col-md-6 col-sm-6 ">
+     											<select class="form-control form-control-sm" id="myIssueRegistImportant" name="important">
+       												<option value="B401">낮음</option>
+       												<option value="B402">중간</option>
+      												<option value="B403">높음</option>
+     											</select>
+											</div>
+ 										</div>
+										<div class="item form-group">
+   											<label class="col-form-label col-md-3 col-sm-3 label-align for="status">진행상태</label>
+											<div class="col-md-6 col-sm-6 ">
+     											<select class="form-control form-control-sm" id="myIssueRegistStatus" name="status">
+       												<option value="B501">진행전</option>
+       												<option value="B502">진행중</option>
+      												<option value="B503">완료</option>
+     											</select>
+											</div>
+ 										</div>
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="startdate">시작일</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="date" id="myIssueRegistStartdate" name="startdate" class="form-control form-control-sm">
+											</div>
+										</div>
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="enddate">마감일</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="date" id="myIssueRegistEnddate" name="enddate" class="form-control form-control-sm">
+											</div>
+										</div>
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="title">이슈명</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" id="myIssueRegistTitle" class="form-control form-control-sm" name="title">
+											</div>
+										</div>
+										<div class=form-group">
+											<textarea class="myIssueRegistSummernote" name="content" ></textarea>
+										</div>
+										<div style="width:100%; float:left">
+											<input name="files" id="myIssueRegistUpload" type="file" aria-label="files" />
+										</div>
+										<div class="col-md-12 col-sm-12 mt-3" style="text-align:right;">
+											<button type="button" class="btn btn-success" onclick='registMyIssue()'>등록</button>
+											<button type="button" class="btn btn-primary" onclick="cancelMyMilestone();">취소</button>
+											<button type="reset" class="btn btn-info">리셋</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>	
+		
+		<script type="text/x-handlebars-template" id="myIssueModifyFormTemplate">
+			<div class="row" id="fadeInMyIssueContent">
+				<div class="col-md-12">
+					<div class="x_panel">
+						<div class="x_title row d-flex justify-content-between">
+							<h5 class="title">
+								<i class="fa fa-clone"></i> <span class="task-bold task-sm">이슈 수정</span>
+							</h5>
+							<div class="clearfix">
+								<button onclick="cancelMyMilestone();" class="btn btn-primary btn-sm">X</button>
+							</div>
+						</div>
+						<div class="x_content">
+							<div class="row">
+								<div class="x_content">
+									<form id="modifyMyIssueForm" method="post" enctype="multipart/form-data" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+										<!-- 프로젝트명 -->
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="projTitle">프로젝트명</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" id="myIssueModifyProjTitle" required="required" class="form-control form-control-sm" name="projTitle" value="{{projTitle}}" readonly>
+												<input type="hidden" id="myIssueModifyIssueNo" name="issueNo" value="{{issueVO.issueNo}}">
+												<input type="hidden" id="myIssueModifyProjNo" name="projNo" value="{{issueVO.projNo}}">
+											</div>
+										</div>
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="userNickname">제기자</label>
+											<div class="col-md-6 col-sm-6 ">
+												<select class="form-control form-control-sm" id="myIssueModifyUserNickname" name="userId" reaonly>
+													<option value="${userVO.userId}">${userVO.nickname}</option>
+												</select>
+											</div>
+										</div>
+										<div class="item form-group">
+	          								<label class="col-form-label col-md-3 col-sm-3 label-align" for="important">중요도</label>
+											<div class="col-md-6 col-sm-6 ">
+	            								<select class="form-control form-control-sm" id="myIssueModifyImportant" name="important">
+													<option
+														{{#ifCond issueVO.important "==" "B401"}}
+			              									selected
+														{{/ifCond}}
+													value="B401">낮음</option>
+													<option
+														{{#ifCond issueVO.important "==" "B402"}}
+			              									selected
+														{{/ifCond}}
+													value="B402">중간</option>
+													<option
+														{{#ifCond issueVO.important "==" "B403"}}
+			              									selected
+														{{/ifCond}}
+													value="B403">높음</option>
+	            								</select>
+											</div>
+	        							</div>
+										<div class="item form-group">
+          									<label class="col-form-label col-md-3 col-sm-3 label-align" for="status">이슈 상태</label>
+											<div class="col-md-6 col-sm-6 ">
+            									<select class="form-control form-control-sm" id="myIssueModifyStatus" name="status">
+              										<option
+														{{#ifCond issueVO.status "==" "B501"}}
+			              									selected
+														{{/ifCond}}
+													value="B501">진행전</option>
+              										<option
+														{{#ifCond issueVO.status "==" "B502"}}
+			              									selected
+														{{/ifCond}}
+													value="B502">진행중</option>
+              										<option
+														{{#ifCond issueVO.status "==" "B503"}}
+			              									selected
+														{{/ifCond}}
+													value="B503">완료</option>
+            									</select>
+											</div>
+        								</div>
+        								<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="startdate">시작일</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="date" id="myIssueModifyStartdate" value="{{formatTime issueVO.startdate "yyyy-MM-DD"}}" name="startdate" class="form-control form-control-sm">
+											</div>
+										</div>
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="enddate">마감일</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="date" id="myIssueModifyEnddate" value="{{formatTime issueVO.enddate "yyyy-MM-DD"}}" name="enddate" class="form-control form-control-sm">
+											</div>
+										</div>
+										
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="title">이슈명</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" id="myIssueModifyTitle" class="form-control form-control-sm" name="title" value="{{issueVO.title}}">
+											</div>
+										</div>
+										<div class="form-group">
+											<textarea class="myIssueModifySummernote" id="myIssueModifyContent" name="content">{{{issueVO.content}}}</textarea>
+										</div>
+										<div style="width:100%; float:left">
+											<input name="files" id="myIssueModifyUpload" type="file" aria-label="files" />
+										</div>
+										<div class="col-md-12 col-sm-12 mt-3" style="text-align:right;">
+											<button type="button" class="btn btn-success" onclick='modifyMyIssue();'>수정</button>
+											<button type="button" class="btn btn-primary" onclick="cancelMyMilestone();">취소</button>
+											<button type="reset" class="btn btn-info">리셋</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+		
 		<script>
 			function printData(data, target, templateObject){
 				var template = Handlebars.compile(templateObject.html());
 				var html = template(data);
 				target.html('').html(html);
+			}
+			
+			function myIssueModifyForm(data){
+				printData(data, $('#myMileOverlay'), $('#myIssueModifyFormTemplate'));
+			}
+			
+			function myIssueRegistForm(data){
+				printData(data, $('#myMileOverlay'), $('#myIssueRegistFormTemplate'));
 			}
 			
 			function myMileRegistForm(data){

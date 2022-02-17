@@ -182,10 +182,10 @@ function checkValidate(FormId, targetName) {
 
 }
 
-function anyWhereMailRegistOverlayMemory(userIds){
+function anyWhereMailRegistOverlayMemory(uid){
 	var anyWhereMailMemoryCapacity = null;
 	
-	var userId = userIds;
+	var userId = uid;
 
 	$.ajax({
 		url: "/app/myWork/getMemoryCapacity",
@@ -234,12 +234,22 @@ function removeOverlayAnyWhereAttachFile_go(dataNum){
 	$('div[data-no="' + dataNum + '"]').remove();
 }
 
-function mailOverlayAnyWhereRegist_go(dist, userFrom){
+function mailOverlayAnyWhereRegist_go(dist, uFrom){
+	var userTo = $("#anyWhereMailOverlayUserTo").val();
+	var userFrom = uFrom;
 	
 	if(dist == "temp"){
-		$("#anyWhereOverlayDist").val("temp");
+		if(userTo == userFrom){
+			$("#anyWhereOverlayDist").val("tempMine");
+		}else{
+			$("#anyWhereOverlayDist").val("temp");
+		}
 	}else if(dist == "send"){
-		$("#anyWhereOverlayDist").val("send");
+		if(userTo == userFrom){
+			$("#anyWhereOverlayDist").val("mine");
+		}else{
+			$("#anyWhereOverlayDist").val("send");
+		}
 	}
 	
 	var files = $('input[class="anyWhereMailOverlayAttachFile"]');
@@ -270,35 +280,36 @@ function mailOverlayAnyWhereRegist_go(dist, userFrom){
 	}
 	if(dist == "send"){
 		var receiverId = $("#anyWhereMailOverlayUserTo").val();
-		mailAlarm(receiverId, userFrom);
+		var nickname = userFrom;
+		mailAlarm(nickname, receiverId);
 	}
 	document.overlayAnyWhereMailRegistForm.submit();
 }
 
-function mailAlarm(rid, userFrom){
-	var nickname   = userFrom;
+function mailAlarm(nickname, receiverId){
+	var nickname   = nickname;
 	var where      = "메일";
 	var target     = "메일";
 	var whatTodo   = "전송";
 	var projNo     = "0";
-	var receiverId = rid;
+	var receiverId = receiverId;
 	
-	let socketData = {
-		nickname   : nickname,
-		where      : where,
-		target     : target,
-		whatToDo   : whatTodo,
-		projNo     : projNo,
-		receiverId : receiverId
+	let mailRegistSocketData = {
+		"nickname"   : nickname,
+		"where"      : where,
+		"target"     : target,
+		"whatToDo"   : whatTodo,
+		"projNo"     : projNo,
+		"receiverId" : receiverId
 	}
 	
 	if(socket){
-		let socketMsg = socketData.nickname 
-				+ "," + socketData.where 
-				+ "," + socketData.target 
-				+ "," + socketData.whatToDo 
-				+ "," + socketData.projNo
-				+ "," + socketData.receiverId;
-		socket.send(socketMsg);
+		let mailRegistSocketMsg = mailRegistSocketData.nickname 
+						  + "," + mailRegistSocketData.where 
+						  + "," + mailRegistSocketData.target 
+						  + "," + mailRegistSocketData.whatToDo 
+						  + "," + mailRegistSocketData.projNo
+						  + "," + mailRegistSocketData.receiverId;
+		socket.send(mailRegistSocketMsg);
 	}
 }

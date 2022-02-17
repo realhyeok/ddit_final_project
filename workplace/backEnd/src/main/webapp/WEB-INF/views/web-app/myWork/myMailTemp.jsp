@@ -12,7 +12,7 @@
 </div>
 
 <script id="tempMailList-template" type="text/x-kendo-template">
-	<div class="mail_list m-0 border-bottom-0">
+	<div class="mail_list m-0 border-bottom-0" onclick="location.href='javascript:tempMailDetail(#:mailNo#);'" style="cursor:pointer;">
 		<div class="left">
 			<input class="tempCheck" type="checkbox" value="#:mailNo#">
 			# if(attachList.length != 0){ #
@@ -20,8 +20,8 @@
 			# } #
 		</div>
 		<div class="right" style="height:40px;">
-			<h3 style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:userTo#<small>#:regDate#</small></h3>
-			<a href="javascript:tempMailDetail(#:mailNo#);"><p style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:title#</p></a>
+			<h3 class="m-0"><p class="m-0 d-inline-block text-truncate" style="padding-bottom:6px;max-width:200px;">#:userTo#</p><small>#:regDate#</small></h3>
+			<p class="d-inline-block text-truncate" style="max-width:300px;">#:title#</p>
 		</div>
 	</div>
 </script>
@@ -37,8 +37,9 @@
 					<button type="button" class="btn btn-sm btn-dark btn-append" onclick="deleteTempMailOne({{mailNo}});"><i class="fa fa-times-circle-o"></i>&nbsp;&nbsp;삭제</button>
 				</div>
 			</div>
-			<input type="hidden" id="userFrom" name="userFrom" value="${userVO.userId}">
+			<input type="hidden" id="tempUserFrom" name="userFrom" value="${userVO.nickname}">
 			<input type="hidden" id="mailNo" name="mailNo" value="{{mailNo}}">
+			<input type="hidden" id="tempDist" name="dist" value="">
 			<div class="col-md-4 text-right">
 				<p class="date">{{regDate}}</p>
 			</div>
@@ -240,6 +241,15 @@
 	}
 	
 	function tempMailRegist_go(){
+		var tempUserFrom = $("#tempUserFrom").val();
+		var tempUserTo = $("#tempUserTo").val();
+		
+		if(tempUserFrom == tempUserTo){
+			$("#tempDist").val("mine");
+		}else if(tempUserFrom != tempUserTo){
+			$("#tempDist").val("send");
+		}
+		
 		var files = $('input[class="tempAttachFile"]');
 		for(var file of files){
 			console.log(file.name + " : " + file.value);
@@ -267,7 +277,8 @@
 		}
 		
 		var receiverId = $("#tempUserTo").val();
-		mailAlarm(receiverId);
+		var nickname = "${userVO.nickname}";
+		mailAlarm(nickname, receiverId);
 		
 		document.tempMailRegistForm.submit();
 	}

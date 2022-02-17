@@ -83,5 +83,8 @@ public interface UserService {
 
 	// 유저 아이디를 참조하여 콜라보 리스트를 리턴한다.
 	public List<CollaboVO> getCollaboListByUserId(String userId) throws SQLException;
+	
+	// 프로젝트 넘버를 참조하여 프로젝트 대시보드에 사용할 진척도 그래프 리스트를 리턴한다.
+	public List<UserVO> getMemberAchievementList(String projNo) throws SQLException;
 
 }

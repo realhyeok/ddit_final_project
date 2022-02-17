@@ -20,6 +20,7 @@ const projDataSource = new kendo.data.DataSource({
             	  status: { type: "string" },
             	  updatedate: { type: "date" },
             	  tagNames: {from:"tagNames"},
+            	  tagNo: {from:"tagNo"}
               }
           }
       }
@@ -84,7 +85,7 @@ const taskDataSource = new kendo.data.DataSource({
 const projList = $("#project-list").kendoGrid({
 	pageable: true,
 	toolbar: [
-		{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"projRegistTypeTemplate\");'>프로젝트 등록</a>" }
+		{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"projRegistFormTemplate\");'>프로젝트 등록</a>" }
 		,{ template: "<div class='k-spacer'>&nbsp;</div>"},"search","pdf"
 	],
 	messages: {
@@ -171,13 +172,15 @@ function getParameterByName(name) {
 /*핸들바스관련 CRUD*/
 function deleteTaskById(url, taskNo){
 
+	var taskVO = {"taskNo":taskNo}
+
 	if(window.confirm("정말로 삭제하시겠습니까?")){
 
 		$.ajax({
 			url : url,
 			type : 'POST',
 			datatype : 'text',
-			data : taskNo,
+			data : taskVO,
 			success : function(data) {
 				alert("삭제가 완료되었습니다.");
 				document.getElementById('task-tab').click();

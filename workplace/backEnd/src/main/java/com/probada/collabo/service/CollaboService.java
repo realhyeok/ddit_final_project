@@ -7,6 +7,7 @@ import com.probada.collabo.command.CollaboCommand;
 import com.probada.collabo.vo.CollaboVO;
 import com.probada.mail.vo.MailVO;
 import com.probada.project.vo.ProjectVO;
+import com.probada.user.vo.UserVO;
 
 public interface CollaboService {
 	
@@ -19,6 +20,9 @@ public interface CollaboService {
 	public CollaboVO getCollaboByCprojNo(String cprojNo) throws SQLException;
 	
 	public int getCollaboCount(String userId)throws SQLException;
+	
+	// 프로젝트 상세에서 사용되는 유저리스트
+	public List<UserVO> getUserByCProjNo(String cprojNo) throws SQLException;
 	
 	public String registCollabo(CollaboVO collaboVO)throws SQLException;
 	
@@ -33,4 +37,8 @@ public interface CollaboService {
 	
 	//콜라보 제안 메일 발송
 	public void sendInviteCollaboMail(CollaboCommand cmd) throws SQLException;
+	
+	public String getCprojectNameByCprojNo(String cprojNo) throws SQLException;
+	
+	
 }

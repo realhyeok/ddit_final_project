@@ -236,22 +236,7 @@ public class UserModifyController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
@@ -268,18 +253,15 @@ public class UserModifyController {
 
 		//암호화되어 있는 to를 복호화 시킨 후, 같은 String타입의 from과 문자열이 같은지 비교한다.
 		//userUtil.comparePwd(passwords, passwords);
-		//하드코딩
 		UserVO userVO= (UserVO)session.getAttribute("userVO");
 	
 		ResponseEntity<String> entity = null;
 		String pwd;
 		boolean chk;
-		pwd = userService.getPwdByUserId(userVO.getUserId());
-		LOGGER.debug("pwd=>{}",pwd);
-		chk = userUtil.comparePwd(passwords, pwd);
-		
-		
-		
+		//pwd = userService.getPwdByUserId(userVO.getUserId());
+		chk = userUtil.comparePwd(passwords, userVO.getUserId());
+
+
 		LOGGER.debug("chk=>{}",chk);
 		
 		if(chk) {
@@ -302,7 +284,7 @@ public class UserModifyController {
 		
 		
 		ResponseEntity<String> entity = null;
-		String encodePassword;
+		String newPassWord;
 		UserVO user = new UserVO();
 		
 //		encodePassword = userUtil.encodePwd(password);
@@ -310,10 +292,13 @@ public class UserModifyController {
 //		user.setPwd(encodePassword);
 		
 		
+		newPassWord= userUtil.encodePwd(password, userVO.getUserId());
+		
+		user.setPwd(newPassWord);
+		
 		userService.modifyUser(user);
 		
-		
-		
+
 		LOGGER.debug("user=>{}",user);
 
 		entity =  new ResponseEntity<String>("",HttpStatus.OK);
@@ -331,11 +316,8 @@ public class UserModifyController {
 		ResponseEntity<String> entity = null;
 		String pwd;
 		boolean chk;
-		//하드코딩
-		
-		pwd = userService.getPwdByUserId(userVO.getUserId());
-		LOGGER.debug("pwd=>{}",pwd);
-		chk = userUtil.comparePwd(passwords, pwd);
+
+		chk = userUtil.comparePwd(passwords, userVO.getUserId());
 		LOGGER.debug("chk=>{}",chk);
 		
 		UserVO user = new UserVO();
@@ -345,10 +327,12 @@ public class UserModifyController {
 		
 		
 		if(chk) {
-			entity =  new ResponseEntity<String>("탈퇴완료",HttpStatus.OK);
+			entity =  new ResponseEntity<String>("yes",HttpStatus.OK);
+			LOGGER.debug("chk11=>{}",chk);
 			userService.modifyUser(user);
 		}else {
-			entity = new ResponseEntity<String>("비밀번호가 일치하지 않습니다.",HttpStatus.BAD_GATEWAY);
+			entity = new ResponseEntity<String>("no",HttpStatus.BAD_GATEWAY);
+			LOGGER.debug("entity=>{}",entity);
 		}
 
 	

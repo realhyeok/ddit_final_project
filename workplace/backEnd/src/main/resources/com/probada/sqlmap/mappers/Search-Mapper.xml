@@ -9,13 +9,92 @@
 
 
 
+<resultMap id="searchColResultMap" type="com.probada.totalSearch.vo.SearchProjVO">
+
+		<result column="CPROJ_NO" property="projNo" />
+		<result column="TITLE" property="title" />
+		<result column="STARTDATE" property="startdate" />
+		<result column="ENDDATE" property="enddate" />
+		<result column="PRIVACY" property="privacy" />
+		<result column="NOTICE" property="notice" />
+		<result column="NOTICE_CONT" property="noticeCont" />
+		<result column="UPDATEDATE" property="updatedate" />
+		<result column="STATUS" property="status" />
+		<result column="INTRO" property="intro" />
+		<result column="DOC_CONT_NO" property="docContNo" />
+		<result column="LIKE_COUNT" property="likeCount" />
+
+</resultMap>
+
+
+
+
+
+
+<select id="selectUserByNickName" resultType="com.probada.user.vo.UserVO" parameterType="str">
+
+	   select * from "USER"
+    		where nickname = #{date}     
+										  
+</select>
+
+
+<select id="selectProjectListByAutoComplate" resultType="com.probada.project.vo.ProjectVO" parameterType="str">
+
+		SELECT *
+ 		 FROM project
+ 		 where PRIVACY = 'A401'
+ 		 ORDER BY startdate,LIKE_COUNT DESC
+										  
+</select>
+
+
+
+
+<select id="selectCollaboListByAutoComplate" resultMap="searchColResultMap" parameterType="str">
+
+		SELECT *
+ 		 FROM c_project
+ 		 where PRIVACY = 'A401'
+ 		 ORDER BY startdate,LIKE_COUNT DESC
+										  
+</select>
+
+
+<select id="selectCollaboListBySearch" resultMap="searchColResultMap" parameterType="str">
+		SELECT *
+ 		 FROM c_project
+ 			WHERE LOWER(title)LIKE LOWER('%'||LOWER(#{data})||'%')
+ 			and PRIVACY = 'A401'
+										  
+</select>
+
+
+<select id="selectCollaboPLBySearch" resultType="str" parameterType="str">
+
+		 select b.nickname from C_PROJECT_R a, "USER" b
+			 where a.CPROJ_NO IN (
+									 SELECT CPROJ_NO
+									 FROM c_project
+									 WHERE LOWER(title) like LOWER('%'||LOWER(#{data})||'%')
+									 and PRIVACY = 'A401'
+								 )
+				  and a.ROLE='A303'
+				  and a.user_id = b.user_id
+		
+</select>
+
+
+
+
+
 
 <select id="selectPopProjBySearch" resultType="com.probada.totalSearch.vo.SearchProjVO" parameterType="str">
 
 		SELECT *
  		 FROM project
- 		 where PRIVACY = 'A501'
- 		 ORDER BY LIKE_COUNT DESC
+ 		 where PRIVACY = 'A401'
+ 		 ORDER BY startdate,LIKE_COUNT DESC
 										  
 </select>
 
@@ -45,33 +124,41 @@
 
 <select id="selectPLBySearch" resultType="str" parameterType="str">
 
-		 select a.user_id from USER_PROJECT a
+		 select b.nickname from USER_PROJECT a, "USER" b
 			 where a.proj_no IN (
 								  SELECT proj_no
 								 FROM project
 								 WHERE LOWER(title) like LOWER('%'||LOWER(#{data})||'%')
 								 and PRIVACY = 'A401'
 								 )
-				  and a.ROLE='A303'
+				 and a.ROLE='A303'
+                  and a.user_id = b.user_id
 		
 </select>
 
 
 <select id="selectPopPLBySearch" resultType="str" parameterType="str">
 
-	 select a.USER_ID from USER_PROJECT a,  (SELECT proj_no,like_count
-                                             FROM project
-                                             ORDER BY LIKE_COUNT DESC) b
-			 where a.proj_no IN b.proj_no 		
+	  select c.nickname from USER_PROJECT a, "USER" c,  (SELECT proj_no,like_count
+			                                             FROM project
+			                                             where privacy = 'A401'
+			                                             ORDER BY LIKE_COUNT DESC) b
+				 where   a.proj_no IN b.proj_no 		
 				         and a.ROLE='A303'
+                         and a.user_id = c.user_id
 
 </select>
 
 
 
+<select id="selectTagNoByTagName" resultType="str" parameterType="str">
 
+	  
+	select tag_no from tag
+	where tag_name = #{data}
+		  
 
-
+</select>
 
 
 <!-- 	<select id="selectUserById" resultType="User" parameterType="str">

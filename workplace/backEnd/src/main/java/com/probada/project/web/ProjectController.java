@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,12 +17,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.probada.document.vo.FileVO;
+import com.probada.mail.command.MailRegistCommand;
+import com.probada.mail.service.MailService;
+import com.probada.mail.vo.MailVO;
 import com.probada.project.service.ProjectService;
 import com.probada.project.vo.ProjectVO;
 import com.probada.user.vo.UserVO;
+import com.probada.util.DocumentUtil;
 import com.probada.util.ProjectUtil;
 
 @Controller
@@ -32,6 +40,10 @@ public class ProjectController {
 	ProjectService projectService;
 	@Resource(name="projectUtil")
 	ProjectUtil projectUtil;
+	@Resource(name="documentUtil")
+	DocumentUtil documentUtil;
+	@Resource(name="mailService")
+	MailService mailService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProjectController.class);
 
@@ -196,8 +208,226 @@ public class ProjectController {
 		return entity;
 	}
 
+	@RequestMapping("/uploadProjectDocument")
+	@ResponseBody
+	public ResponseEntity<HashMap<String, Object>> uploadProjectDocument(@RequestPart(value="files",required = false) List<MultipartFile> files,
+			HttpServletResponse response, HttpServletRequest request, ProjectVO projectVO) throws Exception {
+		ResponseEntity<HashMap<String, Object>> entity = null;
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		ProjectVO resultVO = new ProjectVO();
+		try {
+
+			String title = projectUtil.getProjectNameByProjNo(projectVO.getProjNo());
+			resultVO.setProjNo(projectVO.getProjNo());
+			resultVO.setTitle(title);
+
+			documentUtil.projectDocumentUpload(files, request, response, resultVO);
 
 
+			entity = new ResponseEntity<HashMap<String, Object>>(hashMap,HttpStatus.OK);
+
+		} catch (Exception e) {
+			entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+
+	@RequestMapping("/deleteProjectDoc")
+	@ResponseBody
+	public ResponseEntity<FileVO> deleteProjectDoc(FileVO fileVO) throws Exception{
+
+		LOGGER.debug("[요청받음] => /taskDocumentRemove => " + fileVO);
+
+		ResponseEntity<FileVO> entity = null;
+
+		try {
+
+			documentUtil.documentRemoveResolver(fileVO);
+
+			entity = new ResponseEntity<FileVO>(HttpStatus.OK);
+
+		} catch (Exception e) {
+			entity = new ResponseEntity<FileVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+			LOGGER.error(e.getMessage());
+		}
+		return entity;
+	}
+
+
+	@RequestMapping("/getProjectMemberList")
+	@ResponseBody
+	public ResponseEntity<List<UserVO>> getProjectMemberList(String projNo) throws Exception{
+
+		LOGGER.debug("[요청받음] => /getProjectMemberList => " + projNo);
+
+		ResponseEntity<List<UserVO>> entity = null;
+
+		try {
+
+			List<UserVO> userList = projectUtil.getProjectMemberByProjNo(projNo);
+
+			entity = new ResponseEntity<List<UserVO>>(userList,HttpStatus.OK);
+
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<UserVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			LOGGER.error(e.getMessage());
+		}
+		return entity;
+	}
+
+	@RequestMapping("/modifyUserRole")
+	@ResponseBody
+	public ResponseEntity<String> modifyUserRole(String projNo, ProjectVO projectVO, HttpServletRequest request) throws Exception{
+
+		LOGGER.debug("[요청받음] => /modifyUserRole => " + projectVO.toString());
+
+		ResponseEntity<String> entity = null;
+
+		try {
+
+			projectVO.setProjNo(projNo);
+			projectService.modifyUserRole(projectVO);
+
+			entity = new ResponseEntity<String>(HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			LOGGER.error(e.getMessage());
+		}
+		return entity;
+	}
+
+	@RequestMapping("/getUserRole")
+	@ResponseBody
+	public ResponseEntity<String> getUserRole(String projNo, HttpServletRequest request) throws Exception{
+
+		LOGGER.debug("[요청받음] => /getUserRole => " + projNo);
+
+		ResponseEntity<String> entity = null;
+
+		try {
+			ProjectVO projectVO = new ProjectVO();
+
+			HttpSession session = request.getSession();
+			UserVO userVO = (UserVO) session.getAttribute("userVO");
+			projectVO.setUserId(userVO.getUserId());
+			projectVO.setProjNo(projNo);
+
+			String role = projectService.getUserRole(projectVO);
+
+			entity = new ResponseEntity<String>(role,HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			LOGGER.error(e.getMessage());
+		}
+		return entity;
+	}
+
+	@RequestMapping("/getProjectListByParamUserId")
+	@ResponseBody
+	public ResponseEntity<List<ProjectVO>> getProjectListByParamUserId(@RequestParam("userId") String userId) throws Exception {
+		ResponseEntity<List<ProjectVO>> entity = null;
+
+		LOGGER.debug("[요청받음] => /getProjectListByParamUserId");
+
+		List<ProjectVO> projectList = new ArrayList<ProjectVO>();
+
+		try {
+			projectList = projectService.getProjectListByUserId(userId);
+			projectList = projectUtil.getProjectTagList(projectList);
+			projectList = projectUtil.getProjectMemberList(projectList);
+
+			entity = new ResponseEntity<List<ProjectVO>>(projectList,HttpStatus.OK);
+
+		} catch(Exception e) {
+			entity = new ResponseEntity<List<ProjectVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+
+
+	@RequestMapping("/removeProjectUserRelation")
+	@ResponseBody
+	public ResponseEntity<String> removeProjectUserRelation(ProjectVO projectVO) throws Exception{
+
+		LOGGER.debug("[요청받음] => /removeProjectUserRelation => " + projectVO);
+
+		ResponseEntity<String> entity = null;
+
+		try {
+
+			projectService.removeProjectUserRelation(projectVO);
+
+			entity = new ResponseEntity<String>(HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			LOGGER.error(e.getMessage());
+		}
+		return entity;
+	}
+
+	@RequestMapping("/quitProjectUserRelation")
+	@ResponseBody
+	public ResponseEntity<String> quitProjectUserRelation(ProjectVO projectVO) throws Exception{
+
+		LOGGER.debug("[요청받음] => /quitProjectUserRelation => " + projectVO);
+
+		ResponseEntity<String> entity = null;
+
+		try {
+				projectService.removeProjectUserRelation(projectVO);
+
+			entity = new ResponseEntity<String>(HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			LOGGER.error(e.getMessage());
+		}
+		return entity;
+	}
+
+	@RequestMapping("/registInviteMail")
+	@ResponseBody
+	public ResponseEntity<List<UserVO>> registInviteMail(MailRegistCommand regData, String projNo, HttpServletRequest request) throws Exception{
+
+		LOGGER.debug("[요청받음] => /registInviteMail => " + projNo);
+
+		ResponseEntity<List<UserVO>> entity = null;
+
+		try {
+
+			HttpSession session = request.getSession();
+			UserVO userVO = (UserVO) session.getAttribute("userVO");
+
+			String dist = "B901";
+			String userFrom = getUserIdByNickname(regData.getUserTo());
+			
+			MailVO mailVO = new MailVO();
+			mailVO.setTitle(regData.getTitle());
+			mailVO.setContent(regData.getContent());
+			mailVO.setUserTo(userFrom);
+			mailVO.setUserFrom(userVO.getNickname());
+			mailVO.setDist(dist);
+			
+			List<UserVO> userList = projectUtil.getProjectMemberByProjNo(projNo);
+
+			entity = new ResponseEntity<List<UserVO>>(userList,HttpStatus.OK);
+
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<UserVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			LOGGER.error(e.getMessage());
+		}
+		return entity;
+	}
+	
+	public String getUserIdByNickname(String userId) throws Exception {
+		return mailService.getUserIdByNickname(userId);
+	}
+	
+	public String getNicknameByUserId(String userId) throws Exception {
+		return mailService.getNicknameByUserId(userId);
+	}
 /*
 	@RequestMapping("/getProjectDashCard")
 	@ResponseBody

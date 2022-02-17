@@ -9,6 +9,6 @@ public interface ProjectTagService {
 
 	public List<ProjectTagVO> getTagNameList(String projNo) throws SQLException;
 
-
+	public List<ProjectTagVO> getProjectListByTagNo(String tagNo) throws SQLException;
 
 }

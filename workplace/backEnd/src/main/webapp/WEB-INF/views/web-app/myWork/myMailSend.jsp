@@ -12,7 +12,7 @@
 </div>
 
 <script id="sendMailList-template" type="text/x-kendo-template">
-	<div class="mail_list m-0 border-bottom-0">
+	<div class="mail_list m-0 border-bottom-0" onclick="location.href='javascript:sendMailDetail(#:mailNo#);'" style="cursor:pointer;">
 		<div class="left">
 			# if(userFrom == userTo){ #
 				<input class="sendCheck" type="checkbox" value="#:mailNo#" dist="mineMail">
@@ -25,8 +25,8 @@
 			# } #
 		</div>
 		<div class="right" style="height:40px;">
-			<h3 style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:userTo#<small>#:regDate#</small></h3>
-			<a href="javascript:sendMailDetail(#:mailNo#);"><p style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:title#</p></a>
+			<h3 class="m-0"><p class="m-0 d-inline-block text-truncate" style="padding-bottom:6px;max-width:200px;">#:userTo#</p><small>#:regDate#</small></h3>
+			<p class="d-inline-block text-truncate" style="max-width:300px;">#:title#</p>
 		</div>
 	</div>
 </script>
@@ -42,7 +42,7 @@
 				<p class="date">{{regDate}}</p>
 			</div>
 			<div class="col-md-12">
-				<h4> {{title}}</h4>
+				<h4 class="text-truncate"> {{title}}</h4>
 			</div>
 		</div>
 		<div class="sender-info">
@@ -56,7 +56,7 @@
 			</div>
 		</div>
 		<br>
-		<div class="view-mail" style="min-height:280px;">
+		<div class="view-mail" style="word-break:break-all;min-height:280px;">
 			{{{content}}}
 		</div>
 		<div class="attachment">
@@ -68,7 +68,6 @@
 			{{/if}}
 			
 			<div class="row">
-
 				{{#each attachList}}
 					<a href="<%=request.getContextPath()%>/app/myWork/attachDownload?attachNo={{attachNo}}" class="col-md-2 row m-2 p-1 rounded bg-warning String downloadSendAttaches">
 						<div class="col-3 p-0 text-center text-dark font-weight-bold">

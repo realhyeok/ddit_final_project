@@ -22,6 +22,11 @@ public class ProjectTagServiceImpl implements ProjectTagService {
 
 		return projectTagList;
 	}
+	
+	@Override
+	public List<ProjectTagVO> getProjectListByTagNo(String tagNo) throws SQLException {
+		return projectTagDAO.selectProjectListByTagNo(tagNo);
+	}
 
 
 }

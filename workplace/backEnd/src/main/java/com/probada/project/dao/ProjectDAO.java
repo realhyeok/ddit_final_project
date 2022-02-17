@@ -26,7 +26,11 @@ public interface ProjectDAO {
 	// ProjectUserRelation Table
 	public void insertProjectUserRelation(ProjectVO projectVO) throws SQLException;
 
+	public void deleteProjectUserRelation(ProjectVO projectVO) throws SQLException;
+
 	public String selectProjectNameByProjNo(String projNo) throws SQLException;
 
+	public void updateUserRole(ProjectVO projectVO) throws SQLException;
 
+	public String selectUserRole(ProjectVO projectVO) throws SQLException;
 }

@@ -2,6 +2,13 @@
 
 function createRoom(){
     	
+	
+	
+	
+	offChatList();
+	
+	
+	
   	  var title = document.getElementById('title');
   	  var selectProject = document.getElementById('selectProject');
   	  var checkCreateRoom = document.getElementById('checkCreateRoom');
@@ -21,7 +28,12 @@ function createRoom(){
 
   		 
   	   var arr_Season = document.getElementsByClassName('responseChatUserSeok');
+  	   var chatNickNames = document.getElementsByClassName('chatResNickname');
   		
+  	   
+  	
+  	  
+  	   
   		if(arr_Season.length==0){
   			 checkCreateRoom.innerHTML = "멤버는 적어도 한 명을 선택해야합니다.";
    			 return false;
@@ -47,6 +59,10 @@ function createRoom(){
 	  	    	  
 	  	    	  
 		        }
+	  	 
+	  	      
+	  	  //ajax로 도
+	  	      
 	  	      
 	  	
 	  	
@@ -56,13 +72,13 @@ function createRoom(){
 	  
 	    
 	    
-	  
 	    
-	    
+
 			$.ajax({
 				type : "POST",
 				url : "/chat/createRoom.do",
 				data : {"title":chatTitle,"ptitle":projectNo,"userId":userId},
+				
 				success : function(res) {
 
 					console.log("성공!");
@@ -71,14 +87,17 @@ function createRoom(){
 					for(var i=0;i<arr_Season.length;i++){
 						console.log("채팅방 성공에 id=>"+arr_Season[i].innerText);
 						console.log("채팅방 성공에 title"+chatTitle);
+						
+						alert(chatNickNames[i].innerText);
+						alert("보낸사람:"+res);
 					    //알림
 					    let socketData = {
-								nickname : '${userVO.nickname}',
+								nickname : res,
 								where : "채팅",
-								target : "채팅방 생성",
-								whatToDo : chatTitle+"생성",
+								target : "채팅방 초대",
+								whatToDo : chatTitle+"(으)로 초대 되었습니다.",
 								projNo: "0",
-								receiverId : arr_Season[i].innerText
+								receiverId : chatNickNames[i].innerText
 						};
 					    
 					    
@@ -94,10 +113,28 @@ function createRoom(){
 				    
 				    }
 				     
-			  	    //알림   
+					//석기현test
+					 Swal.fire({
+						  icon: 'success',
+						  title: chatTitle+'방이 생성되었습니다.',
+						
+						}).then((result) => {
+							  
+							  if (result.isConfirmed) {
+							   
+								  location.reload();
+								  
+							  } 
+						})
 					
-
-					location.reload();
+			    /*	setTimeout(function() {
+			    		location.reload();
+					}, 1500);
+			    	*/
+					    	
+					
+					
+					
 				},
 				error : function(err) {
 					console.log("에러" + err.status);
@@ -131,10 +168,10 @@ function chatListBox(selectProj){
 	
 	
 	 var customerTemplate = '<span class="k-state-default" style="background-image: url(\'/user/getPicture.do?picture=#:data.picture #\')"></span>' +
-     '<span class="k-state-default"><h3>#: data.nickname #</h3><p class="requestChatUserSeok">#: data.userId #</p></span>';	
+     '<span class="k-state-default"><h5 class="chatInvateUser">#: data.nickname #</h5><p class="requestChatUserSeok">#: data.userId #</p></span>';	
 	 
 	 var responseTemplate = '<span class="k-state-default" style="background-image: url(\'/user/getPicture.do?picture=#:data.picture #\')"></span>' +
-     '<span class="k-state-default" ><h3>#: data.nickname #</h3><p class="responseChatUserSeok">#: data.userId #</p></span>';
+     '<span class="k-state-default" ><h5 class="chatResNickname">#: data.nickname #</h5><p class="responseChatUserSeok">#: data.userId #</p></span>';
 	 
 	 $("#optionalSeok").kendoListBox({
 		 dataTextField: "nickname",
@@ -193,6 +230,8 @@ function chatListBox(selectProj){
 
 
 window.addEventListener('load', function(){
+	
+
 
 	$.ajax({
 	    url: "/chat/getProjectTitle.do",

@@ -55,6 +55,7 @@ function tempMailBox(userId){
 				return "<h2>메일이 존재하지 않습니다.</h2>";
 			}
 		},
+		scrollable: false,
 		columns: [
 			{ field: "mailNo" , hidden: true },    
 			{ field: "title"  , hidden: true },    

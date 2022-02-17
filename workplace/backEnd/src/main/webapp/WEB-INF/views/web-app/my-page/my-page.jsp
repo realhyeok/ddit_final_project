@@ -4,8 +4,8 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-    
     <body>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 	 <!-- page content -->
       <div class="right_col" role="main">
@@ -79,10 +79,11 @@
 	 							  <div style="display: inline-block;">
 		                          
 		                          <br>
-		                            <h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.nickname }</h5>
+		                          <br>
+		                            <h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.nickname }</h5>
 		                            <input type="hidden" id="userId" value="${user.userId }">
 		                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.userId }</h4>
-		                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-heart fa-2x"  style="color: red;">&nbsp;${user.likeCount}</i>
+		                          <%--    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-heart fa-2x"  style="color: red;">&nbsp;${user.likeCount}</i> --%>
 					                <br><br><br><br>
 		                        </div>
 	 							
@@ -225,7 +226,7 @@
 		                              </div>
 		                              	
 		                          </div>
-		  					        <span id="originPwdCheck"></span>
+		  					        <span id="originPwdCheck" style="color: red;"></span>
 		  					        </div>
 		                          <br>
 		                          <br>
@@ -239,7 +240,7 @@
 		                            </div>
 		                            
 		                          </div>  
-		      					<span id="newPwdCheck"></span>
+		      					<span id="newPwdCheck" style="color: red;"></span>
 		                        <br><br>
 							<form role="pwdform" onsubmit="return false;" class="pwdModify-form"  id="pwdModify-form">
 		                        <div class="form-group row">
@@ -250,7 +251,7 @@
 		      						  
 		                            </div>
 		                        </div>  
-		                        <span id="newPwdVCheck"></span>
+		                        <span id="newPwdVCheck" style="color: red;"></span>
 		    				
 		
 		                      
@@ -366,6 +367,37 @@
 
 							var formData = "";
 
+							
+							
+							
+							 function imgCheck(){
+							    	
+							    	Swal.fire({
+							    	
+							    		  icon: 'error',
+							    		  title: '이미지는 jpg/jpeg 형식만 가능합니다.',
+							    		  showConfirmButton: true
+							    		  
+							    		})
+
+							    	
+							    }
+							
+							 function imgSizeCheck(){
+							    	
+							    	Swal.fire({
+							    	
+							    		  icon: 'error',
+							    		  title: '사진 용량은 1MB 이하면 가능합니다.',
+							    		  showConfirmButton: false,
+							    		  timer: 10000
+							    		})
+
+							    	
+							    }
+							
+							
+							
 							function changePicture_go() {
 								var picture = $('input#inputFile')[0];
 
@@ -375,13 +407,13 @@
 
 								//이미지 확장자 jpg 확인
 								if (!(fileFormat == "JPG" || fileFormat == "JPEG")) {
-									alert("이미지는 jpg/jpeg 형식만 가능합니다.");
+									imgCheck();
 									return;
 								}
 
 								//이미지 파일 용량 체크
 								if (picture.files[0].size > 1024 * 1024 * 1) {
-									alert("사진 용량은 1MB 이하면 가능합니다.");
+									imgSizeCheck();
 									return;
 								}
 
@@ -412,9 +444,9 @@
 								formData = new FormData(
 										$('form[role="formPicture"]')[0]);
 
-								alert("업로드 시작");
-								$
-										.ajax({
+								
+								
+										$.ajax({
 											url : "/user/pictureUpload.do",
 											data : formData,
 											type : 'post',
@@ -425,7 +457,7 @@
 												$(
 														'form[role="form"] input[name="picture"]')
 														.val(data);
-												alert("사진이 업로드 되었습니다.");
+												
 											},
 											error : function(error) {
 												AjaxErrorSecurityRedirectHandler(error.status);
@@ -464,22 +496,19 @@
 										success : function(res) {
 											
 										
-												
-											alert("수정 성공");
-											location.href ="<%=request.getContextPath()%>/user/my-page";
-											
-											
+											userModifycheck();
+
 										},
 										error : function(err) {
-											alert("닉네임이 중복됩니다.");
-											location.href ="<%=request.getContextPath()%>/user/my-page";
+											nicknameCheck();
+											
+											
 										}
 									});
 							
 								
 								
 							}
-							
 							
 							
 							
@@ -540,8 +569,10 @@
 									},
 									success : function(res) {
 
-										alert("비번성공!");
-										location.reload();
+										
+										userPwdcheck();
+									
+										
 									},
 									error : function(err) {
 										alert("에러" + err.status);
@@ -649,9 +680,11 @@
 		      pwdreg = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/
 
 		      if(pwdreg.test(pwdvalue)){
+		    	  newPwdCheck.style.color='';
 		    	  newPwdCheck.innerHTML = "안전하게 사용가능합니다.";
 		      }
 		      else{
+		    	  newPwdCheck.style.color='red';
 		    	  newPwdCheck.innerHTML = "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요!";
 		      }
 
@@ -664,10 +697,12 @@
 	
 			      pwdCheck = $(this).val().trim()
 			      if(pwdCheck == pwdvalue){
+			    	  newPwdVCheck.style.color='';
 			    	  newPwdVCheck.innerHTML = "동일한 비밀번호 입니다.";
 			      }
 			      else{
-			         newPwdVCheck.innerHTML = "비밀번호가 동일하지 비밀번호 입니다.";
+			    	 newPwdVCheck.style.color='red';
+			         newPwdVCheck.innerHTML = "비밀번호가 동일하지 않습니다.";
 			      }
 	
 			   })
@@ -688,7 +723,7 @@
 	   var userId = document.getElementById('userId');
 	   
 		if (fireArea.value.length<50) {
-			fireCheck.innerHTML = "50글자 이하입니다.";
+			fireCheck.innerHTML = "회원 탈퇴 사유를 최소 50자 이상 작성해주세요.";
 			return false;
 		}
     	
@@ -700,11 +735,22 @@
 					    data: {"passwords" : firePassword.value},
 					    success: function (res) {
 					    
-					    	alert("탈퇴");
-					    	window.location.href = 'https:/naver.com';
+					    
+					    	fireCheck();
+					    	
+					    	
+					    	setTimeout(function() {
+					    		window.location.href = '/logout.do';
+							}, 1500);
+					    	
+					    	
+						    	
+					    	
+					    	
+					    	
 					    },
 					    error: function (err) {
-					    	alert("fire에러발생"+err.status);
+					    	alert("비밀번호가 일치하지 않습니다.");
 					    }
 					});
 
@@ -724,6 +770,99 @@
 	  document.getElementById("test_firecnt").style.display="block";  
 	}
         
+    
+    
+    
+  
+    
+    
+   
+    
+    function userPwdcheck(){
+    	
+  
+    		 Swal.fire({
+    			  icon: 'success',
+    			  title: '비밀번호가 변경되었습니다.',
+    			
+    			}).then((result) => {
+    				  
+    				  if (result.isConfirmed) {
+    				   
+    					  location.href ="<%=request.getContextPath()%>/user/my-page";
+    					  
+    				  } 
+    			})
+    	 	
+    	 
+
+    	
+    }
+    
+    
+    function userModifycheck(){
+    	
+    	  
+		 Swal.fire({
+			  icon: 'success',
+			  title: '수정 되었습니다.',
+			
+			}).then((result) => {
+				  
+				  if (result.isConfirmed) {
+				   
+					  location.href ="<%=request.getContextPath()%>/user/my-page";
+					  
+				  } 
+			})
+	 	
+	 
+
+	
+}
+    
+    
+	
+    
+    
+    
+    
+ function fireCheck(){
+    	
+    	Swal.fire({
+    	
+    		  icon: 'success',
+    		  title: '탈퇴가 완료되었습니다.',
+    		  showConfirmButton: false,
+    		  timer: 10000
+    		})
+
+    	
+    }
+ 
+ 
+ function nicknameCheck(){
+ 	
+	 
+	 Swal.fire({
+		  icon: 'warning',
+		  title: '닉네임이 중복됩니다.',
+		  text: '중복되지 않는 닉네임을 입력해주세요.',
+		
+		}).then((result) => {
+			  
+			  if (result.isConfirmed) {
+			   
+				  location.href ="<%=request.getContextPath()%>/user/my-page";
+				  
+			  } 
+		})
+ 	
+ }
+ 
+ 
+ 
+    
     </script>
     
     

@@ -28,6 +28,7 @@ function readMyHistory(userId){
 	        alwaysVisible: true,
 	        pageSizes: [5, 10, 20, 100]
 	    },
+	    scrollable: false,
 	    toolbar: [    		
 			{ template: "<input type='search' id='myHistoryProject-category' style='width:150px;vertical-align:middle;'/>"},    		
 			{ template: "<input type='search' id='myHistoryDist-category' style='width:150px;vertical-align:middle;'/>"},    		

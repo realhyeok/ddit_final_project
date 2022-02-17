@@ -16,9 +16,11 @@
 										{{title}} </span>
 								</h2>
 								<div class="clearfix">
+										{{#getRoleCheck 'A303'}}
 									<div class="clearfix header-title justify-content-end">
 										<i class="fa fa-edit fa-2x" onclick="getOverlayModifyTemplate('projModifyFormTemplate','/app/project/getProjectByProjNo','')"></i>
 									</div>
+										{{/getRoleCheck}}
 								</div>
 							</div>
 							<div class="x_content mb-3" >
@@ -83,7 +85,9 @@
 								<div class="clearfix">
 							{{#ifCond notice '!=' NULL}}
 									<div class="clearfix header-title justify-content-end">
+										{{#getRoleCheck 'A303'}}
 										<i class="fa fa-edit fa-2x" onclick="getOverlayModifyTemplate('noticeModifyFormTemplate','/app/project/getProjectByProjNo','')"></i>
+										{{/getRoleCheck}}
 									</div>
 							{{/ifCond}}
 								</div>
@@ -123,21 +127,26 @@
 					<div class="col-sm-12">
 						<ul class="row list-unstyled project-files">
 							{{#each .}}
-								{{#ifCond @index "<" 3}}
+								{{#ifCond @index "<" 5}}
 							<li class="d-flex align-items-center">
-								<div class="btn files-btn d-flex flex-wrap flex-column align-items-center justify-content-center"  style="width:140px;height:140px">
-									<i class="fa fa-file-text fa-5x text-dark"></i>
-									<div class="mt-2" style="font-size:0.8em;">{{{name}}}{{{extension}}}</div>
-								</div>
+								<div class="btn files-btn d-flex flex-wrap flex-column align-items-center justify-content-center"  style="width:200px;height:140px">
+								{{#getRoleCheck 'A303'}}
+								<button type="button" class="badge badge-danger" style="margin-left:85px" onclick="deleteProjectDoc('{{path}}','{{doc_NO}}');">X</button>
+								{{/getRoleCheck}}
+								<a style="cursor:pointer;" onclick="projectDocumentDownload('{{{name}}}{{{extension}}}','{{projTitle}}');"><i class="fa fa-file-text fa-5x text-dark"></i></a>
+								<div class="mt-2 d-flex"><span class="text-truncate" style="display:inline-block;max-width:70px;">{{{name}}}</span><span>{{{extension}}}</span></div>
+							</div>
 							</li>
 								{{/ifCond}}
 							{{/each}}
-							{{#ifCond this.length "<=" 2}}
+							{{#ifCond this.length "<=" 4}}
+							{{#getRoleCheck 'A303'}}
 							<li>
-								<div class="btn create-btn files-btn">
-									<i class="fa fa-plus fa-lg text-dark"></i>
+								<div class="btn create-btn files-btn" onclick="getOverlayProjDocumentTemplate('uploadProjectDocumentForm');">
+									<i class="fa fa-plus fa-lg text-dark" ></i>
 								</div>
 							</li>
+							{{/getRoleCheck}}
 							{{/ifCond}}
 						</ul>
 						</div>
@@ -161,13 +170,16 @@
 							<i class="fa fa-users"></i> 구성원
 						</h2>
 						<div class="clearfix header-title">
-							<a href="" data-toggle="modal" data-target="#project-member-add">
+							{{#getRoleCheck 'A303'}}
+							<a href="javascript:getOverlayinviteMemberForm('inviteMemberForm')" >
 								<i class="fa fa-user-plus fa-2x"></i></a>
+							{{/getRoleCheck}}
 						</div>
 					</div>
 					<ul class="list-inline" style="display: inline-flex">
 							<!-- 구성원 단위 시작 -->
 							{{#each .}}
+								{{#ifCond userId "!=" '0'}}
 							<li class="project-member nav-item dropdown open ml-3">
 								<div class="d-flex flex-column">
 									<a href="javascript:;" class="project-member " aria-haspopup="true"
@@ -214,12 +226,46 @@
 													<p class="mt-2 mb-2">{{{intro}}}</p>
 												</div>
 												<div class="text-center mt-3">
-													<button type="button" class="btn btn-success btn-sm">
+													{{#getRoleCheck 'A303'}}
+													{{#ifCond '${userVO.nickname}' "==" nickname}}
+													<button type="button" class="btn btn-success btn-sm" onclick="getOverlayModifyUserRole('modifyUserRoleForm','{{{nickname}}}');">
 														<i class="fa fa-pencil-square"> 권한</i>
 													</button>
-													<button type="button" class="btn btn-primary btn-sm">
+													{{/ifCond}}
+
+													{{#ifCond '${userVO.nickname}' "==" nickname}}
+													<button type="button" class="btn btn-success btn-sm" onclick="alert('팀장 본인의 권한을 변경할 수 없습니다. \n팀장을 위임하면 자동으로 전환됩니다.')">
+														<i class="fa fa-pencil-square"> 권한</i>
+													</button>
+													{{/ifCond}}
+
+													{{#ifCond '${userVO.nickname}' "!=" nickname}}
+													<button type="button" class="btn btn-danger btn-sm" onclick="getOverlayRemoveUserProject('removeUserProjectForm','{{{nickname}}}');">
 														<i class="fa fa-user-times"> 제명</i>
 													</button>
+													{{/ifCond}}
+
+													{{#ifCond '${userVO.nickname}' "==" nickname}}
+													<button type="button" class="btn btn-danger btn-sm" onclick="alert('팀장은 프로젝트를 탈퇴할 수 없습니다. \n팀장을 위임한 후에 시도해주세요.')">
+														<i class="fa fa-user-times"> 탈퇴</i>
+													</button>
+													{{/ifCond}}
+													{{/getRoleCheck}}
+
+													{{#ifCond '${userVO.nickname}' "==" nickname}}
+													{{#getRoleCheck 'A302'}}
+													<button type="button" class="btn btn-danger btn-sm" onclick="getOverlayRemoveUserProject('quitUserProjectForm','{{{nickname}}}');">
+														<i class="fa fa-user-times"> 탈퇴</i>
+													</button>
+													{{/getRoleCheck}}
+													{{/ifCond}}
+													{{#ifCond '${userVO.nickname}' "==" nickname}}
+													{{#getRoleCheck 'A301'}}
+													<button type="button" class="btn btn-danger btn-sm" onclick="getOverlayRemoveUserProject('quitUserProjectForm','{{{nickname}}}');">
+														<i class="fa fa-user-times"> 탈퇴</i>
+													</button>
+													{{/getRoleCheck}}
+													{{/ifCond}}
 												</div>
 											</div>
 										</div>
@@ -228,6 +274,7 @@
 									<span>{{{nickname}}}</span>
 								</div>
 							</li>
+								{{/ifCond}}
 							{{/each}}
 					</ul>
 

@@ -43,14 +43,14 @@
 									<!-- 내용저장 -->
 									<div class="x_content row">
 										<div class="col-sm-12">
-											<form id="modifyMyTaskForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+											<form id="modifyMyTaskForm" method="post" enctype="multipart/form-data" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
 												<!-- 프로젝트명 -->
 												<div class="item form-group">
 													<label class="col-form-label col-md-2 col-sm-2 label-align" for="projNo">프로젝트</label>
 													<div class="col-md-10 col-sm-10">
 														<input type="hidden" id="myTaskNo" class="form-control form-control-sm" name="taskNo" value="{{taskNo}}">
 														<input type="hidden" id="myTaskProjNo" class="form-control form-control-sm" name="projNo" value="{{projNo}}">
-														<input type="text" id="myTaskProjTitle" class="form-control form-control-sm" name="proTitle" value="{{projTitle}}" readonly>
+														<input type="text" id="myTaskProjTitle" class="form-control form-control-sm" name="projTitle" value="{{projTitle}}" readonly>
 													</div>
 												</div>
 												<div class="item form-group">
@@ -58,7 +58,12 @@
 													<div class="col-md-10 col-sm-10">
 														<select class="form-control form-control-sm" id="userNickname" name="userId">
 															{{#each userList}}
-              													<option value="{{this.userId}}">{{this.nickname}}</option>
+              													{{#ifCond this.userId "==" "${userVO.userId}"}}
+																	<option value="{{this.userId}}" selected>{{this.nickname}}</option>
+																{{/ifCond}}		
+																{{#ifCond this.userId "!=" "${userVO.userId}"}}
+																	<option value="{{this.userId}}">{{this.nickname}}</option>
+																{{/ifCond}}
 															{{/each}}
             											</select>
 													</div>
@@ -67,9 +72,21 @@
 	          										<label class="col-form-label col-md-2 col-sm-2 label-align" for="important">중요도</label>
 													<div class="col-md-10 col-sm-10">
 	            										<select class="form-control form-control-sm" id="important" name="important">
-	              											<option value="B101">낮음</option>
-	              											<option value="B102">보통</option>
-	             											<option value="B103">높음</option>
+															{{#ifCond important "==" "B101"}}
+																<option value="B101" selected>낮음</option>
+	              												<option value="B102">중간</option>
+	             												<option value="B103">높음</option>
+															{{/ifCond}}
+															{{#ifCond important "==" "B102"}}
+																<option value="B101">낮음</option>
+	              												<option value="B102" selected>중간</option>
+	             												<option value="B103">높음</option>
+															{{/ifCond}}
+															{{#ifCond important "==" "B103"}}
+																<option value="B101">낮음</option>
+	              												<option value="B102">중간</option>
+	             												<option value="B103" selected>높음</option>
+															{{/ifCond}}
 	            										</select>
 													</div>
 	        									</div>
@@ -77,7 +94,7 @@
 			          								<label class="col-form-label col-md-2 col-sm-2 label-align" for="status">진행상태</label>
 													<div class="col-md-10 col-sm-10">
 			            								<select class="form-control form-control-sm" id="status" name="status">
-			              									<option value="B201">예정</option>
+			              									<option value="B201">미배정</option>
 			              									<option value="B202">진행중</option>
 			             									<option value="B203">지연중</option>
 			             									<option value="B204">완료</option>
@@ -87,29 +104,31 @@
 												<div class="item form-group">
 													<label class="col-form-label col-md-2 col-sm-2 label-align" for="startdate">시작일</label>
 													<div class="col-md-10 col-sm-10">
-														<input type="date" id="startdate" name="startdate" class="form-control form-control-sm" value="{{formatTime startdate "yyyy-MM-DD"}}">
+														<input type="date" id="myTaskModifyStartdate" name="startdate" class="form-control form-control-sm" value="{{formatTime startdate "yyyy-MM-DD"}}">
 													</div>
 												</div>
 												<div class="item form-group">
 													<label class="col-form-label col-md-2 col-sm-2 label-align" for="enddate">마감일</label>
 													<div class="col-md-10 col-sm-10">
-														<input type="date" id="enddate" name="enddate" class="form-control form-control-sm" value="{{formatTime enddate "yyyy-MM-DD"}}">
+														<input type="date" id="myTaskModifyEnddate" name="enddate" class="form-control form-control-sm" value="{{formatTime enddate "yyyy-MM-DD"}}">
 													</div>
 												</div>
 												<div class="item form-group">
 													<label class="col-form-label col-md-2 col-sm-2 label-align" for="title">업무명</label>
 													<div class="col-md-10 col-sm-10">
-														<input type="text" id="title" class="form-control form-control-sm" name="title" value="{{title}}">
+														<input type="text" id="myTaskModifyOverlayTitle" class="form-control form-control-sm" name="title" value="{{title}}">
 													</div>
 												</div>
 												<div class="form-group">
-													<label class="col-form-label col-md-2 col-sm-2 label-align">업무내용</label>
-													<div class="col-md-10 col-sm-10"></div>
-													<textarea class="myTaskOverlayContentModify" name="content">{{content}}</textarea>
+													<textarea id="myTaskModifyOverlayContent" class="myTaskOverlayContentModify" name="content">{{content}}</textarea>
+												</div>
+												<div style="width:100%; float:left">
+													<input name="files" id="myTaskModifyUpload" type="file" aria-label="files" />
 												</div>
 												<div class="col-md-12 col-sm-12 m-1 p-1 text-right">
-													<button type="button" class="btn btn-primary" onclick="modifyMyTask();">수정</button>
-													<button type="button" class="btn btn-secondary" onclick="cancelMyTaskModify();">취소</button>
+													<button type="button" class="btn btn-success" onclick="modifyMyTask();">수정</button>
+													<button type="button" class="btn btn-primary" onclick="cancelMyTaskModify();">취소</button>
+													<button type="reset" class="btn btn-info">리셋</button>
 												</div>
 											</form>
 										</div>
@@ -126,6 +145,33 @@
 				Handlebars.registerHelper('formatTime', function (date, format) {
 				    var mmnt = moment(date);
 				    return mmnt.format(format);
+				});
+				
+				Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+				    switch (operator) {
+				        case '==':
+				            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+				        case '===':
+				            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+				        case '!=':
+				            return (v1 != v2) ? options.fn(this) : options.inverse(this);
+				        case '!==':
+				            return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+				        case '<':
+				            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+				        case '<=':
+				            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+				        case '>':
+				            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+				        case '>=':
+				            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+				        case '&&':
+				            return (v1 && v2) ? options.fn(this) : options.inverse(this);
+				        case '||':
+				            return (v1 || v2) ? options.fn(this) : options.inverse(this);
+				        default:
+				            return options.inverse(this);
+				    }
 				});
 			});
 			
@@ -145,23 +191,55 @@
 			}
 			
 			function modifyMyTask() {
-				var taskVO = $('#modifyMyTaskForm').serialize();
+				var projNo = $("myTaskProjNo").val();
+				var content = $("#myTaskModifyOverlayContent").val();
+				var title = $("#myTaskModifyOverlayTitle").val();
+				var startdate = $("#myTaskModifyStartdate").val();
+				var enddate = $("#myTaskModifyEnddate").val();
+				
+				if(!title){
+					alert("업무명을 입력해주세요.");
+					return;
+				}
+				if(!content){
+					alert("업무내용을 입력해주세요.");
+					return;
+				}
+				if(content == "<p><br></p>"){
+					alert("업무내용을 입력해주세요.");
+					return;
+				}
+				if(!startdate){
+					alert("시작일을 입력해주세요.");
+					return;
+				}
+				if(!enddate){
+					alert("마감일을 입력해주세요.");
+					return;
+				}
+				
+				var taskVO = $('#modifyMyTaskForm')[0];
+				var formData = new FormData(taskVO);
 				
 				$.ajax({
 					url : "<%=request.getContextPath()%>/app/task/modifyTaskDetailByTaskNo",
 					type : 'POST',
 					datatype : 'text',
-					data : taskVO,
+					data : formData,
 					success : function(data) {
 						alert("수정에 성공했습니다.");
 						myTaskDetail(data.taskNo, data.projNo);
+						readMyDashboard('${userVO.userId}', '${userVO.nickname}');
 						myOverlayOff('#myTaskModifyOverlay');
 						document.getElementById('mailReceive-tab').click();
 						
 					},
 					error : function(status) {
 						alert("수정에 실패하였습니다.");
-					}
+					},
+					cache:false,
+					contentType:false,
+					processData:false
 				});
 			}
 		</script>

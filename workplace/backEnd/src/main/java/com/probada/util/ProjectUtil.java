@@ -57,6 +57,7 @@ public class ProjectUtil {
 	public List<ProjectVO> getProjectTagList(List<ProjectVO> projectList) throws SQLException{
 
 		List<String> tagList = new ArrayList<String>();
+		List<String> tagNoList = new ArrayList<String>();
 
 		try {
 			for (ProjectVO projectVO : projectList) {
@@ -65,10 +66,13 @@ public class ProjectUtil {
 				for (ProjectTagVO projectTagVO : projectTagList) {
 					if(projectTagVO.getProjNo().equals(projectVO.getProjNo())) {
 						tagList.add(projectTagVO.getTagName());
+						tagNoList.add(projectTagVO.getTagNo());
 					}
 				}
 				projectVO.setTagNames(tagList);
+				projectVO.setTagNo(tagNoList);
 				tagList = new ArrayList<String>();
+				tagNoList = new ArrayList<String>();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -188,6 +192,16 @@ public class ProjectUtil {
 			throw e;
 		}
 		return title;
+	}
+
+	public List<ProjectTagVO> getProjectListByTagNo(String tagNo) {
+		List<ProjectTagVO> projectList = new ArrayList<>();
+		try {
+			projectList = projectTagService.getProjectListByTagNo(tagNo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return projectList;
 	}
 
 }

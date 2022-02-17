@@ -1,5 +1,33 @@
 var projNo = getParameterByName("projNo");
 console.log(projNo);
+var sessionRole = "";
+
+function backToList(){
+	document.getElementById(prevTab).click();
+}
+
+var prevTab = "";
+
+$(function(){
+
+	sessionRole = "";
+
+	$.ajax({
+
+		url : "/app/project/getUserRole",
+		type : 'POST',
+		data : {"projNo":projNo},
+		success : function(data) {
+			console.log("Session Role 취득완료 =>" + data);
+			sessionRole = data;
+		}, // success
+		error : function(xhr, status) {
+			console.log("Session Role 취득실패");
+		}
+	});
+
+})
+
 
 function getDefaultTemplate(templateId,appendTarget){
 	var formTemplate = document.getElementById(templateId).innerText;
@@ -33,7 +61,6 @@ function getTemplate(url,templateId,appendTarget) {
 
 function getTaskTemplate(url,taskNo,templateId,appendTarget) {
 
-
 	var formTemplate = "";
 	var bindTemplate = "";
 	var appe = "";
@@ -63,7 +90,43 @@ function getTaskTemplate(url,taskNo,templateId,appendTarget) {
 	});
 }
 
+
+function getTaskTemplate(url,taskNo,templateId,appendTarget) {
+
+	prevTab = getCookie('projTab');
+
+	var formTemplate = "";
+	var bindTemplate = "";
+	var appe = "";
+	var html = "";
+	var data = "";
+
+	$.ajax({
+	    type : 'GET',
+	    url : url,
+	    dataType : "JSON",
+	    data : {"taskNo" : taskNo,"projNo" : projNo },
+	    success : function(data) {
+	    	console.log("Handlebars success!!");
+	    	formTemplate = document.getElementById(templateId).innerText;
+	    	console.log(formTemplate)
+	    	bindTemplate = Handlebars.compile(formTemplate);
+	    	appe = document.getElementById(appendTarget);
+	    	html = bindTemplate(data);
+	    	console.log(html);
+
+	    	appe.innerHTML = html;
+	    	document.getElementById('taskDetail-tab').click();
+	    },
+	    error : function(error) {
+	    	console.log("Handlebars error!!");
+	    },
+	});
+}
 function getIssueTemplate(url,issueNo,templateId,appendTarget) {
+
+	prevTab = 'issue-tab';
+	
 
 	var formTemplate = "";
 	var bindTemplate = "";
@@ -148,6 +211,12 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 Handlebars.registerHelper('formatTime', function (date, format) {
     var mmnt = moment(date);
     return mmnt.format(format);
+});
+
+Handlebars.registerHelper('getRoleCheck', function (role, options) {
+	var flag = (sessionRole == role) ? options.fn(this) : options.inverse(this);
+	console.log(flag);
+    return flag;
 });
 
 function getParameterByName(name) {

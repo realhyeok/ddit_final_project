@@ -7,47 +7,7 @@
 
 <!-- 석기현 테스트 -->
 
-  <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }
-  
-  
-  /* 프로젝트 입력 창 */
-     /* 자동 완성창 덮는 것 */
-     .autocomplete-items {
-      position: absolute;
-      border: 1px solid #d4d4d4;
-      border-bottom: none;
-      border-top: none;
-      z-index: 99;
-      /*position the autocomplete items to be the same width as the container:*/
-      top: 100%;
-      left: 0;
-      right: 0;
-    }
 
-    /* 자동 완성창 CSS */
-    .autocomplete-items div {
-      padding: 10px;
-      cursor: pointer;
-      background-color: #fff;
-      border-bottom: 1px solid #d4d4d4;
-    }
-
-    /* 자동 완성창 hover*/
-    .autocomplete-items div:hover {
-      background-color: #e9e9e9;
-    }
-
-    /*when navigating through the items using the arrow keys:*/
-    .autocomplete-active {
-      background-color: DodgerBlue !important;
-      color: #ffffff;
-    }
-  
-  
-  
-
-  
-  </style>
 
 
 <!-- 석기현 테스트 -->
@@ -65,7 +25,6 @@
 <html>
 <head>
 </head>
-<body>
   <body class="nav-sm">
     <div class="container body">
       <div class="main_container">
@@ -156,12 +115,23 @@
 
 			<ul class=" navbar-right">
 
-				<div class="search-box">
-					<button class="btn-search">
-						<i class="fa fa-search"></i>
-					</button>
-					<input type="text" class="input-search" placeholder="프로젝트명 또는 닉네임을 입력해주세요...">
-				</div>
+				
+
+
+			<div class="search-box">
+                  <button class="btn-search" id="showSearchInput" onclick="showButton();"><i class="fa fa-search"></i> </button>
+                 <button class="btn-search" id="searchSubmitButton" onclick="submitTotal();" style="display: none;"><i class="fa fa-search"></i> </button>
+                 <!--  <input type="text" class="input-search seokid" id="totalSearchssss" placeholder="프로젝트명 또는 닉네임을 입력해주세요..." style="width: 400px; height: 50px;"> -->
+                 <input type="text" id="totalSearchInput" class="input-search" placeholder="프로젝트명 또는 닉네임을 입력해주세요...">
+             </div>
+				
+
+
+
+
+
+
+
 
 				<!--begin: Quick Actions -->
                   <!-- 퀵 버튼 -->
@@ -248,7 +218,7 @@
 				<li role="presentation" class="nav-item dropdown open" style="margin-left: 15px;">
                     <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                       <i class="fa fa-envelope-o"></i>
-                      <span class="badge bg-green">6</span>
+                      <span class="badge bg-green">0</span>
                     </a>
                     <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1" id="alertVOList">
                     
@@ -301,7 +271,7 @@
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item"  href="<%=request.getContextPath()%>/user/my-page"> 프로필</a>
                       <a class="dropdown-item"  href="#" data-toggle="modal" data-target="#alarmModal"><span>알림설정</span></a>
-                      <a class="dropdown-item"  href="javascript:;" id="doingTest">FAQ</a>
+                      <a class="dropdown-item"  href="#">FAQ</a>
                       <a class="dropdown-item" href="<%=request.getContextPath()%>/logout.do" id="logout"><i class="fa fa-sign-out pull-right"></i> 로그아웃</a>
                     </div>
                   </li>

@@ -21,14 +21,14 @@ import com.probada.util.IssueUtil;
 @Controller
 @RequestMapping("/app/issueReply")
 public class IssueReplyController {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(IssueReplyController.class);
-	
+
 	@Resource(name="issueReplyService")
 	private IssueReplyService issueReplyService;
 	@Resource(name="issueUtil")
 	private IssueUtil issueUtil;
-	
+
 	/**
 	 * 이슈 댓글 출력
 	 * @param issueVO
@@ -39,7 +39,7 @@ public class IssueReplyController {
 	@ResponseBody
 	public ResponseEntity<List<IssueReplyVO>> getIssueReplyByIssueNo(IssueVO issueVO) throws SQLException {
 		ResponseEntity<List<IssueReplyVO>> entity = null;
-		
+
 		try {
 			List<IssueReplyVO> issueReplyList = issueReplyService.getIssueReplyListByIssueNo(issueVO.getIssueNo());
 			List<IssueReplyVO> issueReplyList2 = issueUtil.getUserDetailByReplyList(issueReplyList);
@@ -51,7 +51,7 @@ public class IssueReplyController {
 		}
 		return entity;
 	}
-	
+
 	/**
 	 * 이슈 댓글 등록
 	 * @param issueReplyVO
@@ -62,10 +62,11 @@ public class IssueReplyController {
 	@ResponseBody
 	public ResponseEntity<String> registIssueReply(IssueReplyVO issueReplyVO) throws SQLException {
 		ResponseEntity<String> entity = null;
-		
+
 		try {
 			issueReplyService.registIssueReply(issueReplyVO);
-			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+			String issueNo = issueReplyVO.getIssueNo();
+			entity = new ResponseEntity<String>(issueNo, HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 			LOGGER.error(e.getMessage(), e);
@@ -73,7 +74,7 @@ public class IssueReplyController {
 		}
 		return entity;
 	}
-	
+
 	/**
 	 * 이슈 댓글 수정
 	 * @param issueReplyVO
@@ -84,10 +85,11 @@ public class IssueReplyController {
 	@ResponseBody
 	public ResponseEntity<String> modifyIssueReply(IssueReplyVO issueReplyVO) throws SQLException {
 		ResponseEntity<String> entity = null;
-		
+
 		try {
 			issueReplyService.modifyIssueReply(issueReplyVO);
-			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+			String issueNo = issueReplyVO.getIssueNo();
+			entity = new ResponseEntity<String>(issueNo, HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 			LOGGER.error(e.getMessage(), e);
@@ -95,7 +97,7 @@ public class IssueReplyController {
 		}
 		return entity;
 	}
-	
+
 	/**
 	 * 이슈 댓글 삭제
 	 * @param issueResNo
@@ -106,10 +108,10 @@ public class IssueReplyController {
 	@ResponseBody
 	public ResponseEntity<String> removeIssueReply(String issueResNo) throws SQLException {
 		ResponseEntity<String> entity = null;
-		
+
 		try {
 			issueReplyService.removeIssueReply(issueResNo);
-			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+			entity = new ResponseEntity<String>("success",HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 			LOGGER.error(e.getMessage(), e);

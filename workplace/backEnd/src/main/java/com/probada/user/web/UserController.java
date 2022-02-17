@@ -21,10 +21,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.probada.collabo.vo.CollaboVO;
+import com.probada.project.vo.ProjectTagVO;
 import com.probada.project.vo.ProjectVO;
 import com.probada.task.vo.TaskVO;
 import com.probada.user.service.UserService;
@@ -387,7 +389,7 @@ public class UserController {
 		
 		UserVO userVO = (UserVO) session.getAttribute("userVO");
 		
-		try {
+		try {	
 			recentTaskList = taskUtil.getFormatTaskListByUserId(userVO.getUserId());
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -403,5 +405,82 @@ public class UserController {
 		
 		return recentTaskList;
 	}
-
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/toMemberAchievementChart.do", method = RequestMethod.POST)
+	public List<UserVO> toMemberAchievementChart(@RequestParam("projNo") String projNo) {
+		
+		List<UserVO> userList = new ArrayList<>();
+		
+		try {
+			userList = userService.getMemberAchievementList(projNo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return userList;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getFormatTaskListByUserId.do", method = RequestMethod.POST)
+	public List<TaskVO> getFormatTaskListByUserId(HttpSession session, @RequestParam("userId") String userId) {
+		
+		List<TaskVO> taskList = new ArrayList<>();
+		
+		try {
+			taskList = taskUtil.getFormatTaskListByUserId(userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return taskList;
+	}
+	
+	@RequestMapping("/user/profile")
+	public ModelAndView goToUserProfilePage(@RequestParam("userId") String userId ,ModelAndView mv) {
+		
+		UserVO userProfileVO = new UserVO();
+		
+		try {
+			userProfileVO = userService.getUser(userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		mv.addObject("userProfileVO", userProfileVO);
+		mv.setViewName("/web-app/common/profile");
+		
+		return mv;
+	}
+	
+	@RequestMapping("/app/tag/read")
+	@ResponseBody
+	public ResponseEntity<List<ProjectTagVO>> getProjectListByTagNo(@RequestParam("tagNo") String tagNo, ModelAndView mv) throws Exception {
+		ResponseEntity<List<ProjectTagVO>> entity = null;
+		
+		LOGGER.debug("[요청받음] => /getProjectListByTagNo");
+		
+		List<ProjectTagVO> projectTagList = new ArrayList<ProjectTagVO>();
+		
+		try {
+			projectTagList = projectUtil.getProjectListByTagNo(tagNo);
+			
+			entity = new ResponseEntity<List<ProjectTagVO>>(projectTagList,HttpStatus.OK);
+			
+		} catch(Exception e) {
+			entity = new ResponseEntity<List<ProjectTagVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+	
+	
+//	@RequestMapping("/user/profile")
+//	public String printUserProfile() {
+//		String url = "/web-app/common/profile";
+//		return url;
+//	}
+//	
+	
 }

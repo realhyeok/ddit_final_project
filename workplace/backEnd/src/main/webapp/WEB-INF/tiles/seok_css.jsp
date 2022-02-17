@@ -4,5 +4,6 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/seok/seok.css"/>
+	
 	</head>
 </html>

@@ -40,6 +40,8 @@
         	C_PROJECT_R B ON(A.CPROJ_NO = B.CPROJ_NO)
         WHERE
         	B.USER_ID = #{userId}
+        ORDER BY  
+        	A.STARTDATE DESC	
 	</select>
 	
 	<select id="collaboCount" resultType="String" parameterType="String">
@@ -80,11 +82,21 @@
 	
 	</select>
 	
+	<select id="selectUserByCprojNo" resultType="com.probada.user.vo.UserVO" parameterType="str">
+		SELECT
+    		 *
+		FROM
+    		"USER" A
+		JOIN
+			C_PROJECT_R B ON (A.USER_ID = B.USER_ID)
+		WHERE
+			CPROJ_NO = #{cprojNo}
+	</select>
+	
 	<select id="selectCollaboTagList">
 		DELETE FROM C_PROJECT
 		      WHERE
     				CPROJ_NO = #{cprojNo}
-		
 	</select>
 	
 	<select id="insertCollabo" parameterType="com.probada.collabo.vo.CollaboVO">
@@ -93,9 +105,9 @@
 		           ,STARTDATE
 		           
 		) VALUES (
-		            {cprojNo}
+		            #{cprojNo}
 		           ,SYSDATE
-		        );
+		        )
 	</select>
 	
 	<select id="insertCollaboUserRelation" parameterType="com.probada.collabo.vo.CollaboVO">
@@ -105,11 +117,11 @@
 				   ,CPROJ_NO
 				   ,ROLE
 				) VALUES (
-				    {userId}
-				   ,{projNo}
-				   ,{cprojNo}
-				   ,{role}
-				);
+				    #{userId}
+				   ,#{projNo}
+				   ,#{cprojNo}
+				   ,#{role}
+				)
 	</select>
 	
 	<select id="updateCollaboDetail" parameterType="com.probada.collabo.vo.CollaboVO">
@@ -175,6 +187,15 @@
 		   AND A.USER_ID = #{userId} 	
 	</select>
 	
+	<select id="selectCprojectNameByCprojNo" resultType="String" parameterType="String">
+		SELECT
+			TITLE
+		FROM
+			C_PROJECT
+		WHERE
+			CPROJ_NO = #{cprojNo}
+	</select>
+	
 	
 	<sql id="statusForCollabo">
 			(SELECT
@@ -212,8 +233,8 @@
             	COMMON_CODE.CODE_NO = A.PRIVACY) AS PRIVACY
 	</sql>
 	
-	<select id="selectCollaboSeqNext">
-			SELECT C_PROJECT_R.NEXTVAL
+	<select id="selectCollaboSeqNext" resultType="int">
+			SELECT C_PROJECT_SEQ.NEXTVAL AS CPROJ_NO
   			  FROM DUAL
 	</select>
 	

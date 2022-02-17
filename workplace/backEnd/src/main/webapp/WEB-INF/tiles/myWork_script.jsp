@@ -101,12 +101,30 @@
 					
 					history.pushState(null, null, newLink);
 				}
+
+				if(${from eq 'receiveRegistAfter'}) {
+					document.getElementById('mailReceive-tab').click();
+					
+					var link = document.location.href.split("#");
+					var newLink = link[0] + "#mailReceive-tab";
+					
+					history.pushState(null, null, newLink);
+				}
 				
 				if(${from eq 'tempToSendAfter'}) {
 					document.getElementById('mailSend-tab').click();
 					
 					var link = document.location.href.split("#");
 					var newLink = link[0] + "#mailSend-tab";
+					
+					history.pushState(null, null, newLink);
+				}
+				
+				if(${from eq 'tempToMineAfter'}) {
+					document.getElementById('mailReceive-tab').click();
+					
+					var link = document.location.href.split("#");
+					var newLink = link[0] + "#mailReceive-tab";
 					
 					history.pushState(null, null, newLink);
 				}

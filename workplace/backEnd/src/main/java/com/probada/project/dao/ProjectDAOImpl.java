@@ -89,5 +89,27 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return title;
 	}
 
+	@Override
+	public void updateUserRole(ProjectVO projectVO) throws SQLException {
+
+		sqlSession.update("Project-Mapper.updateUserRole",projectVO);
+
+	}
+
+	@Override
+	public String selectUserRole(ProjectVO projectVO) throws SQLException {
+
+		String role = sqlSession.selectOne("Project-Mapper.selectUserRole",projectVO);
+
+		return role;
+	}
+
+	@Override
+	public void deleteProjectUserRelation(ProjectVO projectVO) throws SQLException {
+
+		sqlSession.update("Project-Mapper.deleteProjectUserRelation",projectVO);
+
+	}
+
 
 }

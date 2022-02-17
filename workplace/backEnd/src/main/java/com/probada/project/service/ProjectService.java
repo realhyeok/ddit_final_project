@@ -23,5 +23,11 @@ public interface ProjectService {
 
 	public void registProjectUserRelation(ProjectVO projectVO) throws SQLException;
 
+	public void removeProjectUserRelation(ProjectVO projectVO) throws SQLException;
+
 	public String getProjectNameByProjNo(String projNo) throws SQLException;
+
+	public void modifyUserRole(ProjectVO projectVO) throws SQLException;
+
+	public String getUserRole(ProjectVO projectVO) throws SQLException;
 }

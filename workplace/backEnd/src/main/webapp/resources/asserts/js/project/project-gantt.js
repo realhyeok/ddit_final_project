@@ -60,7 +60,7 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 					}
 					],
 					columns: [
-						{ field: "title", title: "업무명", editable: true, 
+						{ field: "title", title: "업무명", editable: true,
 							template: "<a href=\"javascript:getTaskTemplate('/app/task/getTaskDetailByTaskNo',#:id#,'taskDetailForm','taskDetailFormTarget')\" class='text-dark'>#:title#</a>"}
 						],
 						autoSync:true,
@@ -72,6 +72,7 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 						editable: {
 							update: false,
 							remove: false,
+							move: false,
 						},
 		})
 		kendo.culture("ko-KR");

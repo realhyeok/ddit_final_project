@@ -48,11 +48,13 @@
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/bootstrap/vendors/pnotify/dist/pnotify.css">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/bootstrap/vendors/pnotify/dist/pnotify.buttons.css">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/bootstrap/vendors/pnotify/dist/pnotify.nonblock.css">
+		
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/css/common/toastr.min.css"/>
 
 
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
-
-	<!-- jQuery -->
+		<!-- jQuery -->
 		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
 		<!-- Bootstrap -->
 		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -73,7 +75,8 @@
 		<script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/pnotify/dist/pnotify.nonblock.js"></script>
 
 
-
+		<!-- toastr js -->
+		<script src="<%=request.getContextPath()%>/resources/asserts/js/common/toastr.min.js"></script>
 
 
 
@@ -394,9 +397,15 @@ height: 8%;
 <body>
 <div class="container">
 <br>
-<h3 class=" text-center">${realChat.title}</h3><button onclick="closeTabClick()">새창 닫기</button>
+
+
+	<h3 class=" text-center">${realChat.title}</h3>
+	<button class="btn btn-round btn-danger float-right" onclick="closeTabClick()">나가기</button>
+
+
 <br>
 <div class="messaging">
+<br>
       <div class="inbox_msg">
       
 		
@@ -407,11 +416,7 @@ height: 8%;
               <h4>참여중인 인원</h4>
             </div>
             <div class="srch_bar">
-              <div class="stylish-input-group">
-                <input type="text" class="search-bar"  placeholder="Search" >
-                <span class="input-group-addon">
-                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                </span> </div>
+              
             </div>
           </div>
           <div class="inbox_chat">
@@ -619,63 +624,7 @@ window.addEventListener('load', function(){
 	    
 	    }
 	    
-	    
-	    
-	    
-	    
-	    
-	//    sock.onerror = function (e) {
-	//        alert('연결에 실패하였습니다.');
-	//        $('#chatConnect').show();
-	//        $('#chat').hide();
-	//    }
-	//    sock.onclose = function () {
-	//        alert('연결을 종료합니다.');
-	//        $('#chatConnect').show();
-	//        $('#chat').hide();
-	//    };
-	
 
-	
-	
-	/* $(document).on('keydown', 'div.write_msg input', function(e){
-	
-	alert("입력값이 타질까?");
-	
-	    if(e.keyCode == 13 && !e.shiftKey) {
-	        e.preventDefault(); // 엔터키가 입력되는 것을 막아준다.
-	        const message = $(this).val();  // 현재 입력된 메세지를 담는다.
-	          
-	        let search3 = $('div.write_msg input').val();
-	         
-	        if(search3.replace(/\s|  /gi, "").length == 0){
-	              return false;
-	              $('div.write_msg input').focus();
-	           }
-	        
-	        sendMessage(message);
-	        // textarea 비우기
-	        $('div.write_msg input').val("");
-	    }
-	}); */
-	
-	/* function dateFormat(date) {
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-        let hour = date.getHours();
-        let minute = date.getMinutes();
-        let second = date.getSeconds();
-
-        month = month >= 10 ? month : '0' + month;
-        day = day >= 10 ? day : '0' + day;
-        hour = hour >= 10 ? hour : '0' + hour;
-        minute = minute >= 10 ? minute : '0' + minute;
-        second = second >= 10 ? second : '0' + second;
-
-        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
-} */
-	
-	
 	
 	
 
@@ -694,18 +643,11 @@ window.addEventListener('load', function(){
            
            if(receive[2] =='CLOSE-CHAT'){
         	   
-        	  alert(receive[1]+"님이 퇴장하셨습니다");
+        	 
         	  var chatUserId = receive[1]+"onoff";
               document.getElementById(chatUserId).innerText = "오프라인";
 
-              new PNotify({
-                  
-                  text: receive[1]+'님이 퇴장하였습니다.',
-                  type: 'info',
-                  hide: false,
-                  styling: 'bootstrap3'
-                 });
-        	  
+              toastr.warning(receive[1]+"님이 퇴장하였습니다.");
         	  
         	   return false;
            }
@@ -750,13 +692,7 @@ window.addEventListener('load', function(){
             
             if(receive[2] == insertUser && receive[0]!="${userVO.userId}" && receive[2]!="ENTER-CHAT"){
             
-            	new PNotify({
-         
-                    text: receive[1]+'님이 참가하셨습니다.',
-                    type: 'info',
-                    hide: false,
-                    styling: 'bootstrap3'
-                   });
+            	   toastr.success(receive[1]+"님이 입장하였습니다.");
             	
             }
             
@@ -785,10 +721,6 @@ window.addEventListener('load', function(){
                   img.alt='sunil'; 
                   img.className="chatImage";
 
-        
-                  
-                  
-              
                   messageReceived.className='received_msg';
                   messageReceivedWith.className='received_withd_msg';
                   timeDate.className='time_date';

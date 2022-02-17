@@ -26,7 +26,7 @@ const IssueReplyDataSource = new kendo.data.DataSource({
 // 이슈 시작
 var issueReplyGridFlag = false;
 function readIssueReply(projNo, issueNo) {
-	
+
 			if(issueReplyGridFlag == true){
 				reloadIssue();
 				return;
@@ -51,9 +51,12 @@ function readIssueReply(projNo, issueNo) {
 		                }
 		            }
 		        },
+		        sort: { field: "regdate", dir: "asc" },
 	         });
 			issueReplyGridFlag = true;
 }
+
+
 
 /*function issueGridSetOpt(){
 	var issueGrid = $("#issueGrid").data("kendoGrid");

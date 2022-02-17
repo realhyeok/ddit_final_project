@@ -185,6 +185,8 @@ public class ChatController {
 		String seq=null;
 
 		String myId=userVO.getUserId();
+		String myNickName = userVO.getNickname();
+		
 		
 		//프로젝트가 중복될 경우 배제한 코드
 		String projNo = chatService.getProjNoByTitle(ptitle);
@@ -229,7 +231,7 @@ public class ChatController {
 		
 		
 		try {
-			entity = new ResponseEntity<String>(myId,HttpStatus.OK);
+			entity = new ResponseEntity<String>(myNickName,HttpStatus.OK);
 
 		} catch(Exception e) {
 			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -427,8 +429,9 @@ public class ChatController {
 
 		
 		String orgin = payload.get("models").toString();
+		LOGGER.debug("orgin {}",orgin);
 		String realOrigin = orgin.replace("=", ":");
-		
+		LOGGER.debug("realOrigin {}",realOrigin);
 		JSONArray ja = new JSONArray(realOrigin);
 
 		JSONObject jo = ja.getJSONObject(0);

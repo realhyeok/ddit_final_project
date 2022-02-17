@@ -29,8 +29,12 @@ $('#toolbar').kendoToolBar({
      	{ template: "<a class='k-button' href='javascript:getOverlayIssueRegistTemplate(\"issueRegistFormTemplate\",\"/app/issue/getIssueRegistInfoByProjNo\");'>이슈 등록</a>" }
       	],
 });
+var mileViewFlag = false;
 function readMile() {
-	$("#mileList").empty();
+	if(mileViewFlag == true){
+		reloadMile();
+		return;
+	}
 	$("#mileList").kendoListView({
 		dataSource:mileDataSource,
 		selectable: true,
@@ -45,7 +49,6 @@ function readMile() {
 			//한번더 클릭시 해제 이벤트 추가필요
 
 		},
-		height:760,
 		template: $("#mileTemplate").html(),
 		dataBound: function() {
 			$('.B301').kendoBadge({
@@ -60,6 +63,11 @@ function readMile() {
 		}
 
 	});
+
+	mileViewFlag = true;
+}
+function reloadMile() {
+	$("#mileList").data("kendoListView").dataSource.read();
 }
 
 $('#search-term').on('keyup', function () {

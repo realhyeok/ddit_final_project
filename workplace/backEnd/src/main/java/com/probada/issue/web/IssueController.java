@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,12 +17,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.probada.issue.service.IssueService;
 import com.probada.issue.vo.IssueVO;
 import com.probada.task.vo.TaskVO;
 import com.probada.user.vo.UserVO;
+import com.probada.util.DocumentUtil;
 import com.probada.util.IssueUtil;
 import com.probada.util.ProjectUtil;
 
@@ -35,7 +39,9 @@ public class IssueController {
 	IssueUtil issueUtil;
 	@Resource(name="projectUtil")
 	ProjectUtil projectUtil;
-
+	@Resource(name = "documentUtil")
+	DocumentUtil documentUtil;
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(IssueController.class);
 
 	@RequestMapping("/getIssueSortByUserId")
@@ -122,55 +128,46 @@ public class IssueController {
 	@ResponseBody
 	public ResponseEntity<HashMap<String, Object>> getIssueByIssueNo(HttpServletRequest request, IssueVO issueVO) throws SQLException {
 		ResponseEntity<HashMap<String, Object>> entity = null;
-
-		LOGGER.debug("[요청받음] => /getIssueByIssueNo");
-
-
-		UserVO userVO = new UserVO();
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
 		try {
-
 			String projTitle = projectUtil.getProjectNameByProjNo(issueVO.getProjNo());
 			issueVO = issueService.getIssueByIssueNo(issueVO);
 			issueVO = issueUtil.getMileListByIssueNo(issueVO);
-
+			issueVO = documentUtil.readIssueDocByIssueTitleAndProjNo(issueVO);
+					
 			hashMap.put("issueVO", issueVO);
 			hashMap.put("projTitle", projTitle);
-
-			entity = new ResponseEntity<HashMap<String, Object>>(hashMap,HttpStatus.OK);
-
+			
+			entity = new ResponseEntity<HashMap<String, Object>>(hashMap, HttpStatus.OK);
 		} catch(Exception e) {
 			entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
 			e.printStackTrace();
-
 		}
-
 		return entity;
 	}
 
 	@RequestMapping("/modifyIssueByIssueNo")
 	@ResponseBody
-	public ResponseEntity<HashMap<String, Object>> modifyIssueByIssueNo(IssueVO issueVO) throws SQLException {
+	public ResponseEntity<HashMap<String, Object>> modifyIssueByIssueNo(HttpServletRequest request
+																	  , HttpServletResponse response
+																	  , @RequestPart(value="files", required=false) List<MultipartFile> files
+																	  , IssueVO issueVO) throws SQLException {
 		ResponseEntity<HashMap<String, Object>> entity = null;
-
-		LOGGER.debug("[요청받음] => /modifyIssueByIssueNo");
-
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
 		try {
-
 			issueService.modifyIssueByIssueNo(issueVO);
+			documentUtil.issueUpload(files, request, response, issueVO);
+			
 			hashMap.put("issueNo", issueVO.getIssueNo());
-
-			entity = new ResponseEntity<HashMap<String, Object>>(hashMap,HttpStatus.OK);
-
+			
+			entity = new ResponseEntity<HashMap<String, Object>>(hashMap, HttpStatus.OK);
 		} catch(Exception e) {
 			entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
 			e.printStackTrace();
-
 		}
-			return entity;
+		return entity;
 	}
 
 	@RequestMapping("/removeIssue")
@@ -200,25 +197,24 @@ public class IssueController {
 
 	@RequestMapping("/registIssue")
 	@ResponseBody
-	public ResponseEntity<HashMap<String, Object>> registIssue(IssueVO issueVO) throws SQLException {
+	public ResponseEntity<HashMap<String, Object>> registIssue(HttpServletRequest request
+															 , HttpServletResponse response
+															 , @RequestPart(value="files", required=false) List<MultipartFile> files
+															 , IssueVO issueVO) throws SQLException {
 		ResponseEntity<HashMap<String, Object>> entity = null;
-
-		LOGGER.debug("[요청받음] => /registIssue");
-
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		
 		try {
-
 			issueService.registIssue(issueVO);
+			documentUtil.issueUpload(files, request, response, issueVO);
+			
 			hashMap.put("issueNo", issueVO.getIssueNo());
 
-			entity = new ResponseEntity<HashMap<String, Object>>(hashMap,HttpStatus.OK);
-
+			entity = new ResponseEntity<HashMap<String, Object>>(hashMap, HttpStatus.OK);
 		} catch(Exception e) {
 			entity = new ResponseEntity<HashMap<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
 			e.printStackTrace();
-
 		}
-
 		return entity;
 	}
 

@@ -9,4 +9,6 @@ public interface ProjectTagDAO {
 
 	public List<ProjectTagVO> selectTagNameList(String projNo) throws SQLException;
 
+	public List<ProjectTagVO> selectProjectListByTagNo(String tagNo);
+
 }

@@ -14,6 +14,40 @@
 		WHERE
 			C.PROJ_NO = #{projNo}
 	</select>
-
+	
+	<select id="selectProjectListByTagNo" parameterType="String" resultType="projectTag">
+		SELECT 
+		  B.TAG_NO
+      	  ,A.PROJ_NO
+      	  ,<include refid="findTagName" />
+		  ,A.TITLE AS PROJECT_TITLE
+		  ,A.STARTDATE AS START_DATE
+		  ,A.ENDDATE AS END_DATE
+		  ,<include refid="formatStatusCodeNoToCodeName" />
+		  ,D.NICKNAME AS LEADER
+		FROM 
+		  PROJECT A
+		JOIN PROJECT_TAG B ON(A.PROJ_NO = B.PROJ_NO)
+		JOIN USER_PROJECT C ON(A.PROJ_NO = C.PROJ_NO)
+		JOIN "USER" D ON(C.USER_ID = D.USER_ID)
+		WHERE B.TAG_NO = #{tagNo}
+		AND C.ROLE = 'A303'
+	</select>
+	
+	
+	<sql id="formatStatusCodeNoToCodeName">
+		(SELECT
+			CODE_NAME
+		FROM
+			COMMON_CODE
+		WHERE
+			COMMON_CODE.CODE_NO = A.STATUS) AS STATUS
+	</sql>
+	
+	<sql id="findTagName">
+		(SELECT TAG_NAME
+		 FROM TAG
+		 WHERE TAG_NO = #{tagNo}) AS TAG_NAME
+	</sql>
 
 </mapper>

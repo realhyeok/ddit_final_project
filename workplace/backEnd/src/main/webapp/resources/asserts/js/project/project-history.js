@@ -1,5 +1,10 @@
 //히스토리 시작
 var projectHistoryTable = $("#projectHistory").kendoGrid({
+	messages: {
+	    commands: {
+	      search: "검색"
+	    }
+	  },
 	dataSource: {
 		type: "json",
 		transport: {

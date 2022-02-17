@@ -9,7 +9,7 @@
 			 , (SELECT COUNT(STATUS) FROM TASK WHERE STATUS = 'B204' AND USER_ID = #{userId}) AS B204
 		  FROM TASK
 	</select>
-	
+
 	<update id="deleteMyTaskByTaskNo" parameterType="str">
 		DELETE
 		  FROM TASK
@@ -22,6 +22,8 @@
 		  FROM USER_PROJECT A, PROJECT B
 		 WHERE USER_ID = #{userId}
 		   AND A.PROJ_NO = B.PROJ_NO
+		   AND
+		   		IS_DELETED = 0
 		 ORDER BY PROJ_TITLE ASC
 	</select>
 
@@ -115,11 +117,11 @@
 		INSERT INTO TASK (
 		    TASK_NO   ,PROJ_NO   ,TITLE   ,USER_ID   ,CONTENT
 		    ,IMPORTANT   ,REGDATE   ,UPDATEDATE   ,STATUS
-		    ,DOC_CONT_NO   ,STARTDATE   ,ENDDATE
+		    ,DOC_CONT_NO   ,STARTDATE   ,ENDDATE, SESSION_ID
 		) VALUES (
 		    #{taskNo}   ,#{projNo}   ,#{title}   ,#{userId}   ,#{content}
 		    ,#{important}   ,sysdate   ,sysdate   ,#{status}
-		    ,1   ,#{startdate}   ,#{enddate}
+		    ,1   ,#{startdate}   ,#{enddate}, #{sessionId}
 		)
 	</insert>
 
@@ -136,6 +138,7 @@
 			,STATUS = #{status}
 			,STARTDATE = #{startdate}
 			,ENDDATE = #{enddate}
+			,SESSION_ID = #{sessionId}
 		WHERE
 			TASK_NO = #{taskNo}
 	</update>
@@ -161,7 +164,7 @@
 		SELECT
 			TASK_SEQ.NEXTVAL AS TASK_NO FROM DUAL
 	</select>
-	
+
 	<select id="selectFormatTaskListByUserId" parameterType="str" resultType="task">
 		SELECT A.TASK_NO
 			 , <include refid="formatProjNo"/>
@@ -178,21 +181,21 @@
 	      FROM TASK A
 	     WHERE A.USER_ID = #{userId}
 	</select>
-	
+
 	<sql id="formatStatus">
-			(SELECT 
+			(SELECT
 				CODE_NAME
-			FROM 
+			FROM
 				COMMON_CODE
-            WHERE 
+            WHERE
             	COMMON_CODE.CODE_NO = A.STATUS) AS STATUS
 	</sql>
 	<sql id="formatProjNo">
-			(SELECT 
+			(SELECT
 				TITLE
-			FROM 
+			FROM
 				PROJECT
-			WHERE 
+			WHERE
 				PROJ_NO = A.PROJ_NO) AS PROJ_NO
 	</sql>
 	<sql id="importantForTask">

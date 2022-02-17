@@ -98,21 +98,18 @@
 	</select>
 
 	<update id="updateIssueByIssueNo" parameterType="issue">
-		UPDATE
-			ISSUE
-		SET
-			PROJ_NO = #{projNo},
-    		USER_ID = #{userId},
-       		TITLE = #{title},
-       		CONTENT = #{content},
-       		IMPORTANT = #{important},
-       		REGDATE = sysdate,
-       		STARTDATE = #{startdate},
-       		ENDDATE = #{enddate},
+		UPDATE ISSUE
+		SET PROJ_NO    = #{projNo},
+    		USER_ID    = #{userId},
+       		TITLE      = #{title},
+       		CONTENT    = #{content},
+       		IMPORTANT  = #{important},
+       		STARTDATE  = #{startdate},
+       		ENDDATE    = #{enddate},
        		UPDATEDATE = sysdate,
-       		STATUS = #{status}
+       		STATUS     = #{status}
        	WHERE
-       		ISSUE_NO = #{issueNo}
+       		ISSUE_NO   = #{issueNo}
 	</update>
 
 	<delete id="deleteIssueByIssueNo" parameterType="issue">

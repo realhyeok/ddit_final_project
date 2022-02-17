@@ -172,4 +172,9 @@ public class UserDAOImpl implements UserDAO{
 		return sqlSession.selectList("Collabo-Mapper.selectCollaboListByUserId", userId);
 	}
 
+	@Override
+	public List<UserVO> getMemberAchievementList(String projNo) throws SQLException {
+		return sqlSession.selectList("User-Mapper.getMemberAchievementList", projNo);
+	}
+
 }

@@ -33,7 +33,7 @@ function readMyIssue(uid){
 	var myIssueTable = $("#myIssueGrid").kendoGrid({
 		dataSource: myIssueDataSource,
 		toolbar: [
-			{ template: "<a class='k-button' href='javascript:getOverlayIssueRegistTemplate(\"issueRegistFormTemplate\",\"/app/issue/getIssueRegistInfoByProjNo\");'>이슈 등록</a>" },
+			{ template: "<a class='k-button' href='javascript:getOverlayMyIssueRegistTemplate(\"" + sessionId + "\");'>이슈 등록</a>" },
 			{ template: "<input type='search' id='myIssueProject-category' style='width: 170px;vertical-align:middle;'/>" },
 			"search"
 		],
@@ -51,38 +51,47 @@ function readMyIssue(uid){
 					"class" : "checkbox-align"
 				},
 				headerAttributes: {
-					"class" : "checkbox-align"
+					"class"      : "checkbox-align"
 				}
 			},
 			{
 				field: "title",
 				title: "이슈 제목",
-				template: "<a href=\"javascript:myIssueDetail('#:issueNo#', '#:projNo#')\" class='text-dark'>#:title#</a>",
-				width: 200,
+				template: "<a href=\"javascript:myIssueDetail('#:issueNo#', '#:projNo#')\" class='text-dark d-inline-block text-truncate' style='max-width:175px;'>#:title#</a>",
+				headerAttributes: {style: 'text-align: center'},
+				width: 245,
 				encoded: false
 			},
 			{
 				field: "important",
 				title: "중요도",
-				template: "<span id='badge_success' class='badgeTemplate badge_success'>#=important#</span>",
-				width: 125,
+				template: "<span id='badge_success' class='badgeTemplate badge_success text-dark' style='text-align:center;'>#=important#</span>",
+				attributes: {style: 'text-align: center'},
+				headerAttributes: {style: 'text-align: center'},
+				width: 80,
 				editable: false
 			},
 			{
 				field: "userId",
 				title: "작성자",
-				width: 125
+				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:115px;'>#:userId#</span>",
+				headerAttributes: {style: 'text-align: center'},
+				width: 140
 			},
 			{
 				field: "status",
 				title: "진행상태",
-				width: 125
+				attributes: {style: 'text-align: center'},
+				headerAttributes: {style: 'text-align: center'},
+				width: 90
 			},
 			{
 				field: "updatedate",
 				title: "갱신일",
-				format: "{0:yy-MM-dd}",
-				width: 100
+				format: "{0:yyyy-MM-dd}",
+				attributes: {style: 'text-align: center'},
+				headerAttributes: {style: 'text-align: center'},
+				width: 110
 			}
 		]
 	});

@@ -199,5 +199,10 @@ public class UserServiceImpl implements UserService {
 		return userDAO.selectCollaboListByUserId(userId);
 	}
 
+	@Override
+	public List<UserVO> getMemberAchievementList(String projNo) throws SQLException {
+		return userDAO.getMemberAchievementList(projNo);
+	}
+
 	
 }

@@ -23,5 +23,10 @@ public class ProjectTagDAOImpl implements ProjectTagDAO {
 		return projectTagList;
 	}
 
+	@Override
+	public List<ProjectTagVO> selectProjectListByTagNo(String tagNo) {
+		return sqlSession.selectList("ProjectTag-Mapper.selectProjectListByTagNo", tagNo);
+	}
+
 
 }

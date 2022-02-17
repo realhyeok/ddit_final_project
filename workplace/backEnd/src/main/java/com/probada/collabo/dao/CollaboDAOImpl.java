@@ -11,6 +11,7 @@ import com.probada.collabo.command.CollaboCommand;
 import com.probada.collabo.vo.CollaboVO;
 import com.probada.collabo.web.CollaboController;
 import com.probada.mail.vo.MailVO;
+import com.probada.user.vo.UserVO;
 
 public class CollaboDAOImpl implements CollaboDAO {
 	
@@ -115,6 +116,22 @@ public class CollaboDAOImpl implements CollaboDAO {
 	public void insertCollaboUserRelation(CollaboVO collaboVO) throws SQLException {
 
 		sqlSession.update("Collabo-Mapper.insertCollaboUserRelation", collaboVO);
+	}
+
+	@Override
+	public String selectCprojectNameByCprojNo(String cprojNo) throws SQLException {
+
+		String title = sqlSession.selectOne("Collabo-Mapper.selectCprojectNameByCprojNo",cprojNo);
+		
+		return title;
+	}
+
+	@Override
+	public List<UserVO> selectUserByCprojNo(String cprojNo) throws SQLException {
+		
+		List<UserVO> collaboList = sqlSession.selectList("Collabo-Mapper.selectUserByCprojNo", cprojNo);
+		
+		return collaboList;
 	}
 	
 

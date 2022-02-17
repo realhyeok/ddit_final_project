@@ -33,6 +33,11 @@ function readIssue() {
 	             toolbar: [
 	             	{ template: "<a class='k-button' href='javascript:getOverlayIssueRegistTemplate(\"issueRegistFormTemplate\",\"/app/issue/getIssueRegistInfoByProjNo\");'>이슈 등록</a>" }
 	             	,"search","excel", "pdf" ],
+	             	messages: {
+	            	    commands: {
+	            	      search: "검색"
+	            	    }
+	            	  },
 	             columns: [{
 	                 selectable: true,
 	                 hidden:true,
@@ -141,3 +146,98 @@ function deleteIssueByNo(url, issueNo){
 	}
 
 }
+
+
+function projIssueReplyModify(){
+	var issueResNo = $("#projIssueReplyModifyIssueResNo").val();
+	var content = $("#projIssueReplyModifyContent").val();
+	var issueNo = $("#issueNo").val();
+	var projNo = $("#projIssueDetailProjNo").val();
+	var issueReplyVO = {
+			"issueResNo" : issueResNo,
+			"content"    : content,
+			"issueNo"    : issueNo
+		}
+
+	var projIssueReplyModifyConfirm = confirm("수정하시겠습니까?");
+
+	if(projIssueReplyModifyConfirm){
+		$.ajax({
+			type   : "POST",
+			url    : "/app/issueReply/modifyIssueReply",
+			data   : issueReplyVO,
+			success: function(data){
+				alert("수정이 완료되었습니다.");
+				getIssueTemplate('/app/issue/getIssueByIssueNo',data,'issueDetailForm','issueDetailFormTarget');
+				var content = document.getElementById('projIssueReplyRegistContent');
+				content.value = null;
+				$("#projIssueReplyModifyModalCloseButton").click();
+			},
+			error  : function(error){
+				console.log("댓글 수정 실패 " + error.status + " 에러");
+			}
+		});
+	}
+}
+
+function projIssueReplyRemove(issueResNo){
+	var issueNo = $("#issueNo").val();
+	var projNo = $("#projIssueDetailProjNo").val();
+
+	var projIssueReplyRemoveConfirm = confirm("삭제하시겠습니까?");
+
+	if(projIssueReplyRemoveConfirm){
+		$.ajax({
+			type   : "POST",
+			url    : "/app/issueReply/removeIssueReply",
+			data   : { "issueResNo" : issueResNo },
+			success: function(data){
+				alert("삭제가 완료되었습니다.");
+				getIssueTemplate('/app/issue/getIssueByIssueNo',issueNo,'issueDetailForm','issueDetailFormTarget');
+				var content = document.getElementById('projIssueReplyRegistContent');
+				content.value = null;
+			},
+			error  : function(error){
+				console.log("댓글 삭제 실패 " + error.status + " 에러");
+			}
+		});
+	}
+}
+
+function projIssueReplyRegist(uid){
+	var issueNo = $("#issueNo").val();
+	var content = $("#projIssueReplyRegistContent").val();
+	var userId = uid;
+	var issueReplyVO = {
+		"issueNo" : issueNo,
+		"content" : content,
+		"userId" : userId,
+		"projNo" : projNo
+	}
+
+	if(!content){
+		alert("댓글을 입력해주세요.");
+		return;
+	}
+
+	$.ajax({
+		type   : "POST",
+		url    : "/app/issueReply/registIssueReply",
+		data   : issueReplyVO,
+		success: function(data){
+			console.log("댓글 등록 성공");
+			getIssueTemplate('/app/issue/getIssueByIssueNo',data,'issueDetailForm','issueDetailFormTarget');
+			var content = document.getElementById('projIssueReplyRegistContent');
+			content.value = null;
+		},
+		error  : function(error){
+			console.log("댓글 등록 실패 " + error.status + " 에러");
+		}
+	});
+}
+
+function projIssueReplyModifyForm_go(issueResNo, content){
+	$("#projIssueReplyModifyContent").val(content);
+	$("#projIssueReplyModifyIssueResNo").val(issueResNo);
+}
+

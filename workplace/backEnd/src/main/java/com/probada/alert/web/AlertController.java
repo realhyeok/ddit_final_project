@@ -48,8 +48,8 @@ public class AlertController {
 		int alertCount = 0;
 		List<AlertVO> alertList = new ArrayList<AlertVO>();
 		
-		alertList = userUtil.getUserAlertList(userVO.getUserId());
-		alertCount = userUtil.getAlertCount(userVO.getUserId());
+		alertList = userUtil.getUserAlertList(userVO.getNickname());
+		alertCount = userUtil.getAlertCount(userVO.getNickname());
 		
 //		시간별 내림차순 정렬
 		Collections.sort(alertList, new Comparator<AlertVO>() {

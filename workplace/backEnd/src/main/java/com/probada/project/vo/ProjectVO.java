@@ -21,12 +21,40 @@ public class ProjectVO {
 
 //	For ProjectTagService
 	private Object tagNames;
+	private Object tagNo;
 	private List<UserVO> member;
 
 //	For ProjectUserRelation
 	private String userId;
 	private String role;
 	private String joindate;
+	private String toPlUserId;
+
+	@Override
+	public String toString() {
+		return "ProjectVO [notice=" + notice + ", status=" + status + ", docContNo=" + docContNo + ", startdate="
+				+ startdate + ", privacy=" + privacy + ", noticeCont=" + noticeCont + ", intro=" + intro + ", title="
+				+ title + ", updatedate=" + updatedate + ", likeCount=" + likeCount + ", projNo=" + projNo
+				+ ", enddate=" + enddate + ", tagNames=" + tagNames + ", member=" + member + ", userId=" + userId
+				+ ", role=" + role + ", joindate=" + joindate + ", toPlUserId=" + toPlUserId + "]";
+	}
+
+
+
+	public Object getTagNo() {
+		return tagNo;
+	}
+	public void setTagNo(Object tagNo) {
+		this.tagNo = tagNo;
+	}
+	public String getToPlUserId() {
+		return toPlUserId;
+	}
+
+	public void setToPlUserId(String toPlUserId) {
+		this.toPlUserId = toPlUserId;
+	}
+
 
 	public String getUserId() {
 		return userId;
@@ -131,5 +159,5 @@ public class ProjectVO {
 		return enddate;
 	}
 
-	
+
 }

@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Mail-Mapper">
+	<select id="selectNicknameByUserId" parameterType="String" resultType="String">
+		SELECT NICKNAME
+		  FROM "USER"
+		 WHERE USER_ID = #{userId}
+	</select>
+
+	<select id="selectUserIdByNickname" parameterType="String" resultType="String">
+		SELECT USER_ID
+		  FROM "USER"
+		 WHERE NICKNAME = #{nickname}
+	</select>
+
 	<select id="selectReceiveMailList" resultType="mailVO">
 		SELECT MAIL_NO
 			 , TITLE
@@ -35,6 +47,7 @@
 		 WHERE USER_FROM = #{userFrom}
 		   AND DIST = 'B901'
 		   AND SENT_DEL = '1'
+		   AND NOT USER_FROM = USER_TO
 		 ORDER BY REGDATE DESC
 	</select>
 	

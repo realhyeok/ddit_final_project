@@ -7,6 +7,7 @@ import com.probada.collabo.command.CollaboCommand;
 import com.probada.collabo.vo.CollaboVO;
 import com.probada.mail.vo.MailVO;
 import com.probada.project.vo.ProjectVO;
+import com.probada.user.vo.UserVO;
 
 public interface CollaboDAO {
 	
@@ -19,6 +20,9 @@ public interface CollaboDAO {
 	public int selectCollaboSeqNext()throws SQLException;
 	
 	public void insertCollaboUserRelation(CollaboVO collaboVO)throws SQLException;
+	
+	//콜라보 상세에서 사용되는 유저리스트
+	public List<UserVO> selectUserByCprojNo(String cprojNo) throws SQLException;
 	
 	//콜라보 갯수 
 	public int collaboCount(String userId)throws SQLException;
@@ -40,6 +44,6 @@ public interface CollaboDAO {
 	//메일 번호 시퀀스
 	public int selectCollaboMailSequenceNextValue()throws SQLException;
 	
-	
+	public String selectCprojectNameByCprojNo(String cprojNo) throws SQLException;
 
 }

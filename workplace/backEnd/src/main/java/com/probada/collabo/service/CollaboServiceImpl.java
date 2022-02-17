@@ -13,6 +13,7 @@ import com.probada.collabo.vo.CollaboVO;
 import com.probada.collabo.web.CollaboController;
 import com.probada.mail.vo.MailVO;
 import com.probada.project.vo.ProjectVO;
+import com.probada.user.vo.UserVO;
 
 public class CollaboServiceImpl implements CollaboService {
 	
@@ -97,12 +98,11 @@ public class CollaboServiceImpl implements CollaboService {
 	@Override
 	public String registCollabo(CollaboVO collaboVO) throws SQLException {
 		
+		
 		int seqNo = collaboDAO.selectCollaboSeqNext();
 		
 		String cprojNo = Integer.toString(seqNo);
-		
 		collaboVO.setCprojNo(cprojNo);
-		
 		collaboDAO.insertCollabo(collaboVO);
 		
 		return cprojNo;
@@ -114,6 +114,21 @@ public class CollaboServiceImpl implements CollaboService {
 		
 		collaboDAO.insertCollaboUserRelation(collaboVO);
 		
+	}
+
+	@Override
+	public String getCprojectNameByCprojNo(String cprojNo) throws SQLException {
+		
+		String title = collaboDAO.selectCprojectNameByCprojNo(cprojNo);
+		return title;
+	}
+
+	@Override
+	public List<UserVO> getUserByCProjNo(String cprojNo) throws SQLException {
+		
+		List<UserVO> collaboList = collaboDAO.selectUserByCprojNo(cprojNo);
+		
+		return collaboList;
 	}
 
 }

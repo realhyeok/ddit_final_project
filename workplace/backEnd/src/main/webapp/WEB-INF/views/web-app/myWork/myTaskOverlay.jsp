@@ -59,7 +59,7 @@
 												<div class="col-md-10 col-sm-10">
             										<select class="form-control form-control-sm" id="important" name="important">
               											<option value="B101">낮음</option>
-              											<option value="B102">보통</option>
+              											<option value="B102">중간</option>
              											<option value="B103">높음</option>
             										</select>
 												</div>
@@ -68,7 +68,7 @@
 		          								<label class="col-form-label col-md-2 col-sm-2 label-align" for="status">진행상태</label>
 												<div class="col-md-10 col-sm-10">
 		            								<select class="form-control form-control-sm" id="status" name="status">
-		              									<option value="B201">예정</option>
+		              									<option value="B201">미배정</option>
 		              									<option value="B202">진행중</option>
 		             									<option value="B203">지연중</option>
 		             									<option value="B204">완료</option>
@@ -101,8 +101,8 @@
 												<input name="files" id="myTaskRegistUpload" type="file" aria-label="files" />
 											</div>
 											<div class="col-md-12 col-sm-12 m-1 p-1 text-right">
-												<button type="button" class="btn btn-primary" onclick="registMyTask();">등록</button>
-												<button type="button" class="btn btn-secondary" onclick="cancelMyTask();">취소</button>
+												<button type="button" class="btn btn-success" onclick="registMyTask();">등록</button>
+												<button type="button" class="btn btn-primary" onclick="cancelMyTask();">취소</button>
 											</div>
 										</form>
 									</div>
@@ -153,20 +153,29 @@
 			}
 			
 			function registMyTask() {
-				if(!$("#myTaskOverlayContent").val()){
-					alert("업무내용을 입력해주세요.");
-					return;
-				}
-				if(!$("#myTaskOverlayTitle").val()){
+				var title = $("#myTaskOverlayTitle").val();
+				var content = $("#myTaskOverlayContent").val();
+				var startdate = $("#startdate").val();
+				var enddate = $("#enddate").val();
+				
+				if(!title){
 					alert("업무명을 입력해주세요.");
 					return;
 				}
-				if(!$("#startdate").val()){
+				if(!content){
+					alert("업무내용을 입력해주세요.");
+					return;
+				}
+				if(content == "<p><br></p>"){
+					alert("업무내용을 입력해주세요.");
+					return;
+				}
+				if(!startdate){
 					alert("시작일을 입력해주세요.");
 					return;
 				}
-				if(!$("#enddate").val()){
-					alert("종료일을 입력해주세요.");
+				if(!enddate){
+					alert("마감일을 입력해주세요.");
 					return;
 				}
 				
@@ -184,7 +193,7 @@
 						alert("등록에 성공했습니다.");
 						
 						myOverlayOff('#myTaskOverlay');
-						
+						readMyDashboard('${userVO.userId}', '${userVO.nickname}');
 						location.reload();
 					},
 					error : function(status) {
@@ -193,7 +202,7 @@
 					cache:false,
 					contentType:false,
 					processData:false
-				}); 
+				});
 			}
 		</script>
 	</body>

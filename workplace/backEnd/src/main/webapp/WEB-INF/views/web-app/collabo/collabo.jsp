@@ -25,19 +25,19 @@
 						role="tab" aria-controls="outline-board" aria-selected="true">개요</a>
 					</li>
 
-					<li class="nav-item"><a class="nav-link" id="dash-board-tab"
+					<li class="nav-item"><a class="nav-link" id="home-tab"
 						data-toggle="tab" href="#dash-board" role="tab"
 						aria-controls="dash-board" aria-selected="false">대시보드</a>
 					</li>
 
 					<li class="nav-item"><a class="nav-link" id="task-tab"
 						data-toggle="tab" href="#task" role="tab" aria-controls="task"
-						aria-selected="false">업무</a>
+						aria-selected="false" onclick="setTimeout(readCollaboTask, 300);">업무</a>
 					</li>
 
 					<li class="nav-item"><a class="nav-link" id="gantt-tab"
 						data-toggle="tab" href="#gantt" role="tab" aria-controls="gantt"
-						aria-selected="false" onclick="setTimeout(myCollaboGantt, 500);">간트차트</a>
+						aria-selected="false" onclick="setTimeout(collaboGantt, 500);">간트차트</a>
 					</li>
 
 					<li class="nav-item"><a class="nav-link" id="issue-tab"
@@ -59,6 +59,12 @@
 						data-toggle="tab" href="#spoon" role="tab"
 						aria-controls="spoon" aria-selected="false">Spoon</a>
 					</li>
+
+					<li class="nav-item" style="display:none;">
+						<a class="nav-link" id="taskDetail-tab" data-toggle="tab" href="#taskDetail" role="tab"
+						aria-controls="taskDetail" aria-selected="false">업무상세</a>
+					</li>
+					
 				</ul>
 
 				<div class="tab-content" id="myTabContent">
@@ -67,7 +73,7 @@
 					<div class="tab-pane fade show active" id="outline-board" role="tabpanel" aria-labelledby="outline-board-tab">
 						<%@ include file="/WEB-INF/views/web-app/collabo/collabo-detail.jsp" %>
 					</div>
-					<div class="tab-pane fade" id="dash-board" role="tabpanel" aria-labelledby="dash-board-tab">
+					<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
 						<%@ include file="/WEB-INF/views/web-app/collabo/collabo-dashboard.jsp" %>
 					</div>
 					<div class="tab-pane fade" id="task" role="tabpanel" aria-labelledby="task-tab">
@@ -91,6 +97,9 @@
 					</div>
 					<div class="tab-pane fade" id="spoon" role="tabpanel" aria-labelledby="spoon-tab">
 						<%@ include file="/WEB-INF/views/web-app/collabo/collabo-spoon.jsp" %>
+					</div>
+					<div class="tab-pane fade" id="taskDetail" role="tabpanel" aria-labelledby="taskDetail-tab">
+						<%@ include file="/WEB-INF/views/web-app/collabo/collabo-task-detail.jsp" %>
 					</div>
 				</div>
 

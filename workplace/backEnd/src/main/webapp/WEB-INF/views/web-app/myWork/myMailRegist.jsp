@@ -13,7 +13,7 @@
 			<!-- 메일 작성 시작 -->
 			<form enctype="multipart/form-data" role="form" method="post" action="<%=request.getContextPath()%>/app/myWork/mailRegist" name="mailRegistForm" class="form-horizontal form-label-left">
 				<div class="inbox-body">
-					<input type="hidden" id="userFrom" name="userFrom" value="${userVO.userId}">
+					<input type="hidden" id="userFrom" name="userFrom" value="${userVO.nickname}">
 					<input type="hidden" id="dist" name="dist" value="">
 					<input type="text" id=sendUserTo name="userTo" class="form-control form-control-sm mt-3" placeholder="받는 사람:">
 					<br>
@@ -39,6 +39,7 @@
 	window.addEventListener('load', function() {
 		var memoryCapacity = null;
 		var userId = $("#userFrom").val();
+		
 		$.ajax({
 			url: "<%=request.getContextPath()%>/app/myWork/getMemoryCapacity",
 			type: "get",
@@ -86,10 +87,21 @@
 	}
 
 	function mailRegist_go(dist){
+		var userFrom = "${userVO.nickname}";
+		var userTo = $("#sendUserTo").val();
+		
 		if(dist == "temp"){
-			$("#dist").val("temp");
+			if(userFrom == userTo){
+				$("#dist").val("tempMine");
+			}else{
+				$("#dist").val("temp");
+			}
 		}else if(dist == "send"){
-			$("#dist").val("send");
+			if(userFrom == userTo){
+				$("#dist").val("mine");
+			}else{
+				$("#dist").val("send");
+			}
 		}
 		
 		var files = $('input[class="sendAttachFile"]');
@@ -120,37 +132,10 @@
 		}
 		if(dist == "send"){
 			var receiverId = $("#sendUserTo").val();
-			mailAlarm(receiverId);
+			var nickname = "${userVO.nickname}";
+			mailAlarm(nickname, receiverId);
 		}
 		
 		document.mailRegistForm.submit();
-	}
-	
-	function mailAlarm(rid){
-		var nickname   = "${userVO.nickname}";
-		var where      = "메일";
-		var target     = "메일";
-		var whatTodo   = "전송";
-		var projNo     = "0";
-		var receiverId = rid;
-		
-		let socketData = {
-			nickname   : nickname,
-			where      : where,
-			target     : target,
-			whatToDo   : whatTodo,
-			projNo     : projNo,
-			receiverId : receiverId
-		}
-		
-		if(socket){
-			let socketMsg = socketData.nickname 
-					+ "," + socketData.where 
-					+ "," + socketData.target 
-					+ "," + socketData.whatToDo 
-					+ "," + socketData.projNo
-					+ "," + socketData.receiverId;
-			socket.send(socketMsg);
-		}
 	}
 </script>

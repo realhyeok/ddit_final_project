@@ -54,7 +54,34 @@
   }
 
 
+.projectPLId{
+	
+	
+      display: block;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  white-space: nowrap;
+	  width: 80px;
+	 
 
+	
+}
+  
+  
+  
+  
+  .spanPL{
+  
+  	margin-top: 20px;
+  
+  
+  
+  
+  }
+  
+  
+  
+  
   
 
    /* 프로필 수정에 동그라미 이미지 수정 */
@@ -169,6 +196,90 @@
        }
 
 
+
+
+
+
+/* searchcss */
+.searchIntro{
+	
+		 display: -webkit-box;
+	    max-width: 250px;
+	    height: 95px;
+	    -webkit-line-clamp: 5;
+	    -webkit-box-orient: vertical;
+	    overflow: hidden;
+	
+	
+	}
+
+
+
+	.searchUserIntro{
+	
+		 display: -webkit-box;
+	    max-width: 250px;
+	    height: 60px;
+	    -webkit-line-clamp: 3;
+	    -webkit-box-orient: vertical;
+	    overflow: hidden;
+	
+	
+	
+	}
+
+
+	.popIntro{
+	
+		height : 50px;
+	
+	
+	}
+	.totalSearchImg{
+	
+	width : 110px;
+	height : 110px;
+	
+	
+	}
+
+
+.carousel-control-prev-icon {
+	
+	 margin-right:50px;
+	 background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+	 
+}
+
+.carousel-control-next-icon {
+	
+	margin-left:50px;
+  	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+  	
+}
+
+.projImg{
+
+
+	height:50px; 
+	width:50px; 
+	border-radius:100%;
+
+
+}
+
+
+.searchProjName{
+
+ 		display: -webkit-box;
+	    max-width: 160px;
+	    -webkit-line-clamp: 1;
+	    -webkit-box-orient: vertical;
+	    overflow: hidden;
+
+
+
+}
 
            
     

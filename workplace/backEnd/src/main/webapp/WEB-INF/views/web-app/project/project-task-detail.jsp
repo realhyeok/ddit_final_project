@@ -7,9 +7,17 @@
       	<div class="x_title">
 			<h2><i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;&nbsp;&nbsp;업무 상세	</h2>
 			<div class="clearfix">
-				<button type="button" class="btn btn-sm btn-secondary float-right" onclick="document.getElementById('task-tab').click();">목록</button>
+				<button type="button" class="btn btn-sm btn-secondary float-right" onclick="backToList();">목록</button>
+				{{#ifCond '${userVO.nickname}' "==" userId}}
 				<button type="button" class="btn btn-sm btn-primary float-right" onclick="getOverlayTaskModifyTemplate('taskModifyFormTemplate','/app/task/getTaskDetailByTaskNo','{{taskNo}}')">수정</button>
 				<button type="button" class="btn btn-sm btn-danger float-right" onclick="deleteTaskById('/app/task/delete','{{taskNo}}');">삭제</button>
+				{{/ifCond}}
+				{{#ifCond '${userVO.nickname}' "!=" userId}}
+				{{#getRoleCheck 'A303'}}
+				<button type="button" class="btn btn-sm btn-primary float-right" onclick="getOverlayTaskModifyTemplate('taskModifyFormTemplate','/app/task/getTaskDetailByTaskNo','{{taskNo}}')">수정</button>
+				<button type="button" class="btn btn-sm btn-danger float-right" onclick="deleteTaskById('/app/task/delete','{{taskNo}}');">삭제</button>
+				{{/getRoleCheck}}
+				{{/ifCond}}
 			</div>
 		</div>
 
@@ -58,20 +66,23 @@
 			</div>
 		</div>
 
-		<div class="project-detail-body p-3">
-					<div class="x_title">
-						<h2 class="title">
-							<i class="glyphicon glyphicon-hdd"></i> 첨부파일
-						</h2>
-						<div class="clearfix"></div>
-					</div>
-					<div class="col-sm-12">
-						<ul class="row list-unstyled task-files">
+		<div class="form-group row">
+		<div class="col-sm-12">
+			<label>첨부파일 :</label>
+			<div class="form-control form-control-sm form-control-view" style="height:150px;">
+				<ul class="row list-unstyled task-files">
 						{{#ifCond fileList.length "!=" 0}}
 							{{#each fileList}}
 							<li class="d-flex align-items-center">
 								<div class="btn files-btn d-flex flex-wrap flex-column align-items-center justify-content-center"  style="width:140px;height:140px">
+								{{#ifCond '${userVO.nickname}' "==" ../userId}}
 								<button type="button" class="badge badge-danger" style="margin-left:85px" onclick="deleteDocument('{{doc_NO}}','{{{path}}}','{{../taskNo}}');">X</button>
+								{{/ifCond}}
+								{{#ifCond '${userVO.nickname}' "!=" ../userId}}
+								{{#getRoleCheck 'A303'}}
+								<button type="button" class="badge badge-danger" style="margin-left:85px" onclick="deleteDocument('{{doc_NO}}','{{{path}}}','{{../taskNo}}');">X</button>
+								{{/getRoleCheck}}
+								{{/ifCond}}
 									<a style="cursor:pointer;" onclick="taskDocumentDownload('{{{name}}}{{{extension}}}','{{{../title}}}','{{{../projTitle}}}');"><i class="fa fa-file-text fa-5x text-dark"></i></a>
 									<div class="mt-2 d-flex"><span class="text-truncate" style="display:inline-block;max-width:70px;">{{{name}}}</span><span>{{{extension}}}</span></div>
 								</div>
@@ -84,7 +95,7 @@
 							<div>
 						{{/ifCond}}
 						</ul>
-						</div>
-					<br />
+					</div>
 				</div>
+			</div>
 	</script>

@@ -72,13 +72,13 @@
 		<div class="card-body project-list">
 			<div class="user-block mt-3 mb-3">
 				<h2>
-					<a href="<%= request.getContextPath() %>/app/project/main?projNo=#:projNo#"
+					<a href="/app/project/main?projNo=#:projNo#"
 						class="project-list-a">#:title#</a> <span
 						class="badge badge-success float-right">#:status#</span>
 				</h2>
 			</div>
 			<!-- /.user-block -->
-			<div class="col-sm-8 text-truncate">#: xssPurify(intro)#</div>
+			<div class="col-sm-8 text-truncate">#= intro#</div>
 			<div class="col-sm-4 text-right">
 				<p>
 					<span class="ml-3 rounded rounded-2" style="background:rgb(239,239,239);">마감일 : #:kendo.toString(enddate,"yyyy년 MM월 dd일")#</span>
@@ -88,7 +88,7 @@
 					<div><span><i class="fa fa fa-heart-o fa-lg"></i> #:likeCount#</span></div>
 					<div class="ml-3 d-flex align-items-center"><h4 class="mb-0">
 				#for (var i=0, len=tagNames.length; i<len; i++){#
-						<span class="badge badge-success" onclick="sortingProjectByTag('#:tagNames[i]#');">#:tagNames[i]#</span>
+						<span class="badge badge-success" onclick="location.href='/app/tag?tagNo='+'#:tagNo[i]#'">#:tagNames[i]#</span>
 				#}#
 					</h4></div>
 					<div class="d-flex justify-content-end"><span class="ml-3">갱신일 : #:kendo.toString((updatedate),"yyyy년 MM월 dd일")#</span></div>

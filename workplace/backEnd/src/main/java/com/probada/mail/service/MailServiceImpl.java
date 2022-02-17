@@ -212,4 +212,18 @@ public class MailServiceImpl implements MailService {
 			}
 		}
 	}
+	
+	//아이디를 닉네임으로 변경
+	@Override
+	public String getNicknameByUserId(String userId) throws SQLException {
+		String nickname = mailDAO.selectNicknameByUserId(userId);
+		return nickname;
+	}
+	
+	//닉네임을 아이디로 변경
+	@Override
+	public String getUserIdByNickname(String nickname) throws SQLException {
+		String userId = mailDAO.selectUserIdByNickname(nickname);
+		return userId;
+	}
 }

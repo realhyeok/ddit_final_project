@@ -36,6 +36,7 @@ function trashMailBox(userId){
 		pageable: {
 	        alwaysVisible: false
 	    },
+	    scrollable: false,
 	    height: 580,
 		toolbar: [
 			{ template:

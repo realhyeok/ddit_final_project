@@ -8,6 +8,7 @@ public class FileVO {
 
 	private String DOC_NO;
 	private String PROJ_NO;
+	private String CPROJ_NO; //콜라보 프로젝트 넘버 추가
 	private String USER_ID;
 	private String DESC="desc??";
 	private String STATUS="STATUS??";
@@ -20,7 +21,11 @@ public class FileVO {
 	private String etc="1";
 	private int size =  20;
 
-    @JsonFormat(pattern = "yyyy/MM/dd")
+	private String projTitle = "";
+
+	private String cprojTitle = "";
+
+	@JsonFormat(pattern = "yyyy/MM/dd")
     private Date createdUtc = new Date();
 
 	@JsonFormat(pattern = "yyyy/MM/dd")
@@ -31,8 +36,29 @@ public class FileVO {
 
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date modifiedUtc = new Date();
+    
+    public String getCprojTitle() {
+    	return cprojTitle;
+    }
+    
+    public void setCprojTitle(String cprojTitle) {
+    	this.cprojTitle = cprojTitle;
+    }
 
+    public String getCPROJ_NO() {
+    	return CPROJ_NO;
+    }
+    
+    public void setCPROJ_NO(String cPROJ_NO) {
+    	CPROJ_NO = cPROJ_NO;
+    }
+    public String getProjTitle() {
+ 		return projTitle;
+ 	}
 
+ 	public void setProjTitle(String projTitle) {
+ 		this.projTitle = projTitle;
+ 	}
 
     public String getEtc() {
 		return etc;

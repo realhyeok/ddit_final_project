@@ -27,6 +27,7 @@ import com.probada.task.vo.TaskVO;
 import com.probada.user.vo.UserVO;
 import com.probada.util.DocumentUtil;
 import com.probada.util.ProjectUtil;
+import com.probada.util.TaskUtil;
 
 @Controller
 @RequestMapping("/app/task")
@@ -40,6 +41,8 @@ public class TaskController {
 	ProjectUtil projectUtil;
 	@Resource(name = "documentUtil")
 	DocumentUtil documentUtil;
+	@Resource(name = "taskUtil")
+	TaskUtil taskUtil;
 
 	@RequestMapping("/getTaskListByProjNo")
 	@ResponseBody
@@ -118,13 +121,11 @@ public class TaskController {
 
 	@RequestMapping("/getTaskDetailByTaskNo")
 	@ResponseBody
-	public ResponseEntity<TaskVO> getTaskDetailByTaskNo(TaskVO taskVO)
-			throws Exception {
+	public ResponseEntity<TaskVO> getTaskDetailByTaskNo(TaskVO taskVO) throws Exception {
 		ResponseEntity<TaskVO> entity = null;
 		TaskVO detailVO = new TaskVO();
 
 		try {
-
 			detailVO = taskService.getTaskDetailByTaskNo(taskVO);
 			String projTitle = projectUtil.getProjectNameByProjNo(taskVO.getProjNo());
 			List<UserVO> userList = projectUtil.getProjectMemberByProjNo(taskVO.getProjNo());
@@ -134,7 +135,6 @@ public class TaskController {
 
 			detailVO = documentUtil.readTaskDocByTaskTitleANDprojNo(detailVO);
 
-			LOGGER.debug("detailVO => "+detailVO);
 			entity = new ResponseEntity<TaskVO>(detailVO, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -154,9 +154,10 @@ public class TaskController {
 
 		try {
 
+			taskUtil.getSessionId(request, taskVO);
 			taskService.modifyTaskDetailByTaskNo(taskVO);
 			documentUtil.taskUpload(files, request, response, taskVO);
-			
+
 			entity = new ResponseEntity<TaskVO>(taskVO,HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -176,8 +177,8 @@ public class TaskController {
 
 		try {
 
+			taskUtil.getSessionId(request, taskVO);
 			String taskNo = taskService.registTask(taskVO);
-
 			documentUtil.taskUpload(files, request, response, taskVO);
 			hashMap.put("taskNo", taskNo);
 

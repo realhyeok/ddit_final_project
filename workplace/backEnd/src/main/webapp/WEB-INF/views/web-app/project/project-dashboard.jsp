@@ -112,26 +112,11 @@
 
 
 
-		<!-- 카드 리스트 -->
-	<div class="col-md-6 col-sm-6 pl-0">
-			<div class="x_title">
-				<h2>업무 통계</h2>
-				<a class="more float-right mt-2" href="javascript:on();">
-					더보기
-					<i class="fa fa-arrow-right"></i>
-				</a>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content d-flex justify-content-center">
-				<div class="chart-container" style="position: relative; height:200px; width:200px">
-                	<canvas id="custom_doughnutChart"></canvas>
-				</div>
-			</div>
-		</div>
+	
 <!-- dashboard-table left end -->
 
 
-<div class="col-md-6 col-sm-6 pl-0  ">
+<%-- <div class="col-md-6 col-sm-6 pl-0  ">
 	<div class="x_title">
 		<h2>이슈 통계</h2>
 		<a class="more float-right mt-2" href="javascript:on();"> 더보기 <i
@@ -245,7 +230,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> --%>
 
 
 <div class="col-md-6 col-sm-6 pl-0">
@@ -281,6 +266,9 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	
 <!-- dashboard-table left end -->
 
 <!-- dashboard-table right start -->
@@ -542,6 +530,22 @@
 					</tbody>
 				</table>
 			</div>
+	</div>
+	
+	<!-- 카드 리스트 -->
+	<div class="col-md-12 col-sm-12 pl-0">
+		<div class="x_title">
+			<h2>구성원별 업무 통계</h2>
+			<a class="more float-right mt-2" href="javascript:on();"> 더보기 <i
+				class="fa fa-arrow-right"></i>
+			</a>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content d-flex justify-content-center">
+			<div class="chart-container" style="width: 100%; height: auto;">
+				<canvas id="member_achievement_chart"></canvas>
+			</div>
+		</div>
 	</div>
 
 

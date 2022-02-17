@@ -92,6 +92,28 @@ public class ProjectServiceImpl implements ProjectService {
 		return title;
 	}
 
+	@Override
+	public void modifyUserRole(ProjectVO projectVO) throws SQLException {
+
+		projectDAO.updateUserRole(projectVO);
+
+	}
+
+	@Override
+	public String getUserRole(ProjectVO projectVO) throws SQLException {
+
+		String role = projectDAO.selectUserRole(projectVO);
+
+		return role;
+	}
+
+	@Override
+	public void removeProjectUserRelation(ProjectVO projectVO) throws SQLException {
+
+		projectDAO.deleteProjectUserRelation(projectVO);
+
+	}
+
 
 
 

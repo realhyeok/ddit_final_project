@@ -56,8 +56,23 @@
 	    <!-- 채팅 js -->
 	    <script src="<%=request.getContextPath()%>/resources/asserts/js/chat/chatCreate.js"></script>
 	    <script src="<%=request.getContextPath()%>/resources/asserts/js/chat/chatOverlay.js"></script>
+	   
+	 
+	   
+	   
+	   	<script src="<%=request.getContextPath()%>/resources/seok/beautialert.js"></script>
+	   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	   
 	    <!-- 통합검색 js -->
 	    <script src="<%=request.getContextPath()%>/resources/asserts/js/search/totalSearch.js"></script>
-
+	    <!-- bootstrap-progressbar -->
+	    <script src="<%=request.getContextPath()%>/resources/bootstrap/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+	    <script>
+		    if(${mailRegist eq 'registSuccess'}) {
+				alert("메일을 전송하였습니다.");
+			}else if(${mailRegist eq 'tempSuccess'}){
+				alert("메일을 임시저장하였습니다.");
+			}
+	    </script>
 	</body>
 </html>

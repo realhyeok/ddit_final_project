@@ -28,7 +28,10 @@
             <div class="container">
                 <div class="signup-content">
                     <div class="signup-form">
-                        <h2 class="form-title">회원가입</h2>
+                    	<div class="form-title">
+                        <h2>회원가입</h2>
+                        <small>회원가입을 완료되면 해당 이메일 주소로 인증 링크를 보냅니다.</small>
+                    	</div>
                         <form class="register-form" id="register-form">
                             <div class="form-group custom-validate">
                                 <label for="userId"><i class="zmdi zmdi-email"></i></label>
@@ -58,11 +61,11 @@
                                 <i class="fas fa-exclamation-circle"></i>
                                 <small>Error message</small>
                             </div>
-                            <div class="form-group custom-validate">
+                            <!-- <div class="form-group custom-validate">
                                 <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
                                 <label for="agree-term" class="label-agree-term"><span><span></span></span><a href="#" class="term-service">이용약관</a>에 동의합니다.</label>
                                 <small style="padding-left:5px;">이용 약관에 동의해주세요.</small>
-                            </div>
+                            </div> -->
                             <div class="form-group form-button">
                                 <input type="submit" name="signup" id="signup" class="form-submit" value="다음"/>
                             </div>

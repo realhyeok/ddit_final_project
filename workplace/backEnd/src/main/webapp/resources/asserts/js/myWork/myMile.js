@@ -37,11 +37,11 @@ function readMyMile(uid){
 		dataBound: function() {
 			$('.B301').kendoBadge({
 				themeColor: 'tertiary',
-				text: '진행중'
+				text: '미해결'
 			});
 			$('.B302').kendoBadge({
 				themeColor: 'primary',
-				text: '완료'
+				text: '해결'
 			});
 		}
 	});

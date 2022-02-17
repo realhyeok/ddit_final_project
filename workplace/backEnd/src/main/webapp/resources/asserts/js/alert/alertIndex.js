@@ -1,4 +1,6 @@
+
 //전역변수 선언-모든 홈페이지에서 사용 할 수 있게 index에 저장
+
 // <!-- 콜라보 none or list로 보내는 함수 -->        
 	window.addEventListener('load', function () {
 		$.ajax({
@@ -20,7 +22,6 @@
 var socket = null;
 
 $(document).ready(function (){
-	$('.k-input').attr('placeholder', '검색...');
 	connectWs();
 	updateAlertList(); // 실시간 알림 리스트 갱신
 	getListToAsideBar(); // 실시간 aside바 리스트들 갱신
@@ -34,6 +35,11 @@ $(document).ready(function (){
 	}
 	isProjAlertCheckBox();
 	writePaymentHistory();
+	projectList_for_profile();
+
+	if(window.location.pathname === "/app/tag"){
+		printTagGrid();
+	}
 });
 
 function connectWs(){
@@ -73,6 +79,7 @@ function connectWs(){
 				$.ajax({
 						type: "post",
 						url: "/app/addToAlertList.do",
+						contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 						data: JSON.stringify(alertData),
 						contentType: "application/json; charset=utf-8",
 						dataType: "json",
@@ -125,6 +132,7 @@ function updateAlertList() {
 $.ajax({
 	type: "post",
 	url: "/app/updateAlertList.do",
+	contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	success: function (data) {
 		var alertList = data.alertList;
 		var alertCount = data.alertCount;
@@ -134,8 +142,8 @@ $.ajax({
 			let alert_ul = document.querySelector("#alertVOList");
 			const li = document.createElement("li");
 			li.innerHTML =`<li class="nav-item">
-             					<strong>해당 내용이 없습니다.</strong>
-				 			</li>`;
+												<strong>해당 내용이 없습니다.</strong>
+											</li>`;
 			alert_ul.prepend(li.children[0]);
 		}
 		$(alertList).each(function(){
@@ -249,7 +257,8 @@ function getListToAsideBar() {
 			showAsideBarList(taskList, projectList, collaboList);
 			if(window.location.pathname === "/app/index"){
 				monthProjectGraph(projectList);
-				
+				task_list_for_index_page(taskList);
+				project_list_for_index_page(projectList);
 			}
 		},error: function (err) {
 			console.log("getTaskListToAsideBar() err status : " + err.status);
@@ -292,11 +301,11 @@ function showAsideBarList(taskList, projectList, collaboList) {
 
 	// 콜라보 리스트 조회
 	if(collaboList.length === 0){
-		li.innerHTML = `<li><a href="#">참여중인 프로젝트가 존재하지 않습니다.</a></li>`;
+		li.innerHTML = `<li><a href="#">참여중인 콜라보가 존재하지 않습니다.</a></li>`;
 		collabo_list_ul.prepend(li.children[0]);
 	} else {
 		collaboList.forEach(e => {
-			li.innerHTML = `<li><a href="/app/project/main?projNo=${e.cprojNo}">${e.title}</a></li>`;
+			li.innerHTML = `<li><a href="/app/collabo/main?cprojNo=${e.cprojNo}">${e.title}</a></li>`;
 			while (li.children.length > 0) {
 				collabo_list_ul.prepend(li.children[0]);
 			}
@@ -304,11 +313,6 @@ function showAsideBarList(taskList, projectList, collaboList) {
 	}
 
 	getAlertModalProjectList(projectList);
-	if(window.location.pathname === "/app/index"){
-		task_list_for_index_page(taskList);
-		project_list_for_index_page(projectList);
-	}
-
 }
 
 // 알림설정에 프로젝트 리스트 가져오는 메서드
@@ -434,12 +438,14 @@ function task_list_for_index_page(taskList) {
 			if(cnt >= 3){ 
 				return false;
 			}
-			tbody.innerHTML += `<tr>
-												<td scope="row" class="text-truncate" style="max-width: 150px;">${e.title}</td>
-												<td class="text-truncate" style="max-width: 60px;">${e.projNo}</td>
-												<td>${e.status}</td>
-											</tr>`;
-			cnt++;
+			if(e.status != "완료"){
+				tbody.innerHTML += `<tr>
+													<td scope="row" class="text-truncate" style="max-width: 150px;">${e.title}</td>
+													<td class="text-truncate" style="max-width: 60px;">${e.projNo}</td>
+													<td>${e.status}</td>
+												</tr>`;
+				cnt++;
+			}
 		});
 	}
 }
@@ -483,7 +489,11 @@ function project_list_for_index_page(projectList) {
 														<td>${e.status}</td>
 														<td>${dateFormat(new Date(e.startdate))}</td>
 														<td>${dateFormat(new Date(e.enddate))}</td>
-														<td>${Math.floor(achievementPercent)}</td>
+														<td class="vertical-align-mid">
+															<div class="progress" title="${Math.floor(achievementPercent)}%">
+																<div class="progress-bar progress-bar-success" data-transitiongoal="${Math.floor(achievementPercent)}" style="width: ${Math.floor(achievementPercent)}%;" aria-valuenow="${Math.floor(achievementPercent)}"></div>
+															</div>
+														</td>
 													</tr>`;
 				},
 				error: function (err) {
@@ -505,76 +515,158 @@ function dateFormat(date) {
 	return year + '-' + month + '-' + day;
 }
 
+function projectList_for_profile() {
+	if(window.location.pathname === "/user/profile"){
+		
+		let search = location.search
+		let params = new URLSearchParams(search);
+		let getType= params.get('userId');
+
+		console.log("getType => " + getType);
+
+		$.ajax({
+			type: "get",
+			url: "/app/project/getProjectListByParamUserId",
+			data: {"userId" : getType},
+			dataType:"json",
+			success: function (res) {
+				print_projects_for_profile(res);
+			},
+			error: function (err) {
+				console.log("projectList_for_profile() err status : " + err.status);
+			}
+		});
+	
+		
+	}
+
+	function print_projects_for_profile(projectList){
+
+		const tbody = document.querySelector(".profile_projectList");
+
+		console.log("len => " + projectList.length);
+		if(projectList.length === 0){
+			tbody.innerHTML = `<tr>
+													<td colspan="4">활동중인 프로젝트가 존재하지 않습니다.</td>
+												</tr>`;
+		} else {
+			projectList.forEach(e => {
+				console.log("e = > " + e);
+
+				if(e.privacy === "공개"){ // 공개인 프로젝트만 출력
+
+					$.ajax({
+						type: "get",
+						url: "/app/task/getTaskListByProjNo",
+						data: {"projNo" : e.projNo},
+						success: function (res) {
+
+							console.log("res = > " + res);
+
+							let advancement = 0;
+							let projTaskCount = 0;
+							res.forEach(taskEle => {
+								if(taskEle.status === "B204"){ // 완료일 경우
+									advancement++;
+								}
+								projTaskCount++;
+							});
+							let achievementPercent = (advancement / projTaskCount) * 100;
+							if(isNaN(achievementPercent)){
+								achievementPercent = 0;
+							}
+							tbody.innerHTML += `<tr style="cursor: pointer;" onclick="location.href='/app/project/main?projNo=${e.projNo}'">
+																		<td scope="row" class="text-truncate" style="max-width: 150px;">${e.title}</td>
+																		<td>${e.status}</td>
+																		<td>${projTaskCount}</td>
+																		<td class="vertical-align-mid">
+																			<div class="progress" title="${Math.floor(achievementPercent)}%">
+																				<div class="progress-bar progress-bar-success" data-transitiongoal="${Math.floor(achievementPercent)}" style="width: ${Math.floor(achievementPercent)}%;" aria-valuenow="${Math.floor(achievementPercent)}"></div>
+																			</div>
+																		</td>
+																	</tr>`;
+						},
+						error: function (err) {
+							console.log("projectList_for_profile() err status : " + err.status);
+						}
+					});
+				}
+			});
+		}
+	}
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////
 // custom graph
 
 
-var test_data_bar = {
-	type: "bar",
-  data: {
-		labels: [
-			"1월",
-			"2월",
-			"3월",
-			"4월",
-			"5월",
-			"6월",
-			"7월",
-			"8월",
-			"9월",
-			"10월",
-			"11월",
-			"12월",
-		],
-		datasets: [
-			{
-				label: "진행중",
-				backgroundColor: "rgba(75, 192, 192, 0.2)",
-				borderColor: "rgb(75, 192, 192)",
-				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				borderWidth: 1,
-			},
-			{
-				label: "지연",
-				backgroundColor: "rgba(255, 205, 86, 0.2)",
-				borderColor: "rgb(255, 205, 86)",
-				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				borderWidth: 1,
-			},
-			{
-				label: "완료",
-				backgroundColor: "rgba(54, 162, 235, 0.2)",
-				borderColor: "rgb(54, 162, 235)",
-				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				borderWidth: 1,
-			},
-			{
-				label: "파기요청",
-				backgroundColor: "rgba(255, 99, 132, 0.2)",
-				borderColor: "rgb(255, 99, 132)",
-				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				borderWidth: 1,
-			},
-		],
-	},
-	options: {
-		scales: {
-			y: {
-				stacked: true,
-			},
-			x: {
-				stacked: true,
-			},
-		},
-	},
-};
 
 // 월별 그래프 차트 출력 메서드
 function monthProjectGraph(projectList) {
-  let dataset = test_data_bar.data.datasets;
-	let labels = test_data_bar.data.labels;
+	
+	var test_data_bar = {
+		type: "bar",
+		data: {
+			labels: [
+				"1월",
+				"2월",
+				"3월",
+				"4월",
+				"5월",
+				"6월",
+				"7월",
+				"8월",
+				"9월",
+				"10월",
+				"11월",
+				"12월",
+			],
+			datasets: [
+				{
+					label: "진행중",
+					backgroundColor: "rgba(75, 192, 192, 0.2)",
+					borderColor: "rgb(75, 192, 192)",
+					data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+					borderWidth: 1,
+				},
+				{
+					label: "지연",
+					backgroundColor: "rgba(255, 205, 86, 0.2)",
+					borderColor: "rgb(255, 205, 86)",
+					data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+					borderWidth: 1,
+				},
+				{
+					label: "완료",
+					backgroundColor: "rgba(54, 162, 235, 0.2)",
+					borderColor: "rgb(54, 162, 235)",
+					data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+					borderWidth: 1,
+				},
+				{
+					label: "파기요청",
+					backgroundColor: "rgba(255, 99, 132, 0.2)",
+					borderColor: "rgb(255, 99, 132)",
+					data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+					borderWidth: 1,
+				},
+			],
+		},
+		options: {
+			scales: {
+				y: {
+					stacked: true,
+				},
+				x: {
+					stacked: true,
+				},
+			},
+		},
+	};
 
+	let dataset = test_data_bar.data.datasets;
+	let labels = test_data_bar.data.labels;
   projectList.forEach(project => {
 		let startMonth = (new Date(project.startdate).getMonth()) + 1;
 		let endMonth = (new Date(project.enddate).getMonth()) + 1;
@@ -612,8 +704,6 @@ function monthProjectGraph(projectList) {
 					}
 				}
 		}
-
-		
   });
 	// canvas 드로잉
 	const custom_monthBarChart = new Chart(
@@ -833,6 +923,7 @@ function requestPay(ppvo, userId) {
 						if(cnt >= 3){ 
 							return false;
 						}
+						
 						tbody.innerHTML += `<tr>
 															<td scope="row" class="text-truncate" style="max-width: 150px;">${e.title}</td>
 															<td class="text-truncate" style="max-width: 60px;">${e.projNo}</td>
@@ -848,3 +939,122 @@ function requestPay(ppvo, userId) {
 		});
 
 	}
+
+	// function goToUserProfilePage(userId) {
+	// 	$.ajax({
+	// 		type: "post",
+	// 		url: "/goToUserProfilePage.do",
+	// 		data: {"userId" : userId},
+	// 		dataType: "josn",
+	// 		success: function (res) {
+				
+	// 		},
+	// 		error: function (err) {
+	// 			console.log("goToUserProfilePage() err status : " + err.status);
+	// 		}
+	// 	});
+	// }
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	function printTagGrid() {
+		 let search = location.search
+		 let params = new URLSearchParams(search);
+		 let tagNo = params.get('tagNo');
+//		let tagNo = 2;
+//		console.log("tagNo = > " + tagNo);
+
+		const dataSource = new kendo.data.DataSource({
+                transport: {
+									read : {
+										url: "/app/tag/read",
+										method: "get",
+										data: {"tagNo":tagNo},
+										success:function(result) {
+											console.log(result);
+											}
+									}
+                },
+              
+                schema: {
+                    model: {
+                        fields: [{
+                            tagNo: { type: "string"},
+                            tagName: { type: "string"},
+                            projNo: { type: "string"},
+                            projectTitle: { type: "string"},
+                            startDate: { type: "string" },
+                            endDate: { type: "string" },
+                            status: { type: "string" },
+                            leader: { type: "string" },
+                        }]
+                    }
+                },
+								pageSize: 10
+            });
+						dataSource.fetch(function(){
+							var data = this.data();
+							let tagName = document.querySelector('.printTagName');
+							tagName.innerHTML = data[0].tagName;
+						});
+					
+        $("#tagGrid-table").kendoGrid({
+            dataSource: dataSource,
+            editable: false,
+            pageable: true,
+            sortable: true,
+            navigatable: true,
+            resizable: true,
+            reorderable: true,
+            groupable: true,
+						messages: {
+							commands: {
+								search: "검색"
+							}
+						},
+            dataBound: onDataBound,
+            toolbar: ["search"],
+            columns: [
+            {
+                field: "projectTitle",
+                title: "프로젝트 명",
+                template: "<a href='/app/project/main?projNo=#:projNo#'>#: projectTitle #</a>",
+                width: 300
+            }, {
+                field: "startDate",
+                title: "시작일",
+                template: "<div> #: startDate#</div>",
+                width: 130,
+            }, {
+                field: "endDate",
+                title: "종료일",
+                groupHeaderTemplate: "<div>#: endDate #</div>",
+                width: 125
+            }, {
+                field: "status",
+                title: "진행상태",
+                template: "<div>#: status #</div>",
+                width: 140
+            }, {
+                field: "leader",
+                title: "책임자",
+                template: "<div>#: leader #</div>",
+                width: 120
+            }
+            ],
+					
+        });
+				function onDataBound(e) {
+					var grid = this;
+
+					grid.table.find("tr").each(function () {
+							var dataItem = grid.dataItem(this);
+
+							kendo.bind($(this), dataItem);
+					});
+					$("#tagGrid-table .k-grid-footer").css('display', 'none');
+			}
+
+	}
+

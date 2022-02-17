@@ -321,3 +321,20 @@
   right: 0.2rem;
   height: 140%;
 }
+
+img.img-responsive.avatar-view {
+    width: 200px;
+    height: 200px;
+}
+.user-profile-intro {
+    width: 200px;
+    height: 160px;
+    /* background: #f3f3f3; */
+}
+.user-profile-projects{
+	overflow:auto;
+	max-height:300px;
+}
+.user-profile-nickname{
+	width:200px;
+}

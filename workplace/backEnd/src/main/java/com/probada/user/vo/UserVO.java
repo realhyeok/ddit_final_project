@@ -14,12 +14,32 @@ public class UserVO {
 	private int likeCount;
 	private int authStatus;
 	private int userUploadUsage;
-	
+
 	private int taskCount;
 	private int projectCount;
+
+//	업무 상태별 count
+	private int completeTaskCount;
+	private int delayTaskCount;
+	private int ongoingTaskCount;
+	private int beforeTaskCount;
+
 	private String projNo;
-	
+
 	private String cprojNo;
+
+	private String isDeleted;
+
+	@Override
+	public String toString() {
+		return "UserVO [nickname=" + nickname + ", privacy=" + privacy + ", picture=" + picture + ", intro=" + intro
+				+ ", authkey=" + authkey + ", regdate=" + regdate + ", userId=" + userId + ", pwd=" + pwd
+				+ ", likeCount=" + likeCount + ", authStatus=" + authStatus + ", userUploadUsage=" + userUploadUsage
+				+ ", taskCount=" + taskCount + ", projectCount=" + projectCount + ", completeTaskCount="
+				+ completeTaskCount + ", delayTaskCount=" + delayTaskCount + ", ongoingTaskCount=" + ongoingTaskCount
+				+ ", beforeTaskCount=" + beforeTaskCount + ", projNo=" + projNo + ", cprojNo=" + cprojNo
+				+ ", isDeleted=" + isDeleted + "]";
+	}
 
 	public String getCprojNo() {
 		return cprojNo;
@@ -29,11 +49,12 @@ public class UserVO {
 		this.cprojNo = cprojNo;
 	}
 
-	@Override
-	public String toString() {
-		return "UserVO [nickname=" + nickname + ", privacy=" + privacy + ", picture=" + picture + ", intro=" + intro
-				+ ", authkey=" + authkey + ", regdate=" + regdate + ", userId=" + userId + ", pwd=" + pwd
-				+ ", likeCount=" + likeCount + ", authStatus=" + authStatus + "]";
+	public String getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(String isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	public String getProjNo() {
@@ -120,5 +141,39 @@ public class UserVO {
 	public void setProjectCount(int projectCount) {
 		this.projectCount = projectCount;
 	}
+
+	public int getCompleteTaskCount() {
+		return completeTaskCount;
+	}
+
+	public void setCompleteTaskCount(int completeTaskCount) {
+		this.completeTaskCount = completeTaskCount;
+	}
+
+	public int getDelayTaskCount() {
+		return delayTaskCount;
+	}
+
+	public void setDelayTaskCount(int delayTaskCount) {
+		this.delayTaskCount = delayTaskCount;
+	}
+
+	public int getOngoingTaskCount() {
+		return ongoingTaskCount;
+	}
+
+	public void setOngoingTaskCount(int ongoingTaskCount) {
+		this.ongoingTaskCount = ongoingTaskCount;
+	}
+
+	public int getBeforeTaskCount() {
+		return beforeTaskCount;
+	}
+
+	public void setBeforeTaskCount(int beforeTaskCount) {
+		this.beforeTaskCount = beforeTaskCount;
+	}
+
+
 
 }

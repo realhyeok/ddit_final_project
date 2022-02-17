@@ -62,7 +62,7 @@
                                 <input type="password" name="user-pwd" id="user-pwd" placeholder="비밀번호" />
                             </div>
 
-                            <div class="remember_search">
+                            <div class="remember_search" style="margin-top:50px">
                                 <div class="form-group">
                                     <input type="checkbox" name="rememberMe" id="remember-me" class="agree-term" />
                                     <label for="remember-me" class="label-agree-term"><span><span></span></span>아이디 기억하기</label>
@@ -78,14 +78,14 @@
 
                         </form>
 
-                        <div class="social-login">
+                      <!--   <div class="social-login">
                             <span class="social-label">Or login with</span>
                             <ul class="socials">
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-kakao"></i></a></li>
                                 <li><a href="#" id="naverIdLogin"><i class="display-flex-center zmdi zmdi-naver"></i></a></li>
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
                             </ul>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>

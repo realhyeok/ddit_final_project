@@ -51,7 +51,9 @@ public class MailController {
 	public ResponseEntity<Integer> getMemoryCapacity(String userId) throws Exception {
 		ResponseEntity<Integer> entity = null;
 		String planNo = null;
+		userId = getUserIdByNickname(userId);
 		int memoryCapacity = 0;
+		
 		try {
 			planNo = paymentsBillService.getPlanNo(userId);
 			memoryCapacity = paymentsBillService.getMemoryCapacity(planNo);
@@ -69,9 +71,16 @@ public class MailController {
 	public ResponseEntity<List<MailVO>> receiveMailListToJSON(String userTo) throws Exception {
 		ResponseEntity<List<MailVO>> entity = null;
 		List<MailVO> receiveMailList = null;
-		
+		userTo = getUserIdByNickname(userTo);
 		try {
 			receiveMailList = mailService.getReceiveMailList(userTo);
+			for(MailVO mailVO : receiveMailList) {
+				String userFrom2 = getNicknameByUserId(mailVO.getUserFrom());
+				String userTo2 = getNicknameByUserId(mailVO.getUserTo());
+				
+				mailVO.setUserFrom(userFrom2);
+				mailVO.setUserTo(userTo2);
+			}
 			entity = new ResponseEntity<List<MailVO>>(receiveMailList, HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity<List<MailVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -86,9 +95,16 @@ public class MailController {
 	public ResponseEntity<List<MailVO>> sendMailListToJSON(String userFrom) throws Exception {
 		ResponseEntity<List<MailVO>> entity = null;
 		List<MailVO> sendMailList = null;
-		
+		userFrom = getUserIdByNickname(userFrom);
 		try {
 			sendMailList = mailService.getSendMailList(userFrom);
+			for(MailVO mailVO : sendMailList) {
+				String userFrom2 = getNicknameByUserId(mailVO.getUserFrom());
+				String userTo2 = getNicknameByUserId(mailVO.getUserTo());
+				
+				mailVO.setUserFrom(userFrom2);
+				mailVO.setUserTo(userTo2);
+			}
 			entity = new ResponseEntity<List<MailVO>>(sendMailList, HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity<List<MailVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -103,9 +119,16 @@ public class MailController {
 	public ResponseEntity<List<MailVO>> tempMailListToJSON(String userFrom) throws Exception {
 		ResponseEntity<List<MailVO>> entity = null;
 		List<MailVO> tempMailList = null;
-		
+		userFrom = getUserIdByNickname(userFrom);
 		try {
 			tempMailList = mailService.getTempMailList(userFrom);
+			for(MailVO mailVO : tempMailList) {
+				String userFrom2 = getNicknameByUserId(mailVO.getUserFrom());
+				String userTo2 = getNicknameByUserId(mailVO.getUserTo());
+				
+				mailVO.setUserFrom(userFrom2);
+				mailVO.setUserTo(userTo2);
+			}
 			entity = new ResponseEntity<List<MailVO>>(tempMailList, HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity<List<MailVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -120,9 +143,17 @@ public class MailController {
 	public ResponseEntity<List<MailVO>> trashMailListToJSON(String userId) throws Exception {
 		ResponseEntity<List<MailVO>> entity = null;
 		List<MailVO> trashMailList = null;
+		userId = getUserIdByNickname(userId);
 		
 		try {
 			trashMailList = mailService.getTrashMailList(userId);
+			for(MailVO mailVO : trashMailList) {
+				String userFrom2 = getNicknameByUserId(mailVO.getUserFrom());
+				String userTo2 = getNicknameByUserId(mailVO.getUserTo());
+				
+				mailVO.setUserFrom(userFrom2);
+				mailVO.setUserTo(userTo2);	
+			}
 			entity = new ResponseEntity<List<MailVO>>(trashMailList, HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity<List<MailVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -139,6 +170,11 @@ public class MailController {
 		MailVO mailDetail = null;
 		try {
 			mailDetail = mailService.getMailByMailNo(mailNo);
+			String userTo = getNicknameByUserId(mailDetail.getUserTo());
+			String userFrom = getNicknameByUserId(mailDetail.getUserFrom());
+			mailDetail.setUserTo(userTo);
+			mailDetail.setUserFrom(userFrom);
+			
 			entity = new ResponseEntity<MailVO>(mailDetail, HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity<MailVO>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -155,6 +191,11 @@ public class MailController {
 		MailVO mailDetail = null;
 		try {
 			mailDetail = mailService.getReceiveMailByMailNo(mailNo);
+			String userTo = getNicknameByUserId(mailDetail.getUserTo());
+			String userFrom = getNicknameByUserId(mailDetail.getUserFrom());
+			mailDetail.setUserTo(userTo);
+			mailDetail.setUserFrom(userFrom);
+			
 			entity = new ResponseEntity<MailVO>(mailDetail, HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity<MailVO>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -316,8 +357,14 @@ public class MailController {
 		String dist = regData.getDist();
 		MailVO mailVO = regData.toMailVO();
 		
+		String userFrom = getUserIdByNickname(mailVO.getUserFrom());
+		String userTo = getUserIdByNickname(mailVO.getUserTo());
+		
+		mailVO.setUserFrom(userFrom);
+		mailVO.setUserTo(userTo);
 		//사용량 
 		String userId = mailVO.getUserFrom();
+		
 		double userUploadUsage = userService.getUser(userId).getUserUploadUsage();
 		//총용량
 		String planNo = paymentsBillService.getPlanNo(userId);
@@ -343,9 +390,19 @@ public class MailController {
 			if(dist.equals("temp")) {
 				mailService.registTempMailAttachFile(mailVO);
 				rttr.addFlashAttribute("from", "tempRegistAfter");
+				rttr.addFlashAttribute("mailRegist", "tempSuccess");
+			}else if(dist.equals("tempMine")) {
+				mailService.registTempMailAttachFile(mailVO);
+				rttr.addFlashAttribute("from", "tempRegistAfter");
+				rttr.addFlashAttribute("mailRegist", "tempSuccess");
 			}else if(dist.equals("send")) {
 				mailService.registMailAttachFile(mailVO);
 				rttr.addFlashAttribute("from", "sendRegistAfter");
+				rttr.addFlashAttribute("mailRegist", "registSuccess");
+			}else if(dist.equals("mine")) {
+				mailService.registMailAttachFile(mailVO);
+				rttr.addFlashAttribute("from", "receiveRegistAfter");
+				rttr.addFlashAttribute("mailRegist", "registSuccess");
 			}
 			return url;
 		}
@@ -355,9 +412,16 @@ public class MailController {
 	@RequestMapping(value="/tempMailRegist", method=RequestMethod.POST, produces="text/plain;charset=utf-8")
 	public String tempMailRegist(TempMailRegistCommand modData, RedirectAttributes rttr) throws Exception {
 		String url = "redirect:/app/myWork";
+		String dist = modData.getDist();
+		String userFrom = getUserIdByNickname(modData.getUserFrom());
+		String userTo = getUserIdByNickname(modData.getUserTo());
+		
+		modData.setUserFrom(userFrom);
+		modData.setUserTo(userTo);
 		
 		//사용량
 		String userId = modData.getUserFrom();
+		
 		double userUploadUsage = userService.getUser(userId).getUserUploadUsage();
 		//총용량
 		String planNo = paymentsBillService.getPlanNo(userId);
@@ -411,8 +475,24 @@ public class MailController {
 			
 			//DB저장
 			mailService.tempMailToSendMail(mailVO);
-			rttr.addFlashAttribute("from", "tempToSendAfter");
+			
+			
+			if(dist.equals("mine")) {
+				rttr.addFlashAttribute("from", "tempToMineAfter");
+				rttr.addFlashAttribute("mailRegist", "registSuccess");
+			}else if(dist.equals("send")) {
+				rttr.addFlashAttribute("from", "tempToSendAfter");
+				rttr.addFlashAttribute("mailRegist", "registSuccess");
+			}
 			return url;
 		}		
+	}
+	
+	public String getUserIdByNickname(String userId) throws Exception {
+		return mailService.getUserIdByNickname(userId);
+	}
+	
+	public String getNicknameByUserId(String userId) throws Exception {
+		return mailService.getNicknameByUserId(userId);
 	}
 }

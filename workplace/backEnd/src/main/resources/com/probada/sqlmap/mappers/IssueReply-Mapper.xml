@@ -12,9 +12,9 @@
 			 , UPDATEDATE
 		  FROM ISSUE_RES
 		 WHERE ISSUE_NO = #{issueNo}
-		 ORDER BY ISSUE_RES_NO DESC
+		 ORDER BY ISSUE_RES_NO ASC
 	</select>
-	
+
 	<update id="insertIssueReply" parameterType="issueReply">
 		INSERT INTO ISSUE_RES (
 			ISSUE_RES_NO
@@ -34,14 +34,14 @@
 		  , SYSDATE
 		  )
 	</update>
-	
+
 	<update id="updateIssueReply" parameterType="issueReply">
 		UPDATE ISSUE_RES
 		   SET CONTENT = #{content}
 			 , UPDATEDATE = SYSDATE
 		 WHERE ISSUE_RES_NO = #{issueResNo}
 	</update>
-	
+
 	<update id="deleteIssueReply" parameterType="String">
 		DELETE FROM ISSUE_RES
 		 WHERE ISSUE_RES_NO = #{issueResNo}

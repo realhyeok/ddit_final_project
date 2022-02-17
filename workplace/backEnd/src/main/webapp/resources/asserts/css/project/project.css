@@ -118,7 +118,9 @@ i.fa-check-circle, i.fa-exclamation-circle {
     color: #2ecc71;
     visibility: visible;
 }
-
+.k-splitbar.k-state-default.k-splitbar-horizontal.k-splitbar-draggable-horizontal{
+	height: 715px!important;
+}
 .form-group.custom-validate.error i.fa-exclamation-circle {
     color: #e74c3c;
     visibility: visible;
@@ -141,5 +143,25 @@ i.fa-check-circle, i.fa-exclamation-circle {
 	display:none!important;
 }
 .k-gantt-footer {
+    display: none;
+}
+.k-gantt-treelist td[role="gridcell"]{
+	padding:0px!important;
+	padding-left:5px!important;
+	overflow:hidden!important;
+}
+.k-task-dot{
+	display:none!important;
+}
+.k-task-complete{
+	display:none!important;
+}
+.k-link.k-task-delete{
+	display:none!important;
+}
+.k-task.k-task-single{
+	background-color:#8491db;
+}
+.tagsinput .tag:after {
     display: none;
 }

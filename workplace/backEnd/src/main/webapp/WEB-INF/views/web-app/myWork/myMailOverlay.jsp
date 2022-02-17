@@ -41,7 +41,7 @@
 									<div class="col-sm-12">
 										<form enctype="multipart/form-data" role="form" method="post" action="<%=request.getContextPath()%>/app/myWork/mailRegist" name="overlayMailRegistForm" class="form-horizontal form-label-left">
 											<div class="inbox-body">
-												<input type="hidden" id="userFrom" name="userFrom" value="${userVO.userId}">
+												<input type="hidden" id="userFrom" name="userFrom" value="${userVO.nickname}">
 												<input type="hidden" id="overlayDist" name="dist" value="">
 												<input type="text" id="userTo" name="userTo" class="form-control form-control-sm mt-3 sendOverlayUserTo" placeholder="받는 사람:" value="" readonly>
 												<br>

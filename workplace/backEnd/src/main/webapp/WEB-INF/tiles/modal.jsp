@@ -46,7 +46,7 @@
 					<ul style="padding:0px; list-style:none;" id="projectAlertSettingList">
 						<!-- alertIndex.js의 getAlertModalProjectList() 메서드에서 li를 추가하고 있다. -->
 					</ul>
-					
+
 				</div>
 
 				<div class="modal-footer"></div>
@@ -54,7 +54,7 @@
 		</div>
 	</div>
 	<!-- 모달끝 -->
-	
+
 	<!-- The Modal -->
     <div class="modal" id="createCollabo" data-backdrop="static">
       <div class="modal-dialog">
@@ -68,24 +68,25 @@
           </div>
 
           <!-- Modal body -->
-          <div class="modal-body">
+          <div class="modal-body" id="collaboModal">
 
             <div class="x_content">
               <!-- form start -->
               <form role="form" method="post" action="<%=request.getContextPath()%>/app/collabo/sendInviteCollaboMail" name="collaboMailRegist">
-                
+
                 <p>콜라보 제안은 다른 프로젝트 팀과 협업 할 수 있는 곳입니다.</p>
                 <p>다른 팀과 협업 공간을 만들고 함께 일해보세요.</p>
-                <div class="card-body">
-                  
+                <div id="name1"></div>
+                <div class="card-body" onchange="selectOtherProj()">
+
                   <div class="control-group row">
                     <label class="control-label col-md-3 col-sm-3 ">이메일 입력</label>
                     <div class="col-md-9 col-sm-9 ">
                       <input type="hidden" id="CollaboUserFrom" name="userFrom" value="${userVO.userId}">
                       <input type="hidden" id="CollboMailTitle" name="title" value="${userVO.userId}의 콜라보">
                       <input type="hidden" id="dist" name="dist" value="">
-                      <input id="tags_1" name="userTo" type="text" class="tags form-control-collabo" value=""/> 
-                      <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
+                      <input id="tags_1" name="userTo" type="text" class="tags form-control-collabo" value="">
+                      <div id="suggestions-container"style="position: relative; float: left; width: 250px; margin: 10px;"></div>
                     </div>
                   </div>
 
@@ -93,10 +94,17 @@
                   <div class="form-group form-group-collabo">
                     <label>나의 프로젝트</label>
                     <select class="form-control form-control-collabo" id="selectOwnProject">
-                    	
+
                     </select>
                   </div>
-                  
+
+                  <div class="form-group form-group-collabo">
+                    <label>상대방의 프로젝트</label>
+                    <select class="form-control form-control-collabo" id="selectOtherProject">
+
+                    </select>
+                  </div>
+
                   <!-- textarea -->
                   <div class="form-group form-group-collabo">
                     <label>보낼 메세지</label>
@@ -113,7 +121,7 @@
       </div>
     </div>
     <!-- 콜라보 제안 모달 끝-->
-    
+
     <!-- 채팅모달 -->
      <div id="createRoomModal" class="modal modal-default fade" role="dialog">
 	<div class="modal-dialog">
@@ -132,38 +140,38 @@
 						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;채팅방 이름 </span></label>
 						<div class="col-lg-12">
 
-							<input id="title" onclick="button_click();" class="form-control col-md-12 seokid" name="title" value="" placeholder="">
-			
+							<input id="title" class="form-control col-md-12 seokid" name="title" value="" placeholder="">
+
 			            </div>
-							
+
 					</div>
 
-					
+
 
 					<div class="form-group row">
 						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;프로젝트 선택</span></label>
 						<div class="col-lg-12">
 			                    <select class="select2_single form-control" name="Ptitle" id="selectProject" tabindex="-1" >
 									<option value=''>==내가속한 프로젝트 리스트==</option>
-			                       
+
 
 
 			                    </select>
 						</div>
 					</div>
-					
+
 					<div class="form-group row">
 						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;멤버초대</span></label>
 						<div class="col-lg-12" id="memberInvite">
-						
+
 							<div id="ChatUserSeok" role="application" style="display: none;">
 							    <div class="demo-section k-content wide">
 							        <select id="optionalSeok"></select>
 							        <select id="selectedSeok"></select>
 							    </div>
 						    </div>
-	   								 
-   								 
+
+
 						</div>
 					</div>
 					<span id="checkCreateRoom">가이드</span>
@@ -171,8 +179,8 @@
 						<button type="button" class="btn btn-danger" id="replyDelBtn"
 							onclick="createRoom();">생성</button>
 						<button type="button" class="btn btn-dark" data-dismiss="modal">취소</button>
-					</div>	
-					
+					</div>
+
 				</form>
 			</div>
 
@@ -181,23 +189,20 @@
 
 		<div class="modal-footer">
 
-			
+
 		</div>
 	</div>
 </div>
-    
+
     <!-- 채팅끝 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-   
+
+
+
+
+
+
+
+
+
 </body>
 </html>

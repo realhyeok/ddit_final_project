@@ -27,13 +27,14 @@ const cprojDataSource = new kendo.data.DataSource({
             	  updatedate: { type: "date" },
               }
           }
-      }
+      },
+      pageSize : 5
 });
 
 const cprojList = $("#collabo-list").kendoGrid({
 	pageable:true,
 	toolbar: [
-		{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"projRegistTypeTemplate\");'>프로젝트 등록</a>" }
+		{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"collaboRegistTypeTemplate\");'>콜라보 제안</a>" }
 		,{ template: "<div class='k-spacer'>&nbsp;</div>"},"search","pdf"
 	],
     columns: [

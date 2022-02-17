@@ -1,15 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>    
 
-<style>
-	.k-grid-norecords {
-		display: flex;
-	    align-items: center;
-	    justify-content: center;
-	    max-height: 42px;
-	}
-</style>
-
 <div id="trashMail" class="row">
 	<div class="col-md-4">
 		<div id="trashMailList" class="mail_list_column" style="height:auto;"></div>	
@@ -21,14 +12,14 @@
 </div>
 
 <script id="trashMailList-template" type="text/x-kendo-template">
-	<div class="mail_list m-0 border-bottom-0">
+	<div class="mail_list m-0 border-bottom-0" onclick="location.href='javascript:trashMailDetail(#:mailNo#);'" style="cursor:pointer;">
 		<div class="left">
 			# if(userTo == userFrom){ #
 				<input class="trashCheck" type="checkbox" value="#:mailNo#" mailType="trashMineMail">
 			# }else{ #
-				# if(userTo == "${userVO.userId}"){ #
+				# if(userTo == "${userVO.nickname}"){ #
 					<input class="trashCheck" type="checkbox" value="#:mailNo#" mailType="trashReceiveMail">
-				# }else if(userFrom == "${userVO.userId}"){ #
+				# }else if(userFrom == "${userVO.nickname}"){ #
 					<input class="trashCheck" type="checkbox" value="#:mailNo#" mailType="trashSendMail">
 				# } #
 			# } #
@@ -42,15 +33,15 @@
 				# if(userFrom == userTo){ #
 					내게 쓴 메일
 				# }else{ #
-					# if(userTo == "${userVO.userId}"){ #
+					# if(userTo == "${userVO.nickname}"){ #
 						받은 메일
-					# }else if(userFrom == "${userVO.userId}"){ #
+					# }else if(userFrom == "${userVO.nickname}"){ #
 						보낸 메일
 					# } #
 				# } #
 				<small>#:regDate#</small>
 			</h3>
-			<a href="javascript:trashMailDetail(#:mailNo#);"><p style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:title#</p></a>
+			<p class="d-inline-block text-truncate" style="max-width:300px;">#:title#</p>
 		</div>
 	</div>
 </script>
@@ -69,19 +60,20 @@
 				<p class="date">{{regDate}}</p>
 			</div>
 			<div class="col-md-12">
-				<h4> {{title}}</h4>
+				<h4 class="text-truncate"> {{title}}</h4>
 			</div>
 		</div>
 		<div class="sender-info">
 			<div class="row">
 				<div class="col-md-12 text-right">
 					<strong>받은 사람 : {{userTo}}</strong>
+					<br>
 					<strong>보낸 사람 : {{userFrom}}</strong>
 				</div>
 			</div>
 		</div>
 		<br>
-		<div class="view-mail" style="min-height:280px;">
+		<div class="view-mail" style="word-break:break-all;min-height:280px;">
 			{{{content}}}
 		</div>
 		<div class="attachment">

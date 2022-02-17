@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.probada.collabo.vo.CollaboTaskVO;
 import com.probada.document.vo.FileVO;
 import com.probada.document.vo.ProjectUserVO;
+import com.probada.issue.vo.IssueVO;
 import com.probada.task.vo.TaskVO;
 
 
@@ -32,8 +34,7 @@ public class DocumentDAOImpl implements DocumentDAO{
 
 	@Override
 	public void insertDocument(FileVO document) throws SQLException {
-
-
+		
 		sqlSession.insert("Document-Mapper.insertDocument", document);
 
 	}
@@ -151,12 +152,27 @@ public class DocumentDAOImpl implements DocumentDAO{
 		return fileList;
 	}
 
+	@Override
+	public List<FileVO> selectDocumentListByIssueTitleAndProjNo(IssueVO issueVO) throws SQLException {
+		List<FileVO> fileList = sqlSession.selectList("Document-Mapper.selectDocumentListByIssueTitleAndProjNo", issueVO);
+		return fileList;
+	}
 
+	@Override
+	public void insertDocumentCollabo(FileVO document) throws SQLException {
 
+		sqlSession.insert("Document-Mapper.insertDocumentCollabo", document);
+	}
 
+	@Override
+	public List<FileVO> selectDocumentListByUserId(String userId) throws SQLException {
+		List<FileVO> fileList = sqlSession.selectList("Document-Mapper.selectDocumentListByUserId", userId);
+		return fileList;
+	}
 
-
-
-
-
+	@Override
+	public List<FileVO> selectDocumentListBytaskTitleANDcprojNo(CollaboTaskVO collaboTaskVO) throws SQLException {
+		List<FileVO> fileList = sqlSession.selectList("Document-Mapper.selectDocumentListBytaskTitleANDcprojNo", collaboTaskVO);
+		return fileList;
+	}
 }

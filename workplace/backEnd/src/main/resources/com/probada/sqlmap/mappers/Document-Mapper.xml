@@ -22,32 +22,33 @@
 		<result column="UPDATEDATE" property="modified" />
 
 	</resultMap>
-
-
+	<select id="selectDocumentListByUserId" parameterType="str" resultType="com.probada.document.vo.FileVO">
+		SELECT CONCAT(A.FILENAME, A.FILETYPE) AS NAME
+			 , B.TITLE AS PROJTITLE
+			 , A.REGDATE AS CREATED
+			 , A.UPDATEDATE AS MODIFIED
+			 , A.DOC_SIZE AS "SIZE"
+		  FROM DOCUMENT A, PROJECT B
+		 WHERE A.PROJ_NO = B.PROJ_NO
+	       AND A.USER_ID = #{userId}
+		   AND A.ISDIRECTORY = '0'
+		 ORDER BY A.UPDATEDATE
+	</select>
 
 	<select id="selectProjByTitle" parameterType="str" resultType="str">
 			select proj_no from PROJECT
 				where title = #{title}
-
 	</select>
-
-
-
-
 
 	<select id="selectDocList" resultMap="DocResultMap">
 			select
 				*
 			from DOCUMENT
-
 	</select>
 
 
 
 	 <update id="insertDocument" parameterType="com.probada.document.vo.FileVO">
-
-
-
 
 		INSERT INTO document(DOC_NO, DOC_CONT_NO, PROJ_NO, USER_ID, UPLOADPATH,
 							 FILENAME, FILETYPE, REGDATE,UPDATEDATE,"DESC",
@@ -71,11 +72,31 @@
 	           , #{size}
 	           , #{etc}
 	           )
-
 	</update>
 
+	 <update id="insertDocumentCollabo" parameterType="com.probada.document.vo.FileVO">
 
-
+		INSERT INTO document(DOC_NO, DOC_CONT_NO, CPROJ_NO, USER_ID, UPLOADPATH,
+							 FILENAME, FILETYPE, REGDATE,UPDATEDATE,"DESC",
+							STATUS,DIST,ISDIRECTORY,HASDIRECTORY,DOC_SIZE,ETC)
+			VALUES (#{DOC_NO}
+		           , 1
+		           , #{CPROJ_NO}
+		           , #{USER_ID}
+		           , #{path}
+		           , #{name}
+		           , #{extension}
+		           , sysdate
+		           , sysdate
+		           , #{DESC}
+		           , #{STATUS}
+		           , #{DIST}
+		           , #{isDirectory}
+		           , #{hasDirectories}
+		           , #{size}
+		           , #{etc}
+		           )					
+	</update>
 
 	<update id="updateDocument" parameterType="com.probada.document.vo.FileVO">
 			update document
@@ -182,7 +203,7 @@
 			UPLOADPATH LIKE '%'||'중요첨부/'||'%'
 	</select>
 
-<select id="selectDocumentListBytaskTitleANDprojNo" resultMap="DocResultMap" parameterType="task">
+	<select id="selectDocumentListBytaskTitleANDprojNo" resultMap="DocResultMap" parameterType="task">
 		SELECT
 			*
 		FROM
@@ -193,6 +214,21 @@
 			UPLOADPATH LIKE '%'||'/업무/'||#{title}||'/%'
 
 	</select>
+	
+	<select id="selectDocumentListBytaskTitleANDcprojNo" resultMap="DocResultMap" parameterType="collaboTaskVO">
+		SELECT *
+		FROM DOCUMENT
+		WHERE CPROJ_NO = #{cprojNo}
+		AND	UPLOADPATH LIKE '%'||'/업무/'||#{title}||'/%'
+	</select>
+	
+	<select id="selectDocumentListByIssueTitleAndProjNo" resultMap="DocResultMap" parameterType="issue">
+		SELECT *
+		  FROM DOCUMENT
+		 WHERE PROJ_NO = #{projNo}
+		   AND UPLOADPATH LIKE '%'||'/이슈/'||#{title}||'/%'
+	</select>
+	
 	<!-- <select id="selectMemberList" resultType="member">
 		select
 		*
@@ -305,10 +341,4 @@
 		where id=#{id}
 	</update>
 	 -->
-
-
-
 </mapper>
-
-
-

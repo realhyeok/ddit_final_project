@@ -9,8 +9,8 @@
 		<h2><i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;&nbsp;&nbsp;이슈 - 상세</h2>
 		<div class="clearfix">
 			<button type="button" class="btn btn-sm btn-secondary float-right" onclick="document.getElementById('issue-tab').click();">목록</button>
-			<button type="button" class="btn btn-sm btn-primary float-right" onclick="getOverlayIssueModifyTemplate('issueModifyFormTemplate','/app/issue/getIssueByIssueNo','{{issueVO.issueNo}}')">수정</button>
-			<button type="button" class="btn btn-sm btn-danger float-right">삭제</button>
+			<button type="button" class="btn btn-sm btn-primary float-right" onclick="getOverlayIssueModifyTemplate('{{issueVO.issueNo}}', '{{issueVO.projNo}}')">수정</button>
+			<button type="button" class="btn btn-sm btn-danger float-right" onclick="deleteMyIssueByIssueNo('{{issueVO.issueNo}}', '{{issueVO.projNo}}')">삭제</button>
 		</div>
 	</div>
 	<!-- 제목 끝 -->
@@ -19,11 +19,11 @@
 		<div class="col-sm-6">
 			<label>제목 :</label>
 			<input type="hidden" id="issueNo" value="{{issueVO.issueNo}}">
-			<div class="form-control form-control-sm form-control-view">{{issueVO.title}}</div>
+			<div class="form-control form-control-sm form-control-view text-truncate">{{issueVO.title}}</div>
 		</div>
 		<div class="col-sm-6">
 			<label>프로젝트명 :</label>
-			<div class="form-control form-control-sm form-control-view">{{projTitle}}</div>
+			<div class="form-control form-control-sm form-control-view text-truncate">{{projTitle}}</div>
 			<input type="hidden" id="myIssueDetailProjNo" value="{{issueVO.projNo}}">
 		</div>
 	</div>
@@ -31,11 +31,11 @@
 	<div class="form-group row">
 		<div class="col-sm-6">
 			<label>담당자</label>
-			<input type="text" class="form-control form-control-sm form-control-view" value="{{issueVO.nickname}}">
+			<input type="text" class="form-control form-control-sm form-control-view text-truncate" value="{{issueVO.nickname}}">
 		</div>
 		<div class="col-sm-6">
 			<label class="control-label">중요도</label>
-			<div class="form-control form-control-sm form-control-view">{{issueVO.important}}</div>
+			<div class="form-control form-control-sm form-control-view text-truncate">{{issueVO.important}}</div>
 		</div>
 	</div>
 
@@ -53,23 +53,34 @@
 	<div class="form-group row">
 		<div class="col-sm-12">
 			<label>이슈 내용 :</label>
-			<div class="form-control form-control-sm form-control-view" style="height:120px;">{{{issueVO.content}}}</div>
+			<div class="form-control form-control-sm form-control-view" style="word-break:break-all;height:auto;">
+				{{{issueVO.content}}}
+			</div>
 		</div>
 	</div>
-
 
 	<div class="form-group row">
 		<div class="col-sm-12">
 			<label>첨부파일 :</label>
-			<div class="form-control form-control-sm form-control-view" style="height:120px;">
-				<li>
-					<i class="glyphicon glyphicon-floppy-disk"></i>
-					<span>업무파일.jpg</span>
-				</li>
-				<li>
-					<i class="glyphicon glyphicon-floppy-disk"></i>
-					<span>jabra.html</span>
-				</li>
+			<div class="form-control form-control-sm form-control-view" style="height:150px;">
+				<ul class="row list-unstyled task-files">
+				{{#ifCond issueVO.fileList.length "!=" 0}}
+					{{#each issueVO.fileList}}
+						<li class="d-flex align-items-center">
+							<div class="btn files-btn d-flex flex-wrap flex-column align-items-center justify-content-center"  style="width:200px;height:140px">
+								<button type="button" class="badge badge-danger" style="margin-left:85px" onclick="deleteIssueDocument('{{doc_NO}}', '{{{path}}}', '{{../issueVO.issueNo}}');">X</button>
+								<a style="cursor:pointer;" onclick="issueDocumentDownload('{{{name}}}{{{extension}}}','{{{../issueVO.title}}}','{{{../projTitle}}}');"><i class="fa fa-file-text fa-5x text-dark"></i></a>
+								<div class="mt-2 d-flex"><span class="text-truncate" style="display:inline-block;max-width:70px;">{{{name}}}</span><span>{{{extension}}}</span></div>
+							</div>
+						</li>
+					{{/each}}
+				{{/ifCond}}
+				{{#ifCond issueVO.fileList.length "==" 0}}
+					<div class="m-3">
+						<span>첨부파일이 없습니다.</span>
+					<div>
+				{{/ifCond}}
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -99,12 +110,12 @@
 	{{#each .}}
 	<div class="block bg-light d-flex">
 		<div class="block_content" style="width:100%">
-			<div class="col-sm-2 pt-2">
+			<div class="col-sm-2 pt-2 text-truncate">
 				<img src="<%=request.getContextPath()%>/user/getPictureById?userId={{userId}}" alt="img" style="height:31px;width:31px;border-radius:100%;"/>
 				<span>{{userVO.nickname}}</span>
 			</div>
 			<div class="col-sm-7">
-				<p class="excerpt mt-3" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{content}}</p>
+				<p class="excerpt mt-3" style="word-break:break-all;height:auto;">{{content}}</p>
 			</div>
 			<div class="col-sm-3">
 				<p class="mt-3" style="display:inline-block;">{{formatTime updatedate "YYYY년 MM월 DD일"}}</p>
@@ -132,7 +143,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-sm btn-primary" onclick="myIssueReplyModify();">저장</button>
-				<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">취소</button>
+				<button type="button" id="myIssueReplyModifyModalCloseButton" class="btn btn-sm btn-secondary" data-dismiss="modal">취소</button>
 			</div>
 		</div>
 	</div>
@@ -203,10 +214,9 @@
 				url    : "<%=request.getContextPath()%>/app/issueReply/modifyIssueReply",
 				data   : issueReplyVO,
 				success: function(data){
-					if(data == "success"){
-						alert("수정 완료");
-						myIssueDetail(issueNo, projNo);
-					}
+					alert("수정 완료");
+					myIssueDetail(issueNo, projNo);
+					$("#myIssueReplyModifyModalCloseButton").click();
 				},
 				error  : function(error){
 					console.log("댓글 수정 실패 " + error.status + " 에러");
@@ -227,15 +237,40 @@
 				url    : "<%=request.getContextPath()%>/app/issueReply/removeIssueReply",
 				data   : { "issueResNo" : issueResNo },
 				success: function(data){
-					if(data == "success"){
-						alert("삭제 완료");
-						myIssueDetail(issueNo, projNo);
-					}
+					alert("삭제 완료");
+					myIssueDetail(issueNo, projNo);
 				},
 				error  : function(error){
 					console.log("댓글 삭제 실패 " + error.status + " 에러");
 				}
 			});
+		}
+	}
+	
+	function deleteMyIssueByIssueNo(issueNo, projNo){
+		var issueVO = {
+			"issueNo" : issueNo,
+			"projNo"  : projNo
+		};
+		
+		var myIssueDeleteConfirm = confirm("삭제하시겠습니까?");
+		
+		if(myIssueDeleteConfirm){
+			$.ajax({
+				url      : "/app/issue/removeIssue",
+				type     : "POST",
+				datatype : "text",
+				data     : issueVO,
+				success  : function(data){
+					alert("삭제가 완료되었습니다.")
+					document.getElementById('issue-tab').click();
+				},
+				error    : function(xhr, status){
+					alert("삭제에 실패하였습니다.");
+				}
+			});
+		}else{
+			return;
 		}
 	}
 	
@@ -264,11 +299,41 @@
 				if(data == "success"){
 					alert("등록 완료");
 					myIssueDetail(issueNo, projNo);
+					readMyDashboard('${userVO.userId}', '${userVO.nickname}');
+					$("#myIssueReplyRegistContent").val("");
 				}
 			},
 			error  : function(error){
 				console.log("댓글 등록 실패 " + error.status + " 에러");
 			}
 		});
+	}
+	
+	function deleteIssueDocument(DOC_NO, path, issueNo){
+		var projNo = $("#myIssueDetailProjNo").val();
+		var fileVO = {
+			"DOC_NO" : DOC_NO,
+			"path"   : path
+		}
+		
+		if(window.confirm("정말로 파일을 삭제하시겠습니까?")){
+			$.ajax({
+				url      : "/app/task/taskDocumentRemove",
+				type     : 'POST',
+				datatype : 'text',
+				data     : fileVO,
+				success  : function(data){
+					alert("삭제가 완료되었습니다.");
+					console.log(data);
+					readMyDashboard('${userVO.userId}', '${userVO.nickname}');
+					myIssueDetail(issueNo, projNo);
+				},
+				error : function(xhr, status) {
+					alert("삭제에 실패하였습니다.");
+				}
+			});
+		}else{
+			return;
+		}
 	}
 </script>

@@ -15,6 +15,32 @@ function uploadForm(target) {
     initUpload();
 }
 
+function deleteIssueDocument(DOC_NO, path, issueNo){
+	var fileVO = {
+		"DOC_NO" : DOC_NO,
+		"path"   : path
+	}
+
+	if(window.confirm("정말로 파일을 삭제하시겠습니까?")){
+		$.ajax({
+			url      : "/app/task/taskDocumentRemove",
+			type     : 'POST',
+			datatype : 'text',
+			data     : fileVO,
+			success  : function(data){
+				alert("삭제가 완료되었습니다.");
+				getIssueTemplate('/app/issue/getIssueByIssueNo',issueNo,'issueDetailForm','issueDetailFormTarget');
+		    	getIssueReplyTemplate("/app/issueReply/getIssueReplyByIssueNo",issueNo,"issueReplyForm","issueReplyFormTarget");
+			},
+			error : function(xhr, status) {
+				alert("삭제에 실패하였습니다.");
+			}
+		});
+	}else{
+		return;
+	}
+}
+
 function deleteDocument(DOC_NO, path, taskNo){
 
 	var fileVO = {"DOC_NO":DOC_NO,"path":path};
@@ -72,15 +98,6 @@ function modifyUploadForm(target, data) {
         }).data("kendoUpload");
     };
 
-    function onSelect(e){
-    	console.log(e.files.length);
-    	if(e.files.length > (3 - files.length)){
-    		alert("파일은 최대 3개까지만 업로드 가능합니다.");
-    		e.files.remove;
-    	}
-    }
-
-
     initModifyUpload();
 }
 
@@ -89,5 +106,14 @@ function taskDocumentDownload(fileName, taskTitle, projTitle){
 	var path = '' + projTitle + '/업무/' + taskTitle + '/' + fileName;
 
 	location.href='/app/task/taskDownload?path='+path;
+}
 
+function issueDocumentDownload(fileName, issueTitle, projTitle){
+	var path = '' + projTitle + '/이슈/' + issueTitle + '/' + fileName;
+	location.href='/app/task/taskDownload?path=' + path;
+}
+
+function projectDocumentDownload(fileName, projTitle){
+	var path = '' + projTitle + '/중요첨부/'  + fileName;
+	location.href='/app/task/taskDownload?path=' + path;
 }

@@ -22,8 +22,7 @@
 				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12"
 					style="max-width: 20%; flex: 20%;">
 
-					<div
-						class="dashboard-stat bordered grey-cararra fadeInDown animated">
+					<div class="dashboard-stat bordered grey-cararra fadeInDown animated">
 						<div class="visual">
 							<i class="fa fa-tasks"></i>
 						</div>
@@ -33,8 +32,7 @@
 							</h3>
 							<div class="noti-desc">내 작업</div>
 						</div>
-						<a class="more"
-							href="<%=request.getContextPath()%>/app/myWork?#home-tab">
+						<a class="more" href="<%=request.getContextPath()%>/app/myWork?#home-tab">
 							더보기 <i class="fa fa-arrow-right"></i>
 						</a>
 					</div>
@@ -143,7 +141,7 @@
           <div class="x_panel_origin">
             <div class="x_title">
               <h2>내 업무 </h2>
-              <a class="more float-right mt-2" href="#">
+              <a class="more float-right mt-2" href="<%=request.getContextPath()%>/app/myWork?#task-tab">
                 더보기
                 <i class="fa fa-arrow-right"></i>
               </a>
@@ -176,7 +174,7 @@
           <div class="x_panel_origin">
             <div class="x_title">
               <h2>최근 작성한 문서</h2>
-              <a class="more float-right mt-2" href="#">
+              <a class="more float-right mt-2" href="<%=request.getContextPath()%>/app/myWork?#task-tab">
                 더보기
                 <i class="fa fa-arrow-right"></i>
               </a>

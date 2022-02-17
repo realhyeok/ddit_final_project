@@ -10,6 +10,56 @@ function myOverlayOff(dist) {
 
 var prevTarget = [];
 
+function getOverlayIssueModifyTemplate(issueNo, projNo) {
+	$("#myMileOverlay").empty();
+	myOverlayOn("#myMileOverlay");
+	
+	var issueVO = {
+		"projNo" : projNo,
+		"issueNo": issueNo
+	}
+	
+	$.ajax({
+		type    : "GET",
+		url     : "/app/issue/getIssueByIssueNo",
+		dataType: "JSON",
+		data    : issueVO,
+		success : function(data){
+			console.log(data);
+			console.log("MyIssue ModifyForm - Handlebars success!!");
+			myIssueModifyForm(data);
+			summernote_go($('.myIssueModifySummernote'));
+			$("#fadeInMyIssueContent").fadeIn(300);
+			uploadForm('myIssueModifyUpload');
+		},
+		error   : function(error){
+			console.log("MyIssue ModifyForm - Handlebars error!!");
+		}
+	});
+}
+
+
+function getOverlayMyIssueRegistTemplate(userId) {
+	$("#myMileOverlay").empty();
+	myOverlayOn("#myMileOverlay");
+	
+	$.ajax({
+		url : "/app/myWork/getProjectNameForSort",
+		type : 'POST',
+		datatype : 'text',
+		data : {"userId" : userId},
+		success : function(data) {
+			myIssueRegistForm(data);
+			uploadForm('myIssueRegistUpload');
+			summernote_go($('.myIssueRegistSummernote'));
+		},
+		error : function(error) {
+			alert(error.status);
+		}
+	});
+	
+}
+
 function getOverlayMyMileRegistTemplate(userId) {
 	$("#myMileOverlay").empty();
 	myOverlayOn("#myMileOverlay");
@@ -43,9 +93,9 @@ function getOverlayMyMileModifyTemplate(mileNo) {
 		dataType: "JSON",
 		data    : mileVO,
 		success : function(data){
+			console.log(data);
 			myMileModifyForm(data);
 			summernote_go($('.myMileModifySummernote'));
-			
 			var issueTitle = [];
 			var issueNo = [];
 			
@@ -57,7 +107,7 @@ function getOverlayMyMileModifyTemplate(mileNo) {
 				}
 				$("#myMileModifyIssueTag").kendoMultiSelect({
 					autoClose: false,
-					value:issueNo,
+					value:issueNo
 				});
 			} else {
 				$("#myMileModifyIssueTag").kendoMultiSelect({
@@ -87,7 +137,6 @@ function getOverlayTaskRegistTemplate(userFrom) {
 
 function getOverlayTaskModifyTemplate(taskNo, projNo) {
 	myOverlayOn("#myTaskModifyOverlay");
-	
 	var taskVO = {
 		"taskNo" : taskNo,
 		"projNo" : projNo
@@ -103,6 +152,7 @@ function getOverlayTaskModifyTemplate(taskNo, projNo) {
 			myTaskModifyForm(data);
 			summernote_go($('.myTaskOverlayContentModify'));
 			$("#fadeInTaskModifyContent").fadeIn(300);
+			uploadForm('myTaskModifyUpload');
 		},
 		error   : function(error){
 			console.log("MyTask ModifyForm - Handlebars error!!");
@@ -167,6 +217,112 @@ function changeProjectAndIssue(){
 	});
 }
 
+function modifyMyIssue() {
+	var projNo = $("#myIssueModifyProjNo").val();
+	var startdate = $("#myIssueModifyStartdate").val();
+	var enddate = $("#myIssueModifyEnddate").val();
+	var title = $("#myIssueModifyTitle").val();
+	var content = $("#myIssueModifyContent").val();
+	
+	if(!title){
+		alert("이슈명을 입력해주세요.");
+		return;
+	}
+	if(!content){
+		alert("이슈내용을 입력해주세요.");
+		return;
+	}
+	if(content == "<p><br></p>"){
+		alert("이슈내용을 입력해주세요.");
+		return;
+	}
+	if(!startdate){
+		alert("시작일을 입력해주세요.");
+		return;
+	}
+	if(!enddate){
+		alert("마감일을 입력해주세요.");
+		return;
+	}
+	
+	var issueVO = $('#modifyMyIssueForm')[0];
+	var formData = new FormData(issueVO);
+	console.log(issueVO);
+	$.ajax({
+		url : "/app/issue/modifyIssueByIssueNo",
+		type : 'POST',
+		data : formData,
+		success : function(data) {
+			alert("수정에 성공했습니다.");
+			myIssueDetail(data.issueNo, projNo);
+			readMyDashboard('${userVO.userId}', '${userVO.nickname}');
+			myOverlayOff('#myMileOverlay');
+		},
+		error : function(status) {
+			alert("수정에 실패하였습니다.");
+		},
+		cache:false,
+		contentType:false,
+		processData:false
+	});
+}
+
+function registMyIssue() {
+	var projNo = $('#registMyIssueForm select[name="projNo"]').val();
+	var projTitle = $("#myIssueRegistProjTitle option:selected").text();
+	var userId = $('#registMyIssueForm select[name="userId"]').val();
+	var important = $('#registMyIssueForm select[name="important"]').val();
+	var status = $('#registMyIssueForm select[name="status"]').val();
+	var startdate = $("#myIssueRegistStartdate").val();
+	var enddate = $("#myIssueRegistEnddate").val();
+	var title = $('#registMyIssueForm input[name="title"]').val();
+	var content = $('#registMyIssueForm textarea[name="content"]').val();
+	
+	if(!title){
+		alert("이슈명을 입력해주세요.");
+		return;
+	}
+	if(!content){
+		alert("이슈내용을 입력해주세요.");
+		return;
+	}
+	if(content == "<p><br></p>"){
+		alert("이슈내용을 입력해주세요.");
+		return;
+	}
+	if(!startdate){
+		alert("시작일을 입력해주세요.");
+		return;
+	}
+	if(!enddate){
+		alert("마감일을 입력해주세요.");
+		return;
+	}
+	
+	var issueVO = $('#registMyIssueForm')[0];
+	var formData = new FormData(issueVO);
+	formData.append("projTitle", projTitle);
+
+	$.ajax({
+		url : "/app/issue/registIssue",
+		type : 'POST',
+		data : formData,
+		success : function(data) {
+			alert("등록에 성공했습니다.");
+			readMyDashboard('${userVO.userId}', '${userVO.nickname}');
+			myOverlayOff('#myMileOverlay');
+			
+			location.reload();
+		},
+		error : function(status) {
+			alert("등록에 실패하였습니다.");
+		},
+		cache:false,
+		contentType:false,
+		processData:false
+	});
+}
+
 function registMyMilestone() {
 	var userId = $('#registMyMileForm select[name="userId"]').val();
 	var projNo = $('#registMyMileForm select[name="projNo"]').val();
@@ -180,6 +336,10 @@ function registMyMilestone() {
 		return;
 	}
 	if(!content){
+		alert("내용을 입력해주세요.");
+		return;
+	}
+	if(content == "<p><br></p>"){
 		alert("내용을 입력해주세요.");
 		return;
 	}

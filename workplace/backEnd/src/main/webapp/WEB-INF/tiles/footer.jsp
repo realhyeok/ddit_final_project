@@ -26,7 +26,7 @@
     <ul class="zoom-menu">
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-person scale-transition scale-out"><i class="fa fa-user"></i></a></li>
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-doc scale-transition scale-out"><i class="fa fa-book"></i></a></li>
-      <li><a class="zoom-fab zoom-btn-sm zoom-btn-report scale-transition scale-out" href="javascript:getOverlayAnyWhereMailRegistTemplate('${userVO.userId}');"><i class="fa fa-envelope-o"></i></a></li>
+      <li><a class="zoom-fab zoom-btn-sm zoom-btn-report scale-transition scale-out" href="javascript:getOverlayAnyWhereMailRegistTemplate('${userVO.nickname}');"><i class="fa fa-envelope-o"></i></a></li>
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-tangram scale-transition scale-out"><i class="fa fa-dashboard"></i></a></li>
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-report scale-transition scale-out" href="javascript:on()"><i class="fa fa-edit"></i></a></li>
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-feedback scale-transition scale-out"><i class="fa fa-bell"></i></a></li>
@@ -59,15 +59,23 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="control-label col-md-3 col-sm-3 ">업무 명 </label>
+                    <label class="control-label col-md-3 col-sm-3 ">업무 명</label>
                     <div class="col-md-9 col-sm-9 ">
-                      <input type="text" class="form-control" readonly="readonly" placeholder="Disabled Input" value="">
+                      <select class="form-control">
+                        <option>업무 1</option>
+                        <option>업무 2</option>
+                        <option>업무 3</option>
+                      </select>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="control-label col-md-3 col-sm-3 ">담당자</label>
                     <div class="col-md-9 col-sm-9 ">
-                      <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input" value="">
+                      <select class="form-control">
+                        <option>은세주</option>
+                        <option>황혜성</option>
+                        <option>공의진</option>
+                      </select>
                     </div>
                   </div>
 
@@ -78,7 +86,7 @@
                     <label class="control-label col-md-3 col-sm-3 ">콜라보</label>
                     <div class="col-md-9 col-sm-9 ">
                       <select class="form-control">
-                        <option>김진혁 앙골라 국제 결혼 프로젝트</option>
+                        <option >김진혁 앙골라 국제 결혼 프로젝트</option>
                         <option>김진혁 르완다 국제 결혼 프로젝트</option>
                         <option>김진혁 아프리카 장가보내기 프로젝트</option>
                       </select>

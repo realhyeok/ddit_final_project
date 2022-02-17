@@ -16,23 +16,31 @@
 		<div class="form-group row">
 			<div class="col-sm-6">
 				<label>제목 :</label>
-				<div class="form-control form-control-sm form-control-view">{{title}}</div>
+				<div class="form-control form-control-sm form-control-view text-truncate">{{title}}</div>
 			</div>
 			<div class="col-sm-6">
 				<label>프로젝트명 :</label>
-				<div class="form-control form-control-sm form-control-view">{{projTitle}}</div>
+				<div class="form-control form-control-sm form-control-view text-truncate">{{projTitle}}</div>
+				<input type="hidden" id="myTaskProjNo" value="{{projNo}}">
 			</div>
 		</div>
 
 		<div class="form-group row">
 			<div class="col-sm-6">
 				<label>담당자</label>
-					<input type="text" class="form-control form-control-sm form-control-view"
-					value="{{userId}}">
+				<input type="text" class="form-control form-control-sm form-control-view" value="{{userId}}">
 			</div>
 			<div class="col-sm-6">
 				<label class="control-label">중요도</label>
-				<div class="form-control form-control-sm form-control-view">{{important}}</div>
+				{{#ifCond important "==" "B101"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">낮음</div>
+				{{/ifCond}}
+				{{#ifCond important "==" "B102"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">중간</div>
+				{{/ifCond}}
+				{{#ifCond important "==" "B103"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">높음</div>
+				{{/ifCond}}
 			</div>
 		</div>
 
@@ -50,7 +58,7 @@
 		<div class="form-group row">
 			<div class="col-sm-12">
 				<label>업무 내용 :</label>
-				<div class="form-control form-control-sm form-control-view" style="height: 120px;">
+				<div class="form-control form-control-sm form-control-view" style="word-break:break-all;height:auto;">
 					{{{content}}}
 				</div>
 			</div>
@@ -65,6 +73,7 @@
 						{{#each fileList}}
 							<li class="d-flex align-items-center">
 								<div class="btn files-btn d-flex flex-wrap flex-column align-items-center justify-content-center"  style="width:200px;height:140px">
+									<button type="button" class="badge badge-danger" style="margin-left:85px" onclick="deleteTaskDocument('{{doc_NO}}', '{{{path}}}', '{{../taskNo}}');">X</button>
 									<a style="cursor:pointer;" onclick="taskDocumentDownload('{{{name}}}{{{extension}}}','{{{../title}}}','{{{../projTitle}}}');"><i class="fa fa-file-text fa-5x text-dark"></i></a>
 									<div class="mt-2 d-flex"><span class="text-truncate" style="display:inline-block;max-width:70px;">{{{name}}}</span><span>{{{extension}}}</span></div>
 								</div>
@@ -89,6 +98,7 @@
 			    return mmnt.format(format);
 			});
 		});
+		
 		function deleteMyTaskByTaskNo(taskNo){
 			var myTaskDeleteConfirm = confirm("삭제하시겠습니까?");
 			
@@ -99,5 +109,31 @@
 		
 		function returnMyTaskList(){
 			document.getElementById('task-tab').click();
+		}
+		
+		function deleteTaskDocument(DOC_NO, path, taskNo){
+			var projNo = $("#myTaskProjNo").val();
+			var fileVO = {
+				"DOC_NO" : DOC_NO,
+				"path"   : path
+			}
+			if(window.confirm("정말로 파일을 삭제하시겠습니까?")){
+				$.ajax({
+					url      : "/app/task/taskDocumentRemove",
+					type     : 'POST',
+					datatype : 'text',
+					data     : fileVO,
+					success  : function(data){
+						alert("삭제가 완료되었습니다.");
+						myTaskDetail(taskNo, projNo);
+						readMyDashboard('${userVO.userId}', '${userVO.nickname}');
+					},
+					error : function(xhr, status) {
+						alert("삭제에 실패하였습니다.");
+					}
+				});
+			}else{
+				return;
+			}
 		}
 	</script>

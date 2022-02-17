@@ -34,7 +34,7 @@ public class AlertHandler extends TextWebSocketHandler {
 		@Override
 		public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 			sessions.add(session);
-			String senderEmail = getId(session);
+			String senderEmail = getNickname(session);
 			userSessionsMap.put(senderEmail , session);
 		}
 		
@@ -74,7 +74,7 @@ public class AlertHandler extends TextWebSocketHandler {
 								+ "," + senderTarget
 								+ "," + senderWhatToDo 
 								+ "," + senderProjNo
-								+ "," + getId(receiverSession));
+								+ "," + getNickname(receiverSession));
 						
 						receiverSession.sendMessage(tmpMsg);
 						
@@ -86,7 +86,7 @@ public class AlertHandler extends TextWebSocketHandler {
 								+ "," + senderTarget
 								+ "," + senderWhatToDo 
 								+ "," + senderProjNo
-								+ "," + getId(receiverSession));
+								+ "," + getNickname(receiverSession));
 						
 						receiverSession.sendMessage(tmpMsg);
 						
@@ -105,7 +105,7 @@ public class AlertHandler extends TextWebSocketHandler {
 																		+ "," + senderTarget
 																		+ "," + senderWhatToDo 
 																		+ "," + senderProjNo
-																		+ "," + getId(sess));
+																		+ "," + getNickname(sess));
 									
 //									sendMessage()를 하게 되면  alertIndex.js의 sock.onmessage()로 파라미터를 전달하게 됩니다.
 									sess.sendMessage(tmpMsg);
@@ -161,6 +161,11 @@ public class AlertHandler extends TextWebSocketHandler {
 			Map<String, Object> httpSession = session.getAttributes();
 			UserVO userVO = (UserVO) httpSession.get("userVO");
 			return userVO == null ? null : userVO.getUserId();
+		}
+		private String getNickname(WebSocketSession session) {
+			Map<String, Object> httpSession = session.getAttributes();
+			UserVO userVO = (UserVO) httpSession.get("userVO");
+			return userVO == null ? null : userVO.getNickname();
 		}
 		
 }

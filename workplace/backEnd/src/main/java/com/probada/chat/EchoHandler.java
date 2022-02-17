@@ -84,7 +84,6 @@ public class EchoHandler extends TextWebSocketHandler {
 		LOGGER.debug(" msg =>{}",msg);
 		
 		ChatMessageVO chatMessage = objectMapper.readValue(msg,ChatMessageVO.class);
-		
 		LOGGER.debug("chatMessage =>{}",chatMessage);
 		
 		checkRealRoom = chatMessage.getRealRoom();
@@ -157,11 +156,7 @@ public class EchoHandler extends TextWebSocketHandler {
                 sessionCount++;
             }
             
-            // 동적쿼리에서 사용할 sessionCount 저장
-            // sessionCount == 2 일 때는 unReadCount = 0,
-            // sessionCount == 1 일 때는 unReadCount = 1
-            // chatMessage.setSessionCount(sessionCount);
-            
+ 
             chatMessage.setChatroomMsgNo(chatService.seqMessage());
             
             LOGGER.debug("chatMessage=>{}",chatMessage);
@@ -202,7 +197,6 @@ public class EchoHandler extends TextWebSocketHandler {
 		
 		  if(sessionList.get(session) != null) {
 			  
-	            // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 ArrayList<session>에서 해당 session을 지운다.
 	            RoomList.get(sessionList.get(session)).remove(session);
 	            sessionList.remove(session);
 	        }

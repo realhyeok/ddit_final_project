@@ -226,7 +226,7 @@
 									</label>
 								<div class="col-md-6 col-sm-6 ">
 									<input type="text" id="projTitle" required="required" class="form-control form-control-sm"
-										name="projTitle" value="{{projTitle}}" disabled>
+										name="projTitle" value="{{projTitle}}" readonly>
 								</div>
 							</div>
 									<div class="item form-group">
@@ -288,9 +288,11 @@
 										</div>
 									</div>
 									<div class=form-group">
-										<label class=" label-align"> 이슈 내용 </label>
 										<textarea class="projSummnote" name="content" ></textarea>
 									</div>
+									<div style="width:100%; float:left">
+											<input name="files" id="projectIssueUpload" type="file" aria-label="files" />
+										</div>
 									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
 										<button type="button" class="btn btn-success" onclick='registIssue()'>등록</button>
 										<button class="btn btn-primary" type="button">취소</button>
@@ -330,7 +332,7 @@
 									</label>
 								<div class="col-md-6 col-sm-6 ">
 									<input type="text" id="projTitle" required="required" class="form-control form-control-sm"
-										name="projTitle" value="{{projTitle}}" disabled>
+										name="projTitle" value="{{projTitle}}" readonly>
 									<input type="hidden" name="issueNo" value="{{issueVO.issueNo}}">
 								</div>
 							</div>
@@ -417,9 +419,11 @@
 										</div>
 									</div>
 									<div class=form-group">
-										<label class=" label-align"> 이슈 내용 </label>
 										<textarea class="projSummnote" name="content" >{{{issueVO.content}}}</textarea>
 									</div>
+									<div style="width:100%; float:left">
+											<input name="files" id="projectIssueUpload" type="file" aria-label="files" />
+										</div>
 									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
 										<button type="button" class="btn btn-success" onclick='modifyIssueDetail()'>수정</button>
 										<button class="btn btn-primary" type="button">취소</button>
@@ -469,9 +473,14 @@
 										</label>
 										<div class="col-md-6 col-sm-6 ">
             								<select class="form-control form-control-sm" id="userNickname" name="userId">
+												{{#getRoleCheck 'A303'}}
 												{{#each userList}}
               									<option value="{{this.userId}}">{{this.nickname}}</option>
 												{{/each}}
+												{{/getRoleCheck}}
+												{{#getRoleCheck 'A302'}}
+												<option value="${userVO.userId}">${userVO.nickname}</option>
+												{{/getRoleCheck}}
             								</select>
 										</div>
         							</div>
@@ -571,7 +580,7 @@
 									</label>
 								<div class="col-md-6 col-sm-6 ">
 									<input type="text" id="title" required="required" class="form-control form-control-sm"
-										name="projTitle" value="{{projTitle}}" disabled>
+										name="projTitle" value="{{projTitle}}" readonly>
 									<input type="hidden" name="taskNo" value="{{taskNo}}">
 								</div>
 							</div>
@@ -594,9 +603,21 @@
 										</label>
 										<div class="">
             								<select class="form-control form-control-sm" id="important" name="important">
-              									<option value="B101">낮음</option>
-              									<option value="B102">보통</option>
-             									<option value="B103">높음</option>
+												<option value="B101"
+											{{#ifCond important "==" "B101"}}
+              									selected
+											{{/ifCond}}
+												>낮음</option>
+												<option value="B102"
+											{{#ifCond important "==" "B102"}}
+              									selected
+											{{/ifCond}}
+												>보통</option>
+												<option value="B103"
+											{{#ifCond important "==" "B103"}}
+              									selected
+											{{/ifCond}}
+												>높음</option>
             								</select>
 										</div>
         							</div>
@@ -606,10 +627,26 @@
 										</label>
 										<div class="">
             								<select class="form-control form-control-sm" id="status" name="status">
-              									<option value="B201">예정</option>
-              									<option value="B202" selected>진행중</option>
-             									<option value="B203">지연중</option>
-             									<option value="B204">완료</option>
+              									<option value="B201"
+											{{#ifCond status "==" "B201"}}
+              									selected
+											{{/ifCond}}
+												>예정</option>
+              									<option value="B202"
+											{{#ifCond status "==" "B202"}}
+              									selected
+											{{/ifCond}}
+												>진행중</option>
+              									<option value="B203"
+											{{#ifCond status "==" "B203"}}
+              									selected
+											{{/ifCond}}
+												>지연중</option>
+              									<option value="B204"
+											{{#ifCond status "==" "B204"}}
+              									selected
+											{{/ifCond}}
+												>완료</option>
             								</select>
 										</div>
         							</div>
@@ -704,7 +741,6 @@
           <span class="task-bold task-sm">프로젝트 등록</span>
         </h5>
         <div class="clearfix">
-			<button onclick="prev()" class="btn btn-primary btn-sm"><-</button>
           	<button onclick="off()" class="btn btn-primary btn-sm">X</button>
         </div>
       </div>
@@ -714,7 +750,7 @@
           <div class="x_content">
             <form>
 			<div class="p-4">
-              <p>콜라보 제안은 다른 프로젝트 팀과 협업 할 수 있는 곳입니다.</p>
+              <p>다른 구성원들과 함께 프로젝트를 만들어나가보세요</p>
               <p>다른 팀과 협업 공간을 만들고 함께 일해보세요.</p>
 			</div>
               <div class="card-body">
@@ -761,7 +797,6 @@
         <span class="task-bold task-sm">프로젝트 등록</span>
       </h5>
       <div class="clearfix">
-		<button onclick="prev()" class="btn btn-primary btn-sm"><-</button>
         <button onclick="off()" class="btn btn-primary btn-sm">X</button>
       </div>
     </div>
@@ -818,8 +853,7 @@
 			</div>
 			<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
 				<button type="button" class="btn btn-success" onclick='registProject()'>등록</button>
-				<button class="btn btn-primary" type="button">취소</button>
-				<button class="btn btn-primary" type="reset">리셋</button>
+				<button class="btn btn-primary" type="button" onclick='off()'>취소</button>
 			</div>
 
 		</form>
@@ -1021,6 +1055,264 @@
 </div>
 </div>
 </script>
+
+
+<!--------------------------- 중요파일 첨부 ----------------------------->
+<script type="text/x-handlebars-template" id="uploadProjectDocumentForm">
+<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">중요첨부파일 등록</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+				<div class="x_content">
+					<div class="row">
+						<div class="x_content">
+							<form id="uploadProjectDocument" method="post" data-parsley-validate=""
+								class="form-horizontal form-label-left" novalidate="">
+							<div style="width:100%; float:left">
+           						<input name="files" id="projectDocument" type="file" aria-label="files" />
+        					</div>
+						</div>
+						<div class="col-md-4 col-sm-4 offset-md-4 mt-3">
+							<button type="button" class="btn btn-success" onclick='uploadProjectDoc()'>등록</button>
+							<button class="btn btn-primary" type="button">취소</button>
+						</div>
+							</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<!--------------------------- 유저 권한 변경 ----------------------------->
+<script type="text/x-handlebars-template" id="modifyUserRoleForm">
+<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">구성원 권한부여</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+						<p>프로젝트 구성원의 권한을 변경할 수 있습니다.</p>
+						<!-- 팀장 설정시 visible로 -->
+						<p>팀장을 양도할 경우 현 프로젝트에서 팀장으로써의 모든 권한을 잃게 됩니다.</p>
+				<form id="modifyUserRole" method="post" data-parsley-validate=""
+				class="form-horizontal form-label-left mt-5" novalidate="">
+				<div class="item form-group col-md-12">
+						<label class="col-form-label col-md-3 col-sm-3 label-align"
+							for="userId">구성원 이름
+						</label>
+						<div class="col-md-6 col-sm-6">
+							<select class="form-control form-control-sm" required="required" name="userId" id="userId">
+							{{#each userList}}
+								<option {{#ifCond ../clickName "==" nickname}} selected {{/ifCond}} value="{{userId}}">{{nickname}}</option>
+							{{/each}}
+							</select>
+						</div>
+				</div>
+				<div class="item form-group col-md-12">
+          		<label class="col-form-label col-md-3 col-sm-3 label-align for="role">
+					권한
+				</label>
+					<div class="col-md-6 col-sm-6 ">
+            			<select class="form-control form-control-sm" required="required" name="role" id="role">
+						<option value="" disabled selected hidden>변경할 권한을
+							설정해주세요</option>
+						<option value="A301">방문자</option>
+						<option value="A302" selected>팀원</option>
+						<option value="A303">팀장</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-6 offset-md-4 mt-3">
+				<button type="button" class="btn btn-success" onclick="modifyUserRoleSubmit()">수정</button>
+				<button class="btn btn-primary" type="button">취소</button>
+			</div>
+		</form>
+        </div>
+      </div>
+	</div>
+  </div>
+</script>
+
+<!---------------------------- 유저 제명 ---------------------------->
+<script type="text/x-handlebars-template" id="removeUserProjectForm">
+<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">구성원 제명</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+						<span class="mt-3">프로젝트에서 해당 구성원을 제명합니다.</span>
+						<p>*해당 구성원이 작성한 업무와 문서는 삭제되지 않습니다.</p>
+						<form id="removeUserProject" method="post" data-parsley-validate=""
+							class="form-horizontal form-label-left mt-3" novalidate="">
+							<div class="item form-group col-md-12">
+						<label class="col-form-label col-md-4 col-sm-4 label-align"
+							for="userId">구성원 이름
+						</label>
+						<div class="col-md-6 col-sm-6">
+							<select class="form-control form-control-sm" required="required" name="userId" id="userId">
+							{{#each userList}}
+								<option {{#ifCond ../clickName "==" nickname}} selected {{/ifCond}} value="{{userId}}">{{nickname}}</option>
+							{{/each}}
+							</select>
+							</div>
+						</div>
+							<!-- textarea -->
+							<div class="form-group">
+								<textarea class="form-control" rows="10"
+									placeholder="제명 사유를 적어주세요." name="content"></textarea>
+							</div>
+							<!-- textarea -->
+							<div class="form-group">
+								<label for="project-member-delete">확인을 위해 "<strong
+									class="text-danger">프로젝트 구성원 제명</strong>" 를 입력해주세요.
+								</label> <input type="text" class="form-control"
+									id="project-member-delete" name="delete_validate"/>
+							</div>
+					<div class="col-md-6 col-sm-6 offset-md-4 mt-3">
+						<button type="button" class="btn btn-danger" onclick="removeUserRoleSubmit();">제명</button>
+						<button class="btn btn-primary" type="button">취소</button>
+					</div>
+					</form>
+				</div>
+      </div>
+	</div>
+  </div>
+</script>
+
+<!---------------------------- 유저 탈퇴 ---------------------------->
+<script type="text/x-handlebars-template" id="quitUserProjectForm">
+<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">구성원 제명</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+						<span class="mt-3">해당 프로젝트에서 탈퇴합니다.</span>
+						<p>*자신이 작성한 업무와 문서는 탈퇴해도 삭제되지 않습니다.</p>
+						<form id="quitUserProject" method="post" data-parsley-validate=""
+							class="form-horizontal form-label-left mt-3" novalidate="">
+						<div class="item form-group col-md-12">
+							<label class="col-form-label col-md-4 col-sm-4 label-align"
+								for="userId">구성원 이름
+							</label>
+							<div class="col-md-6 col-sm-6">
+								<select class="form-control form-control-sm" required="required" name="userId" id="userId">
+									<option selected value="${userVO.userId}">${userVO.nickname}</option>
+								</select>
+							</div>
+						</div>
+							<!-- textarea -->
+							<div class="form-group">
+								<textarea class="form-control" rows="10"
+									placeholder="탈퇴 사유를 적어주세요." name="content"></textarea>
+							</div>
+							<!-- textarea -->
+							<div class="form-group">
+								<label for="project-member-delete">확인을 위해 "<strong
+									class="text-danger">해당 프로젝트 탈퇴</strong>" 를 입력해주세요.
+								</label> <input type="text" class="form-control"
+									id="project-member-delete" name="delete_validate"/>
+							</div>
+					<div class="col-md-6 col-sm-6 offset-md-4 mt-3">
+						<button type="button" class="btn btn-danger" onclick="quitUserRoleSubmit();">탈퇴</button>
+						<button class="btn btn-primary" type="button" onclick="off()">취소</button>
+					</div>
+					</form>
+				</div>
+      </div>
+	</div>
+  </div>
+</script>
+
+<!---------------------------- 멤버 초대 ---------------------------->
+<script type="text/x-handlebars-template" id="inviteMemberForm">
+<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">구성원 초대</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+						<p>프로젝트를 함께 할 구성원을 초대해보세요.</p>
+						<form id="inviteMemberProjectForm" method="post" data-parsley-validate=""
+							class="form-horizontal form-label-left mt-3" novalidate="">
+
+					<!-- 프로젝트명 -->
+					<div class="item form-group">
+						<label class="col-form-label col-md-3 col-sm-3 label-align"
+							for="title">프로젝트명
+						</label>
+						<div class="col-md-6 col-sm-6 ">
+							<input type="text" id="title" readonly class="form-control form-control-sm" name="title" value="{{title}}">
+						</div>
+					</div>
+
+						<div class="item form-group">
+							<label class="col-form-label col-md-3 col-sm-3 label-align"
+								for="role">부여 권한
+							</label>
+							<div class="col-md-6 col-sm-6">
+								<select class="form-control form-control-sm" required="required" name="role" id="role">
+									<option value="A301">게스트</option>
+									<option value="A302">팀원</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 label-align">유저 이메일</label>
+                   			<div class="col-md-9 col-sm-9 ">
+								<input type="text" data-role="tagsinput" id="inviteIdTag"
+									name="userTo" class="form-control form-control-sm" name="userTo">
+                      		<div id="suggestions-container"style="position: relative; float: left; width: 250px; margin: 10px;"></div>
+                    	</div>
+						</div>
+							<!-- textarea -->
+							<div class="form-group">
+								<textarea class="form-control" rows="10"
+									placeholder="보낼 메세지를 적어주세요." name="content"></textarea>
+							</div>
+					<div class="col-md-6 col-sm-6 offset-md-4 mt-3">
+						<button type="button" class="btn btn-success" onclick="inviteMemberSubmit();">초대</button>
+						<button class="btn btn-primary" type="button" onclick="off()">취소</button>
+					</div>
+					</form>
+				</div>
+      </div>
+	</div>
+  </div>
+</script>
+
+
+
 
 <!-- 템플레이트
 <div class="row" style="display:none;" id="fadeInContent">

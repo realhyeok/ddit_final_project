@@ -6,9 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.probada.collabo.vo.CollaboTaskVO;
 import com.probada.document.dao.DocumentDAO;
 import com.probada.document.vo.FileVO;
 import com.probada.document.vo.ProjectUserVO;
+import com.probada.issue.vo.IssueVO;
 import com.probada.task.vo.TaskVO;
 
 
@@ -35,7 +37,6 @@ public class DocumentServiceImpl implements DocumentService{
 
 	@Override
 	public void registDocument(FileVO document) throws SQLException {
-
 
 		documentDAO.insertDocument(document);
 
@@ -159,9 +160,30 @@ public class DocumentServiceImpl implements DocumentService{
 	}
 
 
+	@Override
+	public List<FileVO> getDocumentListByIssueTitleAndProjNo(IssueVO issueVO) throws SQLException {
+		List<FileVO> fileList = documentDAO.selectDocumentListByIssueTitleAndProjNo(issueVO);
+		return fileList;
+	}
 
 
+	@Override
+	public void registDocumentCollabo(FileVO document) throws SQLException {
+
+		documentDAO.insertDocumentCollabo(document);
+	}
 
 
+	@Override
+	public List<FileVO> getDocumentListByUserId(String userId) throws SQLException {
+		List<FileVO> fileList = documentDAO.selectDocumentListByUserId(userId);
+		return fileList;
+	}
 
+
+	@Override
+	public List<FileVO> getDocumentListBytaskTitleANDcprojNo(CollaboTaskVO collaboTaskVO) throws SQLException {
+		List<FileVO> fileList = documentDAO.selectDocumentListBytaskTitleANDcprojNo(collaboTaskVO);
+		return fileList;
+	}
 }

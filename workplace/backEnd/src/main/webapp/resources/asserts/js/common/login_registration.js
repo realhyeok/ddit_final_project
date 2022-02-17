@@ -191,7 +191,7 @@ function checkInputs() {
 	if(usernameValue === "") {
 		setErrorFor(username, '닉네임을 입력하세요.');
 	}else if (!isName(usernameValue)) {
-		setErrorFor(username, '닉네임은 한글, 영문, 숫자만 가능하며 2~20자리까지 가능합니다.');
+		setErrorFor(username, '닉네임은 한글, 영문, 숫자만 가능하며 2~8자리까지 가능합니다.');
 	} else {
 		setSuccessFor(username);
 	}
@@ -220,13 +220,13 @@ function checkInputs() {
 		setSuccessFor(re_pass);
 	}
 	
-	if(!agree_term.checked){
-		$('.label-agree-term').css('border-bottom', '1px solid red');
-		setErrorFor(agree_term, "이용약관에 체크해 주세요.");
-	}else {
-		$('.label-agree-term').css('border', 'none');
-		setSuccessFor(agree_term);
-	}
+	// if(!agree_term.checked){
+	// 	$('.label-agree-term').css('border-bottom', '1px solid red');
+	// 	setErrorFor(agree_term, "이용약관에 체크해 주세요.");
+	// }else {
+	// 	$('.label-agree-term').css('border', 'none');
+	// 	setSuccessFor(agree_term);
+	// }
 }
 
 
@@ -252,7 +252,7 @@ function isPwd(pass) {
   return /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/.test(pass);  
 }
 function isName(username) {
-  return /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,20}$/.test(username);
+  return /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,8}$/.test(username);
 }
 
 /*----------------------------------------- PASSWORD RESET JS -----------------------------------------*/

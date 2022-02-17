@@ -65,6 +65,11 @@
 		  class="com.probada.collabo.dao.CollaboDAOImpl"
 		  p:sqlSession-ref="sqlSession"
 	/>
+	<bean id="collaboTaskDAO"
+		  class="com.probada.collabo.dao.CollaboTaskDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	
 	<bean id="alertDAO"
 		  class="com.probada.alert.dao.AlertDAOImpl"
 		  p:sqlSession-ref="sqlSession"
@@ -78,6 +83,10 @@
 	<bean id="collaboService"
 		  class="com.probada.collabo.service.CollaboServiceImpl"
 		  p:collaboDAO-ref="collaboDAO"
+	/>
+	<bean id="collaboTaskService"
+		  class="com.probada.collabo.service.CollaboTaskServiceImpl"
+		  p:collaboTaskDAO-ref="collaboTaskDAO"
 	/>
 	<bean id="projectService"
 		  class="com.probada.project.service.ProjectServiceImpl"
@@ -139,7 +148,7 @@
 	<bean id="issueUtil" class="com.probada.util.IssueUtil"/>
 	<bean id="documentUtil" class="com.probada.util.DocumentUtil"/>
 	<bean id="collaboUtil" class="com.probada.util.CollaboUtil"/>
-
+	
 
 	<!-- mail -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

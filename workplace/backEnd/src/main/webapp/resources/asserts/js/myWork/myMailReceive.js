@@ -56,6 +56,7 @@ function receiveMailBox(userId){
 				return "<h2>메일이 존재하지 않습니다.</h2>";
 			}
 		},
+		scrollable: false,
 		columns: [
 			{ field: "mailNo"  , hidden: true },    
 			{ field: "title"   , hidden: true },    
@@ -69,7 +70,6 @@ function receiveMailBox(userId){
 }
 
 //콜라보 메일 관련
-
 function acceptCollabo() {
 	
 	alert("수락수락");
@@ -77,14 +77,41 @@ function acceptCollabo() {
 	let userFromCproj = document.getElementById('cprojReplyUserTo').value; //test29
 	console.log("userFrom =>" + userFromCproj);
 	
+	let userFromProjNo = $('.userToProj').attr('idx');  //4
+	console.log("userFromProjNo =>" + userFromProjNo);
+	
 	let userToCproj = document.getElementById('cprojReplyUserFrom').innerText; //pooh_00
 	console.log("userTo =>" + userToCproj);
 	
-	let title = document.getElementById('CollboMailTitle').value + "제안 수락메일입니다.";
+	let userToProjNo = $('.userFromProj').attr('idx'); //3 
+	console.log("userToProjNo =>" + userToProjNo);
 	
+	let title = document.getElementById('CollboMailTitle').value + "제안 수락메일입니다.";
 	console.log("title =>" + title);
 	
-	let receiveContent = replyMailForm(userFromCproj,userToCproj);
+	var collaboVO = {"userFrom" : userFromCproj,
+			"userFromProjNo" : userFromProjNo,
+			"userTo" : userToCproj,
+			"userToProjNo" : userToProjNo,
+		   }
+	
+	$.ajax({
+		url : "/app/collabo/registCollabo",
+		type : "POST",
+		datatype : 'text',
+		data : collaboVO,
+		success : function(data) {
+			alert("등록에 성공했습니다.");
+	       	 console.log(data.cprojNo);
+	       	 
+	       	// off();
+		},
+		error : function(arg) {
+			alert("콜라보 생성 에러" + arg.status + "메세지" + arg.responseText);
+		}
+	});
+	
+	let receiveContent = replyMailForm(userFromCproj,userToCproj,userToProjNo,userFromProjNo);
 	console.log("receiveContent =>" + receiveContent);
 	
 	document.getElementById('collaboContent').value = receiveContent;
@@ -95,28 +122,116 @@ function acceptCollabo() {
 	
 	console.log(document.getElementById('collaboContent').value);
 	
-	document.collaboMailRegist.submit();
+	//document.collaboMailRegist.submit();
+	
+	//location.href="/app/collabo-list";
 	
 }
-function replyMailForm(userFromCproj,userToCproj) {
+function replyMailForm(userFromCproj,userToCproj,userToProjNo,userFromProjNo) {
 	
 	let receiveContent = "";
 	receiveContent +=
 		`
 		<div class="x_content">
-		<div class="item form-group">
-			<h4>`+userFromCproj+`님이 콜라보 제안을 수락하셨습니다.</h4>
-		</div>
-		
-		<div class="col-md-6 col-sm-6 offset-md-3">
-		<button class="btn btn-primary" type="button" onclick="";>바로 가기</button>
-		</div>
+			<div class="item form-group">
+				<h4>`+userFromCproj+`님이 콜라보 제안을 수락하셨습니다.</h4>
+			</div>
+			
+			<div class="col-md-6 col-sm-6 offset-md-3">
+				<button class="btn btn-primary" type="button" onclick="CollaboGo()";>바로 가기</button>
+			</div>
 		
 		</div>  
 		`;
+
+	$.ajax({
+		url : "/app/collabo/getProjectTitleCollabo.do",
+		type : "POST",
+		success : function(arg) {
+			console.log("나의 프로젝트 arg => " + arg)
+			let projTitle = "<option value='' disabled selected hidden>프로젝트를 선택해주세요.</option>";
+			
+			for (var i = 0; i < arg.length; i++) {
+				console.log("arg[i] => " + arg[i].title + arg[i].projNo);
+				projTitle += "<option class='projNoIdx' idxNo='"+arg[i].projNo+"' value='"+arg[i].title+"'>"+arg[i].title+"</option>";
+			}
+			document.getElementById('selectOwnProject').innerHTML= projTitle;
+		},
+		error : function(arg) {
+			alert("리스트 출력 에러임" + arg.status + "메세지" + arg.responseText);
+		}
+	})
 	
 	return receiveContent;
 	
+}
+
+
+function CollaboGo() {
+	alert("콜라보고!")
+	location.href="/app/collabo-list";
+}
+
+
+//콜라보 제안 메일 거절
+function refuseCoproj() {
+	alert("구독 좋아요");
+	
+	let refuseTo = document.getElementById('cprojReplyUserFrom').innerText;
+	console.log("refuseTo =>" + refuseTo);
+	
+	let refuseFrom = document.getElementById('cprojReplyUserTo').value; //test29
+	console.log("refuseFrom =>" + refuseFrom);
+	
+	let title = document.getElementById('CollboMailTitle').value + "제안 거절메일입니다.";
+	console.log("title =>" + title);
+	
+	let text = document.getElementById('sendMessageOther').value;
+	console.log("text =>" + text);
+	
+	let refuseContent = refuseMailForm(refuseTo,refuseFrom,title,text);
+	console.log("contetn = >>>>" + refuseContent);
+	
+	document.getElementById('collaboContent').value = refuseContent;
+	console.log("content => " + document.getElementById('collaboContent').value)
+	
+	document.getElementById('tags_1').value = refuseTo;
+	
+	document.getElementById('CollaboUserFrom').value = refuseFrom;
+	
+	document.getElementById('CollboMailTitle').value = title;
+	
+	document.collaboMailRegist.submit();
+}
+
+function refuseMailForm(refuseTo,refuseFrom,title,text) {
+	console.log("refuseTo =>" + refuseTo);
+	console.log("refuseFrom=>" + refuseFrom);
+	console.log("title =>" + title);
+	console.log("text =>" + text);
+	
+	
+	let refuseContent = "";
+	refuseContent += 
+		`
+		<div class="x_content">
+			<div class="item form-group">
+				<h4>`+refuseFrom+`님이 콜라보 제안을 거절하셨습니다.</h4>
+			</div>
+				
+			<div class="item form-group-collabo">
+		      <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">거절 사유 : 
+		      <span>`+ text +`</span>
+		      </label>
+		    </div>
+			
+			<div class="col-md-6 col-sm-6 offset-md-3">
+			<button class="btn btn-primary" type="button" onclick="CollaboGo()";>바로 가기</button>
+			</div>
+		</div>  
+		`;
+	
+	return refuseContent;
 }
 
 

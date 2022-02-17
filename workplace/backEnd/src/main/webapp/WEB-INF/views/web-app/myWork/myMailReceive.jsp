@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>    
 
+<style>
+	/* 메일이 없을 경우 메시지의 디자인 */
+	.k-grid-norecords {
+		display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    max-height: 42px;
+	}
+</style>
+
 <div id="receiveMail" class="row">
 	<div class="col-md-4">
 		<div id="receiveMailList" class="mail_list_column" style="height:auto;"></div>	
@@ -12,7 +22,7 @@
 </div>
 
 <script id="receiveMailList-template" type="text/x-kendo-template">
-	<div class="mail_list m-0 border-bottom-0">
+	<div class="mail_list m-0 border-bottom-0" onclick="location.href='javascript:receiveMailDetail(#:mailNo#);'" style="cursor:pointer;">
 		<div class="left">
 			# if(userFrom == userTo){ #
 				<input class="receiveCheck" type="checkbox" value="#:mailNo#" dist="mineMail">
@@ -25,8 +35,12 @@
 			# } #
 		</div>
 		<div class="right" style="height:40px;">
-			<h3 style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:userFrom#<small>#:regDate#</small></h3>
-			<a href="javascript:receiveMailDetail(#:mailNo#);"><p style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">#:title#</p></a>
+			# if(userFrom == userTo){ #
+				<h3>내게 쓴 메일<small>#:regDate#</small></h3>
+			# }else if(userFrom != userTo){ #
+				<h3 class="m-0"><p class="m-0 d-inline-block text-truncate" style="padding-bottom:6px;max-width:200px;">#:userFrom#</p><small>#:regDate#</small></h3>
+			# } #
+			<a href="javascript:receiveMailDetail(#:mailNo#);"><p class="d-inline-block text-truncate" style="max-width:300px;">#:title#</p>
 		</div>
 	</div>
 </script>
@@ -45,7 +59,7 @@
 				<p class="date">{{regDate}}</p>
 			</div>
 			<div class="col-md-12">
-				<h4> {{title}}</h4>
+				<h4 class="text-truncate"> {{title}}</h4>
 			</div>
 		</div>
 		<div class="sender-info">
@@ -56,7 +70,7 @@
 			</div>
 		</div>
 		<br>
-		<div class="view-mail" style="min-height:280px;">
+		<div class="view-mail" style="word-break:break-all;min-height:280px;">
 			{{{content}}}
 		</div>
 		<div class="attachment">
@@ -87,6 +101,7 @@
 		</div>
 	</div>
 </script>
+
 <script>
 	function printData(data, target, templateObject){
 		var template = Handlebars.compile(templateObject.html());

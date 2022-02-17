@@ -220,30 +220,41 @@ public class MyDocumentController {
 	@ResponseBody
 	private FileVO update (String target, String path, String doc_NO, String name, String extension,HttpServletResponse res,HttpSession session) throws Exception{
 
-		UserVO userVO= (UserVO) session.getAttribute("userVO");
-		String projectTitle= null;
-		String projNo = null;
-		
-		FileVO doc = new FileVO();
-		doc = documentService.getDocOne(doc_NO);
-		
-		if(target == null) {
-			path = name;
-		}else {
-			path = target+"/"+name+extension;
-			projectTitle= doc.getPath().substring(0,target.indexOf("/"));
-			projNo = documentService.getProjByTitle(projectTitle);
-		}
-
-		
-
-		File originFile = new File("c:/"+doc.getPath());
 		
 		LOGGER.debug("update target : {}",target);
 		LOGGER.debug("update path : {}",path);
 		LOGGER.debug("update name : {}",name);
 		LOGGER.debug("update extension : {}",extension);
 		LOGGER.debug("update doc_NO : {}",doc_NO);
+		
+		
+		
+		UserVO userVO= (UserVO) session.getAttribute("userVO");
+		String projectTitle= null;
+		String projNo = null;
+		
+		FileVO doc = new FileVO();
+		doc = documentService.getDocOne(doc_NO);
+		LOGGER.debug("doc {}",doc);
+		if(target == null || path==null) {
+			path = name;
+		}else {
+			path = target+"/"+name+extension;
+			projectTitle= doc.getName();
+			LOGGER.debug("projectTitle3 {}",doc);
+			projNo = documentService.getProjByTitle(projectTitle);
+			LOGGER.debug("projNo3 {}",doc);
+		}
+
+		
+
+		File originFile = new File("c:/"+doc.getPath());
+		
+		LOGGER.debug("update2 target : {}",target);
+		LOGGER.debug("update2 path : {}",path);
+		LOGGER.debug("update2 name : {}",name);
+		LOGGER.debug("update2 extension : {}",extension);
+		LOGGER.debug("update2 doc_NO : {}",doc_NO);
 		
 		
 		
@@ -311,11 +322,17 @@ public class MyDocumentController {
 		FileVO trash = new FileVO();
 		FileVO doc = new FileVO();
 		FileVO result = new FileVO();
-
+		String orginPath;
 		if(path!=null && name!= null && extension !=null && doc_NO !=null) {
 
-
-			String orginPath = path.substring(0,3);
+			if(path.length()>3) {
+				
+				 orginPath = path.substring(0,3);
+			}else {
+				
+				orginPath = path;
+				
+			}
 
 
 			//path만 이동시키면 되지 않을까??????????
@@ -418,9 +435,6 @@ public class MyDocumentController {
 	}
 
 
-
-
-
 	private List<FileVO> myWork(String target, String userId) throws Exception{
 
 
@@ -434,6 +448,11 @@ public class MyDocumentController {
 
 
 		for ( FileVO vo: fileVO) {
+
+			if(vo.getPath().equals("루트")) {
+				
+				
+			}else {
 
 				if(vo.getPath().equals("휴지통") && flag) {
 
@@ -454,8 +473,9 @@ public class MyDocumentController {
 						}
 					}
 
-		}
+			}
 
+		}
 		return realFileList;
 
 	}

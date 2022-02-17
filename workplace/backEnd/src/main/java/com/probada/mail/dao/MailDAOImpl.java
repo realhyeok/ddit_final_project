@@ -134,6 +134,7 @@ public class MailDAOImpl implements MailDAO {
 	//메일 등록
 	@Override
 	public void registMail(MailVO mailVO) throws SQLException {
+		System.out.println(mailVO.getUserFrom() + ", " + mailVO.getUserTo());
 		sqlSession.update("Mail-Mapper.registMail", mailVO);
 	}
 
@@ -174,5 +175,19 @@ public class MailDAOImpl implements MailDAO {
 	public void tempMailToSendMail(MailVO mailVO) throws SQLException {
 		sqlSession.update("Mail-Mapper.tempMailToSendMail", mailVO);
 		
+	}
+	
+	//아이디를 닉네임으로 변경
+	@Override
+	public String selectNicknameByUserId(String userId) throws SQLException {
+		String nickname = sqlSession.selectOne("Mail-Mapper.selectNicknameByUserId", userId);
+		return nickname;
+	}
+
+	//닉네임을 아이디로 변경
+	@Override
+	public String selectUserIdByNickname(String userTo) throws SQLException {
+		String userId = sqlSession.selectOne("Mail-Mapper.selectUserIdByNickname", userTo);
+		return userId;
 	}
 }

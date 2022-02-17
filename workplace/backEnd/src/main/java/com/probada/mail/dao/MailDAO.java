@@ -79,4 +79,10 @@ public interface MailDAO {
 	
 	//임시메일 전송
 	public void tempMailToSendMail(MailVO mailVO) throws SQLException;
+	
+	//아이디를 닉네임으로 변경
+	public String selectNicknameByUserId(String userId) throws SQLException;
+	
+	//닉네임을 아이디로 변경
+	public String selectUserIdByNickname(String nickname) throws SQLException;
 }

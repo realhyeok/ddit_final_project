@@ -26,6 +26,11 @@
   -webkit-font-smoothing: antialiased;
 }
 
+
+.nav-sm.swal2-shown.swal2-height-auto{
+  padding-right: 0px !important;
+}
+
 html,
 body {
   max-width: 1280px;
@@ -7033,4 +7038,18 @@ widget data css 2022-01-25
 	}
 .col-md-3.widget.widget_tally_box.x_panel_origin.widget_data{
     margin-left: 10px;
+}
+
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  background-clip: padding-box;
+  border: 10px solid transparent;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+*::-webkit-scrollbar-thumb {        
+  box-shadow: inset 0 0 0 10px;
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,6 +27,7 @@ import com.probada.document.service.DocumentService;
 import com.probada.document.vo.FileVO;
 import com.probada.document.vo.ProjectUserVO;
 import com.probada.user.vo.UserVO;
+import com.probada.util.ProjectUtil;
 
 
 
@@ -60,6 +62,8 @@ public class DocumentController {
 
 	@Autowired
 	private DocumentService documentService;
+	@Resource(name="projectUtil")
+	private ProjectUtil projectUtil;
 
 	@RequestMapping("/")
 	public String main() {
@@ -418,7 +422,10 @@ public class DocumentController {
 		try {
 
 			docList = documentService.getDocumentListForProjDetail(projNo);
-
+			String projTitle = projectUtil.getProjectNameByProjNo(projNo);
+			for (FileVO fileVO : docList) {
+				fileVO.setProjTitle(projTitle);
+			}
 			entity = new ResponseEntity<List<FileVO>>(docList,HttpStatus.OK);
 
 		} catch(Exception e) {
@@ -470,12 +477,25 @@ public class DocumentController {
 		return realFileList;
 
 	}
+
+
+
+	@RequestMapping("/getDocumentListByUserId")
+	@ResponseBody
+	public ResponseEntity<List<FileVO>> getDocumentListByUserId(String userId) throws Exception {
+		ResponseEntity<List<FileVO>> entity = null;
+		
+		try {
+			List<FileVO> fileList = documentService.getDocumentListByUserId(userId);
+			entity = new ResponseEntity<List<FileVO>>(fileList, HttpStatus.OK);
+		} catch(Exception e) {
+			entity = new ResponseEntity<List<FileVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+
 }
-
-
-
-
-
 
 
 

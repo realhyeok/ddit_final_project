@@ -2,7 +2,7 @@ function summernote_go(target){
 		target.summernote({//JSON형태로 각각의 설정이 있음, 키값으로 정해져있음, CSS는 불가능
 			placeholder : '본문을 입력해주세요.',
 			lang : 'ko-KR',
-			height : '500px',
+			height : '400px',
 			disableResizeEditor : false,
 			callbacks : {
 				onImageUpload : function(files, editor, welEditable){//files : 자바스크립트 file 객체, 배열, 순서X

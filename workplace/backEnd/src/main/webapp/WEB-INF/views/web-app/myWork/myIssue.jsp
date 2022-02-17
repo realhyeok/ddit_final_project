@@ -13,9 +13,9 @@
 			<div class="panel-heading form-inline justify-content-between mb-4">
 				<div class="form-group">
 					<select id="groupDistIds" class="form-control">
-						<option>모두</option>
-						<option>진행중</option>
-						<option>완료</option>
+						<option>전체</option>
+						<option>해결</option>
+						<option>미해결</option>
 					</select>
 				</div>
 				<div class="form-group justify-content-end">
@@ -27,7 +27,7 @@
 					</span>
 				</div>
 			</div>      
-			<div id="myMileList" style="height:100%;"></div>
+			<div id="myMileList"></div>
 		</div>
 		<div id="myIssueGrid" style="width:69%;"></div>
 	</div>
@@ -36,16 +36,19 @@
 <script type="text/x-kendo-template" id="myMileTemplate">
     <div class="milestone" data-bind="click: searchIssue" style="border-left-color: rgb(138,43,226);border-left-width: 2px;">
 		<div class="x_title row justify-content-between">
-      		<h4>#:title# <span class="#=status#"></span><span class="internal"></span></h4>
-				<div class="text-right">
-					<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"></a>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="javascript:getOverlayMyMileModifyTemplate('#:id#')">수정</a>
-							<a class="dropdown-item" href="javascript:removeMyMilestone('#:id#');">삭제</a>
-						</div>
+      		<h4>
+				<span class="d-inline-block text-truncate" style="max-width:220px;color:black;">#:title#</span> 
+				<span class="#=status#"></span><span class="internal"></span>
+			</h4>
+			<div class="text-right">
+				<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"></a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="javascript:getOverlayMyMileModifyTemplate('#:id#')">수정</a>
+					<a class="dropdown-item" href="javascript:removeMyMilestone('#:id#');">삭제</a>
 				</div>
+			</div>
     	</div>
-        <p class="m-0"><small>#:xssPurify(content)#</small></p>
+        <p class="m-0 text-truncate"><small>#:xssPurify(content)#</small></p>
         <p class="m-0"><small>#:kendo.toString(regdate,"yyyy-MM-dd")#</small></p>
     </div>
 </script>
