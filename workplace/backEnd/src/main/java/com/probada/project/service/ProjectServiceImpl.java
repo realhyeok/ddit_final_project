@@ -114,6 +114,21 @@ public class ProjectServiceImpl implements ProjectService {
 
 	}
 
+	@Override
+	public void modifyProjectUserRelationToRejoin(ProjectVO projectVO) throws SQLException {
+
+		projectDAO.updateProjectUserRelationToRejoin(projectVO);
+
+	}
+
+	@Override
+	public int getCountDeletedUserByUserId(ProjectVO projectVO) throws SQLException {
+
+		int count = projectDAO.countDeletedUserByUserId(projectVO);
+
+		return count;
+	}
+
 
 
 

@@ -440,13 +440,13 @@
 		</div>
 	</div>
 
-<!-- dashboard-table center start -->
-<div class="col-md-6 col-sm-6">
+		<!-- dashboard-table center start -->
+		<div class="col-md-6 col-sm-6">
 			<div class="x_title">
 				<h2>
 					최근 히스토리
 				</h2>
-				<a class="more float-right mt-2" href="#">
+				<a class="more float-right mt-2 text-dark" href="javascript:document.getElementById('history-tab').click();">
 					더보기
 					<i class="fa fa-arrow-right"></i>
 				</a>
@@ -454,37 +454,9 @@
 			</div>
 
 			<div class="x_content">
-				<ul class="list-unstyled top_profiles scroll-view">
-					<li class="media event">
-						<img src="../../resources/asserts/images/img.jpg" alt="img" style="margin:5px 10px 5px 3px;height:50px;width:50px;border-radius:100%;">
-						<div class="media-body">
-							<p><strong>마창수</strong></p>
-							<p>이슈를 등록하였습니다.</p>
-							<p><small>2022-01-01</small> </p>
-						</div>
-						<button type="button" class="btn btn-dark" style="margin:5px 10px 5px 3px;height:50px;width:50px;">go</button>
-					</li>
-					<li class="media event">
-						<img src="../../resources/asserts/images/img.jpg" alt="img" style="margin:5px 10px 5px 3px;height:50px;width:50px;border-radius:100%;">
-						<div class="media-body">
-							<p><strong>석기현</strong></p>
-							<p>이슈를 수정하였습니다.</p>
-							<p><small>2022-01-01</small> </p>
-						</div>
-						<button type="button" class="btn btn-dark" style="margin:5px 10px 5px 3px;height:50px;width:50px;">go</button>
-					</li>
-					<li class="media event">
-						<img src="../../resources/asserts/images/img.jpg" alt="img" style="margin:5px 10px 5px 3px;height:50px;width:50px;border-radius:100%;">
-						<div class="media-body">
-							<p><strong>양기욱</strong></p>
-							<p>이슈를 해결하였습니다.</p>
-							<p><small>2022-01-01</small> </p>
-						</div>
-						<button type="button" class="btn btn-dark" style="margin:5px 10px 5px 3px;height:50px;width:50px;">go</button>
-					</li>
-				</ul>
+				<div id="projectHistoryDashboard"></div>
 			</div>
-	</div>
+		</div>
 
 <div class="col-md-6 col-sm-6">
 			<div class="x_title">

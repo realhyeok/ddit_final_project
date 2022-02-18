@@ -105,12 +105,12 @@ function readDocument(){
 		               items: [
 		               	  {
 		         	            name: "download",
-		         	            text: "Download",
+		         	            text: "다운로드",
 		         	            spriteCssClass: "k-icon k-i-download",
 		         	          	command: "DownloadCommand"
 		         	          },
-		                   { name: "rename" },
-		                   { name: "delete" }
+		                   { name: "rename", text:"이름변경" },
+		                   { name: "delete", text:"삭제" }
 		               ]
 		           },
 

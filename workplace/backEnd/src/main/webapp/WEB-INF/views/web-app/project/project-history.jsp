@@ -9,11 +9,44 @@
 
 <script id="projectHistory-template" type="text/x-kendo-template">
 	<div class="media event">
-		<img src='<%=request.getContextPath()%>/resources/asserts/images/img.jpg' alt='img' style='margin:5px 10px 5px 3px;height:50px;width:50px;border-radius:100%;'/>
+		<img src='<%=request.getContextPath()%>/user/getPictureById?userId=#:userId#' alt='img' style='margin:5px 10px 5px 3px;height:50px;width:50px;border-radius:100%;'/>
 		<div class="media-body">
-			<p class="mt-1">#:msg#</p>
+			<p class="mt-1 text-truncate" style="max-width:930px;">#:msg#</p>
 			<p>#:regDate#</p>
 		</div>
-		<button type="button" class="btn btn-sm btn-dark mt-1" style="height:40px;width:38px;" onclick="location.href='<%=request.getContextPath()%>/app/myWork/#:url#'">이동</button>
+		<button type="button" class="btn btn-sm btn-dark mt-1" style="height:50px;width:50px;" onclick="history_go('#:url#', '#:projNo#');">이동</button>
 	</div>
+</script>
+
+<script id="projectHistoryDashboard-template" type="text/x-kendo-template">
+	<div class="media event row pl-0 pr-0">
+		<img src="<%=request.getContextPath()%>/user/getPictureById?userId=#:userId#" alt="img" style="margin:5px 10px 5px 3px;height:50px;width:50px;border-radius:100%;">
+		<div class="media-body" style="max-width:345px;">
+			<p class="mt-1 text-truncate" style="max-width:320px;">#:msg#</p>
+			<p>#:regDate#</p>
+		</div>
+		<div class="col-md-1">
+			<button type="button" class="btn btn-sm btn-dark mt-1" style="height:50px;width:50px;" onclick="history_go('#:url#');">이동</button>
+		</div>
+	</div>	
+</script>
+
+<script>
+	function history_go(url){
+		if(url == "PROJECT"){
+			document.getElementById('detail-tab').click();
+		}else if(url == "TASK"){
+			document.getElementById('task-tab').click();
+		}else if(url == "ISSUE"){
+			document.getElementById('issue-tab').click();
+		}else if(url == "ISSUE_RES"){
+			document.getElementById('issue-tab').click();
+		}else if(url == "CHATROOM"){
+			getOverlayTemplateChatList('chatTemplate');
+		}else if(url == "MILE"){
+			document.getElementById('issue-tab').click();
+		}else if(url == "DOCUMENT"){
+			document.getElementById('document-tab').click();
+		}
+	}
 </script>

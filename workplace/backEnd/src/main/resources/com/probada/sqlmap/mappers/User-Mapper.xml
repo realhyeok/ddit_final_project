@@ -14,6 +14,13 @@
 		WHERE USER_ID=#{userId}
 
 	</select>
+	
+	<select id="getUserByNickname" resultType="User" parameterType="str">
+		SELECT *
+		FROM "USER"
+		WHERE NICKNAME=#{nickname}
+
+	</select>
 
 
 	<select id="selectTotalUserByPrivacy" resultType="User" parameterType="str">

@@ -1,6 +1,7 @@
 // 업무 시작
-function readMyTask(uid){
+function readMyTask(uid, nname){
 	var userId = uid;
+	var nickname = nname;
 	readMyTask = function(){};
 	
 	var myTaskDataSource = new kendo.data.DataSource({
@@ -18,7 +19,6 @@ function readMyTask(uid){
 				method : "POST",
 				data   : { "userId" : userId },
 				success: function(result) {
-					console.log(result);
 				}
 			},
 			create: {
@@ -26,7 +26,6 @@ function readMyTask(uid){
 				method : "POST",
 				data   : { "userId" : userId },
 				success: function(result) {
-					console.log(result);
 				}
 			},
 			destroy: {
@@ -57,6 +56,13 @@ function readMyTask(uid){
 	    		}
 	    	}
 	    },
+	   change: function() {
+		   var canvasTag = "<canvas id='myTaskChartDashboard'></canvas>";
+		   
+		   $("#canvasBox").empty();
+		   $("#canvasBox").append(canvasTag);
+		   myTaskChart(userId);
+		}
 	    /*sort: {field: "updatedate", dir:"desc"}*/
 	});
 	
@@ -72,7 +78,7 @@ function readMyTask(uid){
 	   		items: [
 	   			{ template: "<button type='button' class='k-button' onclick='getOverlayTaskRegistTemplate(\"{{userFrom}}\")'>업무 등록</button>" },
 	   			"spacer",
-	   			{ template: "<input type='search' id='myTaskProject-category' style='width: 170px;vertical-align:middle;'/>" },
+	   			{ template: "<input type='search' id='myTaskProject-category' style='height:41px;width: 170px;vertical-align:middle;'/>" },
 	    		"search"
 	    	]
     	},
@@ -106,7 +112,7 @@ function readMyTask(uid){
 		dataTextField: "projTitle",
 		dataValueField: "projTitle",
 		autoBind: false,
-		optionLabel: "All",
+		optionLabel: "전체",
 		change: function() {
 			var value = this.value();
 			if (value) {

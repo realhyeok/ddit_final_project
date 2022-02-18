@@ -271,8 +271,8 @@ public class UserUtil {
 			sendMail = new MailHandler(mailSender);
 			sendMail.setSubject("[probada] " + emailVO.getSubject());
 			sendMail.setText(new StringBuffer().append(emailVO.getContent())
-					.append("<a href='http://localhost/" + emailVO.getHostname() + "?userId=").append(emailVO.getUserId())
-//					.append("<a href='http://192.168.143.7/" + emailVO.getHostname() + "?userId=").append(emailVO.getUserId())
+//					.append("<a href='http://localhost/" + emailVO.getHostname() + "?userId=").append(emailVO.getUserId())
+					.append("<a href='http://192.168.143.7/" + emailVO.getHostname() + "?userId=").append(emailVO.getUserId())
 					.append("&authkey=").append(key)
 					.append("' target='_blenk'>비밀번호 재설정을 위해 이메일 이곳을 눌러주세요</a>").toString());
 			sendMail.setFrom("probadahelp@gmail.com", "probada");

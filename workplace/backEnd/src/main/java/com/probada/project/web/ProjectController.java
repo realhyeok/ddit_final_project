@@ -27,6 +27,7 @@ import com.probada.mail.command.MailRegistCommand;
 import com.probada.mail.service.MailService;
 import com.probada.mail.vo.MailVO;
 import com.probada.project.service.ProjectService;
+import com.probada.project.service.ProjectTagService;
 import com.probada.project.vo.ProjectVO;
 import com.probada.user.vo.UserVO;
 import com.probada.util.DocumentUtil;
@@ -157,7 +158,10 @@ public class ProjectController {
 
 			String projNo = projectService.registProject(projectVO);
 
-			projectUtil.setProjectUserRelation(session, projectVO);
+			projectUtil.setProjectLeaderRelation(session, projectVO);
+
+			//태그추가하는 메서드 만들기
+			projectUtil.registProjectTagResolver(projectVO);
 
 			hashmap.put("projNo", projNo);
 
@@ -389,42 +393,74 @@ public class ProjectController {
 
 	@RequestMapping("/registInviteMail")
 	@ResponseBody
-	public ResponseEntity<List<UserVO>> registInviteMail(MailRegistCommand regData, String projNo, HttpServletRequest request) throws Exception{
+	public ResponseEntity<String> registInviteMail(MailRegistCommand regData,HttpServletRequest request) throws Exception{
 
-		LOGGER.debug("[요청받음] => /registInviteMail => " + projNo);
-
-		ResponseEntity<List<UserVO>> entity = null;
+		ResponseEntity<String> entity = null;
 
 		try {
 
-			HttpSession session = request.getSession();
-			UserVO userVO = (UserVO) session.getAttribute("userVO");
-
+			LOGGER.debug("/registInviteMail ====================>>>" + regData.toString());
 			String dist = "B901";
-			String userFrom = getUserIdByNickname(regData.getUserTo());
-			
-			MailVO mailVO = new MailVO();
-			mailVO.setTitle(regData.getTitle());
-			mailVO.setContent(regData.getContent());
-			mailVO.setUserTo(userFrom);
-			mailVO.setUserFrom(userVO.getNickname());
-			mailVO.setDist(dist);
-			
-			List<UserVO> userList = projectUtil.getProjectMemberByProjNo(projNo);
+			HttpSession session = request.getSession();
+			UserVO sessionVO = (UserVO) session.getAttribute("userVO");
 
-			entity = new ResponseEntity<List<UserVO>>(userList,HttpStatus.OK);
+			String[] userToArr = regData.getUserTo().split(",");
+
+			for (int i = 0; i < userToArr.length; i++) {
+
+				String userId = getUserIdByNickname(regData.getUserTo());
+				regData.setUserTo(userId);
+
+				MailVO mailVO = new MailVO();
+				mailVO.setTitle(sessionVO.getNickname() + " 님의 프로젝트 초대 메일");
+				mailVO.setContent(regData.getContent());
+				mailVO.setUserTo(regData.getUserTo());
+				mailVO.setUserFrom(sessionVO.getUserId());
+				mailVO.setDist(dist);
+
+				LOGGER.debug("mailVO============>" + mailVO.toString());
+				mailService.registMailAttachFile(mailVO);
+
+			}
+
+			entity = new ResponseEntity<String>("hello",HttpStatus.OK);
 
 		} catch (Exception e) {
-			entity = new ResponseEntity<List<UserVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 			LOGGER.error(e.getMessage());
 		}
 		return entity;
 	}
-	
+
+	@RequestMapping("/registUserProjectRelation")
+	@ResponseBody
+	public ResponseEntity<String> registUserProjectRelation(ProjectVO projectVO) throws Exception{
+		ResponseEntity<String> entity = null;
+
+	try {
+		String userId = getUserIdByNickname(projectVO.getUserId());
+		projectVO.setUserId(userId);
+
+		int count = projectService.getCountDeletedUserByUserId(projectVO);
+
+		if(count == 0) {
+			projectService.registProjectUserRelation(projectVO);
+		} else {
+			projectService.modifyProjectUserRelationToRejoin(projectVO);
+		}
+
+		entity = new ResponseEntity<String>(projectVO.getProjNo(),HttpStatus.OK);
+
+	} catch (Exception e) {
+		entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		LOGGER.error(e.getMessage());
+	}
+	return entity;
+	}
 	public String getUserIdByNickname(String userId) throws Exception {
 		return mailService.getUserIdByNickname(userId);
 	}
-	
+
 	public String getNicknameByUserId(String userId) throws Exception {
 		return mailService.getNicknameByUserId(userId);
 	}

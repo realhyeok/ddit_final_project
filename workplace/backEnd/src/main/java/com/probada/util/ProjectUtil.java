@@ -7,10 +7,14 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.probada.project.service.ProjectService;
 import com.probada.project.service.ProjectTagService;
 import com.probada.project.vo.ProjectTagVO;
 import com.probada.project.vo.ProjectVO;
+import com.probada.project.web.ProjectController;
 import com.probada.user.service.UserService;
 import com.probada.user.vo.UserVO;
 
@@ -24,6 +28,8 @@ public class ProjectUtil {
 	UserService userService;
 	@Resource(name="taskUtil")
 	TaskUtil taskUtil;
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProjectUtil.class);
 
 	/**
 	 * 프로젝트 개수 조회
@@ -163,7 +169,7 @@ public class ProjectUtil {
 	 * @param projectVO
 	 * @throws SQLException
 	 */
-	public void setProjectUserRelation(HttpSession session, ProjectVO projectVO) throws SQLException{
+	public void setProjectLeaderRelation(HttpSession session, ProjectVO projectVO) throws SQLException{
 
 		UserVO userVO = (UserVO) session.getAttribute("userVO");
 		String userId = userVO.getUserId();
@@ -204,4 +210,36 @@ public class ProjectUtil {
 		return projectList;
 	}
 
+	public void registProjectTagResolver(ProjectVO projectVO) throws SQLException {
+		ProjectTagVO tagVO = new ProjectTagVO();
+
+		try {
+			if(projectVO.getTagNames() != null) {
+
+				String[] tagNameArr = String.valueOf(projectVO.getTagNames()).split(",");
+
+				for (int i = 0; i < tagNameArr.length; i++) {
+
+					tagVO.setTagName("#"+tagNameArr[i]);
+					tagVO.setProjNo(projectVO.getProjNo());
+
+					int count = projectTagService.getCountProjectTagByTagName(tagVO);
+					if(count == 0) {
+						projectTagService.registProjectTagByProjNo(tagVO);
+					}
+					String tagNo = projectTagService.getTagNoByTagName(tagVO);
+					tagVO.setTagNo(tagNo);
+					projectTagService.registProjectTagRelation(tagVO);
+				}
+
+			} else {
+
+				return;
+
+			}
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

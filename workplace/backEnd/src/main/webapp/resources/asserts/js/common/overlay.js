@@ -23,8 +23,69 @@ function getOverlayAnyWhereMailRegistTemplate(userId) {
 	summernote_go($('#anyWhereMailOverlayContent'));
 }
 
-function getOverlayModifyTemplate(templateId, url) {
 
+
+//스푼 오버레이 실행 함수
+function getOverlayAnyWhereSpoonTemplate(url) {
+	console.log("url" + url);
+	
+	if (getCookie("projTab") == "task-tab") {
+		on();
+		$.ajax({
+			type : 'GET',	
+			url : url,
+			data : {"projNo":projNo},
+			success : function(data) {
+				console.log("Handlebars success!!");
+				console.log("data =>   " + JSON.stringify(data));
+				var template = document.querySelector("#anyWhereSpoonTaskTemplate").innerText;
+				var bindTemplate = Handlebars.compile(template);
+				var appe = document.querySelector('#popoverlay');
+				appe.innerHTML = bindTemplate(data);
+				$("#fadeInContent").fadeIn(300);
+				$("#selectTaskTitle").kendoMultiSelect({
+					autoClose: false
+				});
+				
+			},
+			error : function(error) {
+				console.log("Handlebars error!!");
+			},
+		});
+		
+	} else if (getCookie("projTab") == "issue-tab"){
+		on();
+		$.ajax({
+			type : 'GET',	
+			url : url,
+			data : {"projNo":projNo},
+			success : function(data) {
+				console.log("Handlebars success!!");
+				console.log("data =>   " + JSON.stringify(data));
+				var template = document.querySelector("#anyWhereSpoonissueTemplate").innerText;
+				var bindTemplate = Handlebars.compile(template);
+				var appe = document.querySelector('#popoverlay');
+				appe.innerHTML = bindTemplate(data);
+				$("#fadeInContent").fadeIn(300);
+				$("#selectTaskTitle").kendoMultiSelect({
+					autoClose: false
+				});
+				
+			},
+			error : function(error) {
+				console.log("Handlebars error!!");
+			},
+		});
+	}
+	
+}
+
+function SpoonTask_go() {
+	alert("gg");
+}
+
+
+function getOverlayModifyTemplate(templateId, url) {
 	on();
 	$.ajax({
 		type : 'GET',

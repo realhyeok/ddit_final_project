@@ -1,6 +1,6 @@
 
-const server = 'ws://localhost/echo';
-//const server = 'ws://192.168.143.7/echo';
+//const server = 'ws://localhost/echo';
+const server = 'ws://192.168.143.7/echo';
 
 var socket = null;
 

@@ -130,6 +130,22 @@
 			$("textarea[id='sendContent']").focus();
 			return;
 		}
+		
+		$.ajax({
+			type: "get",
+			url : "<%=request.getContextPath()%>/app/myWork/userCheck",
+			data: { "userTo"  : userTo },
+			success: function(result){
+				if(result == "no"){
+					alert("존재하지 않는 회원입니다.");
+					return;
+				}
+			},
+			error: function(error){
+				alert(error.status);
+			}
+		});
+		
 		if(dist == "send"){
 			var receiverId = $("#sendUserTo").val();
 			var nickname = "${userVO.nickname}";

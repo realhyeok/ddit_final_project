@@ -71,8 +71,6 @@ function reloadMile() {
 }
 
 $('#search-term').on('keyup', function () {
-    var groupIds = $("#groupIds").val();
-    console.log(groupIds);
     var search = $.trim($(this).val());
     if (search != "")
     	mileDataSource.filter({ field: "title", operator: "contains", value: search });

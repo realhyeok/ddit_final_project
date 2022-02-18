@@ -131,4 +131,13 @@ public class CollaboServiceImpl implements CollaboService {
 		return collaboList;
 	}
 
+	@Override
+	public List<CollaboVO> getCprojectNameByProjNo(String projNo) throws SQLException {
+		
+		List<CollaboVO> collaboList = collaboDAO.selectCprojectNameByProjNo(projNo);
+		
+		return collaboList;
+	}
+
+
 }

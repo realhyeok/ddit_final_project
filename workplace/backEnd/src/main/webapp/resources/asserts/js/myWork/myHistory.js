@@ -75,7 +75,7 @@ function readMyHistory(userId){
 		dataTextField: "projNo",
 		dataValueField: "projNo",
 		autoBind: false,
-		optionLabel: "All",
+		optionLabel: "전체",
 		change: function() {
 			var value = this.value();
 			if (value) {
@@ -103,7 +103,7 @@ function readMyHistory(userId){
 		dataTextField: "dist",
 		dataValueField: "dist",
 		autoBind: false,
-		optionLabel: "All",
+		optionLabel: "전체",
 		change: function() {
 			var value = this.value();
 			if (value) {

@@ -5,34 +5,7 @@ function readMyDashboard(userId, nickname){
 	var sessionId = userId;
 	
 	//내 업무 시작
-	$.ajax({
-		url     : "/app/myWork/getMyTaskChartByUserId", 
-		type    : "GET",
-		data    : {
-			"userId" : sessionId
-		},
-		async   : false,
-		dataType: "json",
-		success : function(data){
-			var myTaskChart = new Chart(document.getElementById('myTaskChartDashboard'), {
-				type: 'doughnut',
-				data: {
-					labels: ['예정', '진행', '지연', '완료'],
-					datasets: [{
-						data: [data.b201, data.b202, data.b203, data.b204],
-						backgroundColor: ['#6c757d', '#007bff', '#ffc107', '#28a745'],
-						hoverOffset: 4,
-						options: {
-							legend: {position : 'right'}
-						}
-					}]
-				}
-			});
-        },
-        error   : function(error){
-			alert(error.status);
-		}
-    });
+	myTaskChart(sessionId);
 	//내 업무 끝
 	
 	//내 이슈 시작
@@ -61,26 +34,31 @@ function readMyDashboard(userId, nickname){
 			}
 		},
 		scrollable: false,
+		height: 250,
 		columns: [
 			{
 				field: "title",
 				title: "제목" ,
-				headerAttributes: { style: 'text-align:center' },
-				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:150px;'>#:title#</span>"
+				headerAttributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' },
+				attributes: { style: 'padding-top:3px;padding-bottom:3px;' },
+				template: "<a href=\"javascript:myIssueDetail('#:issueNo#', '#:projNo#')\" class='text-dark d-inline-block text-truncate' style='max-width:150px;'>#:title#</a>",
+				width: 200
 			},
 			{ 
 				field: "userId",
 				title: "작성자",
-				headerAttributes: { style: 'text-align:center' },
-				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:120px;'>#:userId#</span>"
+				headerAttributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' },
+				attributes: { style: 'padding-top:3px;padding-bottom:3px;' },
+				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:115px;'>#:userId#</span>",
+				width: 160
 			},
 			{ 
 				field: "updatedate",
 				title: "갱신일",
-				headerAttributes: { style: 'text-align:center' },
-				attributes: { style: 'text-align:center;width:100px;' },
-				format:"{0:yyyy-MM-dd}",
-				width: 130
+				headerAttributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' },
+				attributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' },
+				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:115px;'>#=kendo.toString(updatedate, 'yyyy-MM-dd')#</span>",
+				width: 120
 			}
 		]
 	});
@@ -93,7 +71,7 @@ function readMyDashboard(userId, nickname){
 			transport: {
 				read: "/app/myWork/getReceiveMailList?userTo=" + nickname
 			},
-			pageSize: 3,
+			pageSize: 5,
 			schema: {
 				model: {
 					fields: {
@@ -112,25 +90,30 @@ function readMyDashboard(userId, nickname){
 			}
 		},
 		scrollable: false,
+		height: 250,
 		columns: [
 			{ 
 				field: "title",
 				title: "제목",
-				headerAttributes: { style: 'text-align: center' },
-				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:150px;'>#:title#</span>"
+				headerAttributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' },
+				attributes: { style: 'padding-top:3px;padding-bottom:3px;' },
+				template: "<a href=\"javascript:myMailGo('#:mailNo#')\" class='text-dark d-inline-block text-truncate' style='max-width:150px;'>#:title#</a>",
+				width: 200
 			},
 			{ 
 				field: "userFrom",
 				title: "보낸사람",
-				headerAttributes: { style: 'text-align: center' },
-				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:120px;'>#:userFrom#</span>"
+				headerAttributes: { style: 'width:70;text-align:center;padding-top:3px;padding-bottom:3px;' },
+				attributes: { style: 'width:70;padding-top:3px;padding-bottom:3px;' },
+				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:115px;'>#:userFrom#</span>",
+				width: 160
 			},
 			{ 
 				field: "regDate",
 				title: "보낸날짜",
-				headerAttributes: { style: 'text-align: center' },
-				attributes: { style: 'text-align: center'},
-				width: 130
+				headerAttributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' },
+				attributes: { style: 'text-align:center;width:120px;padding-top:3px;padding-bottom:3px;' },
+				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:115px;'>#=kendo.toString(regDate, 'yyyy-MM-dd')#</span>"
 			}
 		]
 	});
@@ -308,13 +291,95 @@ function readMyDashboard(userId, nickname){
 			}
 		},
 		scrollable: false,
+		height: 250,
 		columns: [
-			{ field: "projTitle", title: "소속 프로젝트"   , headerAttributes: { style: 'text-align: center' }, attributes: { style: 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'}, width: 230 },
-			{ field: "name"     , title: "문서명"        , headerAttributes: { style: 'text-align: center' }, attributes: { style: 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'}},
-			{ field: "size"     , title: "파일크기 (BYTE)", headerAttributes: { style: 'text-align: center' }, width: 110 },
-			{ field: "created"  , title: "등록일"        , headerAttributes: { style: 'text-align: center' }, attributes: { style: 'text-align: center'}, format:"{0:yyyy-MM-dd}", width: 130 },
-			{ field: "modified" , title: "갱신일"        , headerAttributes: { style: 'text-align: center' }, attributes: { style: 'text-align: center'}, format:"{0:yyyy-MM-dd}", width: 130 }
+			{ 
+				field: "projTitle", 
+				title: "소속 프로젝트", 
+				headerAttributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' }, 
+				attributes: { style: 'padding-top:3px;padding-bottom:3px;' },
+				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:180px;'>#:projTitle#</span>",
+				width: 230 
+			},
+			{ 
+				field: "name", 
+				title: "문서명", 
+				headerAttributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' }, 
+				attributes: { style: 'padding-top:3px;padding-bottom:3px;' },
+				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:360px;'>#:name#</span>"
+			},
+			{ 
+				field: "size", 
+				title: "파일크기 (BYTE)", 
+				headerAttributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' },
+				attributes: { style: 'padding-top:3px;padding-bottom:3px;' },
+				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:100px;'>#:size# BYTE</span>",
+				width: 110 
+			},
+			{ 
+				field: "created", 
+				title: "등록일", 
+				headerAttributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' },
+				attributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;'},
+				attributes: { style: 'text-align:center;width:120px;padding-top:3px;padding-bottom:3px;'},
+				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:115px;'>#=kendo.toString(created, 'yyyy-MM-dd')#</span>"
+			},
+			{ 
+				field: "modified", 
+				title: "갱신일", 
+				headerAttributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' },
+				attributes: { style: 'text-align:center;width:120px;padding-top:3px;padding-bottom:3px;'},
+				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:115px;'>#=kendo.toString(modified, 'yyyy-MM-dd')#</span>"
+			}
 		]
 	});
 	//내 문서 끝
+}
+function myMailGo(mailNo){
+	document.getElementById('mail-tab').click();
+	document.getElementById('mailReceive-tab').click();
+	receiveMailDetail(mailNo);
+}
+
+function myTaskChart(sessionId){
+	//내 업무 시작
+	$.ajax({
+		url     : "/app/myWork/getMyTaskChartByUserId", 
+		type    : "GET",
+		data    : {
+			"userId" : sessionId
+		},
+		dataType: "json",
+		success : function(data){
+			var dataMsg = "<canvas id='myTaskChartDashboard'></canvas>";
+        	$("#canvasBox").empty();
+        	$("#canvasBox").append(dataMsg);
+			
+			var data_doughnut = {
+				labels: ['예정', '진행', '지연', '완료'],
+				datasets: [{
+					data: [data.b201, data.b202, data.b203, data.b204],
+					backgroundColor: ['#6c757d', '#007bff', '#ffc107', '#28a745'],
+					hoverOffset: 4,
+					options: {
+						legend: {position : 'right'}
+					}
+				}]
+			};
+			var myTaskChartData = {
+				type: 'doughnut',
+				data: data_doughnut
+			};
+			
+			var myTaskChart = new Chart(
+				document.getElementById('myTaskChartDashboard'),
+				myTaskChartData
+			);
+        },
+        error   : function(error){
+			/*alert(error.status);*/
+        	
+		}
+    });
+	//내 업무 끝
 }

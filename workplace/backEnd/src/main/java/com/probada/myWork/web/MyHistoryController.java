@@ -19,6 +19,38 @@ public class MyHistoryController {
 	@Autowired
 	private HistoryService historyService;
 	
+	@RequestMapping("/getProjHistory")
+	@ResponseBody
+	public ResponseEntity<List<HistoryVO>> projHistoryToJSON(String projNo) throws Exception {
+		ResponseEntity<List<HistoryVO>> entity = null;
+		List<HistoryVO> historyList = null;
+		
+		try {
+			historyList = historyService.getProjHistoryList(projNo);
+			entity = new ResponseEntity<List<HistoryVO>>(historyList, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<HistoryVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+	
+	@RequestMapping("/getProjHistoryDistSort")
+	@ResponseBody
+	public ResponseEntity<List<HistoryVO>> projHistoryDistSortToJSON(String projNo) throws Exception {
+		ResponseEntity<List<HistoryVO>> entity = null;
+		List<HistoryVO> myHistoryDistSort = null;
+		
+		try {
+			myHistoryDistSort = historyService.getProjHistoryDistSort(projNo);
+			entity = new ResponseEntity<List<HistoryVO>>(myHistoryDistSort, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<HistoryVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+	
 	@RequestMapping("/getHistory")
 	@ResponseBody
 	public ResponseEntity<List<HistoryVO>> historyToJSON(String userId) throws Exception {

@@ -18,7 +18,7 @@ public interface CollaboService {
 	public List<CollaboVO> getCollaboSubProj(String cprojNo) throws SQLException;
 	
 	public CollaboVO getCollaboByCprojNo(String cprojNo) throws SQLException;
-	
+
 	public int getCollaboCount(String userId)throws SQLException;
 	
 	// 프로젝트 상세에서 사용되는 유저리스트
@@ -39,6 +39,8 @@ public interface CollaboService {
 	public void sendInviteCollaboMail(CollaboCommand cmd) throws SQLException;
 	
 	public String getCprojectNameByCprojNo(String cprojNo) throws SQLException;
+	
+	public List<CollaboVO> getCprojectNameByProjNo(String projNo)throws SQLException;
 	
 	
 }

@@ -23,7 +23,8 @@ const projDataSource = new kendo.data.DataSource({
             	  tagNo: {from:"tagNo"}
               }
           }
-      }
+      },
+      sort: { field: "updatedate", dir: "desc" }
 });
 
 // 태스크 데이터리소스
@@ -102,6 +103,7 @@ const projList = $("#project-list").kendoGrid({
 			template: $("#projectCardTemplate").html(), field:"odd"
 		},
 	],
+	height:1100,
 	dataSource: projDataSource
 });
 

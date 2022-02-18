@@ -21,7 +21,11 @@ public interface ProjectService {
 
 	public int getProjectCountInProjByUserId(String userId) throws SQLException;
 
+	public int getCountDeletedUserByUserId(ProjectVO projectVO) throws SQLException;
+
 	public void registProjectUserRelation(ProjectVO projectVO) throws SQLException;
+
+	public void modifyProjectUserRelationToRejoin(ProjectVO projectVO) throws SQLException;
 
 	public void removeProjectUserRelation(ProjectVO projectVO) throws SQLException;
 

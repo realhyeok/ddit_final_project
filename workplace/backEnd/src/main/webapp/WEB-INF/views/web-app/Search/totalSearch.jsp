@@ -71,11 +71,11 @@
 							      <div class="card-body project-list">
 							         <div class="user-block mt-3 mb-3">
 				                      <h2>
-				                        <a href="/app/project/main?projNo=${proj.projNo}" class="project-list-a">&nbsp;&nbsp;${proj.title }</a> <span class="badge badge-success float-right">${proj.status }</span>
+				                        <div class="projSearchTitle"><a href="/app/project/main?projNo=${proj.projNo}" class="project-list-a searchProjectTitle2">&nbsp;&nbsp;${proj.title }</a></div> <span class="badge badge-success float-right">${proj.status }</span>
 				                      </h2>
 				                    </div>
 				                    <!-- /.user-block -->
-				                    <div class="col-sm-7" style="height: 100px;"><p class="searchIntro">${proj.intro }</p></div> 
+				                    <div class="col-sm-7" style="height: 100px;"><p class="searchIntro"><c:out  value='${proj.intro.replaceAll("\\\<.*?\\\>","")}' /></p></div> 
 				                    <div class="col-sm-5 text-right">
 				                      
 				                        <span style="background:rgb(239,239,239); width:150px;">기간 : ${proj.startdate.substring(0,10) }~${proj.enddate.substring(0,10) }</span>
@@ -140,11 +140,11 @@
 							      <div class="card-body project-list">
 							         <div class="user-block mt-3 mb-3">
 				                   		<h2>
-				                        <a href="/app/project/main?projNo=${proj.projNo}" class="project-list-a">&nbsp;&nbsp;${proj.title }</a> <span class="badge badge-success float-right">${proj.status }</span>
+				                        <div class="projSearchTitle"><a href="/app/project/main?projNo=${proj.projNo}" class="project-list-a">&nbsp;&nbsp;${proj.title }</a></div> <span class="badge badge-success float-right">${proj.status }</span>
 				                      </h2>
 				                    </div>
 				                    <!-- /.user-block -->
-				                    <div class="col-sm-7" style="height: 100px;"><p class="searchIntro"><c:out value='${proj.intro.replaceAll("\\\<.*?\\\>","")}' /></p></div>
+				                    <div class="col-sm-7" style="height: 100px;"><p class="searchIntro"><c:out  value='${proj.intro.replaceAll("\\\<.*?\\\>","")}' /></p></div>
 
 
 				                    <div class="col-sm-5 text-right">
@@ -443,6 +443,13 @@ function changeTagNo(tagName){
 window.addEventListener('load', function(){
 	
 	
+	
+	var totalSearchInput = document.getElementById('totalSearchInput');
+	totalSearchInput.value = '${resultData}';
+	
+	
+	
+	
 		var searchBaseUrlSeok="/search/"
 			
           var nickNameDataSource = new kendo.data.DataSource({
@@ -496,7 +503,7 @@ window.addEventListener('load', function(){
                   
               },
               batch: true,
-              pageSize: 2,
+              pageSize: 5,
               schema: {
                   model: {
                       id: "projNo",
@@ -526,7 +533,11 @@ window.addEventListener('load', function(){
      				return "<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일치하는 닉네임이 존재하지 않습니다</h2>";
      			}
      		},
-             
+     		messages: {
+                commands: {
+                    search: "검색"
+                }
+            }, 
      		toolbar: ["search"],
             search: {
                 fields: [
@@ -577,7 +588,11 @@ window.addEventListener('load', function(){
       			}
       		},
              
-      		
+      		messages: {
+                commands: {
+                    search: "검색"
+                }
+            },
       		toolbar: ["search"],
             search: {
                 fields: [
@@ -600,7 +615,7 @@ window.addEventListener('load', function(){
             	 {
 	                 field: "projNo",
 	                 title: "프로젝트 이름",
-	                 template: "#if (plIdSec !=null) {# <span  class='badge badge-success'>콜라보</span> <span class='searchProjName'  style='cursor : pointer;' onclick=selectSearchColProject('#=projNo#')> #: title #</span>  #} else {# <span  class='badge badge-success'>프로젝트</span>  <span class='searchProjName'  style='cursor : pointer;' onclick=selectSearchProject('#= projNo #')> #: title #</span> #}#",
+	                 template: "#if (plIdSec !=null) {# <div class='projNameSearchDiv'><span  class='badge badge-success'>콜라보</span> <span class='searchProjName'  style='cursor : pointer;' onclick=selectSearchColProject('#=projNo#')> &nbsp;&nbsp;#: title #</span></div>  #} else {# <div class='projNameSearchDiv'><span  class='badge badge-success'>프로젝트</span>  <span class='searchProjName'  style='cursor : pointer;' onclick=selectSearchProject('#= projNo #')> #: title #</span></div> #}#",
 	                 width: 140,
 	                 encoded: false
 	             },
@@ -608,8 +623,8 @@ window.addEventListener('load', function(){
 	             {
 	                 field: "plId",
 	                 title: "담당자",						
-	                 template:  "#if (plIdSec ==null) {# <span class='projectPLId spanPL' style='cursor : pointer;' onclick=selectSearchNickName('#=plId#')> #: plId #</span><p class='projectPLId'>없음(안올라가게)</p> #} else {# <span class='projectPLId spanPL' style='cursor : pointer;' onclick=selectSearchNickName('#=plId#')> #: plId # </span><p style='cursor : pointer;' class='projectPLId' onclick=selectSearchNickName('#=plIdSec#')>#=plIdSec#</p> #}#",
-	                 width: 90,
+	                 template:  "#if (plIdSec ==null) {#<div class='projectPLIdDiv'> <span class='projectPLId spanPL' style='cursor : pointer;' onclick=selectSearchNickName('#=plId#')> #: plId #</span></div> #} else {# <div class='projectPLIdDiv'><span class='projectPLId spanPL' style='cursor : pointer;' onclick=selectSearchNickName('#=plId#')> #: plId # </span><span style='cursor : pointer;' class='projectPLId' onclick=selectSearchNickName('#=plIdSec#')>,#=plIdSec#</span></div> #}#",
+	                 width: 120,
 	                 encoded: false
 	             },
 	             
@@ -617,7 +632,7 @@ window.addEventListener('load', function(){
 	             {
 	                 field: "status",
 	                 title: "진행상태",
-	                 width: 65,
+	                 width: 60,
 	                 encoded: false
 	             }
 	             

@@ -54,10 +54,7 @@
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/asserts/css/project/kendoGrid.css"/>
 		<!--  search -->
 		<link href="<%=request.getContextPath()%>/resources/asserts/css/search/search.css" rel="stylesheet">
-		
-		
-		
-		
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/seok/beautialert.js"/>
 	</head>
 	<body>
 	</body>

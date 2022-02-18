@@ -28,7 +28,7 @@ public interface CollaboDAO {
 	public int collaboCount(String userId)throws SQLException;
 	
 	public CollaboVO selectCollaboByCprojNo(String cprojNo) throws SQLException;
-	
+
 	public void insertCollabo(CollaboVO collaboVO)throws SQLException;
 	
 	public void updateCollaboDetail(CollaboVO collaboVO) throws SQLException;
@@ -45,5 +45,8 @@ public interface CollaboDAO {
 	public int selectCollaboMailSequenceNextValue()throws SQLException;
 	
 	public String selectCprojectNameByCprojNo(String cprojNo) throws SQLException;
+	
+	//칼럼이 여러개니까 List로 받는다.
+	public List<CollaboVO> selectCprojectNameByProjNo(String projNo)throws SQLException;
 
 }

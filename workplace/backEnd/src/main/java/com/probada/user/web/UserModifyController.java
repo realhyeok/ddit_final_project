@@ -145,6 +145,18 @@ public class UserModifyController {
 		return getPicture(picture);
 	}
 	
+	@RequestMapping(value="/getPictureByNickname", produces="text/plain;charset=utf-8")
+	public ResponseEntity<byte[]> getPictureByNickname(String nickname) throws IOException{
+		String picture = null;
+		
+		try {
+			picture = userService.getUserByNickname(nickname).getPicture();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return getPicture(picture);
+	}
+	
 	
 	@RequestMapping(value="/modify", method= RequestMethod.POST)
 	public ResponseEntity<String> modify(UserVO user, HttpSession session) throws Exception{

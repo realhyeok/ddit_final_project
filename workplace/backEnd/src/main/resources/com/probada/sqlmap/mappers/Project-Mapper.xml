@@ -109,6 +109,19 @@
 			IS_DELETED = 0
 	</select>
 
+	<select id="countDeletedUserByUserId" resultType="int" parameterType="com.probada.project.vo.ProjectVO">
+		SELECT
+			COUNT(*)
+		FROM
+			USER_PROJECT
+		WHERE
+			PROJ_NO = #{projNo}
+		AND
+			USER_ID = #{userId}
+		AND
+			IS_DELETED = 1
+	</select>
+
 	<select id="updateProjectNotice" parameterType="com.probada.project.vo.ProjectVO">
 		UPDATE
 			PROJECT
@@ -135,6 +148,17 @@
 		VALUES
 			(#{userId},#{projNo},#{role})
 	</insert>
+
+	<update id="updateProjectUserRelationToRejoin" parameterType="com.probada.project.vo.ProjectVO">
+		UPDATE
+			USER_PROJECT
+		SET
+			IS_DELETED = '0'
+		WHERE
+			USER_ID = #{userId}
+		AND
+			PROJ_NO = #{projNo}
+	</update>
 
 	<delete id="deleteProjectUserRelation" parameterType="com.probada.project.vo.ProjectVO">
 		UPDATE

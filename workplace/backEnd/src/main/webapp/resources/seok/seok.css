@@ -54,32 +54,8 @@
   }
 
 
-.projectPLId{
-	
-	
-      display: block;
-	  overflow: hidden;
-	  text-overflow: ellipsis;
-	  white-space: nowrap;
-	  width: 80px;
-	 
 
-	
-}
-  
-  
-  
-  
-  .spanPL{
-  
-  	margin-top: 20px;
-  
-  
-  
-  
-  }
-  
-  
+
   
   
   
@@ -267,21 +243,67 @@
 
 
 }
-
-
-.searchProjName{
-
- 		display: -webkit-box;
-	    max-width: 160px;
+.projNameSearchDiv{
+	
+		display: -webkit-box;
+	    max-width: 180px;
 	    -webkit-line-clamp: 1;
 	    -webkit-box-orient: vertical;
 	    overflow: hidden;
+	
+	
+	
+}
 
+.searchProjName{
+	
+ 		/* display: -webkit-box;
+	    max-width: 150px;
+	    -webkit-line-clamp: 1;
+	    -webkit-box-orient: vertical;
+	    overflow: hidden; */
+	
+	display: inline;
 
 
 }
 
            
-    
+.projectPLIdDiv{
+	
+	 overflow: hidden;
+	  text-overflow: ellipsis;
+	  white-space: nowrap;
+	  width: 120px;
+	 
+	
+	
+}
+
+
+.projectPLId{
+	
+	/* 	display: inherit;
+      display: block;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  white-space: nowrap;
+	  width: 80px;
+	 
+ */
+	
+}
+  
+.searchProjectTitle2{
+		
+		width:100px;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+}
+
+
+  
+      
     
     

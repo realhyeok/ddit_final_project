@@ -24,8 +24,44 @@ public class ProjectTagDAOImpl implements ProjectTagDAO {
 	}
 
 	@Override
-	public List<ProjectTagVO> selectProjectListByTagNo(String tagNo) {
+	public List<ProjectTagVO> selectProjectListByTagNo(String tagNo) throws SQLException{
 		return sqlSession.selectList("ProjectTag-Mapper.selectProjectListByTagNo", tagNo);
+	}
+
+	@Override
+	public void insertProjectTagByProjNo(ProjectTagVO projectTagVO) throws SQLException {
+		sqlSession.update("ProjectTag-Mapper.insertProjectTagByProjNo",projectTagVO);
+
+	}
+
+	@Override
+	public void insertProjectTagRelation(ProjectTagVO projectTagVO) throws SQLException {
+		sqlSession.update("ProjectTag-Mapper.insertProjectTagRelation",projectTagVO);
+
+	}
+
+	@Override
+	public int countProjectTagByTagName(ProjectTagVO projectTagVO) throws SQLException {
+
+		int count = sqlSession.selectOne("ProjectTag-Mapper.countProjectTagByTagName",projectTagVO);
+
+		return count;
+	}
+
+	@Override
+	public int selectProjTagSeqNext() throws SQLException {
+
+		int seq = sqlSession.selectOne("ProjectTag-Mapper.selectProjTagSeqNext");
+
+		return seq;
+	}
+
+	@Override
+	public String selectTagNoByTagName(ProjectTagVO projectTagVO) throws SQLException {
+
+		String tagNo = sqlSession.selectOne("ProjectTag-Mapper.selectTagNoByTagName",projectTagVO);
+
+		return tagNo;
 	}
 
 

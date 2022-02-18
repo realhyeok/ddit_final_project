@@ -38,7 +38,6 @@ public class CollaboVO {
 	private String projNo;
 	private String role = "";
 	
-	
 	public String getNotice() {
 		return notice;
 	}

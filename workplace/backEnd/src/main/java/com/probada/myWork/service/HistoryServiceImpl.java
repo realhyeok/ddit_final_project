@@ -15,6 +15,20 @@ public class HistoryServiceImpl implements HistoryService {
 		this.historyDAO = historyDAO;
 	}
 	
+	//프로젝트 히스토리 리스트 출력
+	@Override
+	public List<HistoryVO> getProjHistoryList(String projNo) throws SQLException {
+		List<HistoryVO> historyList = historyDAO.selectProjHistoryList(projNo);
+		return historyList;
+	}
+	
+	//프로젝트 히스토리 리스트 구분별 정렬
+	@Override
+	public List<HistoryVO> getProjHistoryDistSort(String projNo) throws SQLException {
+		List<HistoryVO> historyDistSort = historyDAO.selectProjHistoryDistSort(projNo);
+		return historyDistSort;
+	}
+	
 	//히스토리 리스트 출력
 	@Override
 	public List<HistoryVO> getHistoryList(String userId) throws SQLException {

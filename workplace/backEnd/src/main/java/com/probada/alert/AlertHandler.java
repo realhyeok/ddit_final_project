@@ -66,20 +66,11 @@ public class AlertHandler extends TextWebSocketHandler {
 					WebSocketSession receiverSession = userSessionsMap.get(receiverId);
 					
 //					채팅을 보내는 경우
-					if(serderWhere.equals("채팅") && receiverSession != null) {
+					if((serderWhere.equals("채팅") 
+							|| serderWhere.equals("메일") 
+							|| serderWhere.equals("프로젝트")
+							|| serderWhere.equals("콜라보")) && receiverSession != null) {
 						
-						TextMessage tmpMsg = new TextMessage(
-								serderNickName 
-								+ "," + serderWhere 
-								+ "," + senderTarget
-								+ "," + senderWhatToDo 
-								+ "," + senderProjNo
-								+ "," + getNickname(receiverSession));
-						
-						receiverSession.sendMessage(tmpMsg);
-						
-					}else if(serderWhere.equals("메일") && receiverSession != null) {
-//						메일을 보내는 경우
 						TextMessage tmpMsg = new TextMessage(
 								serderNickName 
 								+ "," + serderWhere 

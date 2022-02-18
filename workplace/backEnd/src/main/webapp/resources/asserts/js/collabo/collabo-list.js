@@ -34,8 +34,10 @@ const cprojDataSource = new kendo.data.DataSource({
 const cprojList = $("#collabo-list").kendoGrid({
 	pageable:true,
 	toolbar: [
-		{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"collaboRegistTypeTemplate\");'>콜라보 제안</a>" }
-		,{ template: "<div class='k-spacer'>&nbsp;</div>"},"search","pdf"
+		//{ template: "<a class='k-button' href='createCollabo' data-toggle='modal' onclick='createCollabo()'>콜라보 제안</a>" }
+		{ template: "<a class='k-button' href=''  data-toggle='modal' data-target='\\#createCollabo' onclick='createCollabo()'>콜라보 제안</a>" }
+		//{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"collaboRegistTypeTemplate\");'>콜라보 제안</a>" }
+		,{ template: "<div class='k-spacer'>&nbsp;</div>"},"search",
 	],
     columns: [
     	{ field: "title", hidden:true},

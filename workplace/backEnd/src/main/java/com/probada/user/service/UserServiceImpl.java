@@ -56,10 +56,10 @@ public class UserServiceImpl implements UserService {
 		try {
 			sendMail = new MailHandler(mailSender);
 			sendMail.setSubject("[probada] 회원가입 인증메일");
-			sendMail.setText(new StringBuffer().append("<h1>test 가입 메일인증 입니다</h1>")
-					.append("<a href='http://localhost/emailConfirm?userId=").append(user.getUserId())
-//					.append("<a href='http://192.168.143.7/emailConfirm?userId=").append(user.getUserId())
-					.append("' target='_blenk'>가입 완료를 위해 이메일 이곳을 눌러주세요</a>").toString());
+			sendMail.setText(new StringBuffer().append("<h1>probada 가입 메일인증 입니다.</h1>")
+//					.append("<a href='http://localhost/emailConfirm?userId=").append(user.getUserId())
+					.append("<a href='http://192.168.143.7/emailConfirm?userId=").append(user.getUserId())
+					.append("' target='_blenk'>가입 완료를 위해 이메일 이곳을 눌러주세요.</a>").toString());
 //			.append("&key=").append(key)
 			sendMail.setFrom("probadahelp@gmail.com", "probada");
 			sendMail.setTo(user.getUserId());
@@ -202,6 +202,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserVO> getMemberAchievementList(String projNo) throws SQLException {
 		return userDAO.getMemberAchievementList(projNo);
+	}
+
+	@Override
+	public UserVO getUserByNickname(String nickname) throws SQLException {
+		return userDAO.getUserByNickname(nickname);
 	}
 
 	

@@ -13,7 +13,7 @@ public class MilestoneServiceImpl implements MilestoneService {
 	public void setMilestoneDAO(MilestoneDAO milestoneDAO) {
 		this.milestoneDAO = milestoneDAO;
 	}
-	
+
 	@Override
 	public List<MilestoneVO> getMilestoneListByUserId(String userId) throws SQLException {
 		List<MilestoneVO> milestoneList = milestoneDAO.selectMilestoneListByUserId(userId);
@@ -56,9 +56,9 @@ public class MilestoneServiceImpl implements MilestoneService {
 
 
 	@Override
-	public List<IssueVO> getWholeIssueList() throws SQLException {
+	public List<IssueVO> getWholeIssueByProjNo(String projNo) throws SQLException {
 
-		List<IssueVO> wholeIssueList = milestoneDAO.selectWholeIssueList();
+		List<IssueVO> wholeIssueList = milestoneDAO.selectWholeIssueByProjNo(projNo);
 
 		return wholeIssueList;
 	}
@@ -90,7 +90,7 @@ public class MilestoneServiceImpl implements MilestoneService {
 		milestoneDAO.insertMilestoneDetail(milestoneVO);
 
 	}
-	
+
 	@Override
 	public void removeMilestone(String mileNo) throws SQLException {
 		milestoneDAO.removeMilestone(mileNo);

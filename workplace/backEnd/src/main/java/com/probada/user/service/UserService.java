@@ -87,4 +87,7 @@ public interface UserService {
 	// 프로젝트 넘버를 참조하여 프로젝트 대시보드에 사용할 진척도 그래프 리스트를 리턴한다.
 	public List<UserVO> getMemberAchievementList(String projNo) throws SQLException;
 
+	// 닉네임을 조회하여 해당 유저vo를 가져온다.
+	public UserVO getUserByNickname(String nickname) throws SQLException;
+
 }

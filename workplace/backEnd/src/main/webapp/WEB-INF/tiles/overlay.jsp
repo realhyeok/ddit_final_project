@@ -288,7 +288,7 @@ font-family: 'Jua', sans-serif;
 									</div>
 								</form>
 							</div>
-						</div>	
+						</div>
 					</div>
 				</div>
 			</div>
@@ -322,7 +322,7 @@ font-family: 'Jua', sans-serif;
 										</div>
 
                                         <div id="roomSelect">
-                    					
+
    									    <div id="chatListSeok"></div>
                                             
                                     
@@ -476,8 +476,8 @@ font-family: 'Jua', sans-serif;
 
 </script>
 
-<!-- 스푼 오버레이!!!!!!!!!!!!!!! -->
-<script type="text/x-handlebars-template" id="anyWhereSpoonTemplate">
+<!-- 스푼 업무 오버레이!!!!!!!!!!!!!!! -->
+<script type="text/x-handlebars-template" id="anyWhereSpoonTaskTemplate">
 	<div class="row" id="fadeInContent">
 		<div class="col-md-12">
 			<div class="x_panel">
@@ -495,61 +495,91 @@ font-family: 'Jua', sans-serif;
                   <div class="form-group row ">
                     <label class="control-label col-md-3 col-sm-3 ">프로젝트 명</label>
                     <div class="col-md-9 col-sm-9 ">
-                      <input type="text" id="title" name="projTitle" class="form-control" readonly="readonly" value="{{projTitle}}">
-					  <input type="hidden" name="taskNo" value="{{taskNo}}">
+                      <input type="text" id="title" name="title" class="form-control" readonly="readonly" value="{{title}}">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="control-label col-md-3 col-sm-3 ">업무 명</label>
                     <div class="col-md-9 col-sm-9 ">
-                      <select class="form-control" id="title" name="title">
-                        {{#each taskVOList}}
-              				<option value="{{taskNo}}">{{title}}</option>
-						{{/each}}
-                      </select>
+						<select id="selectTaskTitle" name="taskTitle" multiple="multiple" data-placeholder="추가하실 업무를 선택해주세요">
+							{{#each taskList}}
+              					<option value="{{taskNo}}">{{title}}</option>
+							{{/each}}
+        				</select>
                     </div>
                   </div>
-                <div class="form-group row">
-                  <label class="control-label col-md-3 col-sm-3 ">선택 항목</label>
-                  <div class="col-md-9 col-sm-9 ">
-                    <ul style="list-style: none; border: 1px solid #ced4da; overflow:auto; height:100px; padding-inline-start : 10px">
-                      <li>1</li>
-                      <li>2</li>
-                      <li>3</li>
-                      <li>3</li>
-                      <li>3</li>
-                      <li>3</li>
-                      <li>3</li>
-                    </ul>
-                  </div>
-                </div>
-               	
-                  <div class="form-group row">
-                    <label class="control-label col-md-3 col-sm-3 ">담당자</label>
-                    <div class="col-md-9 col-sm-9 ">
-                      <select class="form-control">
-                        <option>은세주</option>
-                        <option>황혜성</option>
-                        <option>공의진</option>
-                      </select>
-                    </div>
-                  </div>
-
+				  <hr>
                   <h6 class="collaboSpButton">Spoon 할 콜라보 프로젝트를 선택하세요.</h6>
                   <div class="form-group row">
                     <label class="control-label col-md-3 col-sm-3 ">콜라보</label>
                     <div class="col-md-9 col-sm-9 ">
                       <select class="form-control">
-                        <option >김진혁 앙골라 국제 결혼 프로젝트</option>
-                        <option>김진혁 르완다 국제 결혼 프로젝트</option>
-                        <option>김진혁 아프리카 장가보내기 프로젝트</option>
+                        {{#each cprojTitleList}}
+              				<option value="{{cprojNo}}">{{title}}</option>
+						{{/each}}
                       </select>
                     </div>
                   </div>
                 </form>
 				
 			 	<div class="modal-footer">
-          			<button type="submit" class="btn btn-primary">확인</button>
+          			<button type="button" class="btn btn-primary" onclick="SpoonTask_go()">확인</button>
+          			<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+        		</div>
+              </div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<!-- 스푼 이슈 오버레이!!!!!!!!!!!!!!! -->
+<script type="text/x-handlebars-template" id="anyWhereSpoonIssueTemplate">
+	<div class="row" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<img src="https://img.icons8.com/ios/20/000000/spoon.png"/> <span class="task-bold task-sm">Spoon</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+				<div class="x_content">
+                <form id="SpoonOverlayForm" method="post" enctype="multipart/form-data" class="form-horizontal form-label-left">
+
+                  <div class="form-group row ">
+                    <label class="control-label col-md-3 col-sm-3 ">프로젝트 명</label>
+                    <div class="col-md-9 col-sm-9 ">
+                      <input type="text" id="title" name="title" class="form-control" readonly="readonly" value="{{title}}">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="control-label col-md-3 col-sm-3 ">이슈 명</label>
+                    <div class="col-md-9 col-sm-9 ">
+						<select id="selectTaskTitle" name="taskTitle" multiple="multiple" data-placeholder="추가하실 이슈를 선택해주세요">
+							{{#each taskList}}
+              					<option value="{{taskNo}}">{{title}}</option>
+							{{/each}}
+        				</select>
+                    </div>
+                  </div>
+				  <hr>
+                  <h6 class="collaboSpButton">Spoon 할 콜라보 프로젝트를 선택하세요.</h6>
+                  <div class="form-group row">
+                    <label class="control-label col-md-3 col-sm-3 ">콜라보</label>
+                    <div class="col-md-9 col-sm-9 ">
+                      <select class="form-control">
+                        {{#each cprojTitleList}}
+              				<option value="{{cprojNo}}">{{title}}</option>
+						{{/each}}
+                      </select>
+                    </div>
+                  </div>
+                </form>
+				
+			 	<div class="modal-footer">
+          			<button type="button" class="btn btn-primary" onclick="">확인</button>
           			<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
         		</div>
               </div>

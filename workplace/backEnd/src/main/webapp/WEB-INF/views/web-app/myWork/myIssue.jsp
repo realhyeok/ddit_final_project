@@ -4,13 +4,13 @@
 <div id="myIssue-content">
 	<div class="k-content d-flex row"  style="height:800px;overflow:hidden;">
 		<div class="mile-content" style="width:30%;overflow:auto;">
-			<div class="x_title">
+			<div class="x_title" style="padding-bottom:16px;border-bottom:1px solid #e0e0e0;">
 				<h2>마일스톤</h2>
 				<div class="clearfix">
 					<a class="k-button float-right" style="background-color:#ebebeb" href="javascript:getOverlayMyMileRegistTemplate('${userVO.userId}');">마일스톤 등록</a>
 				</div>
 			</div>
-			<div class="panel-heading form-inline justify-content-between mb-4">
+			<div class="panel-heading form-inline justify-content-between mb-4" style="margin-right:10px;height:33px;">
 				<div class="form-group">
 					<select id="groupDistIds" class="form-control">
 						<option>전체</option>
@@ -27,7 +27,7 @@
 					</span>
 				</div>
 			</div>      
-			<div id="myMileList"></div>
+			<div id="myMileList" style="margin-right:10px;"></div>
 		</div>
 		<div id="myIssueGrid" style="width:69%;"></div>
 	</div>
@@ -37,7 +37,7 @@
     <div class="milestone" data-bind="click: searchIssue" style="border-left-color: rgb(138,43,226);border-left-width: 2px;">
 		<div class="x_title row justify-content-between">
       		<h4>
-				<span class="d-inline-block text-truncate" style="max-width:220px;color:black;">#:title#</span> 
+				<span class="d-inline-block text-truncate" style="max-width:200px;color:black;">#:title#</span> 
 				<span class="#=status#"></span><span class="internal"></span>
 			</h4>
 			<div class="text-right">
@@ -54,7 +54,7 @@
 </script>
 
 <script>
-	Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+	/* Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 	    switch (operator) {
 	        case '==':
 	            return (v1 == v2) ? options.fn(this) : options.inverse(this);
@@ -79,7 +79,7 @@
 	        default:
 	            return options.inverse(this);
 	    }
-	});
+	}); */
 	
 	function xssPurify(html) {
 	    const extractTextPattern = /(<([^>]+)>)/gi;

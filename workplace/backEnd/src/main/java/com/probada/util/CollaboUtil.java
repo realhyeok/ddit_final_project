@@ -70,6 +70,24 @@ public class CollaboUtil {
 		return title;
 	}
 	
+	/**
+	 * 프로젝트 번호로 상위 콜라보프로젝트 이름 출력
+	 * @param projNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<CollaboVO> getCprojectNameByProjNo(String projNo)throws SQLException{
+		
+		List<CollaboVO> cProjTitle = new ArrayList<CollaboVO>();
+		try {
+			cProjTitle = collaboService.getCprojectNameByProjNo(projNo);
+			LOGGER.debug("[요청받음] /getCprojectNameByProjNo => " + cProjTitle);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return cProjTitle;
+	}
 	
 	/**
 	 * 콜라보 프로젝트 번호로 해당 멤버 조회

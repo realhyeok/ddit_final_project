@@ -111,5 +111,20 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 	}
 
+	@Override
+	public void updateProjectUserRelationToRejoin(ProjectVO projectVO) throws SQLException {
+
+		sqlSession.update("Project-Mapper.updateProjectUserRelationToRejoin",projectVO);
+
+	}
+
+	@Override
+	public int countDeletedUserByUserId(ProjectVO projectVO) throws SQLException {
+
+		int count = sqlSession.selectOne("Project-Mapper.countDeletedUserByUserId",projectVO);
+
+		return count;
+	}
+
 
 }

@@ -12,15 +12,14 @@
 						<div class="project-detail-body mb-3 p-3">
 							<div class="x_title">
 								<h2 class="title">
-									<i class="fa fa-gears fa-lg "></i> <span class="">
+										<i class="fa fa-edit" style="font-size: 1.3em;{{#getRoleCheck 'A303'}}cursor:pointer;"
+											onclick="getOverlayModifyTemplate('projModifyFormTemplate','/app/project/getProjectByProjNo','')"
+										{{/getRoleCheck}}"
+										 ></i>
+									 <span class="">
 										{{title}} </span>
 								</h2>
 								<div class="clearfix">
-										{{#getRoleCheck 'A303'}}
-									<div class="clearfix header-title justify-content-end">
-										<i class="fa fa-edit fa-2x" onclick="getOverlayModifyTemplate('projModifyFormTemplate','/app/project/getProjectByProjNo','')"></i>
-									</div>
-										{{/getRoleCheck}}
 								</div>
 							</div>
 							<div class="x_content mb-3" >
@@ -80,16 +79,10 @@
 						<div class="project-detail-body project-notice p-3">
 							<div class="x_title">
 								<h2 class="title">
-									<i class="fa fa-exclamation-circle"></i> 공지사항
+										<i class="fa fa-edit" style="font-size: 1.3em;{{#ifCond notice '!=' NULL}}{{#getRoleCheck 'A303'}}cursor:pointer;" onclick="getOverlayModifyTemplate('noticeModifyFormTemplate','/app/project/getProjectByProjNo','')"{{/getRoleCheck}}{{/ifCond}}"></i>
+									공지사항
 								</h2>
 								<div class="clearfix">
-							{{#ifCond notice '!=' NULL}}
-									<div class="clearfix header-title justify-content-end">
-										{{#getRoleCheck 'A303'}}
-										<i class="fa fa-edit fa-2x" onclick="getOverlayModifyTemplate('noticeModifyFormTemplate','/app/project/getProjectByProjNo','')"></i>
-										{{/getRoleCheck}}
-									</div>
-							{{/ifCond}}
 								</div>
 							</div>
 							{{#ifCond notice '!=' NULL}}
@@ -167,13 +160,13 @@
 				<div class="project-detail-body p-3">
 					<div class="x_title header-title">
 						<h2 class="title">
-							<i class="fa fa-users"></i> 구성원
+								<i class="fa fa-user-plus" style="font-size: 1.3em;{{#getRoleCheck 'A303'}}cursor:pointer;"
+									onclick="getOverlayinviteMemberForm('inviteMemberForm')"
+									{{/getRoleCheck}}"
+								></i>
+							 구성원
 						</h2>
 						<div class="clearfix header-title">
-							{{#getRoleCheck 'A303'}}
-							<a href="javascript:getOverlayinviteMemberForm('inviteMemberForm')" >
-								<i class="fa fa-user-plus fa-2x"></i></a>
-							{{/getRoleCheck}}
 						</div>
 					</div>
 					<ul class="list-inline" style="display: inline-flex">
@@ -185,10 +178,10 @@
 									<a href="javascript:;" class="project-member " aria-haspopup="true"
 									id="navbarDropdown" data-toggle="dropdown"	aria-expanded="false">
 										{{#ifCond picture "==" NULL}}
-										<img src="/resources/asserts/images/img.jpg" class="img-circle" alt="Avatar" />
+										<img src="/user/getPictureById?userId={{userId}}" class="img-circle" alt="Avatar" />
 										{{/ifCond}}
 										{{#ifCond picture "!=" NULL}}
-										<img src="/resources/asserts/images/{{picture}}.jpg" class="img-circle" alt="Avatar" />
+										<img src="/user/getPictureById?userId={{userId}}" class="img-circle" alt="Avatar" />
 										{{/ifCond}}
 									</a>
 									<div class="dropdown-menu dropdown-membermenu pull-right" aria-labelledby="navbarDropdown">
@@ -200,10 +193,10 @@
 														<li></li>
 														<li class="d-flex justify-content-center">
 															{{#ifCond picture "==" NULL}}
-															<img src="/resources/asserts/images/img.jpg" alt="..." class="img-circle profile_img"></li>
+															<img src="/user/getPictureById?userId={{userId}}" alt="" class="img-circle profile_img"></li>
 															{{/ifCond}}
 															{{#ifCond picture "!=" NULL}}
-															<img src="/resources/asserts/images/{{picture}}.jpg" alt="..." class="img-circle profile_img"></li>
+															<img src="/user/getPictureById?userId={{userId}}" alt="" class="img-circle profile_img"></li>
 															{{/ifCond}}
 														<li></li>
 													</ul>
@@ -222,7 +215,7 @@
 													</ul>
 												</div>
 												<div class="p-1"
-													style="height: 100px; background-color: #e5e5e5;">
+													style="height: 100px; background-color: #e5e5e5;overflow: hidden;text-overflow: ellipsis;">
 													<p class="mt-2 mb-2">{{{intro}}}</p>
 												</div>
 												<div class="text-center mt-3">

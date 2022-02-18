@@ -26,13 +26,13 @@
 			,WRITE_TIME
 			,CONTENT
 		FROM ALERT
-		WHERE NICKNAME = #{nickname}
+		WHERE USER_ID = #{nickname}
 	</select>
 	
 	<select id="getAlertCount" parameterType="String" resultType="int">
 		SELECT COUNT(*)
 		FROM ALERT
-		WHERE NICKNAME = #{NICKNAME}
+		WHERE USER_ID = #{NICKNAME}
 	</select>
 	
 </mapper>

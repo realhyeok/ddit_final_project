@@ -9,21 +9,6 @@
 
 <!------ Include the above in your HEAD tag ---------->
 
-
-  
- 
-
-
-
-
-
-
-
-
-
-
-
-
 <link rel="icon" href="<%=request.getContextPath()%>/resources/asserts/images/tab-img.jpg">
 
 		<!-- 추가내용 -->
@@ -399,13 +384,12 @@ height: 8%;
 <br>
 
 
-	<h3 class=" text-center">${realChat.title}</h3>
-	<button class="btn btn-round btn-danger float-right" onclick="closeTabClick()">나가기</button>
-
-
+	<h3 class="text-center">${realChat.title}<button class="btn btn-round btn-danger float-right" style="display: inline-block;" onclick="closeTabClick()">나가기</button></h3>
+	
 <br>
+
 <div class="messaging">
-<br>
+
       <div class="inbox_msg">
       
 		
@@ -432,12 +416,12 @@ height: 8%;
 		              <div class="chat_list active_chat">
 			              <div class="chat_people">
 			                <div class="chat_img"> <img src="/user/getPicture.do?picture=${chat.picture}" alt="sunil" style="margin:5px 10px 5px 3px; height:50px; width:50px; border-radius:100%;"> </div>
-			                <div class="chat_ib">
+			                <div class="chat_ib" style="margin-top: 9px;">
 			                
 			               
 			                 
 			               
-			                  <h5>${chat.nickname}<span class="chat_date" id="${chat.nickname}onoff">오프라인</span></h5>
+			                  <h5>${chat.nickname} <span class="chat_date" id="${chat.nickname}onoff">오프라인</span> </h5>
 							
 			                 
 			                
@@ -533,9 +517,17 @@ function closeTabClick() {
          //소켓 메시지 보내기
          //sock.onmessage = onMessage;
 		
+         
+        sock.onclose = function () {
+            alert('연결을 종료합니다.');
+           
+        };
+         
+         
+         
+	    
 		 window.close(); 
 
-	     sock.onclose = onClose;
 	
 
 }
@@ -598,17 +590,12 @@ window.addEventListener('load', function(){
 	    }
 	});	
 	 
-	
-
-	
-
-
 		
 	    sock = new SockJS("/chat");
 	    //채팅방 입장과 동시에 실행
 	    sock.onopen = function (){
-	       
 	    	
+	       
 	        const data = {
                     "realRoom":"${roomNo}",
                     "userId":"${userVO.userId}",
@@ -619,17 +606,32 @@ window.addEventListener('load', function(){
             sock.send(jsonData);
             
             //소켓 메시지 보내기
-            sock.onmessage = onMessage;
-	   
-	    
+             sock.onmessage = onMessage; 
+    
 	    }
-	    
-
-	
-	
 
   	function onMessage(evt) {
             
+  		
+  		if(evt.data.substring(0,1)=='['){
+  			
+  			let inUser = evt.data.split(",");
+  			
+  			for(var i=0; i<inUser.length;i++){
+  				
+  				
+  				let firstUser = inUser[i].replace(/\"/gi, "").replace("[","").replace("]","");
+  				
+  				document.getElementById(firstUser+"onoff").innerText = "온라인";
+  				
+  			}
+  			
+  			
+  			console.log(evt);
+  			
+  		
+  	   }else{
+  		
            let receive = evt.data.split(",");
             
            const data = {
@@ -645,7 +647,7 @@ window.addEventListener('load', function(){
         	   
         	 
         	  var chatUserId = receive[1]+"onoff";
-              document.getElementById(chatUserId).innerText = "오프라인";
+               document.getElementById(chatUserId).innerText = "오프라인"; 
 
               toastr.warning(receive[1]+"님이 퇴장하였습니다.");
         	  
@@ -659,11 +661,11 @@ window.addEventListener('load', function(){
            */
           
          
-           
+           /* 
            var chatUserId = receive[1]+"onoff";
            
            document.getElementById(chatUserId).innerText = "온라인";
-
+ 			*/
            
            
            
@@ -740,6 +742,7 @@ window.addEventListener('load', function(){
               pmessage.appendChild(document.createTextNode(lastMessage));
             	
             } 
+  	   }//else문 끝
             $("#messages-top").scrollTop($("#messages-top")[0].scrollHeight);
             
      }

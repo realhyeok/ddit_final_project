@@ -177,4 +177,9 @@ public class UserDAOImpl implements UserDAO{
 		return sqlSession.selectList("User-Mapper.getMemberAchievementList", projNo);
 	}
 
+	@Override
+	public UserVO getUserByNickname(String nickname) {
+		return sqlSession.selectOne("User-Mapper.getUserByNickname", nickname);
+	}
+
 }

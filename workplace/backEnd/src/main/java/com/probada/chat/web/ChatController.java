@@ -167,11 +167,11 @@ public class ChatController {
 	
 	
 	
-	@RequestMapping("/createRoom.do")
+	@RequestMapping(value="/createRoom.do", produces = "application/text; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> createRoom(String ptitle, String title,String userId,RedirectAttributes rttr,HttpSession session) throws Exception {
 		
-
+		
 		ResponseEntity<String> entity = null;
 		
 		String[] realUserId = userId.split(",");
@@ -446,7 +446,6 @@ public class ChatController {
 	
 	
 }
-		
 	
 	
 	

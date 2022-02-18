@@ -119,9 +119,9 @@ function openChatList(){
 	                 title: "팀원들과 소통해 보아요.",
 	                 template: "<span style='cursor : pointer;' onclick=selectChatRoom('#=realRoom #')> #:title #</span>",
 	                 width: 200,
-	                 encoded: false,
+	                 encoded: false
 	             },
-            	 
+	           
             	 
             	 { 
             		 command: ["edit", "destroy"], 
@@ -130,6 +130,11 @@ function openChatList(){
             	 }
                  
                  ],
+                 noRecords: {
+ 	      			template: function(e) {
+ 	      				return "<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;채팅방이 존재하지 않습니다.</h2>";
+ 	      			}
+ 	      		},
              editable: "inline"
          });
 

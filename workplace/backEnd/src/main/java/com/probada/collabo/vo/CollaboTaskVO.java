@@ -22,6 +22,7 @@ public class CollaboTaskVO {
 	private String startdate;
 	private String enddate;
 	
+	private String projTitle = "";
 	private String cprojTitle = "";
 	private String nickname = "";
 	private List<UserVO> userList = new ArrayList<UserVO>();
@@ -37,6 +38,12 @@ public class CollaboTaskVO {
 				+ ", updatedate=" + updatedate + ", status=" + status + ", docContNo=" + docContNo + ", startdate="
 				+ startdate + ", enddate=" + enddate + ", cprojTitle=" + cprojTitle + ", nickname=" + nickname
 				+ ", userList=" + userList + ", fileList=" + fileList + ", sessionId=" + sessionId + "]";
+	}
+	public String getProjTitle() {
+		return projTitle;
+	}
+	public void setProjTitle(String projTitle) {
+		this.projTitle = projTitle;
 	}
 	public String getSessionId() {
 		return sessionId;

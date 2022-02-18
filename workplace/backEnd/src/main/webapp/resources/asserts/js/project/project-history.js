@@ -1,3 +1,4 @@
+var projNo = getParameterByName("projNo");
 //히스토리 시작
 var projectHistoryTable = $("#projectHistory").kendoGrid({
 	messages: {
@@ -8,7 +9,7 @@ var projectHistoryTable = $("#projectHistory").kendoGrid({
 	dataSource: {
 		type: "json",
 		transport: {
-			read: "/app/myWork/getHistory?userId=realhyuk@ddit.com"
+			read: "/app/myWork/getProjHistory?projNo=" + projNo
 		},
 		pageSize: 10,
 		schema: {
@@ -31,7 +32,6 @@ var projectHistoryTable = $("#projectHistory").kendoGrid({
         pageSizes: [5, 10, 20, 100]
     },
     toolbar: [
-		{ template: "<input type='search' id='projectHistoryProject-category' style='width:150px;vertical-align:middle;'/>"},
 		{ template: "<input type='search' id='projectHistoryDist-category' style='width:150px;vertical-align:middle;'/>"},
     	"search"
 	],
@@ -49,39 +49,11 @@ var projectHistoryTable = $("#projectHistory").kendoGrid({
 
 $("#projectHistory").find("thead").hide();
 
-var projectHistoryProjectDropdown = projectHistoryTable.find("#projectHistoryProject-category").kendoDropDownList({
-	dataSource: {
-		type: "json",
-        transport: {
-        	read: "/app/myWork/getprojectHistoryProjectSort?userId=realhyuk@ddit.com"
-        },
-		schema: {
-			model: {
-				fields: {
-					projNo : { type: "string" }
-				}
-			}
-		}
-	},
-	dataTextField: "projNo",
-	dataValueField: "projNo",
-	autoBind: false,
-	optionLabel: "All",
-	change: function() {
-		var value = this.value();
-		if (value) {
-			projectHistoryTable.data("kendoGrid").dataSource.filter({ field: "projNo", operator: "eq", value: value });
-		} else {
-			projectHistoryTable.data("kendoGrid").dataSource.filter({});
-		}
-	}
-});
-
 var projectHistoryDistDropdown = projectHistoryTable.find("#projectHistoryDist-category").kendoDropDownList({
 	dataSource: {
 		type: "json",
 		transport: {
-			read: "/app/myWork/getprojectHistoryDistSort?userId=realhyuk@ddit.com"
+			read: "/app/myWork/getProjHistoryDistSort?projNo=" + projNo
 		},
 		schema: {
 			model: {
@@ -104,4 +76,5 @@ var projectHistoryDistDropdown = projectHistoryTable.find("#projectHistoryDist-c
 		}
 	}
 });
+
 // 히스토리 끝

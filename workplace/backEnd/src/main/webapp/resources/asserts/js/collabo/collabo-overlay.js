@@ -15,7 +15,7 @@ function prev() {
 	getOverlayTemplate(prevPage);
 }
 
-function checkValidate(FormId, targetName) {
+/*function checkValidate(FormId, targetName) {
 
 		var validateValue = $('#'+FormId+' [name="'+targetName+'"]').val();
 
@@ -82,7 +82,7 @@ const delCookie = function delCookie_by_name(name){
     date.setDate(date.getDate() - 100);
     let Cookie = `${name}=;Expires=${date.toUTCString()}`
     document.cookie = Cookie;
-}
+}*/
 
 //------------------------------------------------------------------------------------------------------
 

@@ -23,7 +23,8 @@
                         <img src="https://img.icons8.com/color/150/000000/teamwork--v1.png"/>
                       </div>
                       <br>
-                      <p class="text-center">콜라보 하고 싶은 다양한 프로젝트 및 유저들을 검색해보세요.</p>
+                      <p class="text-center">콜라보는 다른 프로젝트 팀과 협업 할 수 있는 곳입니다.</p>
+                	  <p class="text-center">다른 팀과 협업 공간을 만들고 함께 일해보세요.</p>
 
                       <style>
                         /* 자동 완성창 덮는 것 */
@@ -64,13 +65,13 @@
                         <!-- search-bar 시작-->
                         <div class="mid_center d-flex justify-content-center">
                           <div class="collabo search-box">
-
-                            <form autocomplete="off" action="/action_page.php">
+							
+                            <!-- <form autocomplete="off" action="/action_page.php">
                               <button class="btn-search">
                                 <i class="fa fa-search"></i>
                               </button>
                               <input type="text" class="input-search collabo" id="myInput" placeholder="프로젝트명 또는 닉네임을 입력해주세요...">
-                            </form>
+                            </form> -->
                           </div>
 
                         </div>
@@ -364,64 +365,6 @@
 
   </div>
   
-  <script>
-/*   
-//나의 프로젝트 셀렉트 함수  
-function createCollabo() {
-	$.ajax({
-		url : "/app/collabo/getProjectTitleCollabo.do",
-		type : "POST",
-		success : function(arg) {
-			console.log("나의 프로젝트 arg => " + arg)
-			let projTitle = "<option value='' disabled selected hidden>프로젝트를 선택해주세요.</option>";
-			
-			for (var i = 0; i < arg.length; i++) {
-				console.log("arg[i] => " + arg[i].title + arg[i].projNo);
-				projTitle += "<option class='projNoIdx' idxNo='"+arg[i].projNo+"' value='"+arg[i].title+"'>"+arg[i].title+"</option>";
-			}
-			document.getElementById('selectOwnProject').innerHTML= projTitle;
-		},
-		error : function(arg) {
-			alert("리스트 출력 에러임" + arg.status + "메세지" + arg.responseText);
-		}
-	})
-};  
-
-//상대방의 프로젝트 셀렉트 함수 
-function selectOtherProj(){
-	if (window.event.keyCode == 13) {
-    	alert("ddddd");
-		let userName = document.getElementById('tags_1').value;
-		document.getElementById("name1").innerHTML = userName;
-		
-				
-		 $.ajax({
-			url : "/app/collabo/getProjectTitleOther.do",
-			type : "POST",
-			data : {"userId" : userName},
-			
-			success : function(arg) {
-				console.log("arg => " + arg)
-				let projTitle = "<option value='' disabled hidden>프로젝트를 선택해주세요.</option>";
-				
-				for (var i = 0; i < arg.length; i++) {
-					console.log("콜라보 Other arg[i] => " + arg[i].title + arg[i].projNo);
-					
-					projTitle += "<option class='projNoIdx' idxNo='"+arg[i].projNo+"' value='"+arg[i].title+"'>"+arg[i].title+"</option>";
-				}
-				document.getElementById('selectOtherProject').innerHTML= projTitle;
-			},
-			error : function(arg) {
-				alert("리스트 출력 에러임" + arg.status + "메세지" + arg.responseText);
-			}
-			
-		})
-    }
-}; */
-
-  </script>
-
-
 </body>
 
 </html>

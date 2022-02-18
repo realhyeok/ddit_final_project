@@ -21,7 +21,7 @@ public class MilestoneDAOImpl implements MilestoneDAO {
 		List<MilestoneVO> milestoneList = sqlSession.selectList("Milestone-Mapper.selectMilestoneListByUserId", userId);
 		return milestoneList;
 	}
-	
+
 	@Override
 	public List<MilestoneVO> selectMilestoneListByProjNo(String projNo) throws SQLException {
 
@@ -54,9 +54,9 @@ public class MilestoneDAOImpl implements MilestoneDAO {
 	}
 
 	@Override
-	public List<IssueVO> selectWholeIssueList() throws SQLException {
+	public List<IssueVO> selectWholeIssueByProjNo(String projNo) throws SQLException {
 
-		List<IssueVO> wholeIssueList = sqlSession.selectList("Milestone-Mapper.selectWholeIssue");
+		List<IssueVO> wholeIssueList = sqlSession.selectList("Milestone-Mapper.selectWholeIssueByProjNo",projNo);
 
 		return wholeIssueList;
 	}

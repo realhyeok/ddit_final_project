@@ -5,10 +5,10 @@ totalSearchFlag = false;
 
 
 
-function pressSearch(date){ 
+function pressSearch(){ 
 	
-	alert("d");
-	if(date.keyCode == 13){
+	
+	if(window.event.keyCode == 13){
 		
 			
 		submitTotal();
@@ -27,15 +27,12 @@ function submitTotal(){
 
 	 var totalSearchInput = document.getElementById('totalSearchInput');
 	
-	 alert(totalSearchInput.value);
+
 	 var resultDate = (totalSearchInput.value);
 	 location.href = "/search/result?resultData="+resultDate;
 	 
 	 
-	 $('#showSearchInput').attr({
-         onclick: "showButton()"
-     
-     });
+	
 	
 	
 	
@@ -43,23 +40,7 @@ function submitTotal(){
 }
 
 
-function showButton(){
-	
-	
-	 var searchSubmitButton = document.getElementById('searchSubmitButton');
-	 var showSearchInput = document.getElementById('showSearchInput');
-	 
-	 
-	 
-	 
-	  $('#showSearchInput').attr({
-          onclick: "submitTotal()"
-      
-      });
-	 
 
-	
-}
 
 
 function totalAutocomplete(inp, arr) {
@@ -107,9 +88,11 @@ function totalAutocomplete(inp, arr) {
          
           inp.value = this.getElementsByTagName("input")[0].value;
         
-           location.href = "/search/result?resultData="+
-           this.getElementsByTagName("input")[0].value;
-
+          alert(inp.value);
+          
+           location.href = "/search/result?resultData="+inp.value;
+           e.stopPropagation();
+           
 
         
           closeAllLists();
@@ -184,7 +167,7 @@ function totalAutocomplete(inp, arr) {
 
  
     document.addEventListener("click", function (e) {
-    document.getElementById("totalSearchInput").value = "";
+    /*document.getElementById("totalSearchInput").value = "";*/
     closeAllLists(e.target);
 
   });

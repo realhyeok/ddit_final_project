@@ -56,13 +56,7 @@
 	    <!-- 채팅 js -->
 	    <script src="<%=request.getContextPath()%>/resources/asserts/js/chat/chatCreate.js"></script>
 	    <script src="<%=request.getContextPath()%>/resources/asserts/js/chat/chatOverlay.js"></script>
-	   
-	 
-	   
-	   
-	   	<script src="<%=request.getContextPath()%>/resources/seok/beautialert.js"></script>
-	   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	   
+	   	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	    <!-- 통합검색 js -->
 	    <script src="<%=request.getContextPath()%>/resources/asserts/js/search/totalSearch.js"></script>
 	    <!-- bootstrap-progressbar -->

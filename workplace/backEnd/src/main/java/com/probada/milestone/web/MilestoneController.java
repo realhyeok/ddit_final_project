@@ -51,7 +51,7 @@ public class MilestoneController {
 		}
 		return entity;
 	}
-	
+
 	@RequestMapping("/getMilestoneListByProjNo")
 	@ResponseBody
 	public ResponseEntity<List<MilestoneVO>> getMilestoneListByProjNo(@RequestParam(defaultValue="") String projNo) throws Exception {
@@ -86,7 +86,7 @@ public class MilestoneController {
 			UserVO userVO = (UserVO) session.getAttribute("userVO");
 			String projTitle = projectUtil.getProjectNameByProjNo(projNo);
 
-			wholeIssueList = milestoneService.getWholeIssueList();
+			wholeIssueList = milestoneService.getWholeIssueByProjNo(projNo);
 
 			hashMap.put("userVO", userVO);
 			hashMap.put("projTitle", projTitle);
@@ -123,7 +123,7 @@ public class MilestoneController {
 			mileVO.setProjTitle(projTitle);
 			mileVO.setIssueList(issueList);
 
-			wholeIssueList = milestoneService.getWholeIssueList();
+			wholeIssueList = milestoneService.getWholeIssueByProjNo(mileVO.getProjNo());
 
 			hashMap.put("mileVO", mileVO);
 			hashMap.put("wholeIssueList", wholeIssueList);
@@ -216,12 +216,12 @@ public class MilestoneController {
 		}
 		return entity;
 	}
-	
+
 	@RequestMapping("/removeMilestone")
 	@ResponseBody
 	public ResponseEntity<String> removeMilestone(String mileNo) throws Exception {
 		ResponseEntity<String> entity = null;
-		
+
 		try {
 			milestoneService.removeMilestone(mileNo);
 			System.out.println("삭제 성공했는데 왜 그러냐");

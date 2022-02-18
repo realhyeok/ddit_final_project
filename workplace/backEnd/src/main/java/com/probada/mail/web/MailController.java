@@ -488,6 +488,27 @@ public class MailController {
 		}		
 	}
 	
+	//회원존재 체크
+	@RequestMapping("/userCheck")
+	@ResponseBody
+	public ResponseEntity<String> userCheck(String userTo) throws Exception {
+		ResponseEntity<String> entity = null;
+		
+		try {
+			String userCheck = mailService.getUserIdByNickname(userTo);
+			
+			if(userCheck != null) {
+				entity = new ResponseEntity<String>("yes", HttpStatus.OK);
+			}else {
+				entity = new ResponseEntity<String>("no", HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return entity;
+	}
+	
 	public String getUserIdByNickname(String userId) throws Exception {
 		return mailService.getUserIdByNickname(userId);
 	}

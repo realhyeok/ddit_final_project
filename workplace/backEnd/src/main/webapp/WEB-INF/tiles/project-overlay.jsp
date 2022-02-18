@@ -96,10 +96,9 @@
 										{{/each}}
         								</select>
 									</div>
-									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+									<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
 										<button type="button" class="btn btn-success" onclick='registMileDetail()'>등록</button>
-										<button class="btn btn-primary" type="button">취소</button>
-										<button class="btn btn-primary" type="reset">리셋</button>
+										<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 									</div>
 								</form>
 							</div>
@@ -187,10 +186,9 @@
 										{{/each}}
         								</select>
 									</div>
-									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+									<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
 										<button type="button" class="btn btn-success" onclick='modifyMileDetail()'>수정</button>
-										<button class="btn btn-primary" type="button">취소</button>
-										<button class="btn btn-primary" type="reset">리셋</button>
+										<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 									</div>
 								</form>
 							</div>
@@ -293,10 +291,9 @@
 									<div style="width:100%; float:left">
 											<input name="files" id="projectIssueUpload" type="file" aria-label="files" />
 										</div>
-									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+									<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
 										<button type="button" class="btn btn-success" onclick='registIssue()'>등록</button>
-										<button class="btn btn-primary" type="button">취소</button>
-										<button class="btn btn-primary" type="reset">리셋</button>
+										<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 									</div>
 								</form>
 							</div>
@@ -424,10 +421,9 @@
 									<div style="width:100%; float:left">
 											<input name="files" id="projectIssueUpload" type="file" aria-label="files" />
 										</div>
-									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+									<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
 										<button type="button" class="btn btn-success" onclick='modifyIssueDetail()'>수정</button>
-										<button class="btn btn-primary" type="button">취소</button>
-										<button class="btn btn-primary" type="reset">리셋</button>
+										<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 									</div>
 								</form>
 							</div>
@@ -485,7 +481,7 @@
 										</div>
         							</div>
 									<div class="row d-flex justify-content-center">
-									<div class="item form-group" style="margin-right:65px;">
+									<div class="item form-group" style="margin-right:10px;">
           								<label class="col-form-label mr-3 label-align for="important">
 											중요도
 										</label>
@@ -497,7 +493,7 @@
             								</select>
 										</div>
         							</div>
-									<div class="item form-group">
+									<div class="item form-group" style="margin-right:55px;">
           								<label class="col-form-label mr-3 label-align for="status">
 											진행상태
 										</label>
@@ -541,10 +537,9 @@
 									 <div style="width:100%; float:left">
            								 <input name="files" id="projectTaskUpload" type="file" aria-label="files" />
         							</div>
-									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+									<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
 										<button type="button" class="btn btn-success" onclick='registTask()'>등록</button>
-										<button class="btn btn-primary" type="button">취소</button>
-										<button class="btn btn-primary" type="reset">리셋</button>
+										<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 									</div>
 								</form>
 							</div>
@@ -681,10 +676,9 @@
 									<div style="width:100%; float:left">
            								 <input name="files" id="projectTaskUpload" type="file" aria-label="files" />
         							</div>
-									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+									<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
 										<button type="button" class="btn btn-success" onclick='modifyTaskDetail()'>수정</button>
-										<button class="btn btn-primary" type="button">취소</button>
-										<button class="btn btn-primary" type="reset">리셋</button>
+										<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 									</div>
 								</form>
 							</div>
@@ -808,7 +802,7 @@
 			<!-- 프로젝트명 -->
 					<div class="item form-group">
 						<label class="col-form-label col-md-3 col-sm-3 label-align"
-							for="title">프로젝트명 <span class="required">*</span>
+							for="title">프로젝트명
 						</label>
 						<div class="col-md-6 col-sm-6 ">
 							<input type="text" id="title" required="required"
@@ -831,7 +825,7 @@
 			<!-- 시작일 -->
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="startdate">시작일 <span class="required">*</span>
+					for="startdate">시작일
 				</label>
 				<div class="col-md-6 col-sm-6 ">
 					<input type="date" id="startdate" required="required" class="form-control form-control-sm" name="startdate">
@@ -847,15 +841,16 @@
 				</div>
 			</div>
 			<!-- 프로젝트 소개 -->
-			<div class=form-group">
+			<div class="form-group">
 				<label class=" label-align"> 프로젝트 소개 </label>
 				<textarea class="projSummnote" name="intro" required="required"></textarea>
 			</div>
-			<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+
+
+			<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
 				<button type="button" class="btn btn-success" onclick='registProject()'>등록</button>
 				<button class="btn btn-primary" type="button" onclick='off()'>취소</button>
 			</div>
-
 		</form>
         </div>
       </div>
@@ -942,10 +937,9 @@
 				<label class=" label-align"> 프로젝트 소개 </label>
 				<textarea class="projSummnote" name="intro" required="required">{{intro}}</textarea>
 			</div>
-			<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+			<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
 				<button type="button" class="btn btn-success" onclick='modifyProjectDetail()'>수정</button>
-				<button class="btn btn-primary" type="button">취소</button>
-				<button class="btn btn-primary" type="reset">리셋</button>
+				<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 			</div>
 		</form>
         </div>
@@ -990,10 +984,9 @@
 				<label class=" label-align">공지 내용 </label>
 				<textarea class="projSummnote" name="noticeCont"></textarea>
 			</div>
-			<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
+			<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
 				<button type="button" class="btn btn-success" onclick='modifyProjectNotice()'>등록</button>
-				<button class="btn btn-primary" type="button">취소</button>
-				<button class="btn btn-primary" type="reset">리셋</button>
+				<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 			</div>
 
 		</form>
@@ -1044,7 +1037,7 @@
 			<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
 				<button type="button" class="btn btn-success" onclick='modifyProjectNotice()'>수정</button>
 				<button class="btn btn-primary" type="button" onclick='deleteProjectNotice()'>삭제</button>
-				<button class="btn btn-primary" type="button">취소</button>
+				<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 			</div>
 
 		</form>
@@ -1081,7 +1074,7 @@
 						</div>
 						<div class="col-md-4 col-sm-4 offset-md-4 mt-3">
 							<button type="button" class="btn btn-success" onclick='uploadProjectDoc()'>등록</button>
-							<button class="btn btn-primary" type="button">취소</button>
+							<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 						</div>
 							</form>
 					</div>
@@ -1137,7 +1130,7 @@
 			</div>
 			<div class="col-md-6 col-sm-6 offset-md-4 mt-3">
 				<button type="button" class="btn btn-success" onclick="modifyUserRoleSubmit()">수정</button>
-				<button class="btn btn-primary" type="button">취소</button>
+				<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 			</div>
 		</form>
         </div>
@@ -1189,7 +1182,7 @@
 							</div>
 					<div class="col-md-6 col-sm-6 offset-md-4 mt-3">
 						<button type="button" class="btn btn-danger" onclick="removeUserRoleSubmit();">제명</button>
-						<button class="btn btn-primary" type="button">취소</button>
+						<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 					</div>
 					</form>
 				</div>
@@ -1265,6 +1258,8 @@
 						<form id="inviteMemberProjectForm" method="post" data-parsley-validate=""
 							class="form-horizontal form-label-left mt-3" novalidate="">
 
+						<input type="hidden" name="userNicknameFrom" value="${userVO.nickname}">
+						<input type="hidden" name="userIdFrom" value="${userVO.userId}">
 					<!-- 프로젝트명 -->
 					<div class="item form-group">
 						<label class="col-form-label col-md-3 col-sm-3 label-align"
@@ -1288,7 +1283,7 @@
 						</div>
 
 						<div class="item form-group">
-							<label class="control-label col-md-3 col-sm-3 label-align">유저 이메일</label>
+							<label class="control-label col-md-3 col-sm-3 label-align">유저 닉네임</label>
                    			<div class="col-md-9 col-sm-9 ">
 								<input type="text" data-role="tagsinput" id="inviteIdTag"
 									name="userTo" class="form-control form-control-sm" name="userTo">

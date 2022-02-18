@@ -43,8 +43,8 @@ $(document).ready(function (){
 });
 
 function connectWs(){
-//	var sock = new WebSocket("ws://192.168.143.7/app/**");
-	var sock = new WebSocket("ws://localhost/app/**");
+	var sock = new WebSocket("ws://192.168.143.7/app/**");
+//	var sock = new WebSocket("ws://localhost/app/**");
 	socket = sock;
 
 	sock.onopen = function(e) {
@@ -63,12 +63,22 @@ function connectWs(){
 				let senderWhatToDo = datas[3];
 				let senderProjNo = datas[4];
 				let receiverUserId = datas[5];
-				
+
 				var alertData = {
 					serderNickName: serderNickName,
 					receiverUserId: receiverUserId,
 					content: "["+ serderWhere +"]\n" + serderNickName + "님이 " + senderTarget + "를(을) " + senderWhatToDo + "했습니다."
 				};
+				
+				if(serderWhere === "채팅"){
+					alertData.content = `${serderNickName}님이 ${senderTarget}채팅방으로 회원님을 ${senderWhatToDo}했습니다.`;
+				} else if(serderWhere === "메일"){
+					alertData.content = `${serderNickName}님이 회원님에게 ${senderTarget}을 ${senderWhatToDo}했습니다.`;
+				} else if(serderWhere === "프로젝트" && senderWhatToDo === "초대"){
+					alertData.content = `${serderNickName}님이 『${senderTarget}』프로젝트로 회원님을 ${senderWhatToDo}했습니다.`;
+				} else if(serderWhere === "프로젝트" && senderWhatToDo === "수락"){
+					alertData.content = `${serderNickName}님이 『${senderTarget}』프로젝트 초대를 ${senderWhatToDo}했습니다.`;
+				}
 
 				// 모든 알림 끄기가 켜져있지 않으면 if문이 실행되어 알림을 보낸다!
 				if(document.querySelector("#allAlertCheckBox").checked){
@@ -76,6 +86,7 @@ function connectWs(){
 				} 
 				
 				toastr.success(alertData.content);
+
 				$.ajax({
 						type: "post",
 						url: "/app/addToAlertList.do",
@@ -85,6 +96,7 @@ function connectWs(){
 						dataType: "json",
 						success: function (data) {
 							add_alert_li(data);
+							// updateAlertList();
 						},
 						error: function (err) {
 							console.log(this + "에서 알림 전송 실패, 에러 상태 : " + err.status);
@@ -110,10 +122,16 @@ function add_alert_li(alertData) {
   let ul = document.querySelector("#alertVOList");
   const li = document.createElement("li");
 
+	if(document.querySelector("#alertVOList .none-alert")){
+		document.querySelector("#alertVOList .none-alert").remove();
+	}
+	let alertCount = $('#navbarDropdown1 span.badge.bg-green').html();
+	$('span.badge.bg-green').html(parseInt(alertCount) + 1);
+
   li.innerHTML = `<li class="nav-item">
 					  <a class="dropdown-item">
 						  <span class="image">
-						  	<img src="/resources/asserts/images/img.jpg" alt="Profile Image" />
+						  	<img src="/user/getPictureByNickname?nickname=${alertData.nickname}" alt="Profile Image" />
 						  </span>
 						  <span>
 							  <span>${alertData.nickname}</span>
@@ -138,18 +156,33 @@ $.ajax({
 		var alertCount = data.alertCount;
 //		console.log("res => " + JSON.stringify(data));
 		$('span.badge.bg-green').html(alertCount);
+		let alert_ul = document.querySelector("#alertVOList");
+		const li = document.createElement("li");
 		if(alertList.length === 0){
-			let alert_ul = document.querySelector("#alertVOList");
-			const li = document.createElement("li");
-			li.innerHTML =`<li class="nav-item">
+			li.innerHTML =`<li class="nav-item none-alert">
 												<strong>해당 내용이 없습니다.</strong>
 											</li>`;
 			alert_ul.prepend(li.children[0]);
 		}
-		$(alertList).each(function(){
-			add_alert_li(this);
-//			console.log(this.userId + " " + timeForToday(this.writeTime));
+		alertList.forEach(e => {
+			// add_alert_li(this);
+			li.innerHTML = `<li class="nav-item">
+												<a class="dropdown-item">
+													<span class="image">
+														<img src="/user/getPictureByNickname?nickname=${e.nickname}" alt="Profile Image" />
+													</span>
+													<span>
+														<span>${e.nickname}</span>
+														<span class="time">${timeForToday(e.writeTime)}</span>
+													</span>
+													<span class="message">${e.content}</span>
+												</a>
+											</li>`;
+			while (li.children.length > 0) {
+				alert_ul.prepend(li.children[0]);
+			}
 		});
+			
 	},
 	error: function (err) {
 		console.log("updateAlertList err status : " + err.status);

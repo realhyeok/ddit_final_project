@@ -24,7 +24,11 @@ public interface ProjectDAO {
 	public int selectProjectCountInProjByUserId(String userId) throws SQLException;
 
 	// ProjectUserRelation Table
+	public int countDeletedUserByUserId(ProjectVO projectVO) throws SQLException;
+
 	public void insertProjectUserRelation(ProjectVO projectVO) throws SQLException;
+
+	public void updateProjectUserRelationToRejoin(ProjectVO projectVO) throws SQLException;
 
 	public void deleteProjectUserRelation(ProjectVO projectVO) throws SQLException;
 

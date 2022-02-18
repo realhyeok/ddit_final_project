@@ -14,7 +14,21 @@ public class HistoryDAOImpl implements HistoryDAO {
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
-
+	
+	//프로젝트 히스토리 리스트 출력
+	@Override
+	public List<HistoryVO> selectProjHistoryList(String projNo) throws SQLException {
+		List<HistoryVO> historyList = sqlSession.selectList("History-Mapper.selectProjHistoryList", projNo);
+		return historyList;
+	}
+	
+	//프로젝트 히스토리 리스트 구분별 정렬
+	@Override
+	public List<HistoryVO> selectProjHistoryDistSort(String projNo) throws SQLException {
+		List<HistoryVO> historyDistSort = sqlSession.selectList("History-Mapper.selectProjHistoryDistSort", projNo);
+		return historyDistSort;
+	}
+	
 	//히스토리 리스트 출력
 	@Override
 	public List<HistoryVO> selectHistoryList(String userId) throws SQLException {

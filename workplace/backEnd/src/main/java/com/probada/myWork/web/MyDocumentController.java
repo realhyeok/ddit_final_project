@@ -110,7 +110,7 @@ public class MyDocumentController {
 		LOGGER.debug("projNo : {}",projNo);
 		if(projNo == null) {
 			
-			projNo = "0";
+			projNo = "63";
 			
 		}
 		LOGGER.debug("projNo 2차 : {}",projNo);
@@ -192,11 +192,9 @@ public class MyDocumentController {
 		File storeFile = new File(uploadPath, fileName);
 		storeFile.mkdirs();
 
-		
-
 		//하드코딩
 		//0으로 
-		doc.setPROJ_NO("0");
+		doc.setPROJ_NO("63");
 		doc.setUSER_ID(userVO.getUserId());
 
 
@@ -265,7 +263,7 @@ public class MyDocumentController {
 		
 		if(projNo == null) {
 			
-			projNo = "0";
+			projNo = "63";
 			
 		}
 		LOGGER.debug("projNo : {}",projNo);
@@ -317,26 +315,45 @@ public class MyDocumentController {
 
 	@PostMapping(value="/Destroy")
 	@ResponseBody
-	public  FileVO remove(String doc_NO, String path, String name, String extension) throws Exception {
+	public FileVO remove(String doc_NO, String path, String name, String extension) throws Exception {
 		
 		FileVO trash = new FileVO();
 		FileVO doc = new FileVO();
 		FileVO result = new FileVO();
-		String orginPath;
+		String orginPath = null;
+		String trashPath = null;
+		String trashRootPath = null;
+		String trashRoom = null;
+		
+		
+		LOGGER.debug("Destroy path: {}",path);
+		
 		if(path!=null && name!= null && extension !=null && doc_NO !=null) {
 
-			if(path.length()>3) {
+			
+			
+			
+			if(path.contains("휴지통")) {
 				
-				 orginPath = path.substring(0,3);
+			
+				
+				if(path.substring(0,3).equals("휴지통")) {
+					
+					trashRoom = path.substring(0,3);
+					
+				}else {
+					trashRoom = path.substring(path.indexOf("/")+1,path.indexOf("통")+1);
+				}
+				
+				LOGGER.debug("trashRoom : {}",trashRoom);
+			
 			}else {
 				
-				orginPath = path;
-				
+				trashRoom = path;
 			}
+			
 
-
-			//path만 이동시키면 되지 않을까??????????
-			if(orginPath.equals("휴지통")) {
+			if(trashRoom.equals("휴지통")) {
 
 				doc = documentService.getDocOne(doc_NO);
 				result = documentService.getDocOne(doc_NO);
@@ -366,8 +383,22 @@ public class MyDocumentController {
 				}else {
 
 					trash = documentService.getDocOne(doc_NO);
-
-					trash.setPath("휴지통/"+name+extension);
+					
+					
+					if(path !=null) {
+						trashRootPath = path.substring(0,path.indexOf("/"));
+						trashPath = trashRootPath+"/휴지통/"+name+extension;
+						LOGGER.debug("trashRootPath11 : {}",trashRootPath);
+						LOGGER.debug("trashPath11 : {}",trashPath);
+					}else {
+						
+						trashPath = "휴지통/"+name+extension;
+						LOGGER.debug("trashPath : {}",trashPath);
+					}
+					
+					LOGGER.debug("trashPathresutl1ds : {}",trashPath);
+					
+					trash.setPath(trashPath);
 					trash.setName(name);
 
 					File newFile = new File("c:/"+trash.getPath());

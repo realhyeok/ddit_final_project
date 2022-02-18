@@ -94,7 +94,7 @@
 		 select * from CHATROOM 
   				where REALROOM = #{realRoom} 
   					and USER_ID=#{userId}
-
+  					ORDER BY REGDATE
 </select>
 
 
@@ -102,7 +102,7 @@
 
 		select * from chatroom 
 			where CHATROOM_NO = #{chatroomNo}
-
+			ORDER BY REGDATE
 </select>
 
 

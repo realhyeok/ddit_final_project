@@ -120,7 +120,7 @@
 				    #{userId}
 				   ,#{projNo}
 				   ,#{cprojNo}
-				   ,#{role}
+				   ,'A303'
 				)
 	</select>
 	
@@ -194,6 +194,15 @@
 			C_PROJECT
 		WHERE
 			CPROJ_NO = #{cprojNo}
+	</select>
+
+	<select id="selectCprojectNameByProjNo" resultType="com.probada.collabo.vo.CollaboVO" parameterType="String">
+		SELECT A.CPROJ_NO
+			  ,A.TITLE
+			  ,B.PROJ_NO
+		 FROM C_PROJECT A, C_PROJECT_R B
+		WHERE A.CPROJ_NO = B.CPROJ_NO 
+		  AND B.PROJ_NO = #{projNo}
 	</select>
 	
 	

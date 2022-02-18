@@ -78,8 +78,16 @@
 		  class="com.probada.myWork.dao.MyTaskDAOImpl"
 		  p:sqlSession-ref="sqlSession"
 	/>
+	<bean id="spoonDAO"
+		  class="com.probada.spoon.dao.SpoonDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
 
 	<!-- Service -->
+	<bean id="spoonService"
+		  class="com.probada.spoon.service.SpoonServiceImpl"
+		  p:spoonDAO-ref="spoonDAO"
+	/>
 	<bean id="collaboService"
 		  class="com.probada.collabo.service.CollaboServiceImpl"
 		  p:collaboDAO-ref="collaboDAO"

@@ -327,9 +327,13 @@ img.img-responsive.avatar-view {
     height: 200px;
 }
 .user-profile-intro {
-    width: 200px;
-    height: 160px;
-    /* background: #f3f3f3; */
+    max-width: 200px;
+    max-height: 160px;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .user-profile-projects{
 	overflow:auto;

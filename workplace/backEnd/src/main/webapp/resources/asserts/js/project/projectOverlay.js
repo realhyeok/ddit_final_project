@@ -39,6 +39,11 @@ function getOverlayTemplate(templateId) {
 	if (templateId == "projRegistFormTemplate")  {
 		summernote_go($('.projSummnote'));
 	}
+	if (templateId == "projRegistFormTemplate") {
+		$('#projectTag').tagsInput({
+			defaultText:'태그 입력'
+		});
+	}
 
 }
 /**
@@ -515,14 +520,20 @@ function modifyProjectNotice() {
 
 
 function registProject() {
-	var projectVO = $('#registProjectForm').serialize();
-	console.log(projectVO);
+	var title = $('#registProjectForm input[name="title"]').val();
+	var privacy = $('#registProjectForm select[name="privacy"]').val();
+	var startdate = $('#registProjectForm input[name="startdate"]').val();
+	var enddate = $('#registProjectForm input[name="enddate"]').val();
+	var intro = $('#registProjectForm textarea[name="intro"]').val();
+	var tagNames = $('#registProjectForm input[name="projectTag"]').val();
 
+	var projectVO = {"title":title,"privacy":privacy,"startdate":startdate,"enddate":enddate,"intro":intro,"tagNames":tagNames};
+
+	console.log(projectVO);
 
 	 $.ajax({
          url : "/app/project/registProject",
          type : 'POST',
-         datatype : 'text',
          data : projectVO,
          success : function(data) {
         	 alert("등록에 성공했습니다.");
@@ -812,23 +823,30 @@ function inviteMemberSubmit(){
 
 	var flag = false;
 	var projTitle = $('#inviteMemberProjectForm input[name="title"]').val();
-	var content = $('#inviteMemberProjectForm select[name="role"]').val();
+	var role = $('#inviteMemberProjectForm select[name="role"]').val();
+	var roleName = $('#inviteMemberProjectForm select[name="role"] option:selected').text();
+	var beforeContent = $('#inviteMemberProjectForm textarea[name="content"]').val();
 	var userTo = $('#inviteMemberProjectForm input[name="userTo"]').val();
+	var userNicknameFrom = $('#inviteMemberProjectForm input[name="userNicknameFrom"]').val();
+	var userIdFrom = $('#inviteMemberProjectForm input[name="userIdFrom"]').val();
+//	var targetTitle = $('#inviteMemberProjectForm input[name="targetTitle"]').val();
 
-	console.log(projTitle +"/"+ content +"/"+ userTo);
+	var content = inviteMailContentFactory(projNo, projTitle, role, roleName, beforeContent, userTo, userIdFrom, userNicknameFrom);
 
-	/*flag = confirm("작성한 내용으로 초대를 보내시겠습니까?");
+	regData = {"content":content,"userTo":userTo};
+
+	flag = confirm("작성한 내용으로 초대를 보내시겠습니까?");
 
 	if(flag){
 
 		$.ajax({
-			url      : "/app/project/quitProjectUserRelation",
+			url      : "/app/project/registInviteMail",
 			type     : 'POST',
-			data     : projectVO,
+			data     : regData,
 			success  : function(data){
-				alert("탈퇴가 완료되었습니다.");
+				alert("초대가 발송되었습니다.");
 				off();
-				location.href="app/project-list";
+				projectAlert(userNicknameFrom, "프로젝트", projTitle, "초대", projNo, userTo);
 			},
 			error : function(xhr, status) {
 				alert("시스템 오류입니다. 관리자에게 문의하세요.");
@@ -836,7 +854,7 @@ function inviteMemberSubmit(){
 		});
 	} else {
 		return;
-	}*/
+	}
 }
 
 /* ------------------------------------------- 필수 함수들 -------------------------------------------*/
@@ -877,38 +895,6 @@ function checkValidate(FormId, targetName) {
 }
 
 $(document).ready(function(){
-	var endPoint = window.location.search;
-
-	if(getCookie('endPoint')){
-		if(getCookie('endPoint') != endPoint){
-			delCookie('endPoint');
-		}
-	}
-
-	document.cookie = "endPoint="+endPoint;
-
-	if(getCookie('projTab')){
-		var curTab = getCookie('projTab');
-		curTab = curTabCheck(curTab);
-		document.getElementById(curTab).click();
-	} else if(!getCookie('projTab')) {
-		document.getElementById('home-tab').click();
-	}
-
-	$('a[role="tab"]').on('click', function() {
-		var id = this.id
-		document.cookie = "projTab="+id;
-	})
-
-// 상세 탭일경우 리스트로 돌려줌 (각 상세폼에 추가)
-function curTabCheck(curTab){
-	if(curTab == 'taskDetail-tab'){
-		curTab = 'task-tab';
-	} else if (curTab == 'issueDetail-tab'){
-		curTab = 'issue-tab';
-	}
-		return curTab;
-}
 
 })
 
@@ -920,15 +906,55 @@ function getCookie(name) {
 	  return matches ? decodeURIComponent(matches[1]) : undefined;
 	}
 
-const delCookie = function delCookie_by_name(name){
-    let date = new Date();
-    date.setDate(date.getDate() - 100);
-    let Cookie = `${name}=;Expires=${date.toUTCString()}`
-    document.cookie = Cookie;
-}
+function inviteMailContentFactory(projNo, projTitle, role, roleName, content, userTo, userIdFrom, userNicknameFrom){
+	var afterContent =
+		`
+		<table style="width: 100%">
+      <tbody>
+        <tr>
+          <td style="background-color: #0979cb;margin-left:10px;">
+            <h2 class="" style="color: white">프로젝트 초대 메일</h2>
+          </td>
+        </tr>
+        <tr>
+          <td height="20px"></td>
+        </tr>
+        <tr>
+          <td>
+            <div style="border: 1px solid black;padding:10px;width:50%;">
+              <span>유저명 : ${userNicknameFrom}</span><br>
+              <span>프로젝트명 : ${projTitle}</span><br>
+              <span>권한 : ${roleName}</span><br>
+              <span>메세지 :${content}</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td height="5px"></td>
+        </tr>
+        <tr>
+          <td>&nbsp;해당 유저가 당신을 프로젝트로 초대했습니다.</td>
+        </tr>
+        <tr>
+          <td height="5px"></td>
+        </tr>
+        <tr>
+          <td>&nbsp;수락하시려면 '수락' 버튼을, 거절하시려면 '거절' 버튼을 클릭해주세요.</td>
+        </tr>
+        <tr>
+          <td height="20px"></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="align-center">
+              <button type="button" class="btn btn-success" onclick="inviteAccept('${userTo}','${userIdFrom}','${projNo}','${role}', '${userNicknameFrom}', '${projTitle}');">수락</button>
+              <button class="btn btn-primary" type="button" onclick="inviteDenied('${userTo}','${userIdFrom}');">거절</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+		`;
 
-function inviteMailContentFactory(content){
-	var afterContent = ""
-
-		afterContent += ""
+	return afterContent;
 }

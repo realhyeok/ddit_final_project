@@ -11,4 +11,12 @@ public interface ProjectTagService {
 
 	public List<ProjectTagVO> getProjectListByTagNo(String tagNo) throws SQLException;
 
+	public String getTagNoByTagName(ProjectTagVO projectTagVO) throws SQLException;
+
+	public void registProjectTagByProjNo(ProjectTagVO projectTagVO) throws SQLException;
+
+	public void registProjectTagRelation(ProjectTagVO projectTagVO) throws SQLException;
+
+	public int getCountProjectTagByTagName(ProjectTagVO projectTagVO) throws SQLException;
+
 }

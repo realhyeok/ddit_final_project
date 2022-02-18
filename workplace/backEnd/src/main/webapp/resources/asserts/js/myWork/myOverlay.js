@@ -75,7 +75,7 @@ function getOverlayMyMileRegistTemplate(userId) {
 			changeProjectAndIssue();
 		},
 		error   : function(error){
-			alert("짜증");
+			/*alert("짜증");*/
 			console.log("MyMile RegistForm - Handlebars error!!");
 		}
 	});

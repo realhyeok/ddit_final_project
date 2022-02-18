@@ -19,10 +19,10 @@ public class MailVO {
 	private String dist;
 	private String recvDel;
 	private String sentDel;
-	
+
 	private List<AttachVO> attachList;
 	private int memoryCapacity;
-	
+
 	public int getMailNo() {
 		return mailNo;
 	}
@@ -83,7 +83,7 @@ public class MailVO {
 	public void setSentDel(String sentDel) {
 		this.sentDel = sentDel;
 	}
-	
+
 	public List<AttachVO> getAttachList() {
 		return attachList;
 	}
@@ -96,4 +96,13 @@ public class MailVO {
 	public void setMemoryCapacity(int memoryCapacity) {
 		this.memoryCapacity = memoryCapacity;
 	}
+	@Override
+	public String toString() {
+		return "MailVO [mailNo=" + mailNo + ", title=" + title + ", userTo=" + userTo + ", userFrom=" + userFrom
+				+ ", content=" + content + ", regDate=" + regDate + ", status=" + status + ", dist=" + dist
+				+ ", recvDel=" + recvDel + ", sentDel=" + sentDel + ", attachList=" + attachList + ", memoryCapacity="
+				+ memoryCapacity + "]";
+	}
+
+
 }

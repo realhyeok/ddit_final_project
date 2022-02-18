@@ -34,7 +34,7 @@ function readMyIssue(uid){
 		dataSource: myIssueDataSource,
 		toolbar: [
 			{ template: "<a class='k-button' href='javascript:getOverlayMyIssueRegistTemplate(\"" + sessionId + "\");'>이슈 등록</a>" },
-			{ template: "<input type='search' id='myIssueProject-category' style='width: 170px;vertical-align:middle;'/>" },
+			{ template: "<input type='search' id='myIssueProject-category' style='width:200px;vertical-align:middle;'/>" },
 			"search"
 		],
 		messages: {
@@ -51,13 +51,13 @@ function readMyIssue(uid){
 					"class" : "checkbox-align"
 				},
 				headerAttributes: {
-					"class"      : "checkbox-align"
+					"class" : "checkbox-align"
 				}
 			},
 			{
 				field: "title",
 				title: "이슈 제목",
-				template: "<a href=\"javascript:myIssueDetail('#:issueNo#', '#:projNo#')\" class='text-dark d-inline-block text-truncate' style='max-width:175px;'>#:title#</a>",
+				template: "<a href=\"javascript:myIssueDetail('#:issueNo#', '#:projNo#')\" class='text-dark d-inline-block text-truncate' style='max-width:240px;'>#:title#</a>",
 				headerAttributes: {style: 'text-align: center'},
 				width: 245,
 				encoded: false
@@ -127,7 +127,7 @@ function readMyIssue(uid){
 		dataTextField: "projTitle",
 		dataValueField: "projTitle",
 		autoBind: false,
-		optionLabel: "All",
+		optionLabel: "전체",
 		change: function() {
 			var value = this.value();
 			if (value) {
@@ -137,6 +137,8 @@ function readMyIssue(uid){
 			}
 		}
 	});
+	
+	$("#myIssueGrid").find(".k-grid-header-wrap").css("border-right", "none");
 }
 //이슈 끝
 

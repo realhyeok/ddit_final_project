@@ -26,12 +26,14 @@
 			window.onload = function(){
 				summernote_go($('textarea.content'));
 				if(getCookie('tab')){
-					var curTab = getCookie('tab');
-					
+					var curTab = getCookie('tab');					
 					if(curTab == "myIssueDetail-tab"){
 						document.getElementById('issue-tab').click();
 					}else if(curTab == "myTaskDetail-tab"){
 						document.getElementById('task-tab').click();
+					}else if(curTab == "mail-tab"){
+						document.getElementById('mail-tab').click();
+						document.getElementById('mailReceive-tab').click();
 					}else{
 						document.getElementById(curTab).click();
 					}
@@ -51,6 +53,17 @@
 			        }
 			    });
 				
+				if(${from eq 'deniedRegistNoUser'}) {
+					alert("존재하지 않는 유저입니다.");
+					
+					document.getElementById('mailWrite-tab').click();
+					
+					var link = document.location.href.split("#");
+					var newLink = link[0] + "#mailWrite-tab";
+					
+					history.pushState(null, null, newLink);
+				}
+
 				if(${from eq 'deleteMyTaskByTaskNo'}) {
 					alert("업무 삭제가 완료되었습니다.");
 					

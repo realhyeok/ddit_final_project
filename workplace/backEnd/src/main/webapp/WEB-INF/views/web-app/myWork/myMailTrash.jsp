@@ -142,9 +142,9 @@
 		if(userFrom == userTo){
 			mailDist = "mineMail";
 		}else{
-			if(userTo == "${userVO.userId}"){
+			if(userTo == "${userVO.nickname}"){
 				mailDist = "receiveMail";
-			}else if(userFrom == "${userVO.userId}"){
+			}else if(userFrom == "${userVO.nickname}"){
 				mailDist = "sendMail";
 			}
 		}

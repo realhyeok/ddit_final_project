@@ -30,23 +30,25 @@
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-tangram scale-transition scale-out"><i class="fa fa-dashboard"></i></a></li>
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-report scale-transition scale-out" href="javascript:on()"><i class="fa fa-edit"></i></a></li>
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-feedback scale-transition scale-out"><i class="fa fa-bell"></i></a></li>
-      <li><a class="zoom-fab zoom-btn-sm zoom-btn-feedback scale-transition scale-out" data-toggle="modal" data-target="#anyWhereSpoon"><i class="fa fa-spoon"></i></a></li>
+      <li><a class="zoom-fab zoom-btn-sm zoom-btn-feedback scale-transition scale-out" href="javascript:getOverlayAnyWhereSpoonTemplate('/app/spoon/getTaskListByProjNo');"><i class="fa fa-spoon"></i></a></li>
+      <!-- <li><a class="zoom-fab zoom-btn-sm zoom-btn-feedback scale-transition scale-out" data-toggle="modal" data-target="#anyWhereSpoon"><i class="fa fa-spoon"></i></a></li> -->
     </ul>
   </div>
 	<!-- /floating action button  -->
  
-<!-- The Modal -->
-  <div class="modal" id="anyWhereSpoon">
+
+	<!-- The Modal -->
+<!--   <div class="modal" id="anyWhereSpoon">
     <div class="modal-dialog">
       <div class="modal-content">
       
-        <!-- Modal Header -->
+        Modal Header
         <div class="modal-header">
           <h5 class="modal-title"><img src="https://img.icons8.com/ios/20/000000/spoon.png"/>&nbsp Spoon</h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
-        <!-- Modal body -->
+        Modal body
         <div class="modal-body">
             <div class="x_panel">
               <div class="x_content">
@@ -55,7 +57,7 @@
                   <div class="form-group row ">
                     <label class="control-label col-md-3 col-sm-3 ">프로젝트 명</label>
                     <div class="col-md-9 col-sm-9 ">
-                      <input type="text" class="form-control" readonly="readonly" placeholder="Default Input" value="">
+                      <input type="text" class="form-control" readonly="readonly" placeholder="현재 위치 프로젝트 올 예정" value="">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -98,7 +100,7 @@
 
         </div>
         
-        <!-- Modal footer -->
+        Modal footer
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">확인</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
@@ -108,7 +110,7 @@
     </div>
   </div>
   
-</div> 
+</div> -->
   
   
 	

@@ -84,5 +84,17 @@
 	    padding: 2px 0px !important; 
 	}
 	    
+	    
+	.chatInvateUser{
+	
+	 /*   display: block; */
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  white-space: nowrap;
+	  width: 100px;
+	 
+	}
+
+	    
     
     

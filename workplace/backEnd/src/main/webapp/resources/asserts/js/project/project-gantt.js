@@ -48,7 +48,6 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 			toolbar:[
 				{ template: "<a class='k-button' href='javascript:getOverlayRegistTaskTemplate(\"taskRegistFormTemplate\",\"/app/task/getTaskRegistInfoByProjNo\")'>" +
 						"업무 등록</a>" },
-				{ name: "pdf" }
 				],
 				views: [
 					"day",

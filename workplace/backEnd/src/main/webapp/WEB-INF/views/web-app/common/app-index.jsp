@@ -32,7 +32,7 @@
 							</h3>
 							<div class="noti-desc">내 작업</div>
 						</div>
-						<a class="more" href="<%=request.getContextPath()%>/app/myWork?#home-tab">
+						<a class="more" href="<%=request.getContextPath()%>/app/myWork?#task-tab">
 							더보기 <i class="fa fa-arrow-right"></i>
 						</a>
 					</div>

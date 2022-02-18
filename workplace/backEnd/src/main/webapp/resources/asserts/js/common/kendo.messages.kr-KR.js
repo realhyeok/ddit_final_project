@@ -35,6 +35,27 @@
       });
   }
 
+  if (kendo.ui.TreeList) {
+	  kendo.ui.TreeList.prototype.options.messages =
+	  $.extend(true, kendo.ui.TreeList.prototype.options.messages,{
+	      "noRows": "등록된 내용이 없습니다.",
+	      "loading": "준비중...",
+	      "requestFailed": "리퀘스트 실패",
+	      "retry": "재시도",
+	      "commands": {
+	          "edit": "편집",
+	          "update": "업데이트",
+	          "canceledit": "취소",
+	          "create": "데이터 추가",
+	          "createchild": "자식노드 추가",
+	          "destroy": "삭제",
+	          "excel": "엑셀로 내보내기",
+	          "pdf": "PDF로 내보내기"
+	      }
+	  });
+	  }
+
+
   /* FileBrowser messages */
 
   if (kendo.ui.FileBrowser) {
@@ -121,14 +142,14 @@
         },
       },
       previewPane: {
-        noFileSelected: "No File Selected",
+        noFileSelected: "파일을 선택하지 않았습니다.",
         extension: "타입",
         size: "사이즈",
         created: "생성 날짜",
         createdUtc: "생성 날짜",
         modified: "수정 날짜",
         modifiedUtc: "수정 날짜",
-        items: "items",
+        items: "아이템",
       },
     });
   }

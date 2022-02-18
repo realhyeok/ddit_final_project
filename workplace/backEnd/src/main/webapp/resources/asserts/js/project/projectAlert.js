@@ -8,16 +8,17 @@
 //	자신의 데이터에 맡게 변수명은 바꿔주세요. 그렇지 않으면 충돌이 일어납니다.												//
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function projectAlert(sessionId, projectTitle, targetTitle, crud, projectNumber){
+function projectAlert(sessionNickname, projectTitle, targetTitle, crud, projectNumber, targetNickname){
 
 	socketData3 = {
-		nickname : sessionId,
+		nickname : sessionNickname,
 		where    : projectTitle,
 		target   : targetTitle,
 		whatToDo : crud,
-		projNo   : projectNumber
+		projNo   : projectNumber,
+		receiverId : targetNickname
 	};
-	
+
 	if(socket){
 		//protocol : 누가(nickname) 어디서(분야) 무엇(target)을 curd(어떻게), 프로젝트 넘버
 		//","를 구분자로 분리합니다. 반드시 위처럼 순서대로 작성해주세요.
@@ -25,7 +26,8 @@ function projectAlert(sessionId, projectTitle, targetTitle, crud, projectNumber)
 				+ "," + socketData3.where
 				+ "," + socketData3.target
 				+ "," + socketData3.whatToDo
-				+ "," + socketData3.projNo;
+				+ "," + socketData3.projNo
+				+ "," + socketData3.receiverId;
 		//send()하게 되면 alert에 있는 AlertHandler의 handleTextMessage() 메서드로 파라미터를 전달하게 됩니다.
 		socket.send(socketMsg);
 	}

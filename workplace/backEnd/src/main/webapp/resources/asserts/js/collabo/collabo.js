@@ -68,42 +68,42 @@ function inviteMailForm(userFromCproj,userToCproj,myProj,text,myProjNo,otherProj
 	var content = ""
 	content += 
 		`<div class="x_content">
-		  <br>
-		    <div class="item form-group-collabo">
-		      <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name"><span class="required">보낸 사람 : <a id="cprojReplyUserFrom" href="">`+ userFromCproj +`</a></span>
-		      <input type="hidden" id="cprojReplyUserTo" name="userFrom" value="`+userToCproj+`">  
-		      </label>
-		    </div>
-		    
-		    <div class="item form-group-collabo">
-		      <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name"><span
-		       class="required">보낸 사람의 프로젝트 : <a class="userToProj" idx="`+myProjNo+`" href="`+ url+myProjNo+`">`+ myProj +`</a></span>
-		      </label>
-		      <input type="hidden" id="idxNoTo" value="`+myProjNo+`">
-		    </div>
-		       <div class="item form-group-collabo">
-		       <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name"><span
-		       class="required">콜라보 제안 프로젝트 : <a class="userFromProj" idx="`+otherProjNo+`"  href="`+ url+otherProjNo+`">`+ otherProj +`</a></span>
-		       </label>
-		        <input type="hidden" id="idxNoFrom" value="`+otherProjNo+`">
-		       </div>
-		     
-		    <div class="item form-group-collabo">
-		      <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">메세지 : 
-		      <span>`+ text +`</span>
-		      </label>
-		    </div>
-	   
-	    <div class="ln_solid"></div>
-	    <div class="item form-group-collabo">
-	      <div class="col-md-6 col-sm-6 offset-md-3">
-		     
-	        <button class="btn btn-primary" type="button" onclick="acceptCollabo()">수락</button>
-	        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#refuseCollabo">거절</button>
-	      </div>
-	    </div>
-	</div>`;
-	
+
+    <table class="table collabo table-hover">
+      <tbody>
+        <tr>
+          <th class="collabo-th" style="width: 170px; border: none;">보낸 사람</th>
+          <td class="collabo-td" style="border: none;"><a class="collaboMail-a" id="cprojReplyUserFrom" href="">`+ userFromCproj +`</a></td>
+          <input type="hidden" id="cprojReplyUserTo" name="userFrom" value="`+userToCproj+`">
+        </tr>
+        <tr>
+          <th class="collabo-th" style="border: none;">보낸 사람의 프로젝트</th>
+          <td class="collabo-td" style="border: none;"><a class="collaboMail-a" class="userToProj" idx="`+myProjNo+`"
+              href="`+ url+myProjNo+`">`+ myProj +`</a></td>
+          <input type="hidden" id="idxNoTo" value="`+myProjNo+`">
+        </tr>
+        <tr>
+          <th class="collabo-th" style="border: none;">콜라보 제안 프로젝트</th>
+          <td class="collabo-td" style="border: none;"><a class="collaboMail-a" class="userFromProj" idx="`+otherProjNo+`"
+              href="`+ url+otherProjNo+`">`+ otherProj +`</a></td>
+          <input type="hidden" id="idxNoFrom" value="`+otherProjNo+`">
+        </tr>
+        <tr>
+          <th class="collabo-th" style="border: none;">메세지</th>
+          <td class="collabo-td" style="border: none;">`+ text +`</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="ln_solid"></div>
+    <div class="item form-group-collabo">
+      <div class="col-md-6 col-sm-6 offset-md-3">
+        <button class="btn btn-primary" type="button" onclick="acceptCollabo()">수락</button>
+        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#refuseCollabo">거절</button>
+      </div>
+    </div>
+
+</div>`
 	
 	return content;
 }	
@@ -133,11 +133,10 @@ function createCollabo() {
 //상대방의 프로젝트 셀렉트 함수 
 function selectOtherProj(){
 	if (window.event.keyCode == 13) {
-  	alert("ddddd");
+		alert("입력한 ID 값의 프로젝트 출력 함수 실행");
 		let userName = document.getElementById('tags_1').value;
 		document.getElementById("name1").innerHTML = userName;
 		
-				
 		 $.ajax({
 			url : "/app/collabo/getProjectTitleOther.do",
 			type : "POST",

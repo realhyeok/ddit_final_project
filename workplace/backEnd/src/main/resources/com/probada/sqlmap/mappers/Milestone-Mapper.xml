@@ -13,7 +13,7 @@
 		 WHERE A.USER_ID = B.USER_ID
 		   AND A.USER_ID = #{userId}
 	</select>
-	
+
 	<select id="selectMilestoneListByProjNo" resultType="milestone" parameterType="String">
 		SELECT
 			A.MILE_NO,
@@ -49,12 +49,14 @@
 			A.MILE_NO = #{mileNo}
 	</select>
 
-	<select id="selectWholeIssue" resultType="issue">
+	<select id="selectWholeIssueByProjNo" resultType="issue" parameterType="String">
 		SELECT DISTINCT
     		ISSUE_NO,
     		TITLE
 		FROM
     		ISSUE
+    	WHERE
+    		PROJ_NO = #{projNo}
 	</select>
 
 	<select id="selectIssueListByMileNo" resultType="issue" parameterType="String">
@@ -106,7 +108,7 @@
 		AND
 			ISSUE_NO = #{issueNo}
 	</delete>
-	
+
 	<update id="deleteMilestone" parameterType="String">
 		DELETE
 		  FROM MILE

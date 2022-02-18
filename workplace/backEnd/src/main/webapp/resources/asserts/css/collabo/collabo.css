@@ -56,7 +56,9 @@
 }
 
 /*collabo-none*/
-.collabo.search-box {
+.control-label.collabo{
+	font-size : 15px;
+	color : black;
 }
 
 #tags_1_tag{

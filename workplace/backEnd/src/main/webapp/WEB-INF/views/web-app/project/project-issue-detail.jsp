@@ -25,23 +25,23 @@
         <div class="col-sm-6">
           <label>제목 :</label>
 			<input type="hidden" id="issueNo" value="{{issueVO.issueNo}}">
-          <div class="form-control form-control-sm form-control-view">{{issueVO.title}}</div>
+          <div class="form-control form-control-sm form-control-view text-truncate">{{issueVO.title}}</div>
         </div>
         <div class="col-sm-6">
           <label>프로젝트명 :</label>
-          <div class="form-control form-control-sm form-control-view">{{projTitle}}</div>
+          <div class="form-control form-control-sm form-control-view text-truncate">{{projTitle}}</div>
         </div>
       </div>
 
 		<div class="form-group row">
 			<div class="col-sm-6">
 				<label>담당자</label>
-					<input type="text" class="form-control form-control-sm form-control-view"
+					<input type="text" class="form-control form-control-sm form-control-view text-truncate"
 					value="{{issueVO.nickname}}">
 			</div>
 			<div class="col-sm-6">
 				<label class="control-label">중요도</label>
-					<div class="form-control form-control-sm form-control-view">{{issueVO.important}}</div>
+					<div class="form-control form-control-sm form-control-view text-truncate">{{issueVO.important}}</div>
 			</div>
 		</div>
 
@@ -59,7 +59,7 @@
       <div class="form-group row">
         <div class="col-sm-12">
           <label>이슈 내용 :</label>
-          <div class="form-control form-control-sm form-control-view" style="height:120px;">{{{issueVO.content}}}</div>
+          <div class="form-control form-control-sm form-control-view" style="word-break:break-all;height:auto;">{{{issueVO.content}}}</div>
         </div>
       </div>
 
@@ -128,7 +128,7 @@
 				<span>{{userVO.nickname}}</span>
 			</div>
 			<div class="col-sm-7">
-				<p class="excerpt mt-3" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{content}}</p>
+				<p class="excerpt mt-3" style="word-break:break-all;height:auto;">{{content}}</p>
 			</div>
 			<div class="col-sm-3">
 				<p class="mt-3" style="display:inline-block;">{{formatTime updatedate "YYYY년 MM월 DD일"}}</p>

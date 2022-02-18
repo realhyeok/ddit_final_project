@@ -32,7 +32,6 @@ function readMyMile(uid){
 			
 			sortingIssueByClick(selectedData.id);
 		},
-		height    : 760,
 		template  : $("#myMileTemplate").html(),
 		dataBound: function() {
 			$('.B301').kendoBadge({

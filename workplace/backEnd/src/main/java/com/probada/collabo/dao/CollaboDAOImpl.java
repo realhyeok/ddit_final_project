@@ -133,6 +133,14 @@ public class CollaboDAOImpl implements CollaboDAO {
 		
 		return collaboList;
 	}
-	
+
+	@Override
+	public List<CollaboVO> selectCprojectNameByProjNo(String projNo) throws SQLException {
+		
+		List<CollaboVO> collaboList = sqlSession.selectList("Collabo-Mapper.selectCprojectNameByProjNo", projNo);
+		
+		return collaboList;
+	}
+
 
 }

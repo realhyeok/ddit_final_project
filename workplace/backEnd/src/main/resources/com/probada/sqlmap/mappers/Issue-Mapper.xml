@@ -27,6 +27,7 @@
 		 WHERE A.USER_ID = B.USER_ID
 		   AND A.PROJ_NO = C.PROJ_NO
 		   AND A.USER_ID = #{userId}
+		 ORDER BY A.ISSUE_NO DESC
 	</select>
 
 	<select id="selectIssueListByProjNoAndUserId" resultType="issue" parameterType="issue">

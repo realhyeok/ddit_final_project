@@ -24,13 +24,13 @@
 					<a id="issue-tab" class="nav-link" data-toggle="tab" href="#issue" role="tab" aria-controls="issue" aria-selected="false" onclick="readMyMile('${userVO.userId}');readMyIssue('${userVO.userId}');">이슈</a>
 				</li>
 				<li class="nav-item">
-					<a id="task-tab" class="nav-link" data-toggle="tab" href="#task" role="tab" aria-controls="task" aria-selected="false" onclick="readMyTask('${userVO.userId}');">업무</a>
+					<a id="task-tab" class="nav-link" data-toggle="tab" href="#task" role="tab" aria-controls="task" aria-selected="false" onclick="readMyTask('${userVO.userId}', '${userVO.nickname}');">업무</a>
 				</li>
 				<li class="nav-item">
-					<a id="mail-tab" class="nav-link" data-toggle="tab" href="#mail" role="tab" aria-controls="mail" aria-selected="false">메일</a>
+					<a id="mail-tab" class="nav-link" data-toggle="tab" href="#mail" role="tab" aria-controls="mail" aria-selected="false" onclick="receiveMailBox('${userVO.nickname}');">메일</a>
 				</li>
 				<li class="nav-item">
-					<a id="document-tab" class="nav-link" data-toggle="tab" href="#document" role="tab" aria-controls="document" aria-selected="false" onclick="readMyDocument('${userVO.userId}');">문서</a>
+					<a id="document-tab" class="nav-link" data-toggle="tab" href="#document" role="tab" aria-controls="document" aria-selected="false" onclick="readMyDocument('${userVO.userId}');">문서관리</a>
 				</li>
 				<li class="nav-item">
 					<a id="history-tab" class="nav-link" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false" onclick="readMyHistory('${userVO.userId}');">히스토리</a>

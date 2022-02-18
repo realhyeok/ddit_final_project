@@ -8,6 +8,8 @@
 <body>
 		<script	src="<%=request.getContextPath()%>/resources/asserts/js/project/projectHandlebars.js"></script>
 		<script	src="<%=request.getContextPath()%>/resources/asserts/js/project/projectOverlay.js"></script>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/project/projectAlert.js"></script>
+		<script	src="<%=request.getContextPath()%>/resources/asserts/js/project/project-dashboard.js"></script>
 		<script	src="<%=request.getContextPath()%>/resources/asserts/js/project/project-task.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/project/project-detail.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/asserts/js/project/project-gantt.js"></script>

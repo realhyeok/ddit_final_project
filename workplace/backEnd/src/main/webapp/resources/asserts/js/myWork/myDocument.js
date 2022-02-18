@@ -1,10 +1,10 @@
 //내 문서 시작
 function readMyDocument(userId){
 	readMyDocument = function(){};
-	
+
 	var baseUrl = "/app/myWork/";
 	 var kendo = window.kendo, extend = $.extend, Class = kendo.Class;
-	 
+
 	 var Command = Class.extend({
 			     init: function (options) {
 			         this.options = options;
@@ -17,101 +17,101 @@ function readMyDocument(userId){
 			     },
 			     exec: function () {
 						var that = this, target = that.options.target, filemanager = that.filemanager,
-			              item = filemanager._view.widgetComponent.dataItem(target);  
-						 
+			              item = filemanager._view.widgetComponent.dataItem(target);
+
 							location.href=baseUrl+'Download?path='+item.path;
 
 				  if (!item) {
 			            var uid = target.data('uid');
-			            item = that.filemanager.treeView.widgetComponent.dataSource.getByUid(uid);               
+			            item = that.filemanager.treeView.widgetComponent.dataSource.getByUid(uid);
 			         }
 			       if (item.isDirectory) {
 			       	console.error("Cannot download directory");
 			         return
-			       }              
+			       }
 			       console.log("Downloading " + item.path);
 			     }
 			 });
-			
+
 			extend(kendo.ui.filemanager.commands, {DownloadCommand: DownloadCommand});
 			kendo.ui.filemanager.ContextMenu.fn.events.push("open");
-	       
+
 			 $("#filemanager").kendoFileManager({
 	            dataSource: {
 	            transport: {
-	             
-	            	
+
+
 	            	 read: function(options) {
 	                     var that = this;
-	                 
+
 	                     $.ajax({
 	                         url: baseUrl + "Read",
-	                         dataType: "json", 
+	                         dataType: "json",
 	                         method: "POST",
 	                         data: that.parameterMap ? that.parameterMap(options.data, "read") : options.data,
-	                       
+
 	                         success: function(result) {
 	                             options.success(result);
-	                            
+
 	                         }
 	                     });
 	                 },
 	                 update: function(options) {
 	                	 var that = this;
-	                	
+
 	                     $.ajax({
 	                         url: baseUrl + "Update",
-	                         dataType: "json", 
+	                         dataType: "json",
 	                         method: "POST",
 	                         data: that.parameterMap ? that.parameterMap(options.data, "read") : options.data,
 	                         success: function(result) {
-								
+
 	                             options.success(result);
-	                            
+
 	                         }
 	                     });
 	                 },
 	                 create: function(options) {
 	                     var that = this;
-	                    
+
 	                     $.ajax({
 	                         url: baseUrl + "Create",
-	                         dataType: "json", 
+	                         dataType: "json",
 	                         method: "POST",
 	                         data: that.parameterMap ? that.parameterMap(options.data, "read") : options.data,
 	                         success: function(result) {
 	                             options.success(result);
-	                            
-	                            
-				                 
+
+
+
 	                         }
 	                     });
-	                     
+
 	                 },
 	                 destroy: function(options) {
 	                     var that = this;
-	                   
+
 	                     $.ajax({
 	                         url: baseUrl + "Destroy",
-	                         dataType: "json", 
+	                         dataType: "json",
 	                         method: "POST",
 	                         data: that.parameterMap ? that.parameterMap(options.data, "read") : options.data,
 	                         success: function(result) {
 	                             options.success(result);
-	                             
+
 	                         }
 	                     });
 	                 }
 
 	            }
 
-	            
+
 	        },
-	       
+
 	        uploadUrl: baseUrl+"Upload",
 	            toolbar: {
 	                items: [
-	               
+
 	                    { name: "createFolder" },
 	                    { name: "upload" },
 	                    { name: "sortDirection" },
@@ -120,29 +120,29 @@ function readMyDocument(userId){
 	                    { name: "spacer" },
 	                    { name: "details" },
 	                    { name: "search" }
-	                    
+
 	                ]
 	            },
 	            contextMenu: {
 	            	 open: function(ev){
 	     	          	var downloadMenu = ev.sender.element.find(".k-i-download").closest(".k-item");
 	     	            var isFolder = !!$(ev.target).find(".k-i-folder").length;
-	     	            
+
 	     	            ev.sender.enable(downloadMenu, !isFolder);
 	     	          },
-	            	
-	                items: [
-	                	  {
-	          	            name: "download",
-	          	            text: "Download",
-	          	            spriteCssClass: "k-icon k-i-download",
-	          	          	command: "DownloadCommand"
-	          	          },
-	                    { name: "rename" },
-	                    { name: "delete" }
-	                ]
-	            },
-	            
+
+	     	         items: [
+		               	  {
+		         	            name: "download",
+		         	            text: "다운로드",
+		         	            spriteCssClass: "k-icon k-i-download",
+		         	          	command: "DownloadCommand"
+		         	          },
+		                   { name: "rename", text:"이름변경" },
+		                   { name: "delete", text:"삭제" }
+		               ]
+		           },
+
 	            model: {
 	                id: "path",
 	                hasChildren: "hasDirectories",
@@ -160,11 +160,11 @@ function readMyDocument(userId){
 	                    modifiedUtc: { from: "modifiedUtc", type: "Date", editable: false }
 	                }
 	            },
-	            
+
 	            draggable: true,
 	            resizable: true
 
 	    }).data("kendoFileManager");
 
-}	
-//내 문서 끝	
+}
+//내 문서 끝

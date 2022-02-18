@@ -126,7 +126,7 @@ function getTaskTemplate(url,taskNo,templateId,appendTarget) {
 function getIssueTemplate(url,issueNo,templateId,appendTarget) {
 
 	prevTab = 'issue-tab';
-	
+
 
 	var formTemplate = "";
 	var bindTemplate = "";
@@ -227,26 +227,27 @@ function getParameterByName(name) {
 }
 
 
-var endPointBefore = "";
-
 $(document).ready(function(){
 	var endPoint = window.location.search;
 
-	document.cookie = "endPoint="+endPoint;
-
-	if(getCookie('projTab')){
+	if(getCookie('projTab') && getCookie('projNo') == projNo){
 		var curTab = getCookie('projTab');
 		curTab = curTabCheck(curTab);
 		document.getElementById(curTab).click();
 	} else if(!getCookie('projTab')) {
 		document.getElementById('home-tab').click();
+	} else if(getCookie('projNo') != projNo){
+		document.getElementById('home-tab').click();
 	}
 
-	$('a[role="tab"]').on('click', function() {
+
+})
+
+$('a[role="tab"]').on('click', function() {
 		var id = this.id
 		document.cookie = "projTab="+id;
+		document.cookie = "projNo="+projNo;
 	})
-
 // 상세 탭일경우 리스트로 돌려줌 (각 상세폼에 추가)
 function curTabCheck(curTab){
 	if(curTab == 'taskDetail-tab'){
@@ -270,6 +271,3 @@ const delCookie = function delCookie_by_name(name){
     let Cookie = `${name}=;Expires=${date.toUTCString()}`
     document.cookie = Cookie;
 }
-
-})
-

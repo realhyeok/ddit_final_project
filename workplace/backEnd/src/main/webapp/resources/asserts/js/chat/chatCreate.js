@@ -81,21 +81,20 @@ function createRoom(){
 				
 				success : function(res) {
 
-					console.log("성공!");
 				
 				    //알림테스트
 					for(var i=0;i<arr_Season.length;i++){
 						console.log("채팅방 성공에 id=>"+arr_Season[i].innerText);
 						console.log("채팅방 성공에 title"+chatTitle);
 						
-						alert(chatNickNames[i].innerText);
-						alert("보낸사람:"+res);
+					
+						
 					    //알림
 					    let socketData = {
 								nickname : res,
 								where : "채팅",
-								target : "채팅방 초대",
-								whatToDo : chatTitle+"(으)로 초대 되었습니다.",
+								target : chatTitle,
+								whatToDo :"초대",
 								projNo: "0",
 								receiverId : chatNickNames[i].innerText
 						};

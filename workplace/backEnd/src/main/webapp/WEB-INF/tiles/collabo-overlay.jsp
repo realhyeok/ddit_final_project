@@ -166,8 +166,7 @@
 </div>	
 </script>
 
-<script type="text/x-handlebars-template" id="collaboRegistTypeTemplate">
-			
+<%-- <script type="text/x-handlebars-template" id="collaboRegistTypeTemplate">
           <!-- Modal Header -->
           <div class="modal-header">
             <h4 class="modal-title modalTitle">콜라보 제안</h4>
@@ -225,7 +224,7 @@
               </form>
             </div>
           </div>
-</script>
+</script> --%>
 
 <!-- 콜라보 업무 수정 템플레이트 -->
 <script type="text/x-handlebars-template" id="collaboTaskModifyFormTemplate">
