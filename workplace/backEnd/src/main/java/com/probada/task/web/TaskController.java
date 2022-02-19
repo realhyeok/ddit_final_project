@@ -173,6 +173,8 @@ public class TaskController {
 			HttpServletResponse response, HttpServletRequest request, TaskVO taskVO) throws Exception {
 		ResponseEntity<HashMap<String, Object>> entity = null;
 
+		LOGGER.debug("taskVO==============>"+taskVO);
+
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
 		try {

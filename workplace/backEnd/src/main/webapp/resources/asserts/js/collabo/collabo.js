@@ -63,6 +63,9 @@ function inviteMailForm(userFromCproj,userToCproj,myProj,text,myProjNo,otherProj
 	
 	alert("메일 안에서 프로젝트 번호" + myProjNo);
 	alert("메일 안에서 프로젝트 번호" + otherProjNo);
+	alert("내꺼 프로젝트 번호" + myProjNo);
+	alert("다른사람 프로젝트 번호" + otherProjNo);
+	
 	
 	let url = "/app/project/main?projNo="
 	var content = ""

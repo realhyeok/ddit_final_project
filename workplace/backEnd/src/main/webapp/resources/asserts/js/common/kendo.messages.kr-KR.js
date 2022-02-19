@@ -237,7 +237,8 @@
           "cancelDelete": "취소",
           "confirmation": "해당 열을 정말 삭제하시겠습니까?",
           "confirmDelete": "삭제"
-        }
+        },
+        "noRecords": "등록된 데이터가 없습니다.",
       });
   }
 

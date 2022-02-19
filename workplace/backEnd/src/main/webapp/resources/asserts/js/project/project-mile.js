@@ -39,6 +39,8 @@ function readMile() {
 		dataSource:mileDataSource,
 		selectable: true,
 		change: function() {
+			var classList = this.select().attr('class');
+			console.log(classList);
 
 			var index = this.select().index();
 			var selectedData = this.dataSource.view()[index];
@@ -47,7 +49,7 @@ function readMile() {
 			sortingIssueByClick(selectedData.id);
 
 			//한번더 클릭시 해제 이벤트 추가필요
-
+			sortingAllIssue();
 		},
 		template: $("#mileTemplate").html(),
 		dataBound: function() {
@@ -66,6 +68,19 @@ function readMile() {
 
 	mileViewFlag = true;
 }
+
+$("#grid tbody").on("click", "tr", function(e) {
+
+    var rowElement = this;
+    var $row = $(rowElement);
+    var grid = $("#grid").getKendoGrid();
+
+    if ($row.hasClass("k-state-selected")) {
+    $row.removeClass("k-state-selected");
+    e.stopPropagation();
+    }
+});
+
 function reloadMile() {
 	$("#mileList").data("kendoListView").dataSource.read();
 }

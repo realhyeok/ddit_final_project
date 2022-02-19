@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.probada.collabo.vo.CollaboTaskVO;
+import com.probada.spoon.vo.SpoonVO;
 import com.probada.task.vo.TaskVO;
 
 public class SpoonDAOImpl implements SpoonDAO {
@@ -26,6 +28,19 @@ public class SpoonDAOImpl implements SpoonDAO {
 	public List<TaskVO> selectTaskListByProjectNo(String projNo) throws SQLException {
 		List<TaskVO> taskVOList = sqlSession.selectList("Spoon-Mapper.selectTaskListByProjectNo", projNo);
 		return taskVOList;
+	}
+
+
+	@Override
+	public int selectTaskSeqNext() throws SQLException {
+		int seq = sqlSession.selectOne("Spoon-Mapper.selectTaskSeqNext");
+		return seq;
+	}
+
+	@Override
+	public void insertTaskToCollabo(TaskVO taskVO) throws SQLException {
+		sqlSession.update("Spoon-Mapper.insertTaskToCollabo", taskVO);
+		
 	}
 
 }

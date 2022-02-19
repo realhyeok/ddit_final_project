@@ -56,7 +56,7 @@ function trashMailBox(userId){
 		},
 		noRecords: {
 			template: function(e) {
-				return "<h2>메일이 존재하지 않습니다.</h2>";
+				return "<h2 class='text-center' style='color:#73879c;'>메일이 존재하지 않습니다.</h2>";
 			}
 		},
 		columns: [

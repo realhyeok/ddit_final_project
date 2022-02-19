@@ -273,33 +273,38 @@
 	<sql id="getUserTaskCount">
 		(SELECT COUNT(*)
          FROM TASK
-         WHERE USER_ID = A.USER_ID) AS TASK_COUNT
+         WHERE USER_ID = A.USER_ID
+         AND PROJ_NO = #{projNo}) AS TASK_COUNT
 	</sql>
 
 	<sql id="getUserCompleteTaskCount">
 		(SELECT COUNT(*)
          FROM TASK
          WHERE STATUS = 'B204'
-         AND USER_ID = A.USER_ID) AS COMPLETE_TASK_COUNT
+         AND USER_ID = A.USER_ID
+         AND PROJ_NO = #{projNo}) AS COMPLETE_TASK_COUNT
 	</sql>
 
 	<sql id="getUserDelayTaskCount">
 		(SELECT COUNT(*)
          FROM TASK
          WHERE STATUS = 'B203'
-         AND USER_ID = A.USER_ID) AS DELAY_TASK_COUNT
+         AND USER_ID = A.USER_ID
+         AND PROJ_NO = #{projNo}) AS DELAY_TASK_COUNT
 	</sql>
 	<sql id="getUserOngoingTaskCount">
 		(SELECT COUNT(*)
          FROM TASK
          WHERE STATUS = 'B202'
-         AND USER_ID = A.USER_ID) AS ONGOING_TASK_COUNT
+         AND USER_ID = A.USER_ID
+         AND PROJ_NO = #{projNo}) AS ONGOING_TASK_COUNT
 	</sql>
 	<sql id="getUserBeforeTaskCount">
 		(SELECT COUNT(*)
          FROM TASK
          WHERE STATUS = 'B201'
-         AND USER_ID = A.USER_ID) AS BEFORE_TASK_COUNT
+         AND USER_ID = A.USER_ID
+         AND PROJ_NO = #{projNo}) AS BEFORE_TASK_COUNT
 	</sql>
 
 </mapper>

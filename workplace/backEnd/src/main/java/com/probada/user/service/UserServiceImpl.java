@@ -1,6 +1,8 @@
 package com.probada.user.service;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +10,13 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import com.probada.collabo.vo.CollaboVO;
@@ -20,13 +28,19 @@ import com.probada.user.mail.Tempkey;
 import com.probada.user.vo.UserTotalCountVO;
 import com.probada.user.vo.UserVO;
 
+
+@Configuration
+@PropertySource("classpath:/com/probada/sqlmap/properties/uploadPath.properties")
 public class UserServiceImpl implements UserService {
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	// 이메일 인증
 	@Autowired
 	private JavaMailSender mailSender;
 
 	private UserDAO userDAO;
+	@Value("${mail.template}")
+	private String mailTemplate;
 
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
@@ -51,15 +65,24 @@ public class UserServiceImpl implements UserService {
 		paramMap.put("authkey", key);
 		userDAO.createAuthkey(paramMap);
 
+//		URI uri = new URI("/resources/asserts/mail/mailTemplate.html");
+		Path mail = Paths.get(mailTemplate);
+		
+		
+		String str = FileUtils.readFileToString(mail.toFile());
+		
+		String text = str.replace("#{userId}", user.getUserId());
+		
 		// 메일 발송
 		MailHandler sendMail;
 		try {
 			sendMail = new MailHandler(mailSender);
 			sendMail.setSubject("[probada] 회원가입 인증메일");
-			sendMail.setText(new StringBuffer().append("<h1>probada 가입 메일인증 입니다.</h1>")
+			sendMail.setText(text
 //					.append("<a href='http://localhost/emailConfirm?userId=").append(user.getUserId())
-					.append("<a href='http://192.168.143.7/emailConfirm?userId=").append(user.getUserId())
-					.append("' target='_blenk'>가입 완료를 위해 이메일 이곳을 눌러주세요.</a>").toString());
+//					.append("<a href='http://192.168.143.7/emailConfirm?userId=").append(user.getUserId())
+//					.append("' target='_blenk'>가입 완료를 위해 이메일 이곳을 눌러주세요.</a>").toString()
+					);
 //			.append("&key=").append(key)
 			sendMail.setFrom("probadahelp@gmail.com", "probada");
 			sendMail.setTo(user.getUserId());

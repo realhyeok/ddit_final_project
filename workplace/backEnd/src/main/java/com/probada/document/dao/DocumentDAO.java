@@ -20,7 +20,7 @@ public interface DocumentDAO {
 
 	//파일 하나 조회
 	FileVO selectDocumentByPath(String docId) throws SQLException;
-	
+
 	//콜라보 파일 등록
 	public void insertDocumentCollabo(FileVO document) throws SQLException;
 
@@ -45,6 +45,7 @@ public interface DocumentDAO {
 	public List<FileVO> selectDirectoryMyProject(String userId)throws SQLException;
 
 
+	public List<FileVO> selectDashDocumentByProjNo(String projNo) throws SQLException;
 
 	//프로젝트 문서관리 파트 디폴트 폴더
 	public List<FileVO> selectDocumentByDefaultProj(String projectNum) throws SQLException;
@@ -62,8 +63,8 @@ public interface DocumentDAO {
 
 	//콜라보 업무 문서 리스트 출력
 	public List<FileVO> selectDocumentListBytaskTitleANDcprojNo(CollaboTaskVO collaboTaskVO) throws SQLException;
-	
-	
+
+
 	//시퀀스
 	String selectDocumentSeqNext() throws SQLException;
 

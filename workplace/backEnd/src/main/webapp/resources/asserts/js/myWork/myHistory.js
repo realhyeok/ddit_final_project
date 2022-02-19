@@ -30,7 +30,7 @@ function readMyHistory(userId){
 	    },
 	    scrollable: false,
 	    toolbar: [    		
-			{ template: "<input type='search' id='myHistoryProject-category' style='width:150px;vertical-align:middle;'/>"},    		
+			{ template: "<input type='search' id='myHistoryProject-category' style='width:300px;vertical-align:middle;'/>"},    		
 			{ template: "<input type='search' id='myHistoryDist-category' style='width:150px;vertical-align:middle;'/>"},    		
 	    	"search"
 		],
@@ -41,7 +41,7 @@ function readMyHistory(userId){
 		},
 		noRecords: {
 			template: function(e) {
-				return "<h2>히스토리가 존재하지 않습니다.</h2>";
+				return "<h2 class='text-center' style='color:#73879c;'>히스토리가 존재하지 않습니다.</h2>";
 			}
 		},
 	    columns: [

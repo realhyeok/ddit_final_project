@@ -331,8 +331,6 @@ public class MyDocumentController {
 		if(path!=null && name!= null && extension !=null && doc_NO !=null) {
 
 			
-			
-			
 			if(path.contains("휴지통")) {
 				
 			
@@ -342,13 +340,12 @@ public class MyDocumentController {
 					trashRoom = path.substring(0,3);
 					
 				}else {
-					trashRoom = path.substring(path.indexOf("/")+1,path.indexOf("통")+1);
+					trashRoom = path.substring(path.indexOf("/")+1,path.indexOf("통/")+1);
 				}
 				
 				LOGGER.debug("trashRoom : {}",trashRoom);
 			
 			}else {
-				
 				trashRoom = path;
 			}
 			
@@ -370,6 +367,8 @@ public class MyDocumentController {
 
 				}
 
+				
+			//휴지통이 아닐 시
 			}else {
 
 				File originFile = new File("c:/"+path);
@@ -384,17 +383,15 @@ public class MyDocumentController {
 
 					trash = documentService.getDocOne(doc_NO);
 					
-					
-					if(path !=null) {
-						trashRootPath = path.substring(0,path.indexOf("/"));
-						trashPath = trashRootPath+"/휴지통/"+name+extension;
-						LOGGER.debug("trashRootPath11 : {}",trashRootPath);
-						LOGGER.debug("trashPath11 : {}",trashPath);
-					}else {
+					//그냥 휴지통으로 가는 경우			
+					//if(path !=null) {
 						
-						trashPath = "휴지통/"+name+extension;
-						LOGGER.debug("trashPath : {}",trashPath);
-					}
+					trashRootPath = path.substring(0,path.indexOf("/"));
+					trashPath = trashRootPath+"/휴지통/"+name+extension;
+					LOGGER.debug("trashRootPath11 : {}",trashRootPath);
+					LOGGER.debug("trashPath11 : {}",trashPath);
+						
+					//}
 					
 					LOGGER.debug("trashPathresutl1ds : {}",trashPath);
 					
@@ -444,12 +441,8 @@ public class MyDocumentController {
 
 	public String sameFileProcess(HttpServletResponse res, String fullPath) throws Exception{
 
-
-		//String sr2 = String.format("안녕하세요. %s 입니다.","dfdf");
-		//같은 파일 등록 시 +1path와 name에 (1)추가할까말까
 		List<FileVO> fileVO = new ArrayList<FileVO>();
 		String name = "difName";
-
 
 		fileVO = documentService.getDocList();
 
@@ -514,61 +507,6 @@ public class MyDocumentController {
 
 
 
-
-
-
-
-
-
-
-
-//내가 속한 프로젝트 출력 시
-//내가 속한 프로젝트 쿼리로 뽑아서 projNo에 넣으면 완성
-//List<Integer> projNo = new ArrayList<>();
-
-//projNo.add(3);
-//projNo.add(4);
-
-//List<FileVO> realFileList = new ArrayList<>();
-//
-//for ( FileVO vo: fileVO) {
-//
-//	for(int pNo : projNo) {
-//
-//		if(pNo==Integer.parseInt(vo.getPROJ_NO())) {
-//
-//
-//			if(target==null && (vo.getPath().equals(vo.getName()))) {
-//				realFileList.add(vo);
-//			}else if(target != null && (vo.getPath().contains(target+"/"+vo.getName()))){
-//				realFileList.add(vo);
-//			}
-//
-//		}
-//
-//	}
-//
-//}
-
-
-
-//모든 프로젝트
-
-	/*	fileVO = documentService.getDocList();
-
-		List<FileVO> realFileList = new ArrayList<>();
-
-		for ( FileVO vo: fileVO) {
-
-
-			if(target==null && (vo.getPath().equals(vo.getName()))) {
-				realFileList.add(vo);
-			}else if(target != null && (vo.getPath().contains(target+"/"+vo.getName()))){
-				realFileList.add(vo);
-			}
-		}
-
-		return realFileList;*/
 
 
 

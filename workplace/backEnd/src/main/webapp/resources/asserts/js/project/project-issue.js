@@ -66,7 +66,8 @@ function readIssue() {
 	             }, {
 	                 field: "userId",
 	                 title: "작성자",
-	                 template: "<span class='text-dark d-inline-block text-truncate' style='max-width:115px;'>#:userId#</span>",
+	                 template: "<span class='text-dark text-truncate' style='max-width:115px;'>#:userId#</span>",
+	                 attributes: {style: 'text-align: center'},
 	 				 headerAttributes: {style: 'text-align: center'},
 					 width: 140
 	             }, {
@@ -87,7 +88,7 @@ function readIssue() {
 			issueGridSetOpt();
 
 			issueGridFlag = true;
-			
+
 			$("#issueGrid").find(".k-grid-header-wrap").css("border-right", "none");
 }
 
@@ -108,8 +109,6 @@ function issueGridSetOpt(){
 function reloadIssue() {
 	$("#issueGrid").data("kendoGrid").dataSource.read();
 }
-
-
 
 const sortingIssueByClick = function(tData) {
 	if(tData === "clear"){

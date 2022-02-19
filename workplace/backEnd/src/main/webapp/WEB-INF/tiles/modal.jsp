@@ -81,7 +81,7 @@
                 	<input type="hidden" id="name1" value="">
                 </div>
                 <div class="card-body" onkeyup="selectOtherProj()">
-
+				
                   <div class="control-group row">
                     <label class="control-label collabo col-md-3 col-sm-3">이메일 입력</label>
                     <div class="col-md-9 col-sm-9 ">

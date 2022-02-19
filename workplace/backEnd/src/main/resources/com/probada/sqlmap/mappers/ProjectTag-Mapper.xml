@@ -34,7 +34,7 @@
 		AND C.ROLE = 'A303'
 	</select>
 
-	<select id="selectTagNoByTagName" parameterType="projectTag">
+	<select id="selectTagNoByTagName" parameterType="projectTag" resultType="String">
 		SELECT
 			TAG_NO
 		FROM

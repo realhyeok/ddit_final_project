@@ -214,13 +214,13 @@
 														<h3>{{taskCount}}</h3></li>
 													</ul>
 												</div>
-												<div class="p-1"
-													style="height: 100px; background-color: #e5e5e5;overflow: hidden;text-overflow: ellipsis;">
-													<p class="mt-2 mb-2">{{{intro}}}</p>
+												<div class="p-1" style="max-height: 100px; background-color: rgb(229,229,229);display:-webkit-box;
+													-webkit-line-clamp: 5;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
+													<p class="mt-2 mb-2">{{intro}}</p>
 												</div>
 												<div class="text-center mt-3">
 													{{#getRoleCheck 'A303'}}
-													{{#ifCond '${userVO.nickname}' "==" nickname}}
+													{{#ifCond '${userVO.nickname}' "!=" nickname}}
 													<button type="button" class="btn btn-success btn-sm" onclick="getOverlayModifyUserRole('modifyUserRoleForm','{{{nickname}}}');">
 														<i class="fa fa-pencil-square"> 권한</i>
 													</button>

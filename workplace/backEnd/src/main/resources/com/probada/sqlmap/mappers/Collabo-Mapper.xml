@@ -172,8 +172,6 @@
 			)
 	</update>
 	
-	
-	
 	<select id="selectCollaboMailSequenceNextValue" resultType="int">
 		SELECT MAIL_SEQ.NEXTVAL AS MAIL_NO
 		  FROM DUAL

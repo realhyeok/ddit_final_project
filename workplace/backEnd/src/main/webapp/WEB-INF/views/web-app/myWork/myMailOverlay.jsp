@@ -150,6 +150,13 @@
 					$("textarea[id='sendOverlayContent']").focus();
 					return;
 				}
+				
+				if(dist == "send"){
+					var receiverId = $(".sendOverlayUserTo").val();
+					var nickname = "${userVO.nickname}";
+					mailAlarm(nickname, receiverId);
+				}
+				
 				document.overlayMailRegistForm.submit();
 			}
 		</script>

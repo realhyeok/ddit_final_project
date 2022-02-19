@@ -242,7 +242,7 @@ function registTask() {
 	var collaboTaskVO = $('#registTaskForm')[0];
 	var formData = new FormData(collaboTaskVO);
 	formData.append("cprojNo",cprojNo);
-
+	
 	console.log(collaboTaskVO);
 	console.log(formData);
 

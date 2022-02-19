@@ -94,10 +94,30 @@
 			          								<label class="col-form-label col-md-2 col-sm-2 label-align" for="status">진행상태</label>
 													<div class="col-md-10 col-sm-10">
 			            								<select class="form-control form-control-sm" id="status" name="status">
-			              									<option value="B201">미배정</option>
-			              									<option value="B202">진행중</option>
-			             									<option value="B203">지연중</option>
-			             									<option value="B204">완료</option>
+															{{#ifCond status "==" "B201"}}
+																<option value="B201" selected>미배정</option>
+			              										<option value="B202">진행중</option>
+			             										<option value="B203">지연중</option>
+			             										<option value="B204">완료</option>
+															{{/ifCond}}
+															{{#ifCond status "==" "B202"}}
+																<option value="B201">미배정</option>
+			              										<option value="B202" selected>진행중</option>
+			             										<option value="B203">지연중</option>
+			             										<option value="B204">완료</option>
+															{{/ifCond}}
+															{{#ifCond status "==" "B203"}}
+																<option value="B201">미배정</option>
+			              										<option value="B202">진행중</option>
+			             										<option value="B203" selected>지연중</option>
+			             										<option value="B204">완료</option>
+															{{/ifCond}}
+															{{#ifCond status "==" "B204"}}
+																<option value="B201">미배정</option>
+			              										<option value="B202">진행중</option>
+			             										<option value="B203">지연중</option>
+			             										<option value="B204" selected>완료</option>
+															{{/ifCond}}
 			            								</select>
 													</div>
 			        							</div>
@@ -228,11 +248,11 @@
 					data : formData,
 					success : function(data) {
 						alert("수정에 성공했습니다.");
-						myTaskDetail(data.taskNo, data.projNo);
-						readMyDashboard('${userVO.userId}', '${userVO.nickname}');
 						myOverlayOff('#myTaskModifyOverlay');
-						document.getElementById('mailReceive-tab').click();
-						
+						myTaskDetail(data.taskNo, data.projNo);
+						/* document.getElementById('myTaskDetail-tab').click(); */
+						/* $("#myTaskBoard").remove();
+						$(".myTaskBox").append("<div id='myTaskBoard'></div>"); */
 					},
 					error : function(status) {
 						alert("수정에 실패하였습니다.");

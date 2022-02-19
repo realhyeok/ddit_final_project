@@ -155,7 +155,9 @@ public class MailServiceImpl implements MailService {
 	//메일 및 첨부파일 등록
 	@Override
 	public void registMailAttachFile(MailVO mailVO) throws SQLException {
+		
 		int mailNo = mailDAO.selectMailSequenceNextValue();
+		
 		mailVO.setMailNo(mailNo);
 		
 		mailDAO.registMail(mailVO);

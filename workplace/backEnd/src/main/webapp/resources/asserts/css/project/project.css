@@ -165,3 +165,6 @@ i.fa-check-circle, i.fa-exclamation-circle {
 .tagsinput .tag:after {
     display: none;
 }
+div.k-grid-norecords{
+	justify-content: center;
+}

@@ -1,8 +1,8 @@
 // 업무 시작
 function readMyTask(uid, nname){
+	$("#myTaskBoard").empty();
 	var userId = uid;
 	var nickname = nname;
-	readMyTask = function(){};
 	
 	var myTaskDataSource = new kendo.data.DataSource({
 		transport: {
@@ -69,16 +69,16 @@ function readMyTask(uid, nname){
 	var myTaskTable = $("#myTaskBoard").kendoTaskBoard({
 		template: $("#myTask-template").html(),
 		columns: [
-			{ text: "예정" , status: "B201" },
-			{ text: "진행" , status: "B202" },
-			{ text: "지연" , status: "B203" },
+			{ text: "미배정" , status: "B201" },
+			{ text: "진행중" , status: "B202" },
+			{ text: "지연중" , status: "B203" },
 			{ text: "완료" , status: "B204" }
 	    ],
 	   	toolbar: {
 	   		items: [
 	   			{ template: "<button type='button' class='k-button' onclick='getOverlayTaskRegistTemplate(\"{{userFrom}}\")'>업무 등록</button>" },
 	   			"spacer",
-	   			{ template: "<input type='search' id='myTaskProject-category' style='height:41px;width: 170px;vertical-align:middle;'/>" },
+	   			{ template: "<input type='search' id='myTaskProject-category' style='height:41px;width:300px;vertical-align:middle;'/>" },
 	    		"search"
 	    	]
     	},

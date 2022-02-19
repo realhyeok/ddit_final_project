@@ -24,7 +24,7 @@
 			<div class="user-block mt-3 mb-3">
 				<h2>
 					<a href="/app/project/main?projNo=#:projNo#"
-						class="project-list-a">#:title#</a> <span
+						class="project-list-a" style="font-weight:bold;color:olive;	">#:title#</a> <span
 						class="badge badge-success float-right">#:status#</span>
 				</h2>
 			</div>
@@ -53,9 +53,9 @@
 									<a href="" class="project-member " aria-haspopup="true"
 									id="navbarDropdown" data-toggle="dropdown"	aria-expanded="false">
 										# if(member[i].picture == null){ #
-										<img src="/user/getPictureById?userId=#:member[i].userId#" class="img-circle" alt="Avatar" />
+										<img src="/user/getPictureById?userId=#:member[i].userId#" class="img-circle" alt="img" />
 										# } else { #
-										<img src="/user/getPictureById?userId=#:member[i].userId#" class="img-circle" alt="Avatar" />
+										<img src="/user/getPictureById?userId=#:member[i].userId#" class="img-circle" alt="img" />
 										# } #
 									</a>
 									<div class="dropdown-menu dropdown-membermenu pull-right" aria-labelledby="navbarDropdown">
@@ -67,9 +67,9 @@
 														<li></li>
 														<li class="d-flex justify-content-center">
 															# if(member[i].picture == null){ #
-															<img src="/user/getPictureById?userId=#:member[i].userId#" alt="" class="img-circle profile_img"></li>
+															<img src="/user/getPictureById?userId=#:member[i].userId#" alt="img" class="img-circle profile_img"></li>
 															# } else { #
-															<img src="/user/getPictureById?userId=#:member[i].userId#" alt="" class="img-circle profile_img"></li>
+															<img src="/user/getPictureById?userId=#:member[i].userId#" alt="img" class="img-circle profile_img"></li>
 															# } #
 														<li></li>
 													</ul>
@@ -87,7 +87,8 @@
 														<h3>#: member[i].taskCount #</h3></li>
 													</ul>
 												</div>
-												<div class="p-1" style="height: 100px; background-color: rgb(229,229,229);overflow: hidden;text-overflow: ellipsis;">
+												<div class="p-1" style="max-height: 110px; background-color: rgb(229,229,229);display:-webkit-box;
+													-webkit-line-clamp: 4;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
 													<p class="mt-2 mb-2">#= member[i].intro #</p>
 												</div>
 											</div>

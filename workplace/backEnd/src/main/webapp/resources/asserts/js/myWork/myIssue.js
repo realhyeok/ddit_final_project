@@ -34,9 +34,14 @@ function readMyIssue(uid){
 		dataSource: myIssueDataSource,
 		toolbar: [
 			{ template: "<a class='k-button' href='javascript:getOverlayMyIssueRegistTemplate(\"" + sessionId + "\");'>이슈 등록</a>" },
-			{ template: "<input type='search' id='myIssueProject-category' style='width:200px;vertical-align:middle;'/>" },
+			{ template: "<input type='search' id='myIssueProject-category' style='width:300px;vertical-align:middle;'/>" },
 			"search"
 		],
+		noRecords: {
+			template: function(e) {
+				return "<h2 class='text-center' style='color:#73879c;'>이슈가 존재하지 않습니다.</h2>";
+			}
+		},
 		messages: {
 			commands: {
 				search: "검색"

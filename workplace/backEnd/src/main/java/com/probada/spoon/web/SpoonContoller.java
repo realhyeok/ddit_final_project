@@ -1,5 +1,6 @@
 package com.probada.spoon.web;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.probada.collabo.vo.CollaboTaskVO;
 import com.probada.collabo.vo.CollaboVO;
 import com.probada.spoon.service.SpoonService;
 import com.probada.spoon.vo.SpoonVO;
@@ -33,7 +37,6 @@ public class SpoonContoller {
 	@Resource(name="spoonService")
 	SpoonService spoonService;
 	
-	
 	@Resource(name="projectUtil")
 	ProjectUtil projectUtil;
 	
@@ -45,7 +48,6 @@ public class SpoonContoller {
 	
 	@Resource(name = "collaboUtil")
 	CollaboUtil collaboUtil;
-	
 	
 	/**
 	 * 스푼 버튼 클릭시 해당 업무에 대한 정보 가져옴
@@ -91,7 +93,7 @@ public class SpoonContoller {
 	@ResponseBody
 	public ResponseEntity<SpoonVO> getTaskListByProjNo(String projNo) throws Exception {
 		ResponseEntity<SpoonVO> entity = null;
-
+		
 		LOGGER.debug("[요청받음] Spoon => /getTaskListByProjNo" + projNo);
 		SpoonVO spoonVO = new SpoonVO();
 		
@@ -107,6 +109,8 @@ public class SpoonContoller {
 			
 			taskVOList = spoonService.getTaskListByProjectNo(projNo);
 			spoonVO.setTaskList(taskVOList);
+			spoonVO.setProjNo(projNo);
+			
 			LOGGER.debug("[요청받음] Spoon => spoonVO" + spoonVO);
 			entity = new ResponseEntity<SpoonVO>(spoonVO, HttpStatus.OK);
 
@@ -116,4 +120,44 @@ public class SpoonContoller {
 		}
 		return entity;
 	}
+	
+	@PostMapping(value="/setTaskToCollabo")
+	@ResponseBody
+	public ResponseEntity<SpoonVO> setTaskToCollabo(@RequestBody SpoonVO spoonVO)throws Exception{
+		ResponseEntity<SpoonVO> entity = null;
+		
+		List<TaskVO> taskList = new ArrayList<TaskVO>();
+		List<String> taskNoList = spoonVO.getTaskNoList();
+		SimpleDateFormat smf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+
+			for (int i = 0; i < taskNoList.size(); i++) {
+				
+				TaskVO taskVO = new TaskVO();
+				taskVO.setTaskNo(taskNoList.get(i));
+				taskVO.setProjNo(spoonVO.getProjNo());
+				TaskVO taskResultVO = spoonService.getTaskDetailByTaskNo(taskVO);
+				
+				taskResultVO.setProjNo("");
+				taskResultVO.setCprojNo(spoonVO.getCprojNo());
+				
+				LOGGER.debug("wwwwwwwwwwwwwwwwwwww"+taskResultVO.toString());
+				
+				spoonService.setTaskToCollabo(taskResultVO);
+			}
+			
+			
+			
+			entity = new ResponseEntity<SpoonVO>(HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<SpoonVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+			LOGGER.debug("setTaskToCollabo에서 에러",e);
+		}
+		return entity;
+	}
+	
+	
+	
+	
+	
 }

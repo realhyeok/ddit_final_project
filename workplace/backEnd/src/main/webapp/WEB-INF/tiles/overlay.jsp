@@ -38,7 +38,7 @@ font-family: 'Jua', sans-serif;
 			<div class="x_panel">
 				<div class="x_title row d-flex justify-content-between">
 					<h5 class="title">
-							<i class="fa fa-clone"></i> <span class="task-bold task-sm">업무 수정</span>
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">업무 등록</span>
 					</h5>
 					<div class="clearfix">
 						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
@@ -47,7 +47,7 @@ font-family: 'Jua', sans-serif;
 				<div class="x_content">
 					<div class="row">
 							<div class="x_content">
-								<form id="registTaskForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<form id="anyWhereRegistTaskForm" method="post" enctype="multipart/form-data" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
 								<!-- 프로젝트명 -->
 								<div class="item form-group">
 									<label class="col-form-label col-md-3 col-sm-3 label-align"
@@ -55,27 +55,28 @@ font-family: 'Jua', sans-serif;
 										프로젝트명
 									</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="text" id="projTitle" required="required" class="form-control form-control-sm"
-										name="projTitle" value="{{projTitle}}" disabled>
+									<select class="form-control form-control-sm" id="projNo" name="projNo">
+												{{#each .}}
+              									<option value="{{projNo}}">{{title}}</option>
+												{{/each}}
+            								</select>
+									</div>
 								</div>
-							</div>
 									<div class="item form-group">
           								<label class="col-form-label col-md-3 col-sm-3 label-align for="userNickname">
 											담당자
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-            								<select class="form-control form-control-sm" id="userNickname" name="userId">
-												{{#each userList}}
-              									<option value="{{this.userId}}">{{this.nickname}}</option>
-												{{/each}}
-            								</select>
+            								<input readonly class="form-control form-control-sm" value="${userVO.nickname}" id="nickname" name="nickname">
+											<input type="hidden" value="${userVO.userId}" id="userId" name="userId">
 										</div>
         							</div>
-									<div class="item form-group">
-          								<label class="col-form-label col-md-3 col-sm-3 label-align for="important">
+									<div class="row d-flex justify-content-center">
+									<div class="item form-group" style="margin-right:10px;">
+          								<label class="col-form-label mr-3 label-align for="important">
 											중요도
 										</label>
-										<div class="col-md-6 col-sm-6 ">
+										<div class="">
             								<select class="form-control form-control-sm" id="important" name="important">
               									<option value="B101">낮음</option>
               									<option value="B102">보통</option>
@@ -83,11 +84,11 @@ font-family: 'Jua', sans-serif;
             								</select>
 										</div>
         							</div>
-									<div class="item form-group">
-          								<label class="col-form-label col-md-3 col-sm-3 label-align for="status">
+									<div class="item form-group" style="margin-right:55px;">
+          								<label class="col-form-label mr-3 label-align for="status">
 											진행상태
 										</label>
-										<div class="col-md-6 col-sm-6 ">
+										<div class="">
             								<select class="form-control form-control-sm" id="status" name="status">
               									<option value="B201">예정</option>
               									<option value="B202">진행중</option>
@@ -96,6 +97,7 @@ font-family: 'Jua', sans-serif;
             								</select>
 										</div>
         							</div>
+									</div>
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align"
 											for="startdate">시작일
@@ -121,13 +123,14 @@ font-family: 'Jua', sans-serif;
 										</div>
 									</div>
 									<div class=form-group">
-										<label class=" label-align"> 업무내용 </label>
-										<textarea class="projSummnote" name="content" ></textarea>
+										<textarea class="projSummnote" id="anyWhereTaskOverlayContent" name="content" ></textarea>
 									</div>
-									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
-										<button type="button" class="btn btn-success" onclick='registTask()'>등록</button>
-										<button class="btn btn-primary" type="button">취소</button>
-										<button class="btn btn-primary" type="reset">리셋</button>
+									 <div style="width:100%; float:left">
+           								 <input name="files" id="anyWhereProjectTaskUpload" type="file" aria-label="files" />
+        							</div>
+									<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
+										<button type="button" class="btn btn-success" onclick='anyWhereTaskRegistSubmit()'>등록</button>
+										<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 									</div>
 								</form>
 							</div>
@@ -139,7 +142,8 @@ font-family: 'Jua', sans-serif;
 </script>
 
 
-<script type="text/x-handlebars-template" id="anyWhereissueRegistFormTemplate">
+<!------------------------------- 이슈 등록 ----------------------------->
+<script type="text/x-handlebars-template" id="anyWhereIssueRegistFormTemplate">
 	<div class="row" style="display:none;" id="fadeInContent">
 		<div class="col-md-12">
 			<div class="x_panel">
@@ -154,7 +158,7 @@ font-family: 'Jua', sans-serif;
 				<div class="x_content">
 					<div class="row">
 							<div class="x_content">
-								<form id="registTaskForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<form id="anyWhereRegistIssueForm" enctype="multipart/form-data" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
 								<!-- 프로젝트명 -->
 								<div class="item form-group">
 									<label class="col-form-label col-md-3 col-sm-3 label-align"
@@ -162,20 +166,20 @@ font-family: 'Jua', sans-serif;
 										프로젝트명
 									</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="text" id="projTitle" required="required" class="form-control form-control-sm"
-										name="projTitle" value="{{projTitle}}" disabled>
-								</div>
-							</div>
-									<div class="item form-group">
-          								<label class="col-form-label col-md-3 col-sm-3 label-align for="userNickname">
-											담당자
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-            								<select class="form-control form-control-sm" id="userNickname" name="userId">
-												{{#each userList}}
-              									<option value="{{this.userId}}">{{this.nickname}}</option>
+									<select class="form-control form-control-sm" id="projNo" name="projNo">
+												{{#each .}}
+              									<option value="{{projNo}}">{{title}}</option>
 												{{/each}}
             								</select>
+									</div>
+								</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="userNickname">
+											제기자
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<input readonly class="form-control form-control-sm" value="${userVO.nickname}" id="nickname" name="nickname">
+											<input type="hidden" value="${userVO.userId}" id="userId" name="userId">
 										</div>
         							</div>
 									<div class="item form-group">
@@ -184,22 +188,21 @@ font-family: 'Jua', sans-serif;
 										</label>
 										<div class="col-md-6 col-sm-6 ">
             								<select class="form-control form-control-sm" id="important" name="important">
-              									<option value="B101">낮음</option>
-              									<option value="B102">보통</option>
-             									<option value="B103">높음</option>
+												<option value="B401">낮음</option>
+              									<option value="B402">보통</option>
+             									<option value="B403">높음</option>
             								</select>
 										</div>
         							</div>
 									<div class="item form-group">
           								<label class="col-form-label col-md-3 col-sm-3 label-align for="status">
-											진행상태
+											이슈 상태
 										</label>
 										<div class="col-md-6 col-sm-6 ">
             								<select class="form-control form-control-sm" id="status" name="status">
-              									<option value="B201">예정</option>
-              									<option value="B202">진행중</option>
-             									<option value="B203">지연중</option>
-             									<option value="B204">완료</option>
+              									<option value="B501">진행전</option>
+              									<option value="B502">진행중</option>
+             									<option value="B503">완료</option>
             								</select>
 										</div>
         							</div>
@@ -213,7 +216,7 @@ font-family: 'Jua', sans-serif;
 									</div>
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="enddate">마감일
+											for="enddate">종료일
 										</label>
 										<div class="col-md-6 col-sm-6 ">
 											<input type="date" id="enddate" name="enddate" class="form-control form-control-sm">
@@ -221,20 +224,21 @@ font-family: 'Jua', sans-serif;
 									</div>
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align"
-											for="title">업무 제목
+											for="title">이슈 제목
 										</label>
 										<div class="col-md-6 col-sm-6 ">
 											<input type="text" id="title" class="form-control form-control-sm" name="title">
 										</div>
 									</div>
 									<div class=form-group">
-										<label class=" label-align"> 업무내용 </label>
-										<textarea class="projSummnote" name="content" ></textarea>
+										<textarea class="projSummnote" id="anyWhereIssueOverlayContent" name="content" ></textarea>
 									</div>
-									<div class="col-md-7 col-sm-7 offset-md-3 mt-3">
-										<button type="button" class="btn btn-success" onclick='registTask()'>등록</button>
-										<button class="btn btn-primary" type="button">취소</button>
-										<button class="btn btn-primary" type="reset">리셋</button>
+									<div style="width:100%; float:left">
+											<input name="files" id="anyWhereProjectIssueUpload" type="file" aria-label="files" />
+									</div>
+									<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
+										<button type="button" class="btn btn-success" onclick='anyWhereIssueRegistSubmit()'>등록</button>
+										<button class="btn btn-primary" type="button" onclick="off()">취소</button>
 									</div>
 								</form>
 							</div>
@@ -324,13 +328,13 @@ font-family: 'Jua', sans-serif;
                                         <div id="roomSelect">
 
    									    <div id="chatListSeok"></div>
-                                            
-                                    
+
+
                                        </div>
                                 </div>
                             </div>
 							<br>
-							
+
 							<div class="accordion" id="accordion1" role="tablist" aria-multiselectable="true">
                   				  <div class="panel">
                        				 <span style="cursor : pointer;" class="panel-heading collapsed" role="tab" id="headingOne1" data-toggle="collapse" data-parent="#accordion1"
@@ -339,21 +343,21 @@ font-family: 'Jua', sans-serif;
                      			    </span>
                       			  <div id="collapseOne1Chat" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                          			   <div class="panel-body">
-                             		   
 
-										
+
+
                                		   				<img style="width:420px; height:380px; margin-left:10%;" class="Gpicture" src="/resources/seok/ezgif.com-gif-maker.gif" alt="Grapefruit slice atop a pile of other slices"><br>
-                                				
-										
+
+
                             		   </div>
                        			  </div>
                                   </div>
                				 </div>
 
-                          
-                            
+
+
            </div>
-                            
+
 </div>
 
 </script>
@@ -409,13 +413,13 @@ font-family: 'Jua', sans-serif;
 						<div class="col-lg-12">
 
 							<input id="title" onclick="button_click();" class="form-control col-md-12 seokid" name="title" value="" placeholder="">
-			
+
 			            </div>
-							
+
 					</div>
 
 
-		
+
 					<div class="form-group row">
 						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;프로젝트 선택</span></label>
 						<div class="col-lg-12">
@@ -427,15 +431,15 @@ font-family: 'Jua', sans-serif;
 			                    </select>
 						</div>
 					</div>
-			
+
 					<div class="form-group row">
 						  <label ><span class="required" >&nbsp;&nbsp;&nbsp;멤버선택</span></label>
 						<div class="col-lg-12" id="memberInvite">
 
 
-	
-							    <div id="example" role="application">	
-   									 <div class="demo-section k-content wide">	
+
+							    <div id="example" role="application">
+   									 <div class="demo-section k-content wide">
       									  <div>
            										 <label for="optional" id="employees">Employees</label>
          										   <label for="selected">Developers</label>
@@ -444,8 +448,8 @@ font-family: 'Jua', sans-serif;
            									   </select>
             					<select id="selected"></select>
         									</div>
-   									 </div>	
-   								 </div>	
+   									 </div>
+   								 </div>
 
 
 						</div>
@@ -458,8 +462,8 @@ font-family: 'Jua', sans-serif;
 						<button type="button" class="btn btn-info" id="replyDelBtn"
 							onclick="createRoom();">생성</button>
 						<button type="button" class="btn btn-dark" data-dismiss="modal">취소</button>
-					</div>	
-					
+					</div>
+
 				</form>
 			</div>
 
@@ -468,7 +472,7 @@ font-family: 'Jua', sans-serif;
 
 		<div class="modal-footer">
 
-			
+
 		</div>
 	</div>
 </div>
@@ -521,7 +525,7 @@ font-family: 'Jua', sans-serif;
                     </div>
                   </div>
                 </form>
-				
+
 			 	<div class="modal-footer">
           			<button type="button" class="btn btn-primary" onclick="SpoonTask_go()">확인</button>
           			<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
@@ -577,7 +581,7 @@ font-family: 'Jua', sans-serif;
                     </div>
                   </div>
                 </form>
-				
+
 			 	<div class="modal-footer">
           			<button type="button" class="btn btn-primary" onclick="">확인</button>
           			<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
@@ -596,20 +600,20 @@ font-family: 'Jua', sans-serif;
 	                <div id='roomHeader'>채팅 방 목록</div>
 	                <div id="roomSelect">
 
-						
-						{{#each.}}
-							<div class="roomEl" data-id="2" onclick="selectChatRoom('{{this.realRoom}}');">{{this.title}}</div>	
-						{{/each}}	                  	
 
-				
+						{{#each.}}
+							<div class="roomEl" data-id="2" onclick="selectChatRoom('{{this.realRoom}}');">{{this.title}}</div>
+						{{/each}}
+
+
 	              	</div>
 	        </div>
         </div>
-        
+
   <div id="offChatList" onclick="offChatList()">접기</div>
-        
+
   </div>
-  	
+
 </div> -->
 
 <!-- 채팅 기존 템플릿
@@ -619,29 +623,29 @@ font-family: 'Jua', sans-serif;
                             <div id="roomWrap">
                                 <div id="roomList">
                                         <div id="roomCreate" ><span style="font-size: 2.0em;">&nbsp;<i class="fa fa-comments"></i>channel &nbsp;<i class="fa fa-plus-square" data-toggle="modal" data-target="#createRoomModal"></i> </span></div>
-                                     
+
 
                                         <div id="roomSelect">
-                    
+
                                             <table class="table table-hover">
 
 												{{#each.}}
                                                		  <tr>
                                                 	    <td class="active" onclick="selectChatRoom('{{this.realRoom}}');"><span class="seokFont" style="font-size: 1.2em;">{{this.title}}</span></td>
                                               		  </tr>
-												{{/each}}	       	
+												{{/each}}
 
                                             </table>
-                                            
-                                    
+
+
                                             </div>
                                 </div>
                             </div>
                              <span style="font-size: 1.5em;" id="offChatList" onclick="offChatList()">&nbsp;&nbsp;<i class="fa fa-chevron-circle-right"></i>&nbsp;접기</span>
-                       
-                            
+
+
            </div>
-                            
+
 </div>
 
 
@@ -657,7 +661,7 @@ font-family: 'Jua', sans-serif;
 
 
 
- --> 
+ -->
 
 
 

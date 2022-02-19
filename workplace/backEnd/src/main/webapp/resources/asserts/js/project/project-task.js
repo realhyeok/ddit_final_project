@@ -103,7 +103,7 @@ const projList = $("#project-list").kendoGrid({
 			template: $("#projectCardTemplate").html(), field:"odd"
 		},
 	],
-	height:1100,
+	height:950,
 	dataSource: projDataSource
 });
 

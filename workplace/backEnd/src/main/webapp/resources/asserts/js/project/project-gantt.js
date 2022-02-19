@@ -45,6 +45,9 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 			tooltip: {
 				visible: true,
 			},
+			 messages: {
+				    noRecords: "There is no data on current page"
+				  },
 			toolbar:[
 				{ template: "<a class='k-button' href='javascript:getOverlayRegistTaskTemplate(\"taskRegistFormTemplate\",\"/app/task/getTaskRegistInfoByProjNo\")'>" +
 						"업무 등록</a>" },

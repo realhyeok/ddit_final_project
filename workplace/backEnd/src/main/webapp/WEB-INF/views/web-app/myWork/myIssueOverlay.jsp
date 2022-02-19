@@ -308,17 +308,17 @@
 											<div class="col-md-6 col-sm-6 ">
 	            								<select class="form-control form-control-sm" id="myIssueModifyImportant" name="important">
 													<option
-														{{#ifCond issueVO.important "==" "B401"}}
+														{{#ifCond issueVO.important "==" "낮음"}}
 			              									selected
 														{{/ifCond}}
 													value="B401">낮음</option>
 													<option
-														{{#ifCond issueVO.important "==" "B402"}}
+														{{#ifCond issueVO.important "==" "중간"}}
 			              									selected
 														{{/ifCond}}
 													value="B402">중간</option>
 													<option
-														{{#ifCond issueVO.important "==" "B403"}}
+														{{#ifCond issueVO.important "==" "높음"}}
 			              									selected
 														{{/ifCond}}
 													value="B403">높음</option>
@@ -330,17 +330,17 @@
 											<div class="col-md-6 col-sm-6 ">
             									<select class="form-control form-control-sm" id="myIssueModifyStatus" name="status">
               										<option
-														{{#ifCond issueVO.status "==" "B501"}}
+														{{#ifCond issueVO.status "==" "진행전"}}
 			              									selected
 														{{/ifCond}}
 													value="B501">진행전</option>
               										<option
-														{{#ifCond issueVO.status "==" "B502"}}
+														{{#ifCond issueVO.status "==" "진행중"}}
 			              									selected
 														{{/ifCond}}
 													value="B502">진행중</option>
               										<option
-														{{#ifCond issueVO.status "==" "B503"}}
+														{{#ifCond issueVO.status "==" "완료"}}
 			              									selected
 														{{/ifCond}}
 													value="B503">완료</option>

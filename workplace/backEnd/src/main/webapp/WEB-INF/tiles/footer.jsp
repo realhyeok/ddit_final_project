@@ -24,30 +24,30 @@
     	<input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
     	<label class="menu-open-button zoom-btn-large" for="menu-open" id="zoomBtn"> <span class="lines line-1"></span> <span class="lines line-2"></span> <span class="lines line-3"></span> </label>
     <ul class="zoom-menu">
-      <li><a class="zoom-fab zoom-btn-sm zoom-btn-person scale-transition scale-out"><i class="fa fa-user"></i></a></li>
-      <li><a class="zoom-fab zoom-btn-sm zoom-btn-doc scale-transition scale-out"><i class="fa fa-book"></i></a></li>
+      <li><a class="zoom-fab zoom-btn-sm zoom-btn-tangram scale-transition scale-out" href="javascript:getOverlayAnyWhereTaskRegistTemplate('${userVO.userId}');"><i class="fa fa-edit"></i></a></li>
+      <li><a class="zoom-fab zoom-btn-sm zoom-btn-person scale-transition scale-out" href="javascript:getOverlayAnyWhereIssueRegistTemplate('${userVO.userId}');"><i class="fa fa-exclamation"></i></a></li>
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-report scale-transition scale-out" href="javascript:getOverlayAnyWhereMailRegistTemplate('${userVO.nickname}');"><i class="fa fa-envelope-o"></i></a></li>
-      <li><a class="zoom-fab zoom-btn-sm zoom-btn-tangram scale-transition scale-out"><i class="fa fa-dashboard"></i></a></li>
-      <li><a class="zoom-fab zoom-btn-sm zoom-btn-report scale-transition scale-out" href="javascript:on()"><i class="fa fa-edit"></i></a></li>
-      <li><a class="zoom-fab zoom-btn-sm zoom-btn-feedback scale-transition scale-out"><i class="fa fa-bell"></i></a></li>
+       <li><a class="zoom-fab zoom-btn-sm zoom-btn-tangram scale-transition scale-out"><i class="fa fa-user-plus"></i></a></li>
+      <!--  <li><a class="zoom-fab zoom-btn-sm zoom-btn-report scale-transition scale-out" href="javascript:on()"><i class="fa fa-edit"></i></a></li>
+      <li><a class="zoom-fab zoom-btn-sm zoom-btn-feedback scale-transition scale-out"><i class="fa fa-bell"></i></a></li> -->
       <li><a class="zoom-fab zoom-btn-sm zoom-btn-feedback scale-transition scale-out" href="javascript:getOverlayAnyWhereSpoonTemplate('/app/spoon/getTaskListByProjNo');"><i class="fa fa-spoon"></i></a></li>
       <!-- <li><a class="zoom-fab zoom-btn-sm zoom-btn-feedback scale-transition scale-out" data-toggle="modal" data-target="#anyWhereSpoon"><i class="fa fa-spoon"></i></a></li> -->
     </ul>
   </div>
 	<!-- /floating action button  -->
- 
+
 
 	<!-- The Modal -->
 <!--   <div class="modal" id="anyWhereSpoon">
     <div class="modal-dialog">
       <div class="modal-content">
-      
+
         Modal Header
         <div class="modal-header">
           <h5 class="modal-title"><img src="https://img.icons8.com/ios/20/000000/spoon.png"/>&nbsp Spoon</h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        
+
         Modal body
         <div class="modal-body">
             <div class="x_panel">
@@ -82,7 +82,7 @@
                   </div>
 
 
-                  
+
                   <h6 class="collaboSpButton">Spoon 할 콜라보 프로젝트를 선택하세요.</h6>
                   <div class="form-group row">
                     <label class="control-label col-md-3 col-sm-3 ">콜라보</label>
@@ -99,21 +99,21 @@
             </div>
 
         </div>
-        
+
         Modal footer
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">확인</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
         </div>
-        
+
       </div>
     </div>
   </div>
-  
+
 </div> -->
-  
-  
-	
+
+
+
 </body>
 </html>
 

@@ -28,6 +28,8 @@ public class CollaboTaskVO {
 	private List<UserVO> userList = new ArrayList<UserVO>();
 	private List<FileVO> fileList = new ArrayList<FileVO>();
 	
+	private List<CollaboTaskVO> collaboTaskVO;
+	
 	private String sessionId = "";
 	
 	

@@ -29,6 +29,16 @@ public class TaskVO {
 
 	private String sessionId = "";
 
+	// spoon용
+	private String cprojNo = "";
+	
+	
+	public String getCprojNo() {
+		return cprojNo;
+	}
+	public void setCprojNo(String cprojNo) {
+		this.cprojNo = cprojNo;
+	}
 	public String getSessionId() {
 		return sessionId;
 	}
@@ -131,13 +141,23 @@ public class TaskVO {
 	public void setFileList(List<FileVO> fileList) {
 		this.fileList = fileList;
 	}
-
 	@Override
 	public String toString() {
-		return "TaskVO [projNo=" + projNo + ", taskNo=" + taskNo + ", status=" + status + ", docContNo=" + docContNo
-				+ ", startdate=" + startdate + ", enddate=" + enddate + ", regdate=" + regdate + ", important="
-				+ important + ", userId=" + userId + ", title=" + title + ", updatedate=" + updatedate + ", content="
-				+ content + ", projTitle=" + projTitle + ", userList=" + userList + ", nickname=" + nickname
-				+ ", fileList=" + fileList + "]";
+		return "TaskVO [taskNo=" + taskNo + ", projNo=" + projNo + ", title=" + title + ", content=" + content
+				+ ", userId=" + userId + ", important=" + important + ", regdate=" + regdate + ", updatedate="
+				+ updatedate + ", status=" + status + ", docContNo=" + docContNo + ", startdate=" + startdate
+				+ ", enddate=" + enddate + ", projTitle=" + projTitle + ", nickname=" + nickname + ", userList="
+				+ userList + ", fileList=" + fileList + ", sessionId=" + sessionId + ", cprojNo=" + cprojNo
+				+ ", getCprojNo()=" + getCprojNo() + ", getSessionId()=" + getSessionId() + ", getTaskNo()="
+				+ getTaskNo() + ", getProjNo()=" + getProjNo() + ", getTitle()=" + getTitle() + ", getContent()="
+				+ getContent() + ", getUserId()=" + getUserId() + ", getImportant()=" + getImportant()
+				+ ", getRegdate()=" + getRegdate() + ", getUpdatedate()=" + getUpdatedate() + ", getStatus()="
+				+ getStatus() + ", getDocContNo()=" + getDocContNo() + ", getStartdate()=" + getStartdate()
+				+ ", getEnddate()=" + getEnddate() + ", getProjTitle()=" + getProjTitle() + ", getNickname()="
+				+ getNickname() + ", getUserList()=" + getUserList() + ", getFileList()=" + getFileList()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
 	}
+
+	
 }

@@ -30,7 +30,7 @@ function readMyDashboard(userId, nickname){
 		batch: true,
 		noRecords: {
 			template: function(e) {
-				return "<h2>이슈가 존재하지 않습니다.</h2>";
+				return "<h2 class='text-center' style='color:#73879c;'>이슈가 존재하지 않습니다.</h2>";
 			}
 		},
 		scrollable: false,
@@ -86,7 +86,7 @@ function readMyDashboard(userId, nickname){
 		batch: true,
 		noRecords: {
 			template: function(e) {
-				return "<h2>메일이 존재하지 않습니다.</h2>";
+				return "<h2 class='text-center' style='color:#73879c;'>메일이 존재하지 않습니다.</h2>";
 			}
 		},
 		scrollable: false,
@@ -145,7 +145,7 @@ function readMyDashboard(userId, nickname){
 	    pageable: false,
 		noRecords: {
 			template: function(e) {
-				return "<h2>히스토리가 존재하지 않습니다.</h2>";
+				return "<h2 class='text-center' style='color:#73879c;'>히스토리가 존재하지 않습니다.</h2>";
 			}
 		},
 		scrollable: false,
@@ -287,7 +287,7 @@ function readMyDashboard(userId, nickname){
 		batch: true,
 		noRecords: {
 			template: function(e) {
-				return "<h2>문서가 존재하지 않습니다.</h2>";
+				return "<h2 class='text-center' style='color:#73879c;'>문서가 존재하지 않습니다.</h2>";
 			}
 		},
 		scrollable: false,
@@ -351,24 +351,31 @@ function myTaskChart(sessionId){
 		},
 		dataType: "json",
 		success : function(data){
-			var dataMsg = "<canvas id='myTaskChartDashboard'></canvas>";
         	$("#canvasBox").empty();
+
+        	var dataMsg = "<canvas id='myTaskChartDashboard' width='450' height='210'></canvas>";
         	$("#canvasBox").append(dataMsg);
 			
 			var data_doughnut = {
-				labels: ['예정', '진행', '지연', '완료'],
+				labels: ['미배정', '진행중', '지연중', '완료'],
 				datasets: [{
 					data: [data.b201, data.b202, data.b203, data.b204],
 					backgroundColor: ['#6c757d', '#007bff', '#ffc107', '#28a745'],
-					hoverOffset: 4,
-					options: {
-						legend: {position : 'right'}
-					}
+					hoverOffset: 4
 				}]
 			};
 			var myTaskChartData = {
 				type: 'doughnut',
-				data: data_doughnut
+				data: data_doughnut,
+				options: {
+					responsive: false,
+					plugins: {
+						legend: {
+							position: 'right',
+							align: 'center'
+						}
+			        }
+				}
 			};
 			
 			var myTaskChart = new Chart(

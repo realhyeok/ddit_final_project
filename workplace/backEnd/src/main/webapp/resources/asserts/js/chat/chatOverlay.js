@@ -132,7 +132,7 @@ function openChatList(){
                  ],
                  noRecords: {
  	      			template: function(e) {
- 	      				return "<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;채팅방이 존재하지 않습니다.</h2>";
+ 	      				return "<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;채팅방이 존재하지 않습니다.</h2>";
  	      			}
  	      		},
              editable: "inline"

@@ -53,7 +53,7 @@ function receiveMailBox(userId){
 		},
 		noRecords: {
 			template: function(e) {
-				return "<h2>메일이 존재하지 않습니다.</h2>";
+				return "<h2 class='text-center' style='color:#73879c;'>메일이 존재하지 않습니다.</h2>";
 			}
 		},
 		scrollable: false,
@@ -91,22 +91,17 @@ function acceptCollabo() {
 		return;
 	}else{
 		
-		alert("수락수락");
-		
 		let userFromCproj = document.getElementById('cprojReplyUserTo').value; //test29
-		console.log("userFrom =>" + userFromCproj);
 		
-		let userFromProjNo = $('.userToProj').attr('idx');  //4
-		console.log("userFromProjNo =>" + userFromProjNo);
+		//let userFromProjNo = $('.userToProj').attr('idx');  //4 idxNoTo
+		let userFromProjNo = document.getElementById('idxNoTo').value;  //4
 		
 		let userToCproj = document.getElementById('cprojReplyUserFrom').innerText; //pooh_00
-		console.log("userTo =>" + userToCproj);
 		
-		let userToProjNo = $('.userFromProj').attr('idx'); //3
-		console.log("userToProjNo =>" + userToProjNo);
+		//let userToProjNo = $('.userFromProj').attr('idx'); //3
+		let userToProjNo = document.getElementById('idxNoFrom').value; //3
 		
 		let title = document.getElementById('CollboMailTitle').value + "제안 수락메일입니다.";
-		console.log("title =>" + title);
 		
 		var collaboVO = {"userFrom" : userFromCproj,
 				"userFromProjNo" : userFromProjNo,
@@ -121,7 +116,6 @@ function acceptCollabo() {
 			data : collaboVO,
 			success : function(data) {
 				alert("등록에 성공했습니다.");
-				console.log(data.cprojNo);
 				
 				// off();
 			},
@@ -187,14 +181,14 @@ function replyMailForm(userFromCproj,userToCproj,userToProjNo,userFromProjNo) {
 }
 
 function CollaboGo() {
-	alert("콜라보고!")
+	alert("콜라보 프로젝트 제안을 수락하셨습니다.")
 	location.href="/app/collabo-list";
 }
 
 
 //콜라보 제안 메일 거절
 function refuseCoproj() {
-	alert("구독 좋아요");
+	alert("콜라보 프로젝트 제안을 거절하셨습니다.");
 
 	let refuseTo = document.getElementById('cprojReplyUserFrom').innerText;
 	console.log("refuseTo =>" + refuseTo);

@@ -9,7 +9,7 @@
 	  SELECT
         	A.TASK_NO AS TASK_NO,
             A.TITLE AS TITLE,
-            B.NICKNAME AS USER_ID,
+            B.USER_ID AS USER_ID,
             A.CONTENT AS CONTENT,
             A.IMPORTANT AS IMPORTANT,
             A.REGDATE AS REGDATE,
@@ -50,5 +50,43 @@
 			A.PROJ_NO = #{projNo}
 	</select>
 	
+	<insert id="insertTaskToCollabo" parameterType="task">
+		INSERT INTO TASK (
+					     TASK_NO
+					    ,CPROJ_NO
+					    ,TITLE
+					    ,USER_ID
+					    ,CONTENT
+					    ,IMPORTANT
+					    ,REGDATE
+					    ,UPDATEDATE
+					    ,STATUS
+					    ,DOC_CONT_NO
+					    ,STARTDATE
+					    ,ENDDATE,
+					     SESSION_ID
+		) VALUES (
+					    #{taskNo}
+					    ,#{cprojNo}
+					    ,#{title}
+					    ,#{userId}
+					    ,#{content}
+					    ,#{important}
+					    ,sysdate
+					    ,sysdate
+					    ,#{status}
+					    ,1
+					    ,TO_DATE(SUBSTR(#{startdate},1,10),'YYYY-MM-DD')
+					    ,TO_DATE(SUBSTR(#{enddate},1,10),'YYYY-MM-DD')
+					    ,#{sessionId}
+		)
+	</insert>
+	
+	
+	
+	<select id="selectTaskSeqNext" resultType="int">
+		SELECT
+			TASK_SEQ.NEXTVAL AS TASK_NO FROM DUAL
+	</select>
 	
 </mapper>

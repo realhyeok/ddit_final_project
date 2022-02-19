@@ -95,7 +95,7 @@
 		           , #{hasDirectories}
 		           , #{size}
 		           , #{etc}
-		           )					
+		           )
 	</update>
 
 	<update id="updateDocument" parameterType="com.probada.document.vo.FileVO">
@@ -192,6 +192,17 @@
 
 	</select>
 
+	<select id="selectDashDocumentByProjNo" resultMap="DocResultMap" parameterType="com.probada.document.vo.ProjectUserVO">
+		SELECT
+			*
+		FROM
+			DOCUMENT
+		WHERE
+			 PROJ_NO = #{projNo}
+		AND
+			isdirectory = 0
+	</select>
+
 	<select id="selectDocumentListForProjDetail" resultMap="DocResultMap" parameterType="String">
 		SELECT
 			*
@@ -214,21 +225,21 @@
 			UPLOADPATH LIKE '%'||'/업무/'||#{title}||'/%'
 
 	</select>
-	
+
 	<select id="selectDocumentListBytaskTitleANDcprojNo" resultMap="DocResultMap" parameterType="collaboTaskVO">
 		SELECT *
 		FROM DOCUMENT
 		WHERE CPROJ_NO = #{cprojNo}
 		AND	UPLOADPATH LIKE '%'||'/업무/'||#{title}||'/%'
 	</select>
-	
+
 	<select id="selectDocumentListByIssueTitleAndProjNo" resultMap="DocResultMap" parameterType="issue">
 		SELECT *
 		  FROM DOCUMENT
 		 WHERE PROJ_NO = #{projNo}
 		   AND UPLOADPATH LIKE '%'||'/이슈/'||#{title}||'/%'
 	</select>
-	
+
 	<!-- <select id="selectMemberList" resultType="member">
 		select
 		*

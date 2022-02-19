@@ -34,7 +34,7 @@ public class DocumentDAOImpl implements DocumentDAO{
 
 	@Override
 	public void insertDocument(FileVO document) throws SQLException {
-		
+
 		sqlSession.insert("Document-Mapper.insertDocument", document);
 
 	}
@@ -173,6 +173,14 @@ public class DocumentDAOImpl implements DocumentDAO{
 	@Override
 	public List<FileVO> selectDocumentListBytaskTitleANDcprojNo(CollaboTaskVO collaboTaskVO) throws SQLException {
 		List<FileVO> fileList = sqlSession.selectList("Document-Mapper.selectDocumentListBytaskTitleANDcprojNo", collaboTaskVO);
+		return fileList;
+	}
+
+	@Override
+	public List<FileVO> selectDashDocumentByProjNo(String projNo) throws SQLException {
+
+		List<FileVO> fileList = sqlSession.selectList("Document-Mapper.selectDashDocumentByProjNo",projNo);
+
 		return fileList;
 	}
 }

@@ -372,6 +372,13 @@ height: 8%;
   overflow-y: auto;
 }
 
+
+.circleOff{
+
+
+}
+
+
 </style>
 
 
@@ -421,7 +428,7 @@ height: 8%;
 			               
 			                 
 			               
-			                  <h5>${chat.nickname} <span class="chat_date" id="${chat.nickname}onoff">오프라인</span> </h5>
+			                  <h5>${chat.nickname} <span class="chat_date" id="${chat.nickname}onoff">오프라인<div class="circleOff"></div></span> </h5>
 							
 			                 
 			                
@@ -621,8 +628,8 @@ window.addEventListener('load', function(){
   				
   				
   				let firstUser = inUser[i].replace(/\"/gi, "").replace("[","").replace("]","");
-  				
-  				document.getElementById(firstUser+"onoff").innerText = "온라인";
+  				document.getElementById(firstUser+"onoff").innerHTML = "온라인&nbsp;<div class='circleOff' style='display:inline-block; width: 12px; height: 12px; background: green; border-radius: 50%;' >"; 
+  				/* document.getElementById(firstUser+"onoff").innerText = "온라인"; */
   				
   			}
   			
@@ -647,8 +654,8 @@ window.addEventListener('load', function(){
         	   
         	 
         	  var chatUserId = receive[1]+"onoff";
-               document.getElementById(chatUserId).innerText = "오프라인"; 
-
+              document.getElementById(chatUserId).innerHTML = "오프라인&nbsp;<div class='circleOff' style='display:inline-block; width: 12px; height: 12px; background: red; border-radius: 50%;' >"; 
+                
               toastr.warning(receive[1]+"님이 퇴장하였습니다.");
         	  
         	   return false;

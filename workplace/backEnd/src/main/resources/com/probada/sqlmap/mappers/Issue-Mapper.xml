@@ -71,6 +71,8 @@
 			"USER" B ON A.USER_ID = B.USER_ID
 		WHERE
 			A.PROJ_NO = #{projNo}
+		ORDER BY
+			A.ISSUE_NO DESC
 	</select>
 
 	<select id="selectIssueByIssueNo" resultType="issue" parameterType="issue">

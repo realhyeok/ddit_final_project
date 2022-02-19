@@ -67,7 +67,7 @@
                       alertIndex.js의 showAsideBarList() 메서드가 처리중..
                     </ul>
                   </li> -->
-                  <li><a><i class="fa fa-windows"></i> 그룹 <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-windows"></i> 프로젝트 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu user_project_list">
                       <!-- 리스트 추가 -->
                      <!-- alertIndex.js의 showAsideBarList() 메서드가 처리중.. -->

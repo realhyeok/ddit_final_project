@@ -1,5 +1,6 @@
 package com.probada.spoon.vo;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.probada.collabo.vo.CollaboVO;
@@ -20,37 +21,44 @@ public class SpoonVO {
 	private String updatedate;
 	private String likeCount;
 	private String projNo;
+	private String cprojNo;
 	private String enddate;
 
-//	For ProjectTagService
+	//	For ProjectTagService
 	private Object tagNames;
 	private Object tagNo;
 	private List<UserVO> member;
 
-//	For ProjectUserRelation
+	//For ProjectUserRelation
 	private String userId;
 	private String role;
 	private String joindate;
 	private String toPlUserId;
-
+	
 	// For spoon
+	private List<String> taskNoList;
 	private List<TaskVO> taskList;
 	private List<CollaboVO> cprojTitleList;
-
+	
+	
+	
+	public List<String> getTaskNoList() {
+		return taskNoList;
+	}
+	public void setTaskNoList(List<String> taskNoList) {
+		this.taskNoList = taskNoList;
+	}
 	public List<CollaboVO> getCprojTitleList() {
 		return cprojTitleList;
 	}
 	public void setCprojTitleList(List<CollaboVO> cprojTitleList) {
 		this.cprojTitleList = cprojTitleList;
 	}
-	@Override
-	public String toString() {
-		return "SpoonVO [notice=" + notice + ", status=" + status + ", docContNo=" + docContNo + ", startdate="
-				+ startdate + ", privacy=" + privacy + ", noticeCont=" + noticeCont + ", intro=" + intro + ", title="
-				+ title + ", cprojTitle=" + cprojTitle + ", updatedate=" + updatedate + ", likeCount=" + likeCount
-				+ ", projNo=" + projNo + ", enddate=" + enddate + ", tagNames=" + tagNames + ", tagNo=" + tagNo
-				+ ", member=" + member + ", userId=" + userId + ", role=" + role + ", joindate=" + joindate
-				+ ", toPlUserId=" + toPlUserId + ", taskList=" + taskList + "]";
+	public String getCprojNo() {
+		return cprojNo;
+	}
+	public void setCprojNo(String cprojNo) {
+		this.cprojNo = cprojNo;
 	}
 	public String getCprojTitle() {
 		return cprojTitle;

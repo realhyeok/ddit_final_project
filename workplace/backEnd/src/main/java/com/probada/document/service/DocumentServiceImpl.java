@@ -17,6 +17,7 @@ import com.probada.task.vo.TaskVO;
 public class DocumentServiceImpl implements DocumentService{
 
 
+
 	private DocumentDAO documentDAO;
 
 	public void setDocumentDAO(DocumentDAO documentDAO) {
@@ -184,6 +185,15 @@ public class DocumentServiceImpl implements DocumentService{
 	@Override
 	public List<FileVO> getDocumentListBytaskTitleANDcprojNo(CollaboTaskVO collaboTaskVO) throws SQLException {
 		List<FileVO> fileList = documentDAO.selectDocumentListBytaskTitleANDcprojNo(collaboTaskVO);
+		return fileList;
+	}
+
+
+	@Override
+	public List<FileVO> getDashDocumentByProjNo(String projNo) throws SQLException {
+
+		List<FileVO> fileList = documentDAO.selectDashDocumentByProjNo(projNo);
+
 		return fileList;
 	}
 }

@@ -484,7 +484,7 @@ public class DocumentController {
 	@ResponseBody
 	public ResponseEntity<List<FileVO>> getDocumentListByUserId(String userId) throws Exception {
 		ResponseEntity<List<FileVO>> entity = null;
-		
+
 		try {
 			List<FileVO> fileList = documentService.getDocumentListByUserId(userId);
 			entity = new ResponseEntity<List<FileVO>>(fileList, HttpStatus.OK);
@@ -492,6 +492,23 @@ public class DocumentController {
 			entity = new ResponseEntity<List<FileVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
 			e.printStackTrace();
 		}
+		return entity;
+	}
+
+	@RequestMapping("/getDashDocumentByProjNo")
+	@ResponseBody
+	public ResponseEntity<List<FileVO>> getDocumentListByProjNo(String projNo) throws Exception {
+		ResponseEntity<List<FileVO>> entity = null;
+
+		try {
+			List<FileVO> fileList = documentService.getDashDocumentByProjNo(projNo);
+			entity = new ResponseEntity<List<FileVO>>(fileList, HttpStatus.OK);
+
+		} catch(Exception e) {
+			entity = new ResponseEntity<List<FileVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
 		return entity;
 	}
 

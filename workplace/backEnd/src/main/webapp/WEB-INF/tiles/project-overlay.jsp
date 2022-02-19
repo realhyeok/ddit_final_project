@@ -845,8 +845,13 @@
 				<label class=" label-align"> 프로젝트 소개 </label>
 				<textarea class="projSummnote" name="intro" required="required"></textarea>
 			</div>
-
-
+			 <div class="item form-group">
+				<label class="control-label col-md-3 col-sm-3 label-align">태그 추가</label>
+                  			<div class="col-md-9 col-sm-9 ">
+								<input type="text" data-role="tagsinput" id="projectTag"
+									name="projectTag" class="form-control form-control-sm" name="projectTag">
+							</div>
+             </div>
 			<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
 				<button type="button" class="btn btn-success" onclick='registProject()'>등록</button>
 				<button class="btn btn-primary" type="button" onclick='off()'>취소</button>
