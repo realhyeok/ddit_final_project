@@ -23,7 +23,7 @@
                       </div>
                       
                       <div class="profileIntro">
-	                      <h3 class="user-profile-nickname text-truncate">${userProfileVO.nickname }</h3>
+	                      <h3 class="user-profile-nickname text-truncate" style="cursor:pointer;">${userProfileVO.nickname }</h3>
 	                      <p> 이메일: ${userProfileVO.userId}</p>
                       </div>
 

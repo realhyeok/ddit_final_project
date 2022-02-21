@@ -4,7 +4,7 @@
 <div class="col-md-6 col-sm-6" style="min-height:340px;">
 		<div class="x_title">
 			<h2>최근 업무</h2>
-			<a class="more float-right mt-2 text-dark" href="javascript:document.getElementById('task-tab').click();">
+			<a class="more float-right mt-2 text-dark" style="color:#73879c !important" href="javascript:document.getElementById('task-tab').click();">
 				더보기<i class="fa fa-arrow-right"></i>
 			</a>
 			<div class="clearfix"></div>
@@ -17,7 +17,7 @@
 <div class="col-md-6 col-sm-6" style="min-height:340px;">
 		<div class="x_title">
 			<h2>최근 이슈</h2>
-			<a class="more float-right mt-2 text-dark" href="javascript:document.getElementById('issue-tab').click();">
+			<a class="more float-right mt-2 text-dark" style="color:#73879c !important" href="javascript:document.getElementById('issue-tab').click();">
 				더보기<i class="fa fa-arrow-right"></i>
 			</a>
 			<div class="clearfix"></div>
@@ -202,7 +202,7 @@
 				<h2>
 					최근 히스토리
 				</h2>
-				<a class="more float-right mt-2 text-dark" href="javascript:document.getElementById('history-tab').click();">
+				<a class="more float-right mt-2 text-dark" style="color:#73879c !important" href="javascript:document.getElementById('history-tab').click();">
 					더보기
 					<i class="fa fa-arrow-right"></i>
 				</a>
@@ -217,7 +217,7 @@
 	<div class="col-md-6 col-sm-6" style="min-height:340px;">
 		<div class="x_title">
 			<h2>최근 문서</h2>
-			<a class="more float-right mt-2 text-dark" href="javascript:document.getElementById('document-tab').click();">
+			<a class="more float-right mt-2 text-dark" style="color:#73879c !important" href="javascript:document.getElementById('document-tab').click();">
 				더보기<i class="fa fa-arrow-right"></i>
 			</a>
 			<div class="clearfix"></div>
@@ -232,7 +232,7 @@
 	<div class="col-md-12 col-sm-12 pl-0">
 		<div class="x_title">
 			<h2>구성원별 업무 통계</h2>
-			<a class="more float-right mt-2" href="javascript:on();"> 더보기 <i
+			<a class="more float-right mt-2" style="color:#73879c !important" href="javascript:on();"> 더보기 <i
 				class="fa fa-arrow-right"></i>
 			</a>
 			<div class="clearfix"></div>

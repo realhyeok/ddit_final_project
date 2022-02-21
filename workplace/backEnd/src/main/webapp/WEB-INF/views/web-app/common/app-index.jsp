@@ -119,7 +119,7 @@
 							<div class="noti-desc">메일</div>
 						</div>
 						<a class="more"
-							href="<%=request.getContextPath()%>/app/myWork#mailReceive-tab">
+							href="<%=request.getContextPath()%>/app/myWork?mail=mail">
 							더보기 <i class="fa fa-arrow-right"></i>
 						</a>
 					</div>
@@ -141,7 +141,7 @@
           <div class="x_panel_origin">
             <div class="x_title">
               <h2>내 업무 </h2>
-              <a class="more float-right mt-2" href="<%=request.getContextPath()%>/app/myWork?#task-tab">
+              <a class="more float-right mt-2" style="color:#73879c" href="<%=request.getContextPath()%>/app/myWork?#task-tab">
                 더보기
                 <i class="fa fa-arrow-right"></i>
               </a>
@@ -174,7 +174,7 @@
           <div class="x_panel_origin">
             <div class="x_title">
               <h2>최근 작성한 문서</h2>
-              <a class="more float-right mt-2" href="<%=request.getContextPath()%>/app/myWork?#task-tab">
+              <a class="more float-right mt-2" style="color:#73879c" href="<%=request.getContextPath()%>/app/myWork?#task-tab">
                 더보기
                 <i class="fa fa-arrow-right"></i>
               </a>
@@ -248,7 +248,7 @@
         <div class="x_panel_origin">
           <div class="x_title">
             <h2>참여 프로젝트</h2>
-            <a class="more float-right mt-2" href="<%=request.getContextPath() %>/app/project-list">
+            <a class="more float-right mt-2" style="color:#73879c" href="<%=request.getContextPath() %>/app/project-list">
               더보기
               <i class="fa fa-arrow-right"></i>
             </a>

@@ -487,6 +487,10 @@ public class DocumentController {
 
 		try {
 			List<FileVO> fileList = documentService.getDocumentListByUserId(userId);
+			for(FileVO fileVO : fileList) {
+				int size = (fileVO.getSize()) / 1024;
+				fileVO.setSize(size);
+			}
 			entity = new ResponseEntity<List<FileVO>>(fileList, HttpStatus.OK);
 		} catch(Exception e) {
 			entity = new ResponseEntity<List<FileVO>>(HttpStatus.INTERNAL_SERVER_ERROR);

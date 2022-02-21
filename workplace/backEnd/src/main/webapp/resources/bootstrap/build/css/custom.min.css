@@ -6971,9 +6971,9 @@ floating action button css start
 
 .zoom-menu {
   position: absolute;
-  right: 48px;
+  right: 47px;
   left: auto;
-  top: -245%;
+  top: -170%;
   transform: translateY(-50%);
   /* height: 100%; */
   width: 100%;

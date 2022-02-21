@@ -19,7 +19,7 @@ function subProjList(cprojNo) {
 			
 			for (var i = 0; i < arg.length; i++) {
 				
-				subProjTitle += "<tr><td><a href='"+projUrl+""+arg[i].projNo+"' >"+arg[i].title+"</a></td></tr>";
+				subProjTitle += "<tr><td><a class='collabo-a' href='"+projUrl+""+arg[i].projNo+"' >"+arg[i].title+"</a></td></tr>";
 			}
 			
 			//subProjTitle += "<tr><td><a href='"+projUrl+""+arg.projNo+"' >"+arg.title+"</a></td></tr>";

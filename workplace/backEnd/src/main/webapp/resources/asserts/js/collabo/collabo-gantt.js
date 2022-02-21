@@ -3,10 +3,6 @@ console.log(projNo);
 
 var ganttDataSource = new kendo.data.GanttDataSource({
 	transport: {
-		/*read: {
-		      url: "https://demos.telerik.com/kendo-ui/service/GanttTasks",
-		      dataType: "jsonp"
-		    },*/
 	    read: {
 	      url: "/app/task/getTaskListForGanttByProjNo",
 	      dataType: "json",
@@ -16,16 +12,6 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 	  schema: {
 	    model: {
 	      id: "id",
-	     /* fields: {
-	          id: { from: "ID", type: "number" },
-	          orderId: { from: "OrderID", type: "number", validation: { required: true } },
-	          parentId: { from: "ParentID", type: "number", validation: { required: false }, defaultValue: null },
-	          start: { from: "Start", type: "date" },
-	          end: { from: "End", type: "date" },
-	          title: { from: "Title", defaultValue: "", type: "string" },
-	          summary: { from: "Summary" },
-	          expanded: { from: "Expanded" }
-	        }*/
 	      fields: {
 	        id: { from: "taskNo", type: "number" },
 	        orderId: { from: "OrderID", type: "number", validation: { required: true } },
@@ -46,7 +32,7 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 				visible: true,
 			},
 			toolbar:[
-				{ template: "<a class='k-button' href='javascript:getOverlayRegistTaskTemplate(\"taskRegistFormTemplate\",\"/app/task/getTaskRegistInfoByProjNo\")'>" +
+				{ template: "<a class='k-button' href='javascript:getOverlayRegistCollaboTaskTemplate(\"collaboTaskRegistFormTemplate\",\"/app/collabo/getTaskRegistInfoByCprojNo\")'>" +
 						"업무 등록</a>" },
 				{ name: "pdf" }
 				],
@@ -61,7 +47,7 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 					],
 					columns: [
 						{ field: "title", title: "업무명", editable: true,
-							template: "<a href=\"javascript:getTaskTemplate('/app/task/getTaskDetailByTaskNo',#:id#,'taskDetailForm','taskDetailFormTarget')\" class='text-dark'>#:title#</a>"}
+							template: "<a href=\"javascript:getTaskTemplate('/app/collabo/getTaskDetailByTaskNo',#:id#,'collaboTaskDetailForm','collaboTaskDetailFormTarget')\" class='text-dark'>#:title#</a>"}
 						],
 						autoSync:true,
 						height:774,

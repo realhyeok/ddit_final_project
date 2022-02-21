@@ -108,7 +108,6 @@ function getOverlayTemplate(templateId) {
 //콜라보 프로젝트 수정폼
 function getOverlayModifyTemplate(templateId, url) {
 	on();
-	alert("수정폼이다");
 	console.log("templateId" + templateId);
 	console.log("url" + url);
 	

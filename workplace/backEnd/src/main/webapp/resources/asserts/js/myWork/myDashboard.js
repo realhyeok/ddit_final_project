@@ -306,14 +306,14 @@ function readMyDashboard(userId, nickname){
 				title: "문서명", 
 				headerAttributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' }, 
 				attributes: { style: 'padding-top:3px;padding-bottom:3px;' },
-				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:360px;'>#:name#</span>"
+				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:430px;'>#:name#</span>"
 			},
 			{ 
 				field: "size", 
-				title: "파일크기 (BYTE)", 
+				title: "파일크기 (KB)", 
 				headerAttributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' },
 				attributes: { style: 'padding-top:3px;padding-bottom:3px;' },
-				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:100px;'>#:size# BYTE</span>",
+				template: "<span class='text-dark d-inline-block text-truncate float-right' style='max-width:100px;'>#:size# KB</span>",
 				width: 110 
 			},
 			{ 

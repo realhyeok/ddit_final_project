@@ -107,8 +107,15 @@ public class ProjectController {
 		return entity;
 	}
 
+	@RequestMapping("/searchProj")
+	public ModelAndView searchProj(ModelAndView mnv) {
+
+		String url = "/web-app/project/project-search-detail";
+		mnv.setViewName(url);
+		return mnv;
+	}
+
 	@RequestMapping("/getProjectByProjNo")
-	@ResponseBody
 	public ResponseEntity<ProjectVO> getProjectByProjNo(@RequestParam(defaultValue="") String projNo) throws Exception {
 		ResponseEntity<ProjectVO> entity = null;
 

@@ -67,6 +67,7 @@ function connectWs(){
 				var alertData = {
 					serderNickName: serderNickName,
 					receiverUserId: receiverUserId,
+					mailFrom : serderWhere,
 					content: "["+ serderWhere +"]\n" + serderNickName + "님이 " + senderTarget + "를(을) " + senderWhatToDo + "했습니다."
 				};
 				
@@ -128,7 +129,21 @@ function add_alert_li(alertData) {
 	let alertCount = $('#navbarDropdown1 span.badge.bg-green').html();
 	$('span.badge.bg-green').html(parseInt(alertCount) + 1);
 
-  li.innerHTML = `<li class="nav-item">
+	if(alertData.mailFrom === "메일" || alertData.mailFrom === "콜라보" || alertData.mailFrom === "채팅" || alertData.mailFrom === "프로젝트"){
+		li.innerHTML = `<li class="nav-item">
+					  <a class="dropdown-item" href="/app/myWork?mail=mail">
+						  <span class="image">
+						  	<img src="/user/getPictureByNickname?nickname=${alertData.nickname}" alt="Profile Image" />
+						  </span>
+						  <span>
+							  <span>${alertData.nickname}</span>
+							  <span class="time">${timeForToday(alertData.writeTime)}</span>
+						  </span>
+						  <span class="message">${alertData.content}</span>
+					  </a>
+				  </li>`;
+	} else {
+		li.innerHTML = `<li class="nav-item">
 					  <a class="dropdown-item">
 						  <span class="image">
 						  	<img src="/user/getPictureByNickname?nickname=${alertData.nickname}" alt="Profile Image" />
@@ -140,6 +155,9 @@ function add_alert_li(alertData) {
 						  <span class="message">${alertData.content}</span>
 					  </a>
 				  </li>`;
+	}
+
+  
   while (li.children.length > 0) {
     ul.prepend(li.children[0]);
   }
@@ -151,6 +169,7 @@ $.ajax({
 	type: "post",
 	url: "/app/updateAlertList.do",
 	contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+
 	success: function (data) {
 		var alertList = data.alertList;
 		var alertCount = data.alertCount;
@@ -158,15 +177,30 @@ $.ajax({
 		$('span.badge.bg-green').html(alertCount);
 		let alert_ul = document.querySelector("#alertVOList");
 		const li = document.createElement("li");
+
 		if(alertList.length === 0){
 			li.innerHTML =`<li class="nav-item none-alert">
 												<strong>해당 내용이 없습니다.</strong>
 											</li>`;
 			alert_ul.prepend(li.children[0]);
 		}
+
 		alertList.forEach(e => {
-			// add_alert_li(this);
-			li.innerHTML = `<li class="nav-item">
+			if(e.mailFrom === "메일" || e.mailFrom === "콜라보" || e.mailFrom === "채팅" || e.mailFrom === "프로젝트"){
+				li.innerHTML = `<li class="nav-item">
+								<a class="dropdown-item" href="/app/myWork?mail=mail">
+									<span class="image">
+										<img src="/user/getPictureByNickname?nickname=${e.nickname}" alt="Profile Image" />
+									</span>
+									<span>
+										<span>${e.nickname}</span>
+										<span class="time">${timeForToday(e.writeTime)}</span>
+									</span>
+									<span class="message">${e.content}</span>
+								</a>
+							</li>`;
+			} else {
+				li.innerHTML = `<li class="nav-item">
 												<a class="dropdown-item">
 													<span class="image">
 														<img src="/user/getPictureByNickname?nickname=${e.nickname}" alt="Profile Image" />
@@ -178,6 +212,7 @@ $.ajax({
 													<span class="message">${e.content}</span>
 												</a>
 											</li>`;
+			}
 			while (li.children.length > 0) {
 				alert_ul.prepend(li.children[0]);
 			}

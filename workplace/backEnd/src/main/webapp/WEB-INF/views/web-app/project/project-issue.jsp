@@ -36,10 +36,16 @@
 </div>
 
 <script type="text/x-kendo-template" id="mileTemplate">
-    <div class="milestone" data-bind="click: searchIssue" style="border-left-color: rgb(138,43,226);border-left-width: 2px;">
+    <div class="milestone" data-bind="click: searchIssue" style="border-left-width: 2px;border-left-color:
+		# if(status == "B301"){ #
+			rgb(0,105,92)
+		# }else if(status == "B302"){ #
+			rgb(68,81,181)
+		# } #
+	;">
 		<div class="x_title row justify-content-between">
       		<h4>
-				<span class="d-inline-block text-truncate" style="max-width:200px;color:black;">#:title#</span> 
+				<span class="d-inline-block text-truncate" style="max-width:200px;color:black;">#:title#</span>
 				<span class="#=status#"></span><span class="internal"></span>
 			</h4>
 				<div class="text-right">

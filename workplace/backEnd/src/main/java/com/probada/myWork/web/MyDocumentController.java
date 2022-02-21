@@ -27,14 +27,6 @@ import com.probada.document.vo.FileVO;
 import com.probada.document.vo.ProjectUserVO;
 import com.probada.user.vo.UserVO;
 
-
-
-
-
-
-
-
-
 /*
  * 문서 가이드 1/25ver
  *
@@ -47,9 +39,6 @@ import com.probada.user.vo.UserVO;
  *      7) 프로젝트 문서관리, 내 작업 문서관리 read메서드만 다르게 만듦
  *      8) etc "0" 공용으로 보일 거, etc "1" 나만 보일 거 디렉토리만 이렇게 하고 파일은 무조건 다 0
  */
-
-
-
 
 
 @Controller
@@ -80,36 +69,23 @@ public class MyDocumentController {
 		String name;
 		String realFileName;
 		String req = documentService.seqDoc();
-		String realUploadPath = "c:/"+path;							// 3조 PMS probada/업무
+		String realUploadPath = "c:/"+path;						// 3조 PMS probada/업무
 		String fileName = uploadFile.getOriginalFilename();		// jQuery.jpg
 		String fullPath = path+"/"+fileName;					// 3조 PMS probada/업무/jQuery.jpg
-		LOGGER.debug("req : {}",req);
-		LOGGER.debug("uploadPath : {}",realUploadPath);
-		LOGGER.debug("fileName : {}",fileName);
-		LOGGER.debug("fullPath : {}",fullPath);
 
 		int size = Integer.parseInt(uploadFile.getSize()+"");
-		LOGGER.debug("size : {}",size);
 
 		String extension = fileName.substring(fileName.lastIndexOf("."));
 		if(extension== null) {
 			extension = "";
 		}
-		LOGGER.debug("extension : {}",extension);
 
-		
 		//프로젝트 번호 알아내기 (프로젝트 명이 중복 안된다는 조건하에)
 		String projectTitle= fullPath.substring(0,fullPath.indexOf("/"));
-		
 
-		LOGGER.debug("projectTitle : {}",projectTitle);
-		//있다면 해당 프로젝트 번호 알아온 후 넣어주기
-		
-		//없다면 나만의 파일이기 때문에 0으로
 		String projNo = documentService.getProjByTitle(projectTitle);
 		LOGGER.debug("projNo : {}",projNo);
 		if(projNo == null) {
-			
 			projNo = "63";
 			
 		}
@@ -138,8 +114,7 @@ public class MyDocumentController {
 
 		doc.setEtc("0");
 		doc.setDOC_NO(seq);
-		//하드코딩
-		
+
 		UserVO userVO = (UserVO) session.getAttribute("userVO");
 		String userId = userVO.getUserId();
 		doc.setPROJ_NO(projNo);
@@ -219,59 +194,29 @@ public class MyDocumentController {
 	private FileVO update (String target, String path, String doc_NO, String name, String extension,HttpServletResponse res,HttpSession session) throws Exception{
 
 		
-		LOGGER.debug("update target : {}",target);
-		LOGGER.debug("update path : {}",path);
-		LOGGER.debug("update name : {}",name);
-		LOGGER.debug("update extension : {}",extension);
-		LOGGER.debug("update doc_NO : {}",doc_NO);
-		
-		
-		
 		UserVO userVO= (UserVO) session.getAttribute("userVO");
 		String projectTitle= null;
 		String projNo = null;
 		
 		FileVO doc = new FileVO();
 		doc = documentService.getDocOne(doc_NO);
-		LOGGER.debug("doc {}",doc);
+
 		if(target == null || path==null) {
 			path = name;
 		}else {
 			path = target+"/"+name+extension;
 			projectTitle= doc.getName();
-			LOGGER.debug("projectTitle3 {}",doc);
 			projNo = documentService.getProjByTitle(projectTitle);
-			LOGGER.debug("projNo3 {}",doc);
-		}
 
-		
+		}
+	
 
 		File originFile = new File("c:/"+doc.getPath());
 		
-		LOGGER.debug("update2 target : {}",target);
-		LOGGER.debug("update2 path : {}",path);
-		LOGGER.debug("update2 name : {}",name);
-		LOGGER.debug("update2 extension : {}",extension);
-		LOGGER.debug("update2 doc_NO : {}",doc_NO);
-		
-		
-		
-		
-		LOGGER.debug("projectTitle : {}",projectTitle);
-		
-		
-		
 		if(projNo == null) {
-			
 			projNo = "63";
-			
 		}
-		LOGGER.debug("projNo : {}",projNo);
 		
-		
-
-		//세션에서 가지고 올 id
-		//프로젝트 넘버는 받아서 온다.
 		doc.setPROJ_NO(projNo);
 		doc.setUSER_ID(userVO.getUserId());
 		doc.setPath(path);
@@ -343,7 +288,6 @@ public class MyDocumentController {
 					trashRoom = path.substring(path.indexOf("/")+1,path.indexOf("통/")+1);
 				}
 				
-				LOGGER.debug("trashRoom : {}",trashRoom);
 			
 			}else {
 				trashRoom = path;

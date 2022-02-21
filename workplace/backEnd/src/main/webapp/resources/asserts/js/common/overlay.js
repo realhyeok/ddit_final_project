@@ -12,13 +12,14 @@ var prevTarget = [];
 
 function getOverlayAnyWhereTaskRegistTemplate(userId) {
 
-	on();
+
 
 	$.ajax({
 		type : 'GET',
 		url : "/app/project/getProjectListByParamUserId",
 		data : {"userId":userId},
 		success : function(data) {
+			on();
 			var template = document.querySelector("#anyWheretaskRegistFormTemplate").innerText;
 			var bindTemplate = Handlebars.compile(template);
 			var appe = document.querySelector('#popoverlay');
@@ -35,13 +36,14 @@ function getOverlayAnyWhereTaskRegistTemplate(userId) {
 }
 
 function getOverlayAnyWhereIssueRegistTemplate(userId) {
-	on();
+
 
 	$.ajax({
 		type : 'GET',
 		url : "/app/project/getProjectListByParamUserId",
 		data : {"userId":userId},
 		success : function(data) {
+			on();
 			var template = document.querySelector("#anyWhereIssueRegistFormTemplate").innerText;
 			var bindTemplate = Handlebars.compile(template);
 			var appe = document.querySelector('#popoverlay');
@@ -144,7 +146,7 @@ function getOverlayAnyWhereSpoonTemplate(url) {
 
 }
 function SpoonTask_go() {
-	alert("스푼 보내기");
+	//alert("스푼 보내기");
 	/*let projTitle = document.getElementById('taskProjTitle').value;
 	console.log("프로젝트 제목 ====> " + projTitle);
 	*/
@@ -156,31 +158,31 @@ function SpoonTask_go() {
 	*/
 	/*let selectedCprojTitle = document.getElementById('optTaskCprojNo').value;
 	console.log("선택 콜라보 제목 ====> " + selectedCprojTitle);
-	*/	
+	*/
 
 	let taskNoList = $('#SpoonOverlayForm select[name="taskTitle"]').val();
 	console.log("선택 업무 번호 ====> " + taskNoList);
-	
+
 	let cprojNo = $('#optTaskCprojNo option:selected').attr('idx');
 	console.log("선택 콜라보 번호 ====>" + cprojNo);
-	
+
 	var spoonVO = {"taskNoList" : taskNoList, "cprojNo" : cprojNo, "projNo" : projNo};
 	console.log(spoonVO);
-	
+
 	$.ajax({
 		type : 'POST',
 		url : "/app/spoon/setTaskToCollabo",
 		contentType:'application/json;charset=UTF-8',
 		data : JSON.stringify(spoonVO),
 		success : function(data) {
-			alert("스푼 성공");
+			alert("스푼 보내기를 완료하였습니다.");
 		},
 		error : function(error) {
-			console.log("등록 실패");
+			console.log("스푼 보내기를 실패하였습니다.");
 		},
 	});
 }
-	
+
 
 
 

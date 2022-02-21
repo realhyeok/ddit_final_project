@@ -68,7 +68,7 @@
 					<li class="col-md-12 row ml-0 mb-2 p-1 rounded bg-warning String attach-item thumb{{attachNo}}" file-name="{{fileName}}" target-attachNo="{{attachNo}}" style="width:281px;">
 						<div class="col-10 p-0" style="padding-top:1px;">
 							<a name="attachedFile" attach-fileName="{{fileName}}" attach-no="{{attachNo}}" href="<%=request.getContextPath()%>/app/myWork/attachDownload?attachNo={{attachNo}}" class="col-12 m-0 p-0 text-dark font-weight-bold downloadTempAttaches" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-								{{fileName}}&nbsp;-&nbsp;{{fileSize}} Byte
+								{{fileName}}&nbsp;-&nbsp;{{fileSize}} KB
 							</a>
 						</div>
 						<div class="col-2 p-0 text-center font-weight-bold" style="padding-top:1px;">

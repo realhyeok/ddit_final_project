@@ -21,6 +21,7 @@
     	<typeAlias type="com.probada.issue.vo.MileIssueVO" alias="mileIssue"/>
     	<typeAlias type="com.probada.collabo.vo.CollaboVO" alias="collaboVO"/>
     	<typeAlias type="com.probada.collabo.vo.CollaboTaskVO" alias="collaboTaskVO"/>
+    	<typeAlias type="com.probada.collabo.vo.CollaboTagVO" alias="collaboTagVO"/>
     	<typeAlias type="com.probada.spoon.vo.SpoonVO" alias="spoonVO"/>
     	<typeAlias type="com.probada.alert.vo.AlertVO" alias="Alert"/>
     	<typeAlias type="com.probada.issue.vo.IssueReplyVO" alias="issueReply"/>

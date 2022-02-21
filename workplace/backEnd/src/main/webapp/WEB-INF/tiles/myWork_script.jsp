@@ -25,8 +25,10 @@
 		<script>
 			window.onload = function(){
 				summernote_go($('textarea.content'));
+				
 				if(getCookie('tab')){
-					var curTab = getCookie('tab');					
+					var curTab = getCookie('tab');
+					
 					if(curTab == "myIssueDetail-tab"){
 						document.getElementById('issue-tab').click();
 					}else if(curTab == "myTaskDetail-tab"){
@@ -34,11 +36,32 @@
 					}else if(curTab == "mail-tab"){
 						document.getElementById('mail-tab').click();
 						document.getElementById('mailReceive-tab').click();
+					}else if(curTab == "mailReceive-tab"){
+						document.getElementById('mail-tab').click();
+						document.getElementById('mailReceive-tab').click();
 					}else{
-						document.getElementById(curTab).click();
+						if("${mail}" == "receiveMail"){
+							document.getElementById('mail-tab').click();
+							
+							var link = document.location.href.split("?");
+							var newLink = link[0] + "#mailReceive-tab";
+							
+							history.pushState(null, null, newLink);
+						}else{
+							document.getElementById(curTab).click();
+						}
 					}
 				} else {
-					document.getElementById('home-tab').click();
+					if("${mail}" == "receiveMail"){
+						document.getElementById('mail-tab').click();
+						
+						var link = document.location.href.split("?");
+						var newLink = link[0] + "#mailReceive-tab";
+						
+						history.pushState(null, null, newLink);
+					}else{
+						document.getElementById('home-tab').click();
+					}
 				}
 
 				$('a[role="tab"]').on('click', function() {

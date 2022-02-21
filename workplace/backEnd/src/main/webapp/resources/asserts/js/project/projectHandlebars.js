@@ -230,7 +230,13 @@ function getParameterByName(name) {
 $(document).ready(function(){
 	var endPoint = window.location.search;
 
-	if(getCookie('projTab') && getCookie('projNo') == projNo){
+	var from = getParameterByName('from');
+
+	if(from === "search"){
+		document.getElementById('detail-tab').click();
+		console.log('hellooooooooooooooooooooooooo');
+		return;
+	} else if(getCookie('projTab') && getCookie('projNo') == projNo){
 		var curTab = getCookie('projTab');
 		curTab = curTabCheck(curTab);
 		document.getElementById(curTab).click();

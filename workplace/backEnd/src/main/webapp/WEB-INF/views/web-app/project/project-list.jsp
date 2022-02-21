@@ -51,7 +51,7 @@
 							<li class="project-member nav-item dropdown open ml-3">
 								<div class="d-flex flex-column">
 									<a href="" class="project-member " aria-haspopup="true"
-									id="navbarDropdown" data-toggle="dropdown"	aria-expanded="false">
+									id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
 										# if(member[i].picture == null){ #
 										<img src="/user/getPictureById?userId=#:member[i].userId#" class="img-circle" alt="img" />
 										# } else { #

@@ -33,9 +33,17 @@ public class app_probada {
 	}
 	
 	@RequestMapping("/myWork")
-	public String myWork() {
+	public ModelAndView myWork(ModelAndView mnv, String mail) {
 		String url = "/web-app/myWork/myWork";
-		return url;
+		
+		mnv.addObject("mail", "dashBoard");
+		mnv.setViewName(url);
+		
+		if(mail != null) {
+			mnv.addObject("mail", "receiveMail");
+			mnv.setViewName(url);
+		}
+		return mnv;
 	}
 	
 	@RequestMapping("/test")

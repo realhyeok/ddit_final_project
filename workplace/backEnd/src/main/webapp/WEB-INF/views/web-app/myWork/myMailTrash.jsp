@@ -95,7 +95,7 @@
 								{{fileName}}
 							</div>					
 							<div class="col-12 m-0 p-0 text-dark">
-								{{fileSize}} Byte			
+								{{fileSize}} KB		
 							</div>		
 						</div>
 					</a>

@@ -14,6 +14,7 @@
 
     <div class="x_content">
       <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+      <c:if test="${param.from != 'search'}">
         <li class="nav-item">
           <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" onclick="setTimeout(readProjDashboard, 200);">대시보드</a>
         </li>
@@ -41,9 +42,16 @@
         <li class="nav-item" style="display:none;" >
           <a class="nav-link" id="issueDetail-tab" data-toggle="tab" href="#issueDetail" role="tab" aria-controls="issueDetail" aria-selected="false">이슈상세</a>
         </li>
+      </c:if>
+      <c:if test="${param.from == 'search'}">
+      	<li class="nav-item">
+          <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="false" onclick="setTimeout(readProjDetail, 200);">프로젝트 개요</a>
+        </li>
+      </c:if>
       </ul>
 
       <div class="tab-content" id="myTabContent">
+      	 <c:if test="${param.from != 'search'}">
         <div class="tab-pane fade show" id="home" role="tabpanel" aria-labelledby="home-tab">
           <%@ include file="/WEB-INF/views/web-app/project/project-dashboard.jsp" %>
         </div>
@@ -71,6 +79,12 @@
         <div class="tab-pane fade show" id="issueDetail" role="tabpanel" aria-labelledby="issueDetail-tab">
           <%@ include file="/WEB-INF/views/web-app/project/project-issue-detail.jsp" %>
         </div>
+        	</c:if>
+        	<c:if test="${param.from == 'search'}">
+        		<div class="tab-pane fade show" id="detail" role="tabpanel" aria-labelledby="detail-tab">
+          			<%@ include file="/WEB-INF/views/web-app/project/project-detail.jsp" %>
+        		</div>
+        	</c:if>
       </div>
     </div>
   </div>

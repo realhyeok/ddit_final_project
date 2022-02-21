@@ -172,6 +172,10 @@ public class MailController {
 			mailDetail = mailService.getMailByMailNo(mailNo);
 			String userTo = getNicknameByUserId(mailDetail.getUserTo());
 			String userFrom = getNicknameByUserId(mailDetail.getUserFrom());
+			for(AttachVO attachVO : mailDetail.getAttachList()) {
+				long fileSize = (attachVO.getFileSize()) / 1024;
+				attachVO.setFileSize(fileSize);
+			}
 			mailDetail.setUserTo(userTo);
 			mailDetail.setUserFrom(userFrom);
 			
@@ -195,7 +199,10 @@ public class MailController {
 			String userFrom = getNicknameByUserId(mailDetail.getUserFrom());
 			mailDetail.setUserTo(userTo);
 			mailDetail.setUserFrom(userFrom);
-			
+			for(AttachVO attachVO : mailDetail.getAttachList()) {
+				long fileSize = (attachVO.getFileSize()) / 1024;
+				attachVO.setFileSize(fileSize);
+			}
 			entity = new ResponseEntity<MailVO>(mailDetail, HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity<MailVO>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -13,7 +13,6 @@ window.onload = function() {
 
 //콜라보 제안 modal 함수
 function invite_go(){
-	alert("보내기 버튼");
 	let userToCproj = document.getElementById('tags_1').value;
 	
 	let myProj = document.getElementById('selectOwnProject').value;
@@ -61,10 +60,10 @@ function invite_go(){
 
 function inviteMailForm(userFromCproj,userToCproj,myProj,text,myProjNo,otherProj,otherProjNo) {
 	
-	alert("메일 안에서 프로젝트 번호" + myProjNo);
-	alert("메일 안에서 프로젝트 번호" + otherProjNo);
-	alert("내꺼 프로젝트 번호" + myProjNo);
-	alert("다른사람 프로젝트 번호" + otherProjNo);
+	//alert("메일 안에서 프로젝트 번호" + myProjNo);
+	//alert("메일 안에서 프로젝트 번호" + otherProjNo);
+	//alert("내꺼 프로젝트 번호" + myProjNo);
+	//alert("다른사람 프로젝트 번호" + otherProjNo);
 	
 	
 	let url = "/app/project/main?projNo="
@@ -128,7 +127,7 @@ function createCollabo() {
 			document.getElementById('selectOwnProject').innerHTML= projTitle;
 		},
 		error : function(arg) {
-			alert("리스트 출력 에러임" + arg.status + "메세지" + arg.responseText);
+			alert("에러" + arg.status + "메세지" + arg.responseText);
 		}
 	})
 };  
@@ -136,7 +135,7 @@ function createCollabo() {
 //상대방의 프로젝트 셀렉트 함수 
 function selectOtherProj(){
 	if (window.event.keyCode == 13) {
-		alert("입력한 ID 값의 프로젝트 출력 함수 실행");
+		//alert("입력한 ID 값의 프로젝트 출력 함수 실행");
 		let userName = document.getElementById('tags_1').value;
 		document.getElementById("name1").innerHTML = userName;
 		
@@ -157,7 +156,7 @@ function selectOtherProj(){
 				document.getElementById('selectOtherProject').innerHTML= projTitle;
 			},
 			error : function(arg) {
-				alert("리스트 출력 에러임" + arg.status + "메세지" + arg.responseText);
+				alert("에러" + arg.status + "메세지" + arg.responseText);
 			}
 			
 		})

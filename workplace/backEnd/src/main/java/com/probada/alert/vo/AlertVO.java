@@ -10,6 +10,7 @@ public class AlertVO {
 	private String nickName;
 	private Date writeTime;
 	private String content;
+	private String mailFrom;
 	
 	public String getUserId() {
 		return userId;
@@ -34,6 +35,12 @@ public class AlertVO {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public String getmailFrom() {
+		return mailFrom;
+	}
+	public void setmailFrom(String mailFrom) {
+		this.mailFrom = mailFrom;
 	}
 	
 	public String getWriteTimeDisplay() {
