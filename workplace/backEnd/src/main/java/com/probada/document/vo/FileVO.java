@@ -37,7 +37,18 @@ public class FileVO {
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date modifiedUtc = new Date();
     
-    public String getCprojTitle() {
+    
+    @Override
+	public String toString() {
+		return "FileVO [DOC_NO=" + DOC_NO + ", PROJ_NO=" + PROJ_NO + ", CPROJ_NO=" + CPROJ_NO + ", USER_ID=" + USER_ID
+				+ ", DESC=" + DESC + ", STATUS=" + STATUS + ", DIST=" + DIST + ", name=" + name + ", isDirectory="
+				+ isDirectory + ", hasDirectories=" + hasDirectories + ", path=" + path + ", extension=" + extension
+				+ ", etc=" + etc + ", size=" + size + ", projTitle=" + projTitle + ", cprojTitle=" + cprojTitle
+				+ ", createdUtc=" + createdUtc + ", created=" + created + ", modified=" + modified + ", modifiedUtc="
+				+ modifiedUtc + "]";
+	}
+
+	public String getCprojTitle() {
     	return cprojTitle;
     }
     
@@ -119,14 +130,7 @@ public class FileVO {
 	}
 
 
-	@Override
-	public String toString() {
-		return "FileVO [DOC_NO=" + DOC_NO + ", PROJ_NO=" + PROJ_NO + ", USER_ID=" + USER_ID + ", DESC=" + DESC
-				+ ", STATUS=" + STATUS + ", DIST=" + DIST + ", name=" + name + ", isDirectory=" + isDirectory
-				+ ", hasDirectories=" + hasDirectories + ", path=" + path + ", extension=" + extension + ", etc=" + etc
-				+ ", size=" + size + ", createdUtc=" + createdUtc + ", created=" + created + ", modified=" + modified
-				+ ", modifiedUtc=" + modifiedUtc + "]";
-	}
+	
 
 	public String getName() {
 		return name;

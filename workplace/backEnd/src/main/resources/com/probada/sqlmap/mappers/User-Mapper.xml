@@ -32,8 +32,6 @@
 
 
 
-
-
 	<!-- 로그인 -->
 	<select id="login" parameterType="User" resultType="User">
 		SELECT *
@@ -76,7 +74,6 @@
 		, 0
 		, 0)
 	</update>
-
 
 
 	<update id="updateUser" parameterType="User">
@@ -151,7 +148,6 @@
 		WHERE USER_ID = #{userId}
 	</update>
 
-
 	<select id="selectUserByProjNo" resultType="User" parameterType="str">
 		SELECT
     		 *
@@ -166,6 +162,23 @@
 		ORDER BY
 			B.JOINDATE ASC
 	</select>
+
+	<select id="selectUserByCprojNo" resultType="User" parameterType="str">
+		SELECT
+    		 *
+		FROM
+    		"USER" A
+		JOIN
+			C_PROJECT_R B ON (A.USER_ID = B.USER_ID)
+		WHERE
+			CPROJ_NO = #{cprojNo}
+		AND
+			IS_DELETED = 0
+		ORDER BY
+			B.JOINDATE ASC
+	</select>
+	
+	
 
 	<!-- seok -->
 	<select id="pwdCheck" parameterType="User" resultType="int">
@@ -270,6 +283,25 @@
 			IS_DELETED = 0
 	</select>
 
+<select id="getCporjMemberAchievementList" parameterType="String" resultType="User">
+		SELECT
+    		 A.USER_ID
+    		 ,A.NICKNAME
+    		 ,<include refid="getCUserTaskCount"/>
+    		 ,<include refid="getCUserCompleteTaskCount"/>
+    		 ,<include refid="getCUserDelayTaskCount"/>
+    		 ,<include refid="getCUserOngoingTaskCount"/>
+    		 ,<include refid="getCUserBeforeTaskCount"/>
+		FROM
+    		"USER" A
+		JOIN
+			C_PROJECT_R B ON (A.USER_ID = B.USER_ID)
+		WHERE
+			CPROJ_NO = #{cprojNo}
+		AND
+			IS_DELETED = 0
+	</select>
+	
 	<sql id="getUserTaskCount">
 		(SELECT COUNT(*)
          FROM TASK
@@ -297,14 +329,51 @@
          FROM TASK
          WHERE STATUS = 'B202'
          AND USER_ID = A.USER_ID
-         AND PROJ_NO = #{projNo}) AS ONGOING_TASK_COUNT
+         AND CPROJ_NO = #{cprojNo}) AS ONGOING_TASK_COUNT
 	</sql>
 	<sql id="getUserBeforeTaskCount">
 		(SELECT COUNT(*)
          FROM TASK
          WHERE STATUS = 'B201'
          AND USER_ID = A.USER_ID
-         AND PROJ_NO = #{projNo}) AS BEFORE_TASK_COUNT
+         AND CPROJ_NO = #{cprojNo}) AS BEFORE_TASK_COUNT
+	</sql>
+	
+	<sql id="getCUserTaskCount">
+		(SELECT COUNT(*)
+         FROM TASK
+         WHERE USER_ID = A.USER_ID
+         AND CPROJ_NO = #{cprojNo}) AS TASK_COUNT
+	</sql>
+
+	<sql id="getCUserCompleteTaskCount">
+		(SELECT COUNT(*)
+         FROM TASK
+         WHERE STATUS = 'B204'
+         AND USER_ID = A.USER_ID
+         AND CPROJ_NO = #{cprojNo}) AS COMPLETE_TASK_COUNT
+	</sql>
+
+	<sql id="getCUserDelayTaskCount">
+		(SELECT COUNT(*)
+         FROM TASK
+         WHERE STATUS = 'B203'
+         AND USER_ID = A.USER_ID
+         AND CPROJ_NO = #{cprojNo}) AS DELAY_TASK_COUNT
+	</sql>
+	<sql id="getCUserOngoingTaskCount">
+		(SELECT COUNT(*)
+         FROM TASK
+         WHERE STATUS = 'B202'
+         AND USER_ID = A.USER_ID
+         AND CPROJ_NO = #{cprojNo}) AS ONGOING_TASK_COUNT
+	</sql>
+	<sql id="getCUserBeforeTaskCount">
+		(SELECT COUNT(*)
+         FROM TASK
+         WHERE STATUS = 'B201'
+         AND USER_ID = A.USER_ID
+         AND CPROJ_NO = #{cprojNo}) AS BEFORE_TASK_COUNT
 	</sql>
 
 </mapper>

@@ -6,6 +6,7 @@ import java.util.List;
 import com.probada.collabo.dao.CollaboTaskDAO;
 import com.probada.collabo.vo.CollaboTaskVO;
 import com.probada.task.vo.TaskVO;
+import com.probada.user.vo.UserVO;
 
 public class CollaboTaskServiceImpl implements CollaboTaskService {
 	
@@ -60,6 +61,15 @@ public class CollaboTaskServiceImpl implements CollaboTaskService {
 	public void removeTaskByTaskNo(CollaboTaskVO collaboTaskVO) throws SQLException {
 		
 		collaboTaskDAO.deleteTaskByTaskNo(collaboTaskVO);
+	}
+
+
+	@Override
+	public int getTaskCountInCprojByUserId(UserVO userVO) throws SQLException {
+		
+		int result = collaboTaskDAO.selectTaskCountInCprojByUserId(userVO);
+
+		return result;
 	}
 
 

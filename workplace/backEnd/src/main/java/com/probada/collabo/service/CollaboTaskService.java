@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.probada.collabo.vo.CollaboTaskVO;
 import com.probada.task.vo.TaskVO;
+import com.probada.user.vo.UserVO;
 
 
 public interface CollaboTaskService {
@@ -14,6 +15,8 @@ public interface CollaboTaskService {
 	public void modifyTaskStatus(CollaboTaskVO collaboTaskVO) throws SQLException;
 	
 	public CollaboTaskVO getTaskDetailByTaskNo(CollaboTaskVO collaboTaskVO) throws SQLException;
+	
+	public int getTaskCountInCprojByUserId(UserVO userVO) throws SQLException;
 	
 	public String registTask(CollaboTaskVO collaboTaskVO) throws SQLException;
 	

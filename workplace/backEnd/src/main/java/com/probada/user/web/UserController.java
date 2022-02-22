@@ -33,6 +33,7 @@ import com.probada.user.service.UserService;
 import com.probada.user.vo.EmailVO;
 import com.probada.user.vo.UserTotalCountVO;
 import com.probada.user.vo.UserVO;
+import com.probada.util.CollaboUtil;
 import com.probada.util.ProjectUtil;
 import com.probada.util.TaskUtil;
 import com.probada.util.UserUtil;
@@ -51,6 +52,8 @@ public class UserController {
 	private TaskUtil taskUtil;
 	@Resource(name="projectUtil")
 	private ProjectUtil projectUtil;
+	@Resource(name="collaboUtil")
+	private CollaboUtil collaboUtil;
 	
 	public UserController() {
 		LOGGER.debug("userController 생성됨!");
@@ -213,6 +216,35 @@ public class UserController {
 
 		return entity;
 	}
+	
+	/**
+	 * 콜라보 프로젝트 유저 리스트
+	 * @param cprojNo
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/getUserByCprojNo", method = RequestMethod.GET)
+	public ResponseEntity<List<UserVO>> getUserByCprojNo(String cprojNo) throws Exception{
+		ResponseEntity<List<UserVO>> entity = null;
+		
+		LOGGER.debug("[요청받음] => /getUserByCprojNo");
+		
+		List<UserVO> userListForCprojDetail = new ArrayList<UserVO>();
+		
+		try {
+			userListForCprojDetail = userService.getUserByCprojNo(cprojNo);
+			userListForCprojDetail = collaboUtil.getTaskCountUtil(userListForCprojDetail);
+			
+			entity = new ResponseEntity<List<UserVO>>(userListForCprojDetail,HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<UserVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		
+		return entity;
+		
+	}
+	
 	
 	@RequestMapping(value="home/send_pwdReset", method = RequestMethod.GET)
 	public String password_reset() {
@@ -415,6 +447,23 @@ public class UserController {
 		
 		try {
 			userList = userService.getMemberAchievementList(projNo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return userList;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/toCMemberAchievementChart.do", method = RequestMethod.POST)
+	public List<UserVO> toCprojMemberAchievementChart(@RequestParam("cprojNo") String cprojNo) {
+		
+		LOGGER.debug("============================================>" + cprojNo);
+		List<UserVO> userList = new ArrayList<>();
+		
+		try {
+			LOGGER.debug("===>" + cprojNo);
+			userList = userService.getCMemberAchievementList(cprojNo);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -50,6 +50,19 @@
 	   	 WHERE USER_ID = #{userId} 
 	</select>
 	
+	<select id="selectProjectCountInCprojByUserId" resultType="int" parameterType="String">
+		SELECT
+	          COUNT(*)
+	      FROM
+	          C_PROJECT A
+	      JOIN
+	          C_PROJECT_R B ON(A.CPROJ_NO = B.CPROJ_NO)
+	     WHERE
+	          B.USER_ID = #{userId}
+	      AND
+	          IS_DELETED = 0  
+	</select>
+	
 	<select id="selectCollaboByCprojNo" resultType="com.probada.collabo.vo.CollaboVO" parameterType="String">
 			SELECT
 			    CPROJ_NO
@@ -245,6 +258,28 @@
   			  FROM DUAL
 	</select>
 	
-
+	<select id="selectUserRole" resultType="str" parameterType="collaboVO">
+	  SELECT
+			ROLE
+		FROM
+			C_PROJECT_R
+		WHERE
+			CPROJ_NO = #{cprojNo}
+		AND
+			USER_ID = #{userId}
+		AND
+			IS_DELETED = 0
+	</select>
+	
+	<update id="updateUserRole" parameterType="collaboVO">
+	  UPDATE
+			C_PROJECT_R
+		SET
+			ROLE = #{role}
+		WHERE
+			CPROJ_NO = #{cprojNo}
+		AND
+			USER_ID = #{userId}
+	</update>
 
 </mapper>

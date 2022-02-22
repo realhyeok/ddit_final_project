@@ -1,4 +1,4 @@
-//Collabo Task 데이터리소스
+//Collabo Task 데이터리소스//
 const collaboTaskDataSource = new kendo.data.DataSource({
 		transport: {
 				read: {
@@ -105,6 +105,7 @@ function deleteTaskById(url, taskNo){
 			data : taskVO,
 			success : function(data) {
 				alert("삭제가 완료되었습니다.");
+				collaboAlert(sessionNickname, cprojectTitle, targetTitle, crud, cprojectNumber, targetNickname);
 				document.getElementById('task-tab').click();
 			}, // success
 			error : function(xhr, status) {

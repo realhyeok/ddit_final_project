@@ -1,9 +1,11 @@
 package com.probada.collabo.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.probada.user.vo.UserVO;
 
 public class CollaboVO {
 
@@ -38,6 +40,29 @@ public class CollaboVO {
 	private String projNo;
 	private String role = "";
 	
+	//For ProjectTagService
+	private Object tagNames;
+	private Object tagNo;
+	private List<UserVO> member;
+	
+	public Object getTagNames() {
+		return tagNames;
+	}
+	public void setTagNames(Object tagNames) {
+		this.tagNames = tagNames;
+	}
+	public Object getTagNo() {
+		return tagNo;
+	}
+	public void setTagNo(Object tagNo) {
+		this.tagNo = tagNo;
+	}
+	public List<UserVO> getMember() {
+		return member;
+	}
+	public void setMember(List<UserVO> member) {
+		this.member = member;
+	}
 	public String getNotice() {
 		return notice;
 	}

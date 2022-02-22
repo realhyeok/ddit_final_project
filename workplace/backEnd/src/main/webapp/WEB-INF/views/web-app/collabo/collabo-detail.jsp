@@ -13,14 +13,15 @@
 						<div class="collabo-detail-body mb-3 p-3">
 							<div class="x_title">
 								<h2 class="title">
-									<i class="fa fa-gears fa-lg"></i> <span class="">
+										<i class="fa fa-edit" style="font-size: 1.3em;"
+											onclick="getOverlayModifyTemplate('collaboModifyFormTemplate','/app/collabo/getCollaboByCprojNo','')"
+										 ></i>
+									 <span class="">
 										{{title}} </span>
 								</h2>
 								<div class="clearfix">
-									<div class="clearfix header-title justify-content-end">
-										<i class="fa fa-edit fa-2x" onclick="getOverlayModifyTemplate('collaboModifyFormTemplate','/app/collabo/getCollaboByCprojNo')"></i>
-									</div>
 								</div>
+								
 							</div>
 							<div class="x_content mb-3" >
 								<span class="collabo-intro">
@@ -62,7 +63,6 @@
 											<i class="fa fa-hashtag"></i> 태그
 										</h2>
 									
-										<span class="badge badge-success">1</span>
 									
 									</div>
 								</div>
@@ -75,7 +75,7 @@
 					<a class="panel-heading collabo-detail-a" role="tab" id="headingOne1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne1" aria-expanded="true"
 						aria-controls="collapseOne">
 						<h4 class="panel-title" onclick="subProjList('{{cprojNo}}');">
-							<i class="fa fa-object-group"></i> 연관 프로젝트
+							<i class="fa fa-object-group"></i> 하위 프로젝트
 						</h4>
 					</a>
 					<div id="collapseOne1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
@@ -84,11 +84,11 @@
 
 								<tbody id="selectSubProject">
 									<tr>
-										<td><a href="" class="collabo-detail-a">하위 프로젝트 1</a></td>
+										<td><a href="" class="collabo-detail-a"></a></td>
 									</tr>
 
 									<tr>
-										<td><a href="" class="collabo-detail-a">하위 프로젝트 2</a></td>
+										<td><a href="" class="collabo-detail-a"></a></td>
 									</tr>
 								</tbody>
 							</table>
@@ -109,14 +109,10 @@
 						<div class="collabo-detail-body collabo-notice p-3">
 							<div class="x_title">
 								<h2 class="title">
-									<i class="fa fa-sticky-note"></i> 공지사항
+										<i class="fa fa-edit" style="font-size: 1.3em;{{#ifCond notice '!=' NULL}}cursor:pointer;" onclick="getOverlayModifyTemplate('collaboNoticeModifyFormTemplate','/app/collabo/getCollaboByCprojNo','')"{{/ifCond}}"></i>
+									공지사항
 								</h2>
 								<div class="clearfix">
-							{{#ifCond notice '!=' NULL}}
-									<div class="clearfix header-title justify-content-end">
-										<i class="fa fa-edit fa-2x" onclick="getOverlayModifyTemplate('collaboNoticeModifyFormTemplate','/app/collabo/getCollaboByCprojNo')"></i>
-									</div>
-							{{/ifCond}}
 								</div>
 							</div>
 							{{#ifCond notice '!=' NULL}}
@@ -144,7 +140,7 @@
 			<!-- 중요첨부 파일 시작 -->
 			<div id="collaboDetailDocumentTarget"></div>
 			<script type="text/x-handlebars-template" id="collaboDetailDocument">
-				<div class="collabo-detail-body">
+				<div class="project-detail-body p-3">
 					<div class="x_title">
 						<h2 class="title">
 							<i class="glyphicon glyphicon-hdd"></i> 중요첨부파일
@@ -154,21 +150,24 @@
 					<div class="col-sm-12">
 						<ul class="row list-unstyled project-files">
 							{{#each .}}
-								{{#ifCond @index "<" 3}}
+								{{#ifCond @index "<" 5}}
 							<li class="d-flex align-items-center">
-								<div class="btn files-btn d-flex flex-wrap align-items-center justify-content-center"  style="width:140px;height:140px">
-									<i class="fa fa-file-text fa-5x text-dark"></i>
-									<div class="mt-2" style="font-size:0.8em;">{{{name}}}{{{extension}}}</div>
-								</div>
+								<div class="btn files-btn d-flex flex-wrap flex-column align-items-center justify-content-center"  style="width:200px;height:140px">
+								<button type="button" class="badge badge-danger" style="margin-left:85px" onclick="deleteCollaboDoc('{{path}}','{{doc_NO}}');">X</button>
+								<a style="cursor:pointer;" onclick="CollaboDocumentDownload('{{{name}}}{{{extension}}}','{{cprojTitle}}');"><i class="fa fa-file-text fa-5x text-dark"></i></a>
+								<div class="mt-2 d-flex"><span class="text-truncate" style="display:inline-block;max-width:70px;">{{{name}}}</span><span>{{{extension}}}</span></div>
+							</div>
 							</li>
 								{{/ifCond}}
 							{{/each}}
-							{{#ifCond this.length "<=" 2}}
+							{{#ifCond this.length "<=" 4}}
+							
 							<li>
-								<div class="btn create-btn files-btn">
-									<i class="fa fa-plus fa-lg text-dark"></i>
+								<div class="btn create-btn files-btn" onclick="getOverlayCollaboDocumentTemplate('uploadCollaboDocumentForm');">
+									<i class="fa fa-plus fa-lg text-dark" ></i>
 								</div>
 							</li>
+							
 							{{/ifCond}}
 						</ul>
 						</div>
@@ -184,263 +183,122 @@
 
 
 		<!-- 구성원 시작-->
-		<div class="collabo-detail-body">
-			<div class="x_title header-title">
-				<h2 class="title">
-					<i class="fa fa-users"></i> 구성원
-				</h2>
-				<div class="clearfix header-title">
-					<a href="" data-toggle="modal" data-target="#collabo-member-add"><i
-						class="fa fa-user-plus fa-2x"></i></a>
+		<div id="collaboDetailMemberTarget"></div>
+				<script type="text/x-handlebars-template" id="collaboDetailMember">
+				<div class="project-detail-body p-3">
+					<div class="x_title header-title">
+						<h2 class="title">
+								<i class="fa fa-user-plus" style="font-size: 1.3em;"
+									onclick="getOverlayinviteCollaboMemberForm('inviteCollaboMemberForm')"
+								></i>
+							 구성원
+						</h2>
+					</div>
+					<ul class="list-inline" style="display: inline-flex">
+							<!-- 구성원 단위 시작 -->
+							{{#each .}}
+								{{#ifCond userId "!=" '0'}}
+							<li class="project-member nav-item dropdown open ml-3">
+								<div class="d-flex flex-column">
+									<a href="javascript:;" class="project-member " aria-haspopup="true"
+									id="navbarDropdown" data-toggle="dropdown"	aria-expanded="false">
+										{{#ifCond picture "==" NULL}}
+										<img src="/user/getPictureById?userId={{userId}}" class="img-circle" alt="Avatar" />
+										{{/ifCond}}
+										{{#ifCond picture "!=" NULL}}
+										<img src="/user/getPictureById?userId={{userId}}" class="img-circle" alt="Avatar" />
+										{{/ifCond}}
+									</a>
+									<div class="dropdown-menu dropdown-membermenu pull-right" aria-labelledby="navbarDropdown">
+									<div class="col-md-3   widget widget_tally_box">
+										<div class="fixed_height_390">
+											<div class="x_content">
+												<div class="flex">
+													<ul class="list-inline widget_profile_box">
+														<li></li>
+														<li class="d-flex justify-content-center">
+															{{#ifCond picture "==" NULL}}
+															<img src="/user/getPictureById?userId={{userId}}" alt="" class="img-circle profile_img"></li>
+															{{/ifCond}}
+															{{#ifCond picture "!=" NULL}}
+															<img src="/user/getPictureById?userId={{userId}}" alt="" class="img-circle profile_img"></li>
+															{{/ifCond}}
+														<li></li>
+													</ul>
+												</div>
+												<div>
+													<h3 class="d-flex justify-content-center mt-3">{{{nickname}}}</h3>
+												</div>
+												<div class="flex">
+													<ul	class="list-inline count2 d-flex justify-content-between">
+													<li><span class="badge badge-primary">Projects</span>
+														<h3>{{projectCount}}</h3></li>
+													<li><span class="badge badge-danger">Likes</span>
+														<h3>{{likeCount}}</h3></li>
+													<li><span class="badge badge-info">Tasks</span>
+														<h3>{{taskCount}}</h3></li>
+													</ul>
+												</div>
+												<div class="p-1" style="max-height: 100px; background-color: rgb(229,229,229);display:-webkit-box;
+													-webkit-line-clamp: 5;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
+													<p class="mt-2 mb-2">{{intro}}</p>
+												</div>
+												<div class="text-center mt-3">
+													{{#getRoleCheck 'A303'}}
+													{{#ifCond '${userVO.nickname}' "!=" nickname}}
+													<button type="button" class="btn btn-success btn-sm" onclick="getOverlayModifyUserRole('modifyUserRoleForm','{{{nickname}}}');">
+														<i class="fa fa-pencil-square"> 권한</i>
+													</button>
+													{{/ifCond}}
+
+													{{#ifCond '${userVO.nickname}' "==" nickname}}
+													<button type="button" class="btn btn-success btn-sm" onclick="alert('팀장 본인의 권한을 변경할 수 없습니다. \n팀장을 위임하면 자동으로 전환됩니다.')">
+														<i class="fa fa-pencil-square"> 권한</i>
+													</button>
+													{{/ifCond}}
+
+													{{#ifCond '${userVO.nickname}' "!=" nickname}}
+													<button type="button" class="btn btn-danger btn-sm" onclick="getOverlayRemoveUserProject('removeUserProjectForm','{{{nickname}}}');">
+														<i class="fa fa-user-times"> 제명</i>
+													</button>
+													{{/ifCond}}
+
+													{{#ifCond '${userVO.nickname}' "==" nickname}}
+													<button type="button" class="btn btn-danger btn-sm" onclick="alert('팀장은 프로젝트를 탈퇴할 수 없습니다. \n팀장을 위임한 후에 시도해주세요.')">
+														<i class="fa fa-user-times"> 탈퇴</i>
+													</button>
+													{{/ifCond}}
+													{{/getRoleCheck}}
+
+													{{#ifCond '${userVO.nickname}' "==" nickname}}
+													{{#getRoleCheck 'A302'}}
+													<button type="button" class="btn btn-danger btn-sm" onclick="getOverlayRemoveUserProject('quitUserProjectForm','{{{nickname}}}');">
+														<i class="fa fa-user-times"> 탈퇴</i>
+													</button>
+													{{/getRoleCheck}}
+													{{/ifCond}}
+													{{#ifCond '${userVO.nickname}' "==" nickname}}
+													{{#getRoleCheck 'A301'}}
+													<button type="button" class="btn btn-danger btn-sm" onclick="getOverlayRemoveUserProject('quitUserProjectForm','{{{nickname}}}');">
+														<i class="fa fa-user-times"> 탈퇴</i>
+													</button>
+													{{/getRoleCheck}}
+													{{/ifCond}}
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+									<span>{{{nickname}}}</span>
+								</div>
+							</li>
+								{{/ifCond}}
+							{{/each}}
+					</ul>
+
+
 				</div>
-			</div>
-			<td>
-				<ul class="list-inline" style="display: inline-flex">
-					<!-- 구성원 단위 시작 -->
-					<li class="collabo-member nav-item dropdown open">
-						<div class="d-flex flex-column">
-							<span>PL</span><br /> <a href="javascript:;"
-								class="collabo-member " aria-haspopup="true" id="navbarDropdown"
-								data-toggle="dropdown" aria-expanded="false"> <img
-								src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-								class="img-circle" alt="Avatar" />
-							</a>
-							<div class="dropdown-menu dropdown-membermenu pull-right"
-								aria-labelledby="navbarDropdown">
-								<!-- 프로필 상세 드롭다운 -->
-								<div class="col-md-3   widget widget_tally_box">
-									<div class="fixed_height_390">
-										<div class="x_content">
-											<div class="flex">
-												<ul class="list-inline widget_profile_box">
-													<li></li>
-													<li class="d-flex justify-content-center"><img
-														src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-														alt="..." class="img-circle profile_img"></li>
-													<li></li>
-												</ul>
-											</div>
-											<div>
-												<h3 class="d-flex justify-content-center mt-3">RealHyukPL</h3>
-											</div>
-											<div class="flex">
-												<ul
-													class="list-inline count2 d-flex justify-content-between">
-													<li><span class="badge badge-primary">Projects</span>
-														<h3>8</h3></li>
-													<li><span class="badge badge-danger">Likes</span>
-														<h3>3</h3></li>
-													<li><span class="badge badge-info">Tasks</span>
-														<h3>83</h3></li>
-												</ul>
-											</div>
-											<div class="p-1"
-												style="height: 100px; background-color: #e5e5e5;">
-												<p class="mt-2 mb-2">안녕하세요. 3팀 프로젝트 리더를 맡고있는 김진혁입니다. 저는
-													java와 자바스크립트를 다룰줄압니다. 잘부탁드립니다.</p>
-											</div>
-											<div class="text-center mt-3">
-												<button type="button" class="btn btn-success btn-sm">
-													<i class="fa fa-pencil-square"> 권한</i>
-												</button>
-												<button type="button" class="btn btn-primary btn-sm">
-													<i class="fa fa-user-times"> 제명</i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- 프로필 상세 드롭다운 -->
-							</div>
-							<span>RealHyukPL</span>
-						</div>
-					</li>
-					<li class="collabo-member nav-item dropdown open">
-						<div class="d-flex flex-column">
-							<span>PL</span><br /> <a href="javascript:;"
-								class="collabo-member " aria-haspopup="true" id="navbarDropdown"
-								data-toggle="dropdown" aria-expanded="false"> <img
-								src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-								class="img-circle" alt="Avatar" />
-							</a>
-							<div class="dropdown-menu dropdown-membermenu pull-right"
-								aria-labelledby="navbarDropdown">
-								<!-- 프로필 상세 드롭다운 -->
-								<div class="col-md-3   widget widget_tally_box">
-									<div class="fixed_height_390">
-										<div class="x_content">
-											<div class="flex">
-												<ul class="list-inline widget_profile_box">
-													<li></li>
-													<li class="d-flex justify-content-center"><img
-														src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-														alt="..." class="img-circle profile_img"></li>
-													<li></li>
-												</ul>
-											</div>
-											<div>
-												<h3 class="d-flex justify-content-center mt-3">RealHyukPL</h3>
-											</div>
-											<div class="flex">
-												<ul
-													class="list-inline count2 d-flex justify-content-between">
-													<li><span class="badge badge-primary">Projects</span>
-														<h3>8</h3></li>
-													<li><span class="badge badge-danger">Likes</span>
-														<h3>3</h3></li>
-													<li><span class="badge badge-info">Tasks</span>
-														<h3>83</h3></li>
-												</ul>
-											</div>
-											<div class="p-1"
-												style="height: 100px; background-color: #e5e5e5;">
-												<p class="mt-2 mb-2">안녕하세요. 3팀 프로젝트 리더를 맡고있는 김진혁입니다. 저는
-													java와 자바스크립트를 다룰줄압니다. 잘부탁드립니다.</p>
-											</div>
-											<div class="text-center mt-3">
-												<button type="button" class="btn btn-success btn-sm">
-													<i class="fa fa-pencil-square"> 권한</i>
-												</button>
-												<button type="button" class="btn btn-primary btn-sm">
-													<i class="fa fa-user-times"> 제명</i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- 프로필 상세 드롭다운 -->
-							</div>
-							<span>RealHyukPL</span>
-						</div>
-					</li>
-					<li class="collabo-member nav-item dropdown">
-						<div class="d-flex flex-column">
-							<span>PL</span><br /> <a href="javascript:stopPropagation();"
-								class="collabo-member " aria-haspopup="true" id="navbarDropdown"
-								data-toggle="dropdown" aria-expanded="false"> <img
-								src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-								class="img-circle" alt="Avatar" />
-							</a>
-							<div class="dropdown-menu dropdown-membermenu pull-right"
-								aria-labelledby="navbarDropdown">
-								<!-- 프로필 상세 드롭다운 -->
-								<div class="col-md-3   widget widget_tally_box">
-									<div class="fixed_height_390">
-										<div class="x_content">
-											<div class="flex">
-												<ul class="list-inline widget_profile_box">
-													<li></li>
-													<li class="d-flex justify-content-center"><img
-														src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-														alt="..." class="img-circle profile_img"></li>
-													<li></li>
-												</ul>
-											</div>
-											<div>
-												<h3 class="d-flex justify-content-center mt-3">RealHyukPL</h3>
-											</div>
-											<div class="flex">
-												<ul
-													class="list-inline count2 d-flex justify-content-between">
-													<li><span class="badge badge-primary">Projects</span>
-														<h3>8</h3></li>
-													<li><span class="badge badge-danger">Likes</span>
-														<h3>3</h3></li>
-													<li><span class="badge badge-info">Tasks</span>
-														<h3>83</h3></li>
-												</ul>
-											</div>
-											<div class="p-1"
-												style="height: 100px; background-color: #e5e5e5;">
-												<p class="mt-2 mb-2">안녕하세요. 3팀 프로젝트 리더를 맡고있는 김진혁입니다. 저는
-													java와 자바스크립트를 다룰줄압니다. 잘부탁드립니다.</p>
-											</div>
-											<div class="text-center mt-3">
-												<button type="button" class="btn btn-success btn-sm">
-													<i class="fa fa-pencil-square"> 권한</i>
-												</button>
-												<button type="button" class="btn btn-primary btn-sm">
-													<i class="fa fa-user-times"> 제명</i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- 프로필 상세 드롭다운 -->
-							</div>
-							<span>RealHyukPL</span>
-						</div>
-					</li>
-					<li class="collabo-member nav-item dropdown open">
-						<div class="d-flex flex-column">
-							<span>PL</span><br /> <a href="javascript:;"
-								class="collabo-member " aria-haspopup="true" id="navbarDropdown"
-								data-toggle="dropdown" aria-expanded="false"> <img
-								src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-								class="img-circle" alt="Avatar" />
-							</a>
-							<div class="dropdown-menu dropdown-membermenu pull-right"
-								aria-labelledby="navbarDropdown">
-								<!-- 프로필 상세 드롭다운 -->
-								<div class="col-md-3   widget widget_tally_box">
-									<div class="fixed_height_390">
-										<div class="x_content">
-											<div class="flex">
-												<ul class="list-inline widget_profile_box">
-													<li></li>
-													<li class="d-flex justify-content-center"><img
-														src="<%=request.getContextPath()%>/resources/asserts/images/img.jpg"
-														alt="..." class="img-circle profile_img"></li>
-													<li></li>
-												</ul>
-											</div>
-											<div>
-												<h3 class="d-flex justify-content-center mt-3">RealHyukPL</h3>
-											</div>
-											<div class="flex">
-												<ul
-													class="list-inline count2 d-flex justify-content-between">
-													<li><span class="badge badge-primary">Projects</span>
-														<h3>8</h3></li>
-													<li><span class="badge badge-danger">Likes</span>
-														<h3>3</h3></li>
-													<li><span class="badge badge-info">Tasks</span>
-														<h3>83</h3></li>
-												</ul>
-											</div>
-											<div class="p-1"
-												style="height: 100px; background-color: #e5e5e5;">
-												<p class="mt-2 mb-2">안녕하세요. 3팀 프로젝트 리더를 맡고있는 김진혁입니다. 저는
-													java와 자바스크립트를 다룰줄압니다. 잘부탁드립니다.</p>
-											</div>
-											<div class="text-center mt-3">
-												<button type="button" class="btn btn-success btn-sm">
-													<i class="fa fa-pencil-square"> 권한</i>
-												</button>
-												<button type="button" class="btn btn-primary btn-sm">
-													<i class="fa fa-user-times"> 제명</i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- 프로필 상세 드롭다운 -->
-							</div>
-							<span>RealHyukPL</span>
-						</div>
-					</li>
-
-					<!-- 구성원 단위 끝 -->
-					<!-- 구성원 더보기 버튼 시작 -->
-					<li class="collabo-member d-flex align-items-center mr-3"><a
-						href="../project/project-member-list.html"> <i
-							class="fa fa-ellipsis-h fa-2x"></i>
-					</a></li>
-					<!-- 구성원 더보기 버튼 끝 -->
-				</ul>
-			</td>
-
-		</div>
+				</script>
 		<!-- 구성원 끝 -->
 	</div>
 </div>

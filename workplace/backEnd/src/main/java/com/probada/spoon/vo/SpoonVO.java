@@ -1,6 +1,5 @@
 package com.probada.spoon.vo;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.probada.collabo.vo.CollaboVO;

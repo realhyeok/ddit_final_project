@@ -1,10 +1,10 @@
 var cprojNo = getParameterByName("cprojNo");
-console.log(projNo);
+console.log(cprojNo);
 
 var ganttDataSource = new kendo.data.GanttDataSource({
 	transport: {
 	    read: {
-	      url: "/app/task/getTaskListForGanttByProjNo",
+	      url: "/app/collabo/getTaskListForGanttByCprojNo",
 	      dataType: "json",
 	      data: { "cprojNo": cprojNo }
 	    }
@@ -24,17 +24,19 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 	  },
 	  sort: {field: "updatedate", dir:"desc"},
 	});
-	function projGantt() {
+	function collaboGantt() {
 		$("#collaboGantt").empty();
-		var projectGantt = $("#collaboGantt").kendoGantt({
+		var collaboGantt = $("#collaboGantt").kendoGantt({
 			dataSource:ganttDataSource,
 			tooltip: {
 				visible: true,
 			},
+			 messages: {
+				    noRecords: "There is no data on current page"
+				  },
 			toolbar:[
-				{ template: "<a class='k-button' href='javascript:getOverlayRegistCollaboTaskTemplate(\"collaboTaskRegistFormTemplate\",\"/app/collabo/getTaskRegistInfoByCprojNo\")'>" +
+				{ template: "<a class='k-button' href='getOverlayRegistCollaboTaskTemplate(\"collaboTaskRegistFormTemplate\",\"/app/collabo/getTaskRegistInfoByCprojNo\")'>" +
 						"업무 등록</a>" },
-				{ name: "pdf" }
 				],
 				views: [
 					"day",
@@ -47,7 +49,7 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 					],
 					columns: [
 						{ field: "title", title: "업무명", editable: true,
-							template: "<a href=\"javascript:getTaskTemplate('/app/collabo/getTaskDetailByTaskNo',#:id#,'collaboTaskDetailForm','collaboTaskDetailFormTarget')\" class='text-dark'>#:title#</a>"}
+							template: "<a href=\"javascript:getTaskTemplate('/app/task/getTaskDetailByTaskNo',#:id#,'taskDetailForm','taskDetailFormTarget')\" class='text-dark'>#:title#</a>"}
 						],
 						autoSync:true,
 						height:774,
@@ -65,7 +67,7 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 	}
 
 	function ganttRefresh() {
-		 var projectGantt = $("#collaboGantt").getKendoGantt();
-			projectGantt.dataSource.read()
-			projectGantt.dependencies.read()
+		 var collaboGantt = $("#collaboGantt").getKendoGantt();
+		 	collaboGantt.dataSource.read()
+			collaboGantt.dependencies.read()
 	}

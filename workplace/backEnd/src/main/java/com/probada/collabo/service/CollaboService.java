@@ -21,6 +21,9 @@ public interface CollaboService {
 
 	public int getCollaboCount(String userId)throws SQLException;
 	
+	//유저 관련 콜라보 개수
+	public int getCprojectCountInCprojByUserId(String userId) throws SQLException;
+	
 	// 프로젝트 상세에서 사용되는 유저리스트
 	public List<UserVO> getUserByCProjNo(String cprojNo) throws SQLException;
 	
@@ -42,5 +45,9 @@ public interface CollaboService {
 	
 	public List<CollaboVO> getCprojectNameByProjNo(String projNo)throws SQLException;
 	
-	
+	//유저 역할 관련
+	public String getUserRole(CollaboVO collaboVO) throws SQLException;
+
+	public void modifyUserRole(CollaboVO collaboVO) throws SQLException;
+
 }

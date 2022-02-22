@@ -27,7 +27,7 @@ public class TaskUtil {
 	public List<UserVO> getTaskCountUtil(List<UserVO> userList) throws SQLException {
 
 		try {
-
+			
 			for (UserVO userVO : userList) {
 				int taskCount = taskService.getTaskCountInProjByUserId(userVO);
 				userVO.setTaskCount(taskCount);

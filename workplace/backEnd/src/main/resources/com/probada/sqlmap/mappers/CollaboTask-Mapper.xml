@@ -120,4 +120,17 @@
 			TASK_SEQ.NEXTVAL AS TASK_NO FROM DUAL
 	</select>
 	
+	<select id="selectTaskCountInCprojByUserId" resultType="int" parameterType="User">
+		SELECT
+			COUNT(*)
+		FROM
+			TASK A
+		JOIN
+			C_PROJECT_R B ON(A.USER_ID = B.USER_ID AND A.CPROJ_NO = B.CPROJ_NO)
+		WHERE
+			A.USER_ID = #{userId}
+		  AND
+            A.CPROJ_NO = #{cprojNo}    
+	</select>
+	
 </mapper>

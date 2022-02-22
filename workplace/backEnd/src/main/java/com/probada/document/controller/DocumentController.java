@@ -27,15 +27,8 @@ import com.probada.document.service.DocumentService;
 import com.probada.document.vo.FileVO;
 import com.probada.document.vo.ProjectUserVO;
 import com.probada.user.vo.UserVO;
+import com.probada.util.CollaboUtil;
 import com.probada.util.ProjectUtil;
-
-
-
-
-
-
-
-
 
 /*
  * 문서 가이드 1/25ver
@@ -64,6 +57,8 @@ public class DocumentController {
 	private DocumentService documentService;
 	@Resource(name="projectUtil")
 	private ProjectUtil projectUtil;
+	@Resource(name="collaboUtil")
+	private CollaboUtil collaboUtil;
 
 	@RequestMapping("/")
 	public String main() {
@@ -292,6 +287,36 @@ public class DocumentController {
 		return realFileList;
 
 	}
+	
+	@PostMapping(value="/readCollaboDoc")
+	@ResponseBody
+	public List<FileVO> readCollaboDoc(String target,String cprojNo) throws Exception {
+		
+		
+		LOGGER.debug("[요청받음] => /readCollaboDoc");
+		LOGGER.debug("[요청받음] => /readCollaboDoc ===>cprojNo" + cprojNo);
+		
+		LOGGER.debug("==> target" + target);
+		//프로젝트 문서관리
+		List<FileVO> fileVO = new ArrayList<FileVO>();
+		fileVO = documentService.getDocumentListByCprojNo(cprojNo);
+		
+		
+		List<FileVO> realFileList = new ArrayList<>();
+		
+		for (FileVO vo: fileVO) {
+			LOGGER.debug("==> fileVO1" + vo);
+			if(target==null && (vo.getPath().equals(vo.getName()))) {
+				realFileList.add(vo);
+			}else if(target != null && (vo.getPath().contains(target+"/"+vo.getName()))){
+				realFileList.add(vo);
+				LOGGER.debug("==> fileVOX" + vo);
+			}
+		}
+		
+		return realFileList;
+		
+	}
 
 
 
@@ -434,8 +459,8 @@ public class DocumentController {
 		}
 		return entity;
 	}
-
-
+	
+	
 
 
 
@@ -515,6 +540,37 @@ public class DocumentController {
 
 		return entity;
 	}
+	
+	/**
+	 * 콜라보 문서 리스트 상세조회
+	 * @param cprojNo
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/getDocumentListForCprojDetail")
+	@ResponseBody
+	public ResponseEntity<List<FileVO>> getDocumentListForCprojDetail(String cprojNo) throws Exception{
+		ResponseEntity<List<FileVO>> entity = null;
+		
+		List<FileVO> docList = new ArrayList<FileVO>();
+		LOGGER.debug("[요청받음] => /getDocumentListForCprojDetail");
+		
+		try {
+			docList = documentService.getDocumentListForCprojDetail(cprojNo);
+			String cprojTitle = collaboUtil.getCollaboNameByCprojNo(cprojNo);
+			for (FileVO fileVO : docList) {
+				fileVO.setCprojTitle(cprojTitle);
+			}
+			entity = new ResponseEntity<List<FileVO>>(docList,HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<FileVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			LOGGER.error(e.getMessage(),e); // e.printStackTrace(); 보다 LOGGER 쓸 것
+			LOGGER.error("/getDocumentListForCprojDetail 시 에러가 발생했습니다.",e); 
+		}
+		
+		return entity;
+	}
+
 
 }
 

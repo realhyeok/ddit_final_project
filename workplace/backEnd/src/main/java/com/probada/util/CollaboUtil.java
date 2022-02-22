@@ -11,16 +11,37 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.probada.collabo.service.CollaboIssueService;
 import com.probada.collabo.service.CollaboService;
+import com.probada.collabo.service.CollaboTaskService;
+import com.probada.collabo.vo.CollaboIssueVO;
 import com.probada.collabo.vo.CollaboTaskVO;
 import com.probada.collabo.vo.CollaboVO;
-import com.probada.project.web.ProjectController;
-import com.probada.task.vo.TaskVO;
+import com.probada.issue.vo.MileIssueVO;
+import com.probada.project.service.ProjectTagService;
+import com.probada.project.vo.ProjectTagVO;
+import com.probada.project.vo.ProjectVO;
+import com.probada.user.service.UserService;
 import com.probada.user.vo.UserVO;
 
 public class CollaboUtil {
 	@Resource(name="collaboService")
 	CollaboService collaboService;
+	
+	@Resource(name="collaboTaskService")
+	CollaboTaskService collaboTaskService;
+	
+	@Resource(name="userService")
+	UserService userService;
+	
+	@Resource(name="collaboIssueService")
+	CollaboIssueService collaboIssueService;
+	
+	@Resource(name="collaboUtil")
+	CollaboUtil collaboUtil;
+	
+	@Resource(name="projectTagService")
+	ProjectTagService projectTagService;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CollaboUtil.class);
 	
@@ -106,6 +127,28 @@ public class CollaboUtil {
 			throw e;
 		}
 		return memberList;
+	}
+	
+	public List<CollaboVO> getCollaboMemberList(List<CollaboVO> collaboList)throws SQLException{
+		
+		List<UserVO> userList = new ArrayList<UserVO>();
+		
+		try {
+			for (CollaboVO collaboVO : collaboList) {
+				userList = userService.getUserByCprojNo(collaboVO.getCprojNo());
+				if (userList != null) {
+					userList = getCprojectCountUtil(userList);
+					userList = collaboUtil.getTaskCountUtil(userList);
+					collaboVO.setMember(userList);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		
+		return collaboList;
 		
 	}
 	
@@ -128,5 +171,98 @@ public class CollaboUtil {
 		return collaboTaskVO;
 	}
 	
+	/**
+	 * 콜라보 업무 개수 조회
+	 * @param userList
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<UserVO> getTaskCountUtil(List<UserVO> userList) throws SQLException {
+		
+		try {
+			
+			for (UserVO userVO : userList) {
+				int taskCount = collaboTaskService.getTaskCountInCprojByUserId(userVO);
+				userVO.setTaskCount(taskCount);
+			}
+
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+		return userList;
+	}
 	
+	
+	/**
+	 * 유저에 해당하는 콜라보 개수 조회
+	 * @param userList
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<UserVO> getCprojectCountUtil(List<UserVO> userList) throws SQLException {
+
+		try {
+			
+			for (UserVO userVO : userList) {
+				int collaboCount = collaboService.getCprojectCountInCprojByUserId(userVO.getUserId());
+				userVO.setCollaboCount(collaboCount);
+			}
+
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+		return userList;
+	}
+	
+	public List<CollaboIssueVO> getMileListByIssueList(List<CollaboIssueVO> issueList) throws SQLException{
+		
+		List<MileIssueVO> mileIssueList = new ArrayList<MileIssueVO>();
+		List<String> mileNoList = new ArrayList<String>();
+		
+		try {
+			for (CollaboIssueVO collaboIssueVO: issueList) {
+				mileIssueList = collaboIssueService.selectMileIssueListByIssueNo(collaboIssueVO.getIssueNo());
+				
+				for (MileIssueVO mileIssueVO : mileIssueList) {
+					if (mileIssueVO.getIssueNo().equals(collaboIssueVO.getIssueNo())) {
+						mileNoList.add(mileIssueVO.getMileNo());
+					}
+				}
+				collaboIssueVO.setMileNo(mileNoList);
+				mileNoList = new ArrayList<String>();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return issueList;
+		
+	}
+	
+	public CollaboIssueVO getMileListByIssueNo(CollaboIssueVO collaboIssueVO) throws SQLException{
+		List<MileIssueVO> mileIssueList = new ArrayList<MileIssueVO>();
+		List<String> mileNoList = new ArrayList<String>();
+		
+		try {
+			mileIssueList = collaboIssueService.selectMileIssueListByIssueNo(collaboIssueVO.getIssueNo());
+			if (mileIssueList != null) {
+				for (MileIssueVO mileIssueVO : mileIssueList) {
+					if(mileIssueVO.getIssueNo().equals(collaboIssueVO.getIssueNo())) {
+						mileNoList.add(mileIssueVO.getMileNo());
+					}
+				}
+				collaboIssueVO.setMileNo(mileNoList);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return collaboIssueVO;
+	}
+	
+
 }

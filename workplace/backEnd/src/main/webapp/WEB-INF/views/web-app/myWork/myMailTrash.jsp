@@ -12,7 +12,7 @@
 </div>
 
 <script id="trashMailList-template" type="text/x-kendo-template">
-	<div class="mail_list m-0 border-bottom-0" onclick="location.href='javascript:trashMailDetail(#:mailNo#);'" style="cursor:pointer;">
+	<div class="mail_list m-0 border-bottom-0" onclick="location.href='javascript:trashMailDetail(#:mailNo#);'" style="cursor:pointer;height:40px;">
 		<div class="left">
 			# if(userTo == userFrom){ #
 				<input class="trashCheck" type="checkbox" value="#:mailNo#" mailType="trashMineMail">
@@ -122,7 +122,7 @@
 				printData(data, $('#trashMailDetail'), $('#trash-mail-detail-template'));
 			},
 			error : function(error){
-				alert(error.status);
+				/* alert(error.status); */
 			}
 		});
 	}
@@ -159,13 +159,13 @@
 					"mailDist": mailDist
 				},
 				success: function(data){
-					alert("성공");
+					alert("복구를 완료하였습니다.");
 					$('#trashMailList').data("kendoGrid").dataSource.read();
 					$('#receiveMailList').data("kendoGrid").dataSource.read();
 					$('#sendMailList').data("kendoGrid").dataSource.read();
 				},
 				error: function(error){
-					alert(error.status);
+					/* alert(error.status); */
 				}
 			});
 		}
@@ -173,12 +173,13 @@
 	
 	function deleteTrashMailOne(mailNo, userTo, userFrom){
 		var mailDist = null;
+		
 		if(userFrom == userTo){
 			mailDist = "trashMineMail";
 		}else{
-			if(userTo == "${userVO.userId}"){
+			if(userTo == "${userVO.nickname}"){
 				mailDist = "trashReceiveMail";
-			}else if(userFrom == "${userVO.userId}"){
+			}else if(userFrom == "${userVO.nickname}"){
 				mailDist = "trashSendMail";
 			}
 		}
@@ -193,11 +194,11 @@
 					"mailDist": mailDist
 				},
 				success: function(data){
-					alert("성공");
+					alert("삭제를 완료하였습니다.");
 					$('#trashMailList').data("kendoGrid").dataSource.read();
 				},
 				error: function(error){
-					alert(error.status);
+					/* alert(error.status); */
 				}
 			});
 		}
@@ -230,11 +231,11 @@
 				success: function(data){
 					$("#trashAllCheckButton").prop("checked", false);
 
-					alert("성공");
+					alert("삭제를 완료하였습니다.");
 					$('#trashMailList').data("kendoGrid").dataSource.read();
 				},
 				error: function(error){
-					alert(error.status);
+					/* alert(error.status); */
 				}
 			});
 		}

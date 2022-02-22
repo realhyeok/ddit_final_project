@@ -1,6 +1,9 @@
 package com.probada.collabo.command;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -24,12 +27,26 @@ public class CollaboCommand {
 	private String recvDel;
 	private String sentDel;
 	
+	private List<MultipartFile> attachFile;	//첨부파일
 	
 	@Override
 	public String toString() {
 		return "CollaboCommand [userId=" + userId + ", projNo=" + projNo + ", title=" + title + ", mailNo=" + mailNo
 				+ ", userTo=" + userTo + ", userFrom=" + userFrom + ", content=" + content + ", regDate=" + regDate
-				+ ", status=" + status + ", dist=" + dist + ", recvDel=" + recvDel + ", sentDel=" + sentDel + "]";
+				+ ", status=" + status + ", dist=" + dist + ", recvDel=" + recvDel + ", sentDel=" + sentDel
+				+ ", attachFile=" + attachFile + ", getAttachFile()=" + getAttachFile() + ", getMailNo()=" + getMailNo()
+				+ ", getUserTo()=" + getUserTo() + ", getUserFrom()=" + getUserFrom() + ", getContent()=" + getContent()
+				+ ", getRegDate()=" + getRegDate() + ", getStatus()=" + getStatus() + ", getDist()=" + getDist()
+				+ ", getRecvDel()=" + getRecvDel() + ", getSentDel()=" + getSentDel() + ", getUserId()=" + getUserId()
+				+ ", getProjNo()=" + getProjNo() + ", getTitle()=" + getTitle() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
+	
+	public List<MultipartFile> getAttachFile() {
+		return attachFile;
+	}
+	public void setAttachFile(List<MultipartFile> attachFile) {
+		this.attachFile = attachFile;
 	}
 	public int getMailNo() {
 		return mailNo;

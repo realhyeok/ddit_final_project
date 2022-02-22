@@ -7,7 +7,7 @@
   			  	<div class="x_title" style="padding-bottom:16px;border-bottom:1px solid #e0e0e0;">
       				<h2>마일스톤</h2>
       				<div class="clearfix">
-      					<a class="k-button float-right" style="background-color:#ebebeb" href="javascript:getOverlayMileRegistTemplate('mileStoneRegistFormTemplate','/app/milestone/getMilestoneInfo');">마일스톤 등록</a>
+      					<a class="k-button float-right" style="background-color:#ebebeb" href="javascript:getOverlayMileRegistTemplate('collaboMileStoneRegistFormTemplate','/app/collabo/getMilestoneInfo');">마일스톤 등록</a>
       				</div>
     			</div>
         		  <div class="panel-heading form-inline justify-content-end mb-4">
@@ -36,10 +36,16 @@
 </div>
 
 <script type="text/x-kendo-template" id="mileTemplate">
-    <div class="milestone" data-bind="click: searchIssue" style="border-left-color: rgb(138,43,226);border-left-width: 2px;">
+    <div class="milestone" data-bind="click: searchIssue" style="border-left-width: 2px;border-left-color:
+		# if(status == "B301"){ #
+			rgb(0,105,92)
+		# }else if(status == "B302"){ #
+			rgb(68,81,181)
+		# } #
+	;">
 		<div class="x_title row justify-content-between">
       		<h4>
-				<span class="d-inline-block text-truncate" style="max-width:200px;color:black;">#:title#</span> 
+				<span class="d-inline-block text-truncate" style="max-width:200px;color:black;">#:title#</span>
 				<span class="#=status#"></span><span class="internal"></span>
 			</h4>
 				<div class="text-right">

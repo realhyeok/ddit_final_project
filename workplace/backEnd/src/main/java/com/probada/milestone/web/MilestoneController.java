@@ -76,11 +76,11 @@ public class MilestoneController {
 	@ResponseBody
 	public ResponseEntity<HashMap<String, Object>> getMilestoneInfo(HttpServletRequest request, String projNo) throws Exception {
 		ResponseEntity<HashMap<String, Object>> entity = null;
-
+		
 		List<IssueVO> wholeIssueList = new ArrayList<IssueVO>();
 		HttpSession session = request.getSession();
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-
+		
 		try {
 
 			UserVO userVO = (UserVO) session.getAttribute("userVO");
@@ -154,30 +154,36 @@ public class MilestoneController {
 
 			/*삭제되는 이슈*/
 			beforeIssueList = milestoneService.getIssueListByMileNo(mileVO.getMileNo());
-			for (IssueVO beforeIssueVO : beforeIssueList) {
-				beforeIssueNoListReset.add(beforeIssueVO.getIssueNo());
-			}
-			List<String> afterIssueNoListReset = mileVO.getIssueNoList();
-			beforeIssueNoListReset.removeAll(afterIssueNoListReset);
+			if(beforeIssueList != null) {
+				for (IssueVO beforeIssueVO : beforeIssueList) {
+					beforeIssueNoListReset.add(beforeIssueVO.getIssueNo());
+				}
+				List<String> afterIssueNoListReset = mileVO.getIssueNoList();
 
-			/*추가되는 이슈*/
-			beforeIssueList = milestoneService.getIssueListByMileNo(mileVO.getMileNo());
-			for (IssueVO beforeIssueVO : beforeIssueList) {
-				beforeIssueNoList.add(beforeIssueVO.getIssueNo());
-			}
-			afterIssueNoList = mileVO.getIssueNoList();
-			afterIssueNoList.removeAll(beforeIssueNoList);
+				if(afterIssueNoListReset != null) {
+					beforeIssueNoListReset.removeAll(afterIssueNoListReset);
+				}
 
+				/*추가되는 이슈*/
+				beforeIssueList = milestoneService.getIssueListByMileNo(mileVO.getMileNo());
+				for (IssueVO beforeIssueVO : beforeIssueList) {
+					beforeIssueNoList.add(beforeIssueVO.getIssueNo());
+				}
+				afterIssueNoList = mileVO.getIssueNoList();
 
-			for (String deleteNo : beforeIssueNoListReset) {
-				issueVO.setMileNo(mileVO.getMileNo());
-				issueVO.setIssueNo(deleteNo);
-				milestoneService.removeMileIssueRelation(issueVO);
-			}
-			for (String insertNo : afterIssueNoList) {
-				issueVO.setMileNo(mileVO.getMileNo());
-				issueVO.setIssueNo(insertNo);
-				milestoneService.registMileIssueRelation(issueVO);
+				if(afterIssueNoList != null) {
+					afterIssueNoList.removeAll(beforeIssueNoList);
+					for (String deleteNo : beforeIssueNoListReset) {
+						issueVO.setMileNo(mileVO.getMileNo());
+						issueVO.setIssueNo(deleteNo);
+						milestoneService.removeMileIssueRelation(issueVO);
+					}
+					for (String insertNo : afterIssueNoList) {
+						issueVO.setMileNo(mileVO.getMileNo());
+						issueVO.setIssueNo(insertNo);
+						milestoneService.registMileIssueRelation(issueVO);
+					}
+				}
 			}
 
 			entity = new ResponseEntity<MilestoneVO>(mileVO,HttpStatus.OK);
@@ -202,10 +208,12 @@ public class MilestoneController {
 			milestoneService.registMilestoneDetail(mileVO);
 
 			afterIssueNoList = mileVO.getIssueNoList();
-			for (String insertNo : afterIssueNoList) {
-				issueVO.setMileNo(mileVO.getMileNo());
-				issueVO.setIssueNo(insertNo);
-				milestoneService.registMileIssueRelation(issueVO);
+			if(afterIssueNoList != null) {
+				for (String insertNo : afterIssueNoList) {
+					issueVO.setMileNo(mileVO.getMileNo());
+					issueVO.setIssueNo(insertNo);
+					milestoneService.registMileIssueRelation(issueVO);
+				}
 			}
 
 			entity = new ResponseEntity<MilestoneVO>(mileVO,HttpStatus.OK);

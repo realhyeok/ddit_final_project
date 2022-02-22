@@ -50,9 +50,13 @@ public interface UserService {
 
 	// 프로젝트 상세에서 사용되는 유저리스트
 	public List<UserVO> getUserByProjNo(String projNo) throws SQLException;
+	
 
 	// USER_PROJECT 테이블에서 유저 아이디를 조회하여 PROJ_NO를 조회한다.
 	public List<String> getUserProjNoList(String userId) throws SQLException;
+	
+	// 콜라보 상세에서 사용되는 유저리스트
+	public List<UserVO> getUserByCprojNo(String cprojNo) throws SQLException;
 
 	// userId를 파라미터로 받아서 해당 유저의 pwd를 리턴한다.
 	public String pwdPicker(String userId) throws SQLException;
@@ -86,6 +90,9 @@ public interface UserService {
 	
 	// 프로젝트 넘버를 참조하여 프로젝트 대시보드에 사용할 진척도 그래프 리스트를 리턴한다.
 	public List<UserVO> getMemberAchievementList(String projNo) throws SQLException;
+
+	// 콜라보 프로젝트 넘버를 참조하여 프로젝트 대시보드에 사용할 진척도 그래프 리스트를 리턴한다.
+	public List<UserVO> getCMemberAchievementList(String cprojNo) throws SQLException;
 
 	// 닉네임을 조회하여 해당 유저vo를 가져온다.
 	public UserVO getUserByNickname(String nickname) throws SQLException;

@@ -32,7 +32,15 @@
 			</div>
 			<div class="col-sm-6">
 				<label class="control-label">중요도</label>
-					<div class="form-control form-control-sm form-control-view">{{important}}</div>
+				{{#ifCond important "==" "B101"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">낮음</div>
+				{{/ifCond}}
+				{{#ifCond important "==" "B102"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">중간</div>
+				{{/ifCond}}
+				{{#ifCond important "==" "B103"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">높음</div>
+				{{/ifCond}}
 			</div>
 		</div>
 

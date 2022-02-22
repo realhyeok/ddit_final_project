@@ -3,7 +3,6 @@ package com.probada.document.vo;
 public class ProjectUserVO {
 
 	
-	
 	private String userId;
 	private String projNo;
 	

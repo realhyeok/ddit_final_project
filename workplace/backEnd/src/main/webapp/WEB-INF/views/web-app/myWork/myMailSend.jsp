@@ -12,7 +12,7 @@
 </div>
 
 <script id="sendMailList-template" type="text/x-kendo-template">
-	<div class="mail_list m-0 border-bottom-0" onclick="location.href='javascript:sendMailDetail(#:mailNo#);'" style="cursor:pointer;">
+	<div class="mail_list m-0 border-bottom-0" onclick="location.href='javascript:sendMailDetail(#:mailNo#);'" style="cursor:pointer;height:40px;">
 		<div class="left">
 			# if(userFrom == userTo){ #
 				<input class="sendCheck" type="checkbox" value="#:mailNo#" dist="mineMail">
@@ -110,7 +110,7 @@
 				printData(data, $('#sendMailDetail'), $('#send-mail-detail-template'));
 			},
 			error : function(error){
-				alert(error.status);
+				/* alert(error.status); */
 			}
 		});
 	}
@@ -144,13 +144,13 @@
 					"mailDist" : mailDist
 				},
 				success: function(data){
-					alert("성공");
+					alert("삭제를 완료하였습니다.");
 					$('#receiveMailList').data("kendoGrid").dataSource.read();
 					$('#sendMailList').data("kendoGrid").dataSource.read();
 					$('#trashMailList').data("kendoGrid").dataSource.read();
 				},
 				error: function(error){
-					alert(error.status);
+					/* alert(error.status); */
 				}
 			});
 		}
@@ -182,13 +182,13 @@
 				},
 				success: function(data){
 					$("#sendAllCheckButton").prop("checked", false);
-					alert("성공");
+					alert("삭제를 완료하였습니다.");
 					$('#receiveMailList').data("kendoGrid").dataSource.read();
 					$('#sendMailList').data("kendoGrid").dataSource.read();
 					$('#trashMailList').data("kendoGrid").dataSource.read();
 				},
 				error: function(error){
-					alert(error.status);
+					/* alert(error.status); */
 				}
 			});
 		}

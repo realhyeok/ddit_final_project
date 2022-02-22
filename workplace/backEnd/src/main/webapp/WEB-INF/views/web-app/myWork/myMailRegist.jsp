@@ -1,35 +1,45 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
 
 <div class="row">
 	<div class="col-sm-12 mail_view border-left-0">
 		<div class="col-sm-12">
-			<div class="col-md-12 col-sm-12" style="text-align:right;">
-				<button type="button" class="btn btn-sm btn-dark" onclick="mailRegist_go('temp');">임시저장</button>
-				<button id="mailSendButton" type="button" class="btn btn-sm btn-primary" onclick="mailRegist_go('send');">전송</button>
+			<div class="col-md-12 col-sm-12" style="text-align: right;">
+				<button type="button" class="btn btn-sm btn-dark"
+					onclick="mailRegist_go('temp');">임시저장</button>
+				<button id="mailSendButton" type="button"
+					class="btn btn-sm btn-primary" onclick="mailRegist_go('send');">전송</button>
 			</div>
 		</div>
 		<div class="col-sm-12">
 			<!-- 메일 작성 시작 -->
-			<form enctype="multipart/form-data" role="form" method="post" action="<%=request.getContextPath()%>/app/myWork/mailRegist" name="mailRegistForm" class="form-horizontal form-label-left">
+			<form enctype="multipart/form-data" role="form" method="post"
+				action="<%=request.getContextPath()%>/app/myWork/mailRegist"
+				name="mailRegistForm" class="form-horizontal form-label-left">
 				<div class="inbox-body">
-					<input type="hidden" id="userFrom" name="userFrom" value="${userVO.nickname}">
-					<input type="hidden" id="dist" name="dist" value="">
-					<input type="text" id=sendUserTo name="userTo" class="form-control form-control-sm mt-3" placeholder="받는 사람:">
-					<br>
-					<input type="text" id="sendTitle" name="title" class="form-control form-control-sm" placeholder="제목:">
-					<br>
-					<textarea id="sendContent" name="content" rows="10" class="form-control content" placeholder="내용을 입력하세요." style="display:none;"></textarea>
+					<input type="hidden" id="userFrom" name="userFrom"
+						value="${userVO.nickname}"> <input type="hidden" id="dist"
+						name="dist" value=""> <input type="text" id=sendUserTo
+						name="userTo" class="form-control form-control-sm mt-3"
+						placeholder="받는 사람:"> <br> <input type="text"
+						id="sendTitle" name="title" class="form-control form-control-sm"
+						placeholder="제목:"> <br>
+					<textarea id="sendContent" name="content" rows="10"
+						class="form-control content" placeholder="내용을 입력하세요."
+						style="display: none;"></textarea>
 					<br>
 				</div>
 				<div class="card">
-					<div class="card-header" style="background:#f7f7f7;border-bottom:none;">
-						<button class="btn btn-sm btn-primary" onclick="addFile_go();" type="button" id="addFileBtn">파일첨부</button>
+					<div class="card-header"
+						style="background: #f7f7f7; border-bottom: none;">
+						<button class="btn btn-sm btn-primary" onclick="addFile_go();"
+							type="button" id="addFileBtn">파일첨부</button>
 					</div>
 					<div class="card-body fileInput"></div>
 					<div class="card-footer"></div>
 				</div>
-			</form>		
+			</form>
 			<!-- 메일 작성 끝 -->
 		</div>
 	</div>
@@ -51,7 +61,7 @@
 				memoryCapacity = data;
 			},
 			error: function(error){
-				alert(error.status);
+				/* alert(error.status); */
 			}
 		});
 		
@@ -130,19 +140,20 @@
 			$("textarea[id='sendContent']").focus();
 			return;
 		}
-		
+		var result3 = null;
 		$.ajax({
 			type: "get",
 			url : "<%=request.getContextPath()%>/app/myWork/userCheck",
 			data: { "userTo"  : userTo },
+			async: false,
 			success: function(result){
 				if(result == "no"){
 					alert("존재하지 않는 회원입니다.");
-					return;
+					result3 = result;
 				}
 			},
 			error: function(error){
-				alert(error.status);
+				/* alert(error.status); */
 			}
 		});
 		
@@ -152,6 +163,8 @@
 			mailAlarm(nickname, receiverId);
 		}
 		
-		document.mailRegistForm.submit();
+		if(result3 != "no"){
+			document.mailRegistForm.submit();			
+		}
 	}
 </script>

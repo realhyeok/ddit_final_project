@@ -36,12 +36,14 @@ public class app_probada {
 	public ModelAndView myWork(ModelAndView mnv, String mail) {
 		String url = "/web-app/myWork/myWork";
 		
-		mnv.addObject("mail", "dashBoard");
 		mnv.setViewName(url);
 		
-		if(mail != null) {
+		if(mail == null) {
+			mnv.addObject("mail", "dashBoard");			
+		}else if(mail.equals("mail")) {
 			mnv.addObject("mail", "receiveMail");
-			mnv.setViewName(url);
+		}else if(mail.equals("send")) {
+			mnv.addObject("mail", "sendMail");
 		}
 		return mnv;
 	}

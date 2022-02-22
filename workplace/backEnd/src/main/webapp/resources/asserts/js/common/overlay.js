@@ -175,10 +175,11 @@ function SpoonTask_go() {
 		contentType:'application/json;charset=UTF-8',
 		data : JSON.stringify(spoonVO),
 		success : function(data) {
-			alert("스푼 보내기를 완료하였습니다.");
+			alert("스푼 하기를 완료하였습니다.");
+			off();
 		},
 		error : function(error) {
-			console.log("스푼 보내기를 실패하였습니다.");
+			console.log("스푼 하기를 실패하였습니다.");
 		},
 	});
 }
@@ -515,12 +516,32 @@ function mailOverlayAnyWhereRegist_go(dist, uFrom){
 		$("textarea[id='anyWhereMailOverlayContent']").focus();
 		return;
 	}
+	var result2 = null;
+	$.ajax({
+		type: "get",
+		url : "/app/myWork/userCheck",
+		data: { "userTo"  : userTo },
+		async: false,
+		success: function(result){
+			if(result == "no"){
+				alert("존재하지 않는 회원입니다.");
+				result2 = result;
+			}
+		},
+		error: function(error){
+			/* alert(error.status); */
+		}
+	});
+	
 	if(dist == "send"){
 		var receiverId = $("#anyWhereMailOverlayUserTo").val();
 		var nickname = userFrom;
 		mailAlarm(nickname, receiverId);
 	}
-	document.overlayAnyWhereMailRegistForm.submit();
+	
+	if(result2 != "no"){
+		document.overlayAnyWhereMailRegistForm.submit();		
+	}
 }
 
 function mailAlarm(nickname, receiverId){
@@ -567,3 +588,33 @@ function uploadForm(target) {
 
     initUpload();
 }
+
+
+function CollaboAlarm(nickname, receiverId){
+	var nickname   = nickname;
+	var where      = "메일";
+	var target     = "메일";
+	var whatTodo   = "전송";
+	var projNo     = "0";
+	var receiverId = receiverId;
+
+	let mailRegistSocketData = {
+		"nickname"   : nickname,
+		"where"      : where,
+		"target"     : target,
+		"whatToDo"   : whatTodo,
+		"projNo"     : projNo,
+		"receiverId" : receiverId
+	}
+
+	if(socket){
+		let mailRegistSocketMsg = mailRegistSocketData.nickname
+						  + "," + mailRegistSocketData.where
+						  + "," + mailRegistSocketData.target
+						  + "," + mailRegistSocketData.whatToDo
+						  + "," + mailRegistSocketData.projNo
+						  + "," + mailRegistSocketData.receiverId;
+		socket.send(mailRegistSocketMsg);
+	}
+}
+

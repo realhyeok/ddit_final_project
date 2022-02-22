@@ -94,7 +94,7 @@
 		SELECT *
  		 FROM project
  		 where PRIVACY = 'A401'
- 		 ORDER BY startdate,LIKE_COUNT DESC
+ 		 ORDER BY LIKE_COUNT DESC
 										  
 </select>
 

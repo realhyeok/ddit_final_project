@@ -21,10 +21,10 @@
 					<a id="home-tab" class="nav-link" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" onclick="readMyDashboard('${userVO.userId}', '${userVO.nickname}');">대시보드</a>
 				</li>
 				<li class="nav-item">
-					<a id="issue-tab" class="nav-link" data-toggle="tab" href="#issue" role="tab" aria-controls="issue" aria-selected="false" onclick="readMyMile('${userVO.userId}');readMyIssue('${userVO.userId}');">이슈</a>
+					<a id="task-tab" class="nav-link" data-toggle="tab" href="#task" role="tab" aria-controls="task" aria-selected="false" onclick="readMyTask('${userVO.userId}', '${userVO.nickname}');">업무</a>
 				</li>
 				<li class="nav-item">
-					<a id="task-tab" class="nav-link" data-toggle="tab" href="#task" role="tab" aria-controls="task" aria-selected="false" onclick="readMyTask('${userVO.userId}', '${userVO.nickname}');">업무</a>
+					<a id="issue-tab" class="nav-link" data-toggle="tab" href="#issue" role="tab" aria-controls="issue" aria-selected="false" onclick="readMyMile('${userVO.userId}');readMyIssue('${userVO.userId}');">이슈</a>
 				</li>
 				<li class="nav-item">
 					<a id="mail-tab" class="nav-link" data-toggle="tab" href="#mail" role="tab" aria-controls="mail" aria-selected="false" onclick="receiveMailBox('${userVO.nickname}');">메일</a>
@@ -47,11 +47,11 @@
 				<div id="home" class="tab-pane fade show" role="tabpanel" aria-labelledby="home-tab">
 					<%@ include file="/WEB-INF/views/web-app/myWork/myDashboard.jsp" %>
 				</div>
-				<div id="issue" class="tab-pane fade show" role="tabpanel" aria-labelledby="issue-tab">
-					<%@ include file="/WEB-INF/views/web-app/myWork/myIssue.jsp" %>
-				</div>
 				<div id="task" class="tab-pane fade show" role="tabpanel" aria-labelledby="task-tab">
 					<%@ include file="/WEB-INF/views/web-app/myWork/myTask.jsp" %>
+				</div>
+				<div id="issue" class="tab-pane fade show" role="tabpanel" aria-labelledby="issue-tab">
+					<%@ include file="/WEB-INF/views/web-app/myWork/myIssue.jsp" %>
 				</div>
 				<div id="mail" class="tab-pane fade show" role="tabpanel" aria-labelledby="mail-tab">
 					<%@ include file="/WEB-INF/views/web-app/myWork/myMail.jsp" %>

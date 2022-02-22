@@ -64,6 +64,8 @@
 	    <script>
 		    if(${mailRegist eq 'registSuccess'}) {
 				alert("메일을 전송하였습니다.");
+				
+				location.href="<%=request.getContextPath()%>/app/myWork?mail=send";
 			}else if(${mailRegist eq 'tempSuccess'}){
 				alert("메일을 임시저장하였습니다.");
 			}

@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.probada.collabo.vo.CollaboTaskVO;
+import com.probada.user.vo.UserVO;
 
 public class CollaboTaskDAOImpl implements CollaboTaskDAO {
 	
@@ -67,6 +68,15 @@ public class CollaboTaskDAOImpl implements CollaboTaskDAO {
 	public void deleteTaskByTaskNo(CollaboTaskVO collaboTaskVO) throws SQLException {
 
 		sqlSession.delete("CollaboTask-Mapper.deleteTaskByTaskNo",collaboTaskVO);
+	}
+
+
+	@Override
+	public int selectTaskCountInCprojByUserId(UserVO userVO) throws SQLException {
+		
+		int result = sqlSession.selectOne("CollaboTask-Mapper.selectTaskCountInCprojByUserId", userVO);
+		
+		return result;
 	}
 
 }

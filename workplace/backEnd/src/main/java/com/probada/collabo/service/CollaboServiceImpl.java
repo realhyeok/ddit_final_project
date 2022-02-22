@@ -139,5 +139,23 @@ public class CollaboServiceImpl implements CollaboService {
 		return collaboList;
 	}
 
+	@Override
+	public int getCprojectCountInCprojByUserId(String userId) throws SQLException {
+		int count = collaboDAO.selectCprojectCountInCprojByUserId(userId);
+		
+		return count;
+	}
+
+	@Override
+	public String getUserRole(CollaboVO collaboVO) throws SQLException {
+		String role = collaboDAO.selectUserRole(collaboVO);
+		return role;
+	}
+
+	@Override
+	public void modifyUserRole(CollaboVO collaboVO) throws SQLException {
+		collaboDAO.updateUserRole(collaboVO);
+	}
+
 
 }

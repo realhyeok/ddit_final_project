@@ -494,12 +494,13 @@ font-family: 'Jua', sans-serif;
 					</div>
 				</div>
 				<div class="x_content">
-                <form id="SpoonOverlayForm" method="post" enctype="multipart/form-data" class="form-horizontal form-label-left">
+                <form id="SpoonOverlayForm" method="post"  class="form-horizontal form-label-left">
 
                   <div class="form-group row ">
                     <label class="control-label col-md-3 col-sm-3 ">프로젝트 명</label>
                     <div class="col-md-9 col-sm-9 ">
-                      <input type="text" id="title" name="title" class="form-control" readonly="readonly" value="{{title}}">
+                      <input type="text" id="taskProjTitle" name="title" class="form-control" readonly="readonly" value="{{title}}">
+					  <input type="hidden" id="taskOfProjNo" name="projNo" class="form-control"readonly="readonly" value="{{projNo}}">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -507,7 +508,7 @@ font-family: 'Jua', sans-serif;
                     <div class="col-md-9 col-sm-9 ">
 						<select id="selectTaskTitle" name="taskTitle" multiple="multiple" data-placeholder="추가하실 업무를 선택해주세요">
 							{{#each taskList}}
-              					<option value="{{taskNo}}">{{title}}</option>
+              					<option class="selectedTaskNoOfProj" value="{{taskNo}}">{{title}}</option>
 							{{/each}}
         				</select>
                     </div>
@@ -517,9 +518,9 @@ font-family: 'Jua', sans-serif;
                   <div class="form-group row">
                     <label class="control-label col-md-3 col-sm-3 ">콜라보</label>
                     <div class="col-md-9 col-sm-9 ">
-                      <select class="form-control">
+                      <select id="optTaskCprojNo" name="optTaskCprojNo" class="form-control">
                         {{#each cprojTitleList}}
-              				<option value="{{cprojNo}}">{{title}}</option>
+              				<option idx="{{cprojNo}}" value="{{title}}">{{title}}</option>
 						{{/each}}
                       </select>
                     </div>

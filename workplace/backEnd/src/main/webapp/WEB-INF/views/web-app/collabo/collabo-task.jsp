@@ -17,7 +17,16 @@
 </div>
 	<script id="collabo-card-template" type="text/x-kendo-template">
 			<div class="">
-                <div class="two" style="border-left: 1px solid;border-left-color: rgb(138,43,226);border-left-width: 2px;">
+                <div class="two" style="border-left: 1px solid;border-left-color: rgb(138,43,226);border-left-width: 2px;border-left-color:
+				# if(important == "B101"){ #
+					rgb(40, 167, 69)
+				# }else if(important == "B102"){ #
+					rgb(255, 193, 7)
+				# }else if(important == "B103"){ #
+					rgb(220, 53, 69)
+				# } #
+				;">
+					
                     <div class="d-flex justify-content-end px-2"><i class="mdi mdi-star-outline pr-1 star"></i><i class="mdi mdi-dots-horizontal dot"></i></div>
                     <div class="px-3">
 							<input type="hidden" id="taskNoForDrag" value="#:taskNo#">

@@ -428,7 +428,7 @@ height: 8%;
 			               
 			                 
 			               
-			                  <h5>${chat.nickname} <span class="chat_date" id="${chat.nickname}onoff">오프라인<div class="circleOff"></div></span> </h5>
+			                  <h5>${chat.nickname} <span class="chat_date" id="${chat.nickname}onoff">오프라인<div class="circleOff" style='display:inline-block; width: 12px; height: 12px; background: red; border-radius: 50%;'></div></span> </h5>
 							
 			                 
 			                

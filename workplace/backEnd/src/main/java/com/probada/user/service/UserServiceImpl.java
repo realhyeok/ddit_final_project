@@ -232,5 +232,19 @@ public class UserServiceImpl implements UserService {
 		return userDAO.getUserByNickname(nickname);
 	}
 
+	@Override
+	public List<UserVO> getUserByCprojNo(String cprojNo) throws SQLException {
+		
+		List<UserVO> userListForCprojDetail = userDAO.selectUserByCprojNo(cprojNo);
+
+		return userListForCprojDetail;
+	}
+
+	@Override
+	public List<UserVO> getCMemberAchievementList(String cprojNo) throws SQLException {
+		return userDAO.getCMemberAchievementList(cprojNo);
+		
+	}
+
 	
 }

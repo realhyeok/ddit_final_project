@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -268,7 +269,7 @@ public class CollaboTaskController {
 		LOGGER.debug("[요청받음] => /taskDownload(콜라보) => " + path);
 
 		String url = "downloadFile";
-
+		
 		//디렉토리는 다운이 되지 않으니 무조건 패스가 있는 파일만 /유무 판단 안해도 가능
 		String FileName = path.substring(path.lastIndexOf("/")+1);
 
@@ -319,4 +320,41 @@ public class CollaboTaskController {
 		return entity;
 	}
 	
+	/**
+	 * 콜라보 번호로 간트에서 업무 리스트 출력
+	 * @param cprojNo
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/getTaskListForGanttByCprojNo")
+	@ResponseBody
+	public ResponseEntity<List<CollaboTaskVO>> getTaskListForGanttByCprojNo(@RequestParam(defaultValue = "") String cprojNo)
+			throws Exception{
+		ResponseEntity<List<CollaboTaskVO>> entity = null;
+		
+		LOGGER.debug("[요청받음] => /getTaskListForGanttByProjNo");
+		
+		List<CollaboTaskVO> collaboVOList = new ArrayList<CollaboTaskVO>(); 
+		
+		try {
+			collaboVOList = collaboTaskService.getTaskListByCprojNo(cprojNo);
+			entity = new ResponseEntity<List<CollaboTaskVO>>(collaboVOList, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<CollaboTaskVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			LOGGER.error(e.getMessage(),e); 
+			LOGGER.error("/getTaskListForGanttByProjNo에서 에러가 발생했습니다.",e); 
+		}
+		
+		return entity;
+	}
+	
 }
+
+
+
+
+
+
+
+
+

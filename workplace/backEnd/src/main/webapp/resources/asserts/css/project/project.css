@@ -168,3 +168,20 @@ i.fa-check-circle, i.fa-exclamation-circle {
 div.k-grid-norecords{
 	justify-content: center;
 }
+#inviteIdTag_tag{
+	width:80px!important;
+}
+
+.blink{
+	animation-duration: 1.5s;
+	animation-name: newData;
+}
+
+@keyframes newData {
+	from{
+		background: #4c4d4e;
+	}
+	to{
+		background: white;
+	}
+}

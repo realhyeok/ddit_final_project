@@ -30,7 +30,6 @@ public interface DocumentDAO {
 	//file update
 	public void updateDocument(FileVO document) throws SQLException;
 
-
 	//file 삭제
 	public void deleteDocument(String docId) throws SQLException;
 
@@ -63,7 +62,11 @@ public interface DocumentDAO {
 
 	//콜라보 업무 문서 리스트 출력
 	public List<FileVO> selectDocumentListBytaskTitleANDcprojNo(CollaboTaskVO collaboTaskVO) throws SQLException;
+	
+	//콜라보 문서관리
+	public List<FileVO> selectDocumentListForCprojDetail(String cprojNo) throws SQLException;
 
+	public List<FileVO> selectDocumentListByCprojNo(String cprojNo) throws SQLException;
 
 	//시퀀스
 	String selectDocumentSeqNext() throws SQLException;

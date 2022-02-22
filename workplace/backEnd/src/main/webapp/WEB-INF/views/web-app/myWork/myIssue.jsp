@@ -47,7 +47,7 @@
 				</div>
 			</div>
     	</div>
-        <p class="m-0 text-truncate"><small>#:xssPurify(content)#</small></p>
+        <p class="m-0 text-truncate"><small>#=content#</small></p>
         <p class="m-0"><small>#:kendo.toString(regdate,"yyyy-MM-dd")#</small></p>
     </div>
 </script>

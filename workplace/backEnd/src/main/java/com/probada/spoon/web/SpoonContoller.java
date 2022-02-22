@@ -140,10 +140,11 @@ public class SpoonContoller {
 				
 				taskResultVO.setProjNo("");
 				taskResultVO.setCprojNo(spoonVO.getCprojNo());
-				
-				LOGGER.debug("wwwwwwwwwwwwwwwwwwww"+taskResultVO.toString());
+				taskResultVO.setStatus("B201");
+				LOGGER.debug("setTaskToCollabo() 디버그 => "+taskResultVO.toString());
 				
 				spoonService.setTaskToCollabo(taskResultVO);
+				
 			}
 			
 			

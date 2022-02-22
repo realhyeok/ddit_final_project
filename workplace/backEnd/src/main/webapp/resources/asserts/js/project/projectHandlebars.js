@@ -219,6 +219,14 @@ Handlebars.registerHelper('getRoleCheck', function (role, options) {
     return flag;
 });
 
+Handlebars.registerHelper('getRoleCheckReverse', function (role, options) {
+	var flag = (sessionRole != role) ? options.fn(this) : options.inverse(this);
+	console.log(flag);
+	return flag;
+});
+
+
+
 function getParameterByName(name) {
   	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
    	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),

@@ -196,4 +196,18 @@ public class DocumentServiceImpl implements DocumentService{
 
 		return fileList;
 	}
+
+
+	@Override
+	public List<FileVO> getDocumentListForCprojDetail(String cprojNo) throws SQLException {
+		List<FileVO> fileList = documentDAO.selectDocumentListForCprojDetail(cprojNo);
+		return fileList;
+	}
+
+
+	@Override
+	public List<FileVO> getDocumentListByCprojNo(String cprojNo) throws SQLException {
+		List<FileVO> fileList = documentDAO.selectDocumentListByCprojNo(cprojNo);
+		return fileList;
+	}
 }

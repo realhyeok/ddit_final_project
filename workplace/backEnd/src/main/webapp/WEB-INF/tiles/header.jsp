@@ -196,7 +196,7 @@
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item"  href="<%=request.getContextPath()%>/user/my-page"> 프로필</a>
                       <a class="dropdown-item"  href="#" data-toggle="modal" data-target="#alarmModal"><span>알림설정</span></a>
-                      <a class="dropdown-item"  href="#">FAQ</a>
+                      <!-- <a class="dropdown-item"  href="#">FAQ</a> -->
                       <a class="dropdown-item" href="<%=request.getContextPath()%>/logout.do" id="logout"><i class="fa fa-sign-out pull-right"></i> 로그아웃</a>
                     </div>
                   </li>

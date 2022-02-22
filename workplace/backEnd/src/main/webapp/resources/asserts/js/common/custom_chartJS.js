@@ -186,6 +186,9 @@ $(function () {
   if(window.location.pathname === "/app/project/main"){
     get_member_achievement();
   }
+  if(window.location.pathname === "/app/collabo/main"){
+	  get_cproj_member_achievement();
+  }
   
 });
 
@@ -272,6 +275,93 @@ function get_member_achievement() {
 			console.log("toMemberAchievementChart() err status : " + err.status);
 		}
   });
+}
+function get_cproj_member_achievement() {
+	let search = location.search;
+	let params = new URLSearchParams(search);
+	let getData = params.get('cprojNo');
+	console.log(getData);
+	
+	$.ajax({
+		type: "post",
+		url: "/toCMemberAchievementChart.do",
+		data: {"cprojNo" : getData},
+		dataType: "json",
+		success: function (userList) {
+			
+			console.log("cproj_chart success");
+			
+			let member_achievement_config = {
+					type: 'scatter',
+					data: {
+						labels: [],
+						datasets: [
+							{
+								type: 'bar',
+								label: '총 업무량',
+								data: [],
+								borderColor: 'rgb(201, 203, 207)',
+								backgroundColor: 'rgba(201, 203, 207, 0.2)',
+								borderWidth: 1,
+								maxBarThickness: 100,
+							}, {
+								type: 'line',
+								label: '진척도',
+								data: [],
+								fill: false,
+								borderColor: 'rgb(54, 162, 235)',
+								backgroundColor: 'transparent',
+							}, {
+								type: 'line',
+								label: '미배정',
+								data: [],
+								fill: false,
+								borderColor: 'rgba(255, 99, 132)',
+								backgroundColor: 'transparent',
+							}, {
+								type: 'line',
+								label: '진행중',
+								data: [],
+								fill: false,
+								borderColor: 'rgba(75, 192, 192)',
+								backgroundColor: 'transparent',
+							}, {
+								type: 'line',
+								label: '지연중',
+								data: [],
+								fill: false,
+								borderColor: 'rgba(255, 205, 86)',
+								backgroundColor: 'transparent',
+							}
+							]
+					},
+					options: {
+						scales: {
+							y: {
+								beginAtZero: true
+							}
+						}
+					}
+			};
+			
+			userList.forEach((e, i) => {
+				member_achievement_config.data.labels[i] = e.nickname;
+				member_achievement_config.data.datasets[0].data[i] = e.taskCount;
+				member_achievement_config.data.datasets[1].data[i] = e.completeTaskCount;
+				member_achievement_config.data.datasets[2].data[i] = e.beforeTaskCount;
+				member_achievement_config.data.datasets[3].data[i] = e.ongoingTaskCount;
+				member_achievement_config.data.datasets[4].data[i] = e.delayTaskCount;
+			});
+			
+			const get_cproj_member_achievement = new Chart(
+					document.getElementById("get_cproj_member_achievement"),
+					member_achievement_config
+			);
+		},
+		error: function (err) {
+			console.log("toCMemberAchievementChart() err status : " + err.status);
+		}
+	});
 }
 
 

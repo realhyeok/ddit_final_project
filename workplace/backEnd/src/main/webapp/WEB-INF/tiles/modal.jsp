@@ -65,25 +65,25 @@
           <div class="modal-header">
             <h4 class="modal-title modalTitle">콜라보 제안</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-			
+
           </div>
 
           <!-- Modal body -->
           <div class="modal-body" id="collaboModal">
-	
+
             <div class="x_content">
               <!-- form start -->
               <form role="form" method="post" action="<%=request.getContextPath()%>/app/collabo/sendInviteCollaboMail" name="collaboMailRegist">
-				
+
                 <p>콜라보 제안은 다른 프로젝트 팀과 협업 할 수 있는 곳입니다.</p>
                 <p>다른 팀과 협업 공간을 만들고 함께 일해보세요.</p>
                 <div>
                 	<input type="hidden" id="name1" value="">
                 </div>
                 <div class="card-body" onkeyup="selectOtherProj()">
-				
+
                   <div class="control-group row">
-                    <label class="control-label collabo col-md-3 col-sm-3">이메일 입력</label>
+                    <label class="control-label collabo col-md-3 col-sm-3">닉네임 입력</label>
                     <div class="col-md-9 col-sm-9 ">
                       <input type="hidden" id="CollaboUserFrom" name="userFrom" value="${userVO.userId}">
                       <input type="hidden" id="CollboMailTitle" name="title" value="${userVO.userId}의 콜라보">
@@ -92,7 +92,7 @@
                       <div id="suggestions-container"style="position: relative; float: left; width: 250px; margin: 10px;"></div>
                     </div>
                   </div>
-					
+
                   <!-- select -->
                   <!-- <div class="form-group form-group-collabo">
                     <label>나의 프로젝트</label>
@@ -111,16 +111,16 @@
 					<label class="control-label collabo  col-md-3 col-sm-3 ">나의 프로젝트</label>
 						<div class="col-md-9 col-sm-9 ">
 							<select class="form-control form-control-collabo" id="selectOwnProject">
-							
+
 							</select>
 						</div>
 				  </div>
-				  
+
                   <div class="form-group row">
 					<label class="control-label collabo  col-md-3 col-sm-3 ">상대방의 프로젝트</label>
 						<div class="col-md-9 col-sm-9 ">
 							<select class="form-control form-control-collabo" id="selectOtherProject">
-									
+
 							</select>
 						</div>
 				  </div>
@@ -147,18 +147,18 @@
       </div>
     </div>
     <!-- 콜라보 제안 모달 끝-->
-    
+
      <!-- 콜라보 거절 모달 The Modal -->
 	  <div class="modal" id="refuseCollabo">
 	    <div class="modal-dialog">
 	      <div class="modal-content">
-	      
+
 	        <!-- Modal Header -->
 	        <div class="modal-header">
 	          <h5 class="modal-title">콜라보 제안 거절</h5>
 	          <button type="button" class="close" data-dismiss="modal">&times;</button>
 	        </div>
-	        
+
 	        <!-- Modal body -->
 	        <div class="modal-body">
 	          <div class="form-group row">
@@ -168,17 +168,17 @@
 	              </div>
 	            </div>
 	        </div>
-	        
+
 	        <!-- Modal footer -->
 	        <div class="modal-footer">
 	          <button type="button" class="btn btn-primary" onclick="refuseCoproj()">보내기</button>
 	          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 	        </div>
-	        
+
 	      </div>
 	    </div>
 	  </div>
-	    
+
 
     <!-- 채팅모달 -->
      <div id="createRoomModal" class="modal modal-default fade" role="dialog">

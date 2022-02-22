@@ -25,7 +25,7 @@
 				# }else if(important == "B103"){ #
 					rgb(220, 53, 69)
 				# } #
-			;">
+				;">
 				<div class="d-flex justify-content-end px-2"><i class="mdi mdi-star-outline pr-1 star"></i><i class="mdi mdi-dots-horizontal dot"></i></div>
 				<div class="px-3">
 					<h2 class="name"><a id="task_go#:taskNo#" href="javascript:myTaskDetail(#:taskNo#, #:projNo#);" class="text-dark d-inline-block text-truncate" style="max-width:199px;">#:title#</a></h2>

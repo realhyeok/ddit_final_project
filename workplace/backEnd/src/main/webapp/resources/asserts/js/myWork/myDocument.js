@@ -132,15 +132,15 @@ function readMyDocument(userId){
 	     	          },
 
 	     	         items: [
-		               	  {
-		         	            name: "download",
-		         	            text: "다운로드",
-		         	            spriteCssClass: "k-icon k-i-download",
-		         	          	command: "DownloadCommand"
-		         	          },
-		                   { name: "rename", text:"이름변경" },
-		                   { name: "delete", text:"삭제" }
-		               ]
+	                	  {
+	          	            name: "download",
+	          	            text: "Download",
+	          	            spriteCssClass: "k-icon k-i-download",
+	          	          	command: "DownloadCommand"
+	          	          },
+	                    { name: "rename" },
+	                    { name: "delete" }
+	                ]
 		           },
 
 	            model: {

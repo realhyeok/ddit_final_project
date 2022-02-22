@@ -12,7 +12,7 @@
 </div>
 
 <script id="tempMailList-template" type="text/x-kendo-template">
-	<div class="mail_list m-0 border-bottom-0" onclick="location.href='javascript:tempMailDetail(#:mailNo#);'" style="cursor:pointer;">
+	<div class="mail_list m-0 border-bottom-0" onclick="location.href='javascript:tempMailDetail(#:mailNo#);'" style="cursor:pointer;height:40px;">
 		<div class="left">
 			<input class="tempCheck" type="checkbox" value="#:mailNo#">
 			# if(attachList.length != 0){ #
@@ -160,7 +160,7 @@
 				summernote_go($('textarea.content'));
 			},
 			error : function(error){
-				alert(error.status);
+				/* alert(error.status); */
 			}
 		});
 	}
@@ -187,11 +187,11 @@
 					"mailDist": "tempMail"
 				},
 				success: function(data){
-					alert("성공");
+					alert("삭제를 완료하였습니다.");
 					$('#tempMailList').data("kendoGrid").dataSource.read();
 				},
 				error: function(error){
-					alert(error.status);
+					/* alert(error.status); */
 				}
 			});
 		}
@@ -222,12 +222,12 @@
 				},
 				success: function(data){
 					$("#tempAllCheckButton").prop("checked", false);
-					alert("성공");
+					alert("삭제를 완료하였습니다.");
 					
 					$('#tempMailList').data("kendoGrid").dataSource.read();
 				},
 				error: function(error){
-					alert(error.status);
+					/* alert(error.status); */
 				}
 			});
 		}

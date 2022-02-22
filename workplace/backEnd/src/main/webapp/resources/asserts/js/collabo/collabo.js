@@ -8,49 +8,50 @@ function getParameterByName(name) {
 window.onload = function() {
 	var cprojNo = getParameterByName("cprojNo");
 	console.log(cprojNo);
-	
+
 }
 
 //콜라보 제안 modal 함수
 function invite_go(){
 	let userToCproj = document.getElementById('tags_1').value;
-	
+
 	let myProj = document.getElementById('selectOwnProject').value;
-	
+
 	let myProjNo = $('#selectOwnProject option:selected').attr('idxno');
 	console.log("myProjNo =>" + myProjNo);
 	let otherProj = document.getElementById('selectOtherProject').value;
-	
+
 	let otherProjNo = $('#selectOtherProject option:selected').attr('idxno');
 	console.log("otherProjNo =>" + otherProjNo);
+
+
 	let text = document.getElementById('sendMessage').value;
-	
+
 	let userFromCproj = document.getElementById('CollaboUserFrom').value;
 	
-	
 	console.log("userToCproj =>" + userToCproj + "userFromCproj =>" + userFromCproj);
-	
+
 	if (userToCproj == "") {
-		alert("초대할 유저를 입력하세요.")	
+		alert("초대할 유저를 입력하세요.")
 		return false;
 	}
 	if (myProj == "") {
-		alert("프로젝트를 선택하세요.")	
+		alert("프로젝트를 선택하세요.")
 		return false;
 	}
 	if (text == "") {
-		alert("메세지를 입력하세요.")	
+		alert("메세지를 입력하세요.")
 		return false;
 	}
-	
+
 	let title = document.getElementById('CollboMailTitle').value + "제안 메일입니다.";
 	console.log("title =>" + title);
 	
 	let content = inviteMailForm(userFromCproj,userToCproj,myProj,text,myProjNo,otherProj,otherProjNo);
-	
+
 	document.getElementById('collaboContent').value = content;
 	console.log(document.getElementById('collaboContent').value);
-	
+
 	document.getElementById('CollboMailTitle').value = title;
 	
 	document.collaboMailRegist.submit();
@@ -59,16 +60,16 @@ function invite_go(){
 
 
 function inviteMailForm(userFromCproj,userToCproj,myProj,text,myProjNo,otherProj,otherProjNo) {
-	
+
 	//alert("메일 안에서 프로젝트 번호" + myProjNo);
 	//alert("메일 안에서 프로젝트 번호" + otherProjNo);
 	//alert("내꺼 프로젝트 번호" + myProjNo);
 	//alert("다른사람 프로젝트 번호" + otherProjNo);
-	
-	
+
+
 	let url = "/app/project/main?projNo="
 	var content = ""
-	content += 
+	content +=
 		`<div class="x_content">
 
     <table class="table collabo table-hover">
@@ -106,12 +107,12 @@ function inviteMailForm(userFromCproj,userToCproj,myProj,text,myProjNo,otherProj
     </div>
 
 </div>`
-	
+
 	return content;
-}	
+}
 
 
-//나의 프로젝트 셀렉트 함수  
+//나의 프로젝트 셀렉트 함수
 function createCollabo() {
 	$.ajax({
 		url : "/app/collabo/getProjectTitleCollabo.do",
@@ -119,7 +120,7 @@ function createCollabo() {
 		success : function(arg) {
 			console.log("나의 프로젝트 arg => " + arg)
 			let projTitle = "<option value='' disabled selected hidden>프로젝트를 선택해주세요.</option>";
-			
+
 			for (var i = 0; i < arg.length; i++) {
 				console.log("arg[i] => " + arg[i].title + arg[i].projNo);
 				projTitle += "<option class='projNoIdx' idxNo='"+arg[i].projNo+"' value='"+arg[i].title+"'>"+arg[i].title+"</option>";
@@ -130,27 +131,27 @@ function createCollabo() {
 			alert("에러" + arg.status + "메세지" + arg.responseText);
 		}
 	})
-};  
+};
 
-//상대방의 프로젝트 셀렉트 함수 
+//상대방의 프로젝트 셀렉트 함수
 function selectOtherProj(){
 	if (window.event.keyCode == 13) {
 		//alert("입력한 ID 값의 프로젝트 출력 함수 실행");
 		let userName = document.getElementById('tags_1').value;
 		document.getElementById("name1").innerHTML = userName;
-		
+
 		 $.ajax({
 			url : "/app/collabo/getProjectTitleOther.do",
 			type : "POST",
-			data : {"userId" : userName},
-			
+			data : {"nickname" : userName},
+
 			success : function(arg) {
 				console.log("arg => " + arg)
 				let projTitle = "<option value='' disabled hidden>프로젝트를 선택해주세요.</option>";
-				
+
 				for (var i = 0; i < arg.length; i++) {
 					console.log("콜라보 Other arg[i] => " + arg[i].title + arg[i].projNo);
-					
+
 					projTitle += "<option class='projNoIdx' idxNo='"+arg[i].projNo+"' value='"+arg[i].title+"'>"+arg[i].title+"</option>";
 				}
 				document.getElementById('selectOtherProject').innerHTML= projTitle;
@@ -158,7 +159,7 @@ function selectOtherProj(){
 			error : function(arg) {
 				alert("에러" + arg.status + "메세지" + arg.responseText);
 			}
-			
+
 		})
   }
 };

@@ -182,4 +182,20 @@ public class UserDAOImpl implements UserDAO{
 		return sqlSession.selectOne("User-Mapper.getUserByNickname", nickname);
 	}
 
+	@Override
+	public List<UserVO> selectUserByCprojNo(String cprojNo) throws SQLException {
+		
+		List<UserVO> userListForCprojDetail = sqlSession.selectList("User-Mapper.selectUserByCprojNo", cprojNo);
+
+		return userListForCprojDetail;
+	}
+
+	@Override
+	public List<UserVO> getCMemberAchievementList(String cprojNo) throws SQLException {
+		
+		List<UserVO> userListForCprojDetail = sqlSession.selectList("User-Mapper.getCporjMemberAchievementList", cprojNo);
+		
+		return userListForCprojDetail;
+	}
+
 }

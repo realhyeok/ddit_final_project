@@ -12,6 +12,7 @@
 	<select id="selectIssueListByUserId" resultType="issue" parameterType="String">
 		SELECT A.ISSUE_NO
 			 , A.PROJ_NO
+			 , A.STATUS
 			 , B.NICKNAME AS USER_ID
 			 , A.TITLE
 			 , A.CONTENT
@@ -77,7 +78,7 @@
 
 	<select id="selectIssueByIssueNo" resultType="issue" parameterType="issue">
 		SELECT
-    		A.ISSUE_NO,A.PROJ_NO ,B.NICKNAME ,B.USER_ID, A.TITLE ,A.CONTENT ,<include refid="importantForIssue"/>
+    		A.ISSUE_NO, A.STATUS, A.PROJ_NO ,B.NICKNAME ,B.USER_ID, A.TITLE ,A.CONTENT ,<include refid="importantForIssue"/>
    			,A.REGDATE ,A.STARTDATE ,A.ENDDATE ,A.UPDATEDATE ,<include refid="statusForIssue"/> ,A.DOC_CONT_NO
 		FROM
     		ISSUE A

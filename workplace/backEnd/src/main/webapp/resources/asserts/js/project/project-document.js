@@ -84,8 +84,6 @@ function readDocument(){
 		           uploadUrl: baseUrl+"Upload?PROJ_NO="+projNo,
 		           toolbar: {
 		               items: [
-		                   { name: "createFolder" },
-		                   { name: "upload" },
 		                   { name: "sortDirection" },
 		                   { name: "sortField" },
 		                   { name: "changeView" },
@@ -109,7 +107,9 @@ function readDocument(){
 		         	            spriteCssClass: "k-icon k-i-download",
 		         	          	command: "DownloadCommand"
 		         	          },
-		                   { name: "rename", text:"이름변경" },
+		         	         {
+		                	   name:"rename", text:"이름 변경"
+		                   },
 		                   { name: "delete", text:"삭제" }
 		               ]
 		           },

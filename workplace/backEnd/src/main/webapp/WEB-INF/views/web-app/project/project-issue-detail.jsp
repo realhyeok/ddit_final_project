@@ -12,10 +12,8 @@
         	<button type="button" class="btn btn-sm btn-danger float-right" onclick="deleteIssueByNo('/app/issue/removeIssue','{{issueVO.issueNo}}');">삭제</button>
 			{{/ifCond}}
 			{{#ifCond '${userVO.nickname}' "!=" userId}}
-			{{#getRoleCheck 'A303'}}
         	<button type="button" class="btn btn-sm btn-primary float-right" onclick="getOverlayIssueModifyTemplate('issueModifyFormTemplate','/app/issue/getIssueByIssueNo','{{issueVO.issueNo}}')">수정</button>
         	<button type="button" class="btn btn-sm btn-danger float-right" onclick="deleteIssueByNo('/app/issue/removeIssue','{{issueVO.issueNo}}');">삭제</button>
-			{{/getRoleCheck}}
 			{{/ifCond}}
 		</div>
       </div>

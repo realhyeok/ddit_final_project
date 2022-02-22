@@ -183,4 +183,17 @@ public class DocumentDAOImpl implements DocumentDAO{
 
 		return fileList;
 	}
+
+	@Override
+	public List<FileVO> selectDocumentListForCprojDetail(String cprojNo) throws SQLException {
+		List<FileVO> docList= sqlSession.selectList("Document-Mapper.selectDocumentListForCprojDetail",cprojNo);
+
+		return docList;
+	}
+
+	@Override
+	public List<FileVO> selectDocumentListByCprojNo(String cprojNo) throws SQLException {
+		List<FileVO> docList = sqlSession.selectList("Document-Mapper.selectDocumentListByCprojNo", cprojNo);
+		return docList;
+	}
 }

@@ -33,9 +33,21 @@
 			<label>담당자</label>
 			<input type="text" class="form-control form-control-sm form-control-view text-truncate" value="{{issueVO.nickname}}">
 		</div>
-		<div class="col-sm-6">
+		<div class="col-sm-3">
 			<label class="control-label">중요도</label>
 			<div class="form-control form-control-sm form-control-view text-truncate">{{issueVO.important}}</div>
+		</div>
+		<div class="col-sm-3">
+			<label class="control-label">상태</label>
+			{{#ifCond issueVO.status "==" "B501"}}
+				<div class="form-control form-control-sm form-control-view text-truncate">진행중</div>
+			{{/ifCond}}
+			{{#ifCond issueVO.status "==" "B502"}}
+				<div class="form-control form-control-sm form-control-view text-truncate">진행중</div>
+			{{/ifCond}}
+			{{#ifCond issueVO.status "==" "B503"}}
+				<div class="form-control form-control-sm form-control-view text-truncate">완료</div>
+			{{/ifCond}}
 		</div>
 	</div>
 
@@ -214,7 +226,7 @@
 				url    : "<%=request.getContextPath()%>/app/issueReply/modifyIssueReply",
 				data   : issueReplyVO,
 				success: function(data){
-					alert("수정 완료");
+					alert("수정을 완료하였습니다.");
 					myIssueDetail(issueNo, projNo);
 					$("#myIssueReplyModifyModalCloseButton").click();
 				},
@@ -237,7 +249,7 @@
 				url    : "<%=request.getContextPath()%>/app/issueReply/removeIssueReply",
 				data   : { "issueResNo" : issueResNo },
 				success: function(data){
-					alert("삭제 완료");
+					alert("삭제를 완료하였습니다.");
 					myIssueDetail(issueNo, projNo);
 				},
 				error  : function(error){
@@ -262,7 +274,7 @@
 				datatype : "text",
 				data     : issueVO,
 				success  : function(data){
-					alert("삭제가 완료되었습니다.")
+					alert("삭제를 완료하였습니다.")
 					document.getElementById('issue-tab').click();
 				},
 				error    : function(xhr, status){
@@ -297,7 +309,7 @@
 			data   : issueReplyVO,
 			success: function(data){
 				if(data == "success"){
-					alert("등록 완료");
+					alert("등록을 완료하였습니다.");
 					myIssueDetail(issueNo, projNo);
 					readMyDashboard('${userVO.userId}', '${userVO.nickname}');
 					$("#myIssueReplyRegistContent").val("");
@@ -323,7 +335,7 @@
 				datatype : 'text',
 				data     : fileVO,
 				success  : function(data){
-					alert("삭제가 완료되었습니다.");
+					alert("삭제를 완료되었습니다.");
 					console.log(data);
 					readMyDashboard('${userVO.userId}', '${userVO.nickname}');
 					myIssueDetail(issueNo, projNo);

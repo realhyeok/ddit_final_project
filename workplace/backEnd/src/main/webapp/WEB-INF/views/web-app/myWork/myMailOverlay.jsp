@@ -86,7 +86,7 @@
 						memoryCapacity = data;
 					},
 					error: function(error){
-						alert(error.status);
+						/* alert(error.status); */
 					}
 				});
 				

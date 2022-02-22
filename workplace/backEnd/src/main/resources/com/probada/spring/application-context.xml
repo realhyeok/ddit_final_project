@@ -69,7 +69,14 @@
 		  class="com.probada.collabo.dao.CollaboTaskDAOImpl"
 		  p:sqlSession-ref="sqlSession"
 	/>
-	
+	<bean id="collaboMilestoneDAO"
+		  class="com.probada.collabo.dao.CollaboMilestoneDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="collaboIssueDAO"
+		  class="com.probada.collabo.dao.CollaboIssueDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
 	<bean id="alertDAO"
 		  class="com.probada.alert.dao.AlertDAOImpl"
 		  p:sqlSession-ref="sqlSession"
@@ -96,6 +103,15 @@
 		  class="com.probada.collabo.service.CollaboTaskServiceImpl"
 		  p:collaboTaskDAO-ref="collaboTaskDAO"
 	/>
+	<bean id="collaboMilestoneService"
+		  class="com.probada.collabo.service.CollaboMilestoneServiceImpl"
+		  p:collaboMilestoneDAO-ref="collaboMilestoneDAO"
+	/>
+	<bean id="collaboIssueService"
+		  class="com.probada.collabo.service.CollaboIssueServiceImpl"
+		  p:collaboIssueDAO-ref="collaboIssueDAO"
+	/>
+	
 	<bean id="projectService"
 		  class="com.probada.project.service.ProjectServiceImpl"
 		  p:projectDAO-ref="projectDAO"

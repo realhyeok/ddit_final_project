@@ -86,9 +86,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public String getProjectNameByProjNo(String projNo) throws SQLException {
-
 		String title = projectDAO.selectProjectNameByProjNo(projNo);
-
 		return title;
 	}
 

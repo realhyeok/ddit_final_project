@@ -72,7 +72,7 @@ function receiveMailBox(userId){
 
 
 //콜라보 메일 관련
-//수락 버튼 중복 클릭 방지 
+//수락 버튼 중복 클릭 방지
 var doubleSubmitFlag = false;
 
 function doubleSubmitCheck(){
@@ -84,30 +84,37 @@ function doubleSubmitCheck(){
     }
 }
 
+
+
 //콜라보 수락 버튼 함수
 function acceptCollabo() {
+
 	if(doubleSubmitCheck()){
 		alert("이미 수락하셨습니다.");
 		return;
 	}else{
-		
+
 		let userFromCproj = document.getElementById('cprojReplyUserTo').value; //test29
-		
+
 		//let userFromProjNo = $('.userToProj').attr('idx');  //4 idxNoTo
 		let userFromProjNo = document.getElementById('idxNoTo').value;  //4
-		
+
 		let userToCproj = document.getElementById('cprojReplyUserFrom').innerText; //pooh_00
 		
 		//let userToProjNo = $('.userFromProj').attr('idx'); //3
 		let userToProjNo = document.getElementById('idxNoFrom').value; //3
-		
+
 		let title = document.getElementById('CollboMailTitle').value + "제안 수락메일입니다.";
-		
+
 		var collaboVO = {"userFrom" : userFromCproj,
 				"userFromProjNo" : userFromProjNo,
 				"userTo" : userToCproj,
 				"userToProjNo" : userToProjNo,
 		}
+		let sessionNickname = userFromCproj;
+		let targetNickname = userToCproj;
+		console.log("========>>11111" + sessionNickname);
+		console.log("========>>22222" + targetNickname);
 		
 		$.ajax({
 			url : "/app/collabo/registCollabo",
@@ -116,27 +123,28 @@ function acceptCollabo() {
 			data : collaboVO,
 			success : function(data) {
 				alert("등록에 성공했습니다.");
-				
+				if(targetNickname === "test10@asd.com") targetNickname = "이길과장";
+				collaboAlert(sessionNickname, "콜라보", "", "수락", "0", targetNickname);
 				// off();
 			},
 			error : function(arg) {
 				alert("콜라보 생성 에러" + arg.status + "메세지" + arg.responseText);
 			}
 		});
-		
-		let receiveContent = replyMailForm(userFromCproj,userToCproj,userToProjNo,userFromProjNo);
+
+		/*let receiveContent = replyMailForm(userFromCproj,userToCproj,userToProjNo,userFromProjNo);
 		console.log("receiveContent =>" + receiveContent);
-		
+
 		document.getElementById('collaboContent').value = receiveContent;
-		
+
 		document.getElementById('tags_1').value = userToCproj;
-		
+
 		document.getElementById('CollboMailTitle').value = title;
-		
+
 		console.log(document.getElementById('collaboContent').value);
-		
-		document.collaboMailRegist.submit();
-		
+
+		document.collaboMailRegist.submit();*/
+
 		//location.href="/app/collabo-list";
 	}
 
@@ -157,7 +165,7 @@ function replyMailForm(userFromCproj,userToCproj,userToProjNo,userFromProjNo) {
 
 		</div>
 		`;
-	
+
 	$.ajax({
 		url : "/app/collabo/getProjectTitleCollabo.do",
 		type : "POST",
@@ -184,6 +192,8 @@ function CollaboGo() {
 	alert("콜라보 프로젝트 제안을 수락하셨습니다.")
 	location.href="/app/collabo-list";
 }
+
+
 
 
 //콜라보 제안 메일 거절
@@ -216,6 +226,32 @@ function refuseCoproj() {
 
 	document.collaboMailRegist.submit();
 }
+
+function collaboAlert(sessionNickname, cprojectTitle, targetTitle, crud, cprojectNumber, targetNickname){
+
+	socketData3 = {
+		nickname : sessionNickname,
+		where    : cprojectTitle,
+		target   : targetTitle,
+		whatToDo : crud,
+		projNo   : cprojectNumber,
+		receiverId : targetNickname
+	};
+
+	if(socket){
+		//protocol : 누가(nickname) 어디서(분야) 무엇(target)을 curd(어떻게), 프로젝트 넘버
+		//","를 구분자로 분리합니다. 반드시 위처럼 순서대로 작성해주세요.
+		let socketMsg = socketData3.nickname
+				+ "," + socketData3.where
+				+ "," + socketData3.target
+				+ "," + socketData3.whatToDo
+				+ "," + socketData3.cprojNo
+				+ "," + socketData3.receiverId;
+		//send()하게 되면 alert에 있는 AlertHandler의 handleTextMessage() 메서드로 파라미터를 전달하게 됩니다.
+		socket.send(socketMsg);
+	}
+}
+
 
 function refuseMailForm(refuseTo,refuseFrom,title,text) {
 	console.log("refuseTo =>" + refuseTo);

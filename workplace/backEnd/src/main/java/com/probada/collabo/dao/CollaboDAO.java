@@ -27,6 +27,9 @@ public interface CollaboDAO {
 	//콜라보 갯수 
 	public int collaboCount(String userId)throws SQLException;
 	
+	//유저의 콜라보 개수 
+	public int selectCprojectCountInCprojByUserId(String userId) throws SQLException;
+	
 	public CollaboVO selectCollaboByCprojNo(String cprojNo) throws SQLException;
 
 	public void insertCollabo(CollaboVO collaboVO)throws SQLException;
@@ -48,5 +51,11 @@ public interface CollaboDAO {
 	
 	//칼럼이 여러개니까 List로 받는다.
 	public List<CollaboVO> selectCprojectNameByProjNo(String projNo)throws SQLException;
+	
+	//유저 역할
+	public String selectUserRole(CollaboVO collaboVO) throws SQLException;
+
+	public void updateUserRole(CollaboVO collaboVO) throws SQLException;
+
 
 }

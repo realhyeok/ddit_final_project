@@ -450,7 +450,381 @@
 	</div>
 </script>
 
+<!---------------------------- 멤버 초대 ---------------------------->
+<script type="text/x-handlebars-template" id="inviteCollaboMemberForm">
+<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">구성원 초대</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+						<p>콜라보를 함께 할 구성원을 초대해보세요.</p>
+						<form id="inviteMemberCollaboForm" method="post" data-parsley-validate=""
+							class="form-horizontal form-label-left mt-3" novalidate="">
 
+						<input type="hidden" name="userNicknameFrom" value="${userVO.nickname}">
+						<input type="hidden" name="userIdFrom" value="${userVO.userId}">
+					<!-- 콜라보명 -->
+					<div class="item form-group">
+						<label class="col-form-label col-md-3 col-sm-3 label-align"
+							for="title">콜라보명
+						</label>
+						<div class="col-md-6 col-sm-6 ">
+							<input type="text" id="title" readonly class="form-control form-control-sm" name="title" value="{{title}}">
+						</div>
+					</div>
+
+						<div class="item form-group">
+							<label class="col-form-label col-md-3 col-sm-3 label-align"
+								for="role">부여 권한
+							</label>
+							<div class="col-md-6 col-sm-6">
+								<select class="form-control form-control-sm" required="required" name="role" id="role">
+									<option value="A301">게스트</option>
+									<option value="A302">팀원</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 label-align">유저 닉네임</label>
+                   			<div class="col-md-9 col-sm-9 ">
+								<input type="text" data-role="tagsinput" id="inviteIdTag"
+									name="userTo" class="form-control form-control-sm" name="userTo">
+                      		<div id="suggestions-container"style="position: relative; float: left; width: 250px; margin: 10px;"></div>
+                    	</div>
+						</div>
+							<!-- textarea -->
+							<div class="form-group">
+								<textarea class="form-control" rows="10"
+									placeholder="보낼 메세지를 적어주세요." name="content"></textarea>
+							</div>
+					<div class="col-md-6 col-sm-6 offset-md-4 mt-3">
+						<button type="button" class="btn btn-success" onclick="inviteCollaboMemberSubmit();">초대</button>
+						<button class="btn btn-primary" type="button" onclick="off()">취소</button>
+					</div>
+					</form>
+				</div>
+      </div>
+	</div>
+  </div>
+</script>
+
+<!-- 콜라보 상세페이지의 문서 업로드 폼 -->
+<script type="text/x-handlebars-template" id="uploadCollaboDocumentForm">
+<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">중요첨부파일 등록</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+				<div class="x_content">
+					<div class="row">
+						<div class="x_content">
+							<form id="uploadCollaboDocument" method="post" data-parsley-validate=""
+								class="form-horizontal form-label-left" novalidate="">
+							<div style="width:100%; float:left">
+           						<input name="files" id="CollaboDocument" type="file" aria-label="files" />
+        					</div>
+						</div>
+						<div class="col-md-4 col-sm-4 offset-md-4 mt-3">
+							<button type="button" class="btn btn-success" onclick='uploadCollaboDoc()'>등록</button>
+							<button class="btn btn-primary" type="button" onclick="off()">취소</button>
+						</div>
+							</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<!-- 콜라보 마일스톤 등록 -->
+<!------------------------------- 마일스톤 등록 ----------------------------->
+<script type="text/x-handlebars-template" id="collaboMileStoneRegistFormTemplate">
+	<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">마일스톤 등록</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+				<div class="x_content">
+					<div class="row">
+							<div class="x_content">
+								<form id="registMileForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<!-- 콜라보명 -->
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align"
+										for="projTitle">
+										콜라보명
+									</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="cprojTitle" required="required" class="form-control form-control-sm"
+										name="cprojTitle" value="{{cprojTitle}}" disabled>
+								</div>
+							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="userNickname">
+											제기자
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="userNickname" name="userId">
+              									<option value="{{userVO.userId}}">{{userVO.nickname}}</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="status">
+											마일스톤 상태
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="status" name="status">
+              									<option	value="B301">미완료</option>
+              									<option	value="B302">완료</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align"
+											for="title">마일스톤 제목
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" id="title" class="form-control form-control-sm" name="title">
+										</div>
+									</div>
+									<div class=form-group">
+										<textarea class="cprojSummnote" name="content" ></textarea>
+									</div>
+									<div class=form-group">
+										<label class=" label-align mt-3">이슈 등록 </label>
+										<select id="mileIssueTag" name="issueList" multiple="multiple" data-placeholder="추가하실 이슈를 선택해주세요">
+										{{#each wholeIssueList}}
+											<option value="{{issueNo}}">{{title}}</option>
+										{{/each}}
+        								</select>
+									</div>
+									<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
+										<button type="button" class="btn btn-success" onclick='registMileDetail()'>등록</button>
+										<button class="btn btn-primary" type="button" onclick="off()">취소</button>
+									</div>
+								</form>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<!------------------------------- 콜라보 마일스톤 수정 ----------------------------->
+<script type="text/x-handlebars-template" id="mileStoneModifyFormTemplate">
+	<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">마일스톤 수정</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+				<div class="x_content">
+					<div class="row">
+							<div class="x_content">
+								<form id="modifyMileForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<!-- 프로젝트명 -->
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align"
+										for="projTitle">
+										프로젝트명
+									</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="projTitle" required="required" class="form-control form-control-sm"
+										name="projTitle" value="{{mileVO.projTitle}}" disabled>
+									<input type="hidden" name="mileNo" value="{{mileVO.mileNo}}">
+								</div>
+							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="userNickname">
+											제기자
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="userNickname" name="userId">
+              									<option value="{{mileVO.userId}}">{{mileVO.nickname}}</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="status">
+											마일스톤 상태
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="status" name="status">
+              									<option
+												{{#ifCond mileVO.status "==" "B301"}}
+              									selected
+												{{/ifCond}}
+												value="B301">미완료</option>
+              									<option
+												{{#ifCond mileVO.status "==" "B302"}}
+              									selected
+												{{/ifCond}}
+												value="B302">완료</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align"
+											for="title">마일스톤 제목
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" id="title" class="form-control form-control-sm" name="title" value="{{mileVO.title}}">
+										</div>
+									</div>
+									<div class=form-group">
+										<textarea class="projSummnote" name="content" >{{{mileVO.content}}}</textarea>
+									</div>
+									<div class=form-group">
+										<label class=" label-align mt-3">이슈 등록 </label>
+										<select id="mileIssueTag" name="issueList" multiple="multiple" data-placeholder="추가하실 이슈를 선택해주세요">
+										{{#each wholeIssueList}}
+											<option value="{{issueNo}}">{{title}}</option>
+										{{/each}}
+        								</select>
+									</div>
+									<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
+										<button type="button" class="btn btn-success" onclick='modifyMileDetail()'>수정</button>
+										<button class="btn btn-primary" type="button" onclick="off()">취소</button>
+									</div>
+								</form>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<!-- 콜라보 이슈 등록 -->
+<script type="text/x-handlebars-template" id="collaboIssueRegistFormTemplate">
+	<div class="row" style="display:none;" id="fadeInContent">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_title row d-flex justify-content-between">
+					<h5 class="title">
+							<i class="fa fa-clone"></i> <span class="task-bold task-sm">이슈 등록</span>
+					</h5>
+					<div class="clearfix">
+						<button onclick="off()" class="btn btn-primary btn-sm">X</button>
+					</div>
+				</div>
+				<div class="x_content">
+					<div class="row">
+							<div class="x_content">
+								<form id="registIssueForm" method="post" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+								<!-- 콜라보명 -->
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align"
+										for="projTitle">
+										콜라보명
+									</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="cprojTitle" required="required" class="form-control form-control-sm"
+										name="projTitle" value="{{cprojTitle}}" readonly>
+								</div>
+							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="userNickname">
+											제기자
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="userNickname" name="userId">
+              									<option value="{{member.userId}}">{{member.nickname}}</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="important">
+											중요도
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="important" name="important">
+												<option value="B401">낮음</option>
+              									<option value="B402">보통</option>
+             									<option value="B403">높음</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+          								<label class="col-form-label col-md-3 col-sm-3 label-align for="status">
+											이슈 상태
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+            								<select class="form-control form-control-sm" id="status" name="status">
+              									<option value="B501">진행전</option>
+              									<option value="B502">진행중</option>
+             									<option value="B503">완료</option>
+            								</select>
+										</div>
+        							</div>
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align"
+											for="startdate">시작일
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="date" id="startdate" name="startdate" class="form-control form-control-sm">
+										</div>
+									</div>
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align"
+											for="enddate">종료일
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="date" id="enddate" name="enddate" class="form-control form-control-sm">
+										</div>
+									</div>
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align"
+											for="title">이슈 제목
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" id="title" class="form-control form-control-sm" name="title">
+										</div>
+									</div>
+									<div class=form-group">
+										<textarea class="projSummnote" name="content" ></textarea>
+									</div>
+									<div style="width:100%; float:left">
+											<input name="files" id="projectIssueUpload" type="file" aria-label="files" />
+										</div>
+									<div class="col-md-7 col-sm-7 offset-md-4 mt-3">
+										<button type="button" class="btn btn-success" onclick='registIssue()'>등록</button>
+										<button class="btn btn-primary" type="button" onclick="off()">취소</button>
+									</div>
+								</form>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
 	
 </body>
 </html>

@@ -100,9 +100,18 @@
 							<!-- 프로젝트 공지사항 예시 끝 -->
 							{{/ifCond}}
 							{{#ifCond notice '==' NULL}}
-                    	<div class="btn create-btn project-bg-btn" style="width:80%;" onclick="getOverlayModifyTemplate('noticeRegistFormTemplate','/app/project/getProjectByProjNo','')">
+								{{#getRoleCheck 'A303'}}
+                    	<div class="btn create-btn project-bg-btn" style="width:80%;"
+						 onclick="getOverlayModifyTemplate('noticeRegistFormTemplate','/app/project/getProjectByProjNo','')">
                       		<span class="text-dark">새로운 공지사항을 등록해보세요!</span>
 						</div>
+								{{/getRoleCheck}}
+								{{#getRoleCheckReverse 'A303'}}
+								<div class="border round round-3 p-3 mb-3">
+									<div class="project-detail-body project-notice-content">
+										등록된 공지사항이 없습니다.</div>
+								</div>
+								{{/getRoleCheckReverse}}
 							{{/ifCond}}
 				</script>
 

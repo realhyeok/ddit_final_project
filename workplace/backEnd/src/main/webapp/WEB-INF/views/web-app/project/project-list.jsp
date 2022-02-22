@@ -38,7 +38,7 @@
 			<div class="col-sm-8 row d-flex justify-content-evenly">
 					<div class="ml-3 d-flex align-items-center"><h4 class="mb-0">
 				#for (var i=0, len=tagNames.length; i<len; i++){#
-						<span class="badge badge-success" onclick="location.href='/app/tag?tagNo='+'#:tagNo[i]#'">#:tagNames[i]#</span>
+						<span class="badge badge-success" style="cursor:pointer;" onclick="location.href='/app/tag?tagNo='+'#:tagNo[i]#'">#:tagNames[i]#</span>
 				#}#
 					</h4></div>
 					<div class="d-flex justify-content-end"><span class="ml-3">갱신일 : #:kendo.toString((updatedate),"yyyy년 MM월 dd일")#</span></div>

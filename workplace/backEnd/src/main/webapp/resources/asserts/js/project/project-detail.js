@@ -145,7 +145,7 @@ function getOverlayinviteMemberForm(templateId) {
 			appe.innerHTML = html;
 			$("#fadeInContent").fadeIn(300);
 			$('#inviteIdTag').tagsInput({
-				defaultText:'메일 입력'
+				defaultText:'닉네임 입력'
 			});
 		},
 		error : function(xhr, status) {

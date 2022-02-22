@@ -9,7 +9,7 @@ import com.probada.milestone.vo.MilestoneVO;
 public interface MilestoneDAO {
 
 	public List<MilestoneVO> selectMilestoneListByUserId(String userId) throws SQLException;
-
+	
 	public List<MilestoneVO> selectMilestoneListByProjNo(String projNo) throws SQLException;
 
 	public MilestoneVO selectMilestoneByMileNo(String mileNo) throws SQLException;

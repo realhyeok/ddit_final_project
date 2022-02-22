@@ -34,18 +34,33 @@
 					}else if(curTab == "myTaskDetail-tab"){
 						document.getElementById('task-tab').click();
 					}else if(curTab == "mail-tab"){
-						document.getElementById('mail-tab').click();
-						document.getElementById('mailReceive-tab').click();
+						if("${mail}" == "receiveMail"){
+							document.getElementById('mail-tab').click();
+							var link = document.location.href.split("?");
+							var newLink = link[0] + "#mailReceive-tab";
+							history.pushState(null, null, newLink);
+						}else if("${mail}" == "sendMail"){
+							document.getElementById('mail-tab').click();
+							var link = document.location.href.split("?");
+							var newLink = link[0] + "#mailSend-tab";
+							history.pushState(null, null, newLink);
+						}else{
+							document.getElementById('mail-tab').click();
+							document.getElementById('mailReceive-tab').click();
+						}
 					}else if(curTab == "mailReceive-tab"){
 						document.getElementById('mail-tab').click();
 						document.getElementById('mailReceive-tab').click();
 					}else{
 						if("${mail}" == "receiveMail"){
 							document.getElementById('mail-tab').click();
-							
 							var link = document.location.href.split("?");
 							var newLink = link[0] + "#mailReceive-tab";
-							
+							history.pushState(null, null, newLink);
+						}else if("${mail}" == "sendMail"){
+							document.getElementById('mail-tab').click();
+							var link = document.location.href.split("?");
+							var newLink = link[0] + "#mailSend-tab";
 							history.pushState(null, null, newLink);
 						}else{
 							document.getElementById(curTab).click();
@@ -54,10 +69,13 @@
 				} else {
 					if("${mail}" == "receiveMail"){
 						document.getElementById('mail-tab').click();
-						
 						var link = document.location.href.split("?");
 						var newLink = link[0] + "#mailReceive-tab";
-						
+						history.pushState(null, null, newLink);
+					}else if("${mail}" == "sendMail"){
+						document.getElementById('mail-tab').click();
+						var link = document.location.href.split("?");
+						var newLink = link[0] + "#mailSend-tab";
 						history.pushState(null, null, newLink);
 					}else{
 						document.getElementById('home-tab').click();

@@ -54,7 +54,7 @@ function getOverlayMyIssueRegistTemplate(userId) {
 			summernote_go($('.myIssueRegistSummernote'));
 		},
 		error : function(error) {
-			alert(error.status);
+			/*alert(error.status);*/
 		}
 	});
 	
@@ -253,7 +253,7 @@ function modifyMyIssue() {
 		type : 'POST',
 		data : formData,
 		success : function(data) {
-			alert("수정에 성공했습니다.");
+			alert("수정을 완료하였습니다.");
 			myIssueDetail(data.issueNo, projNo);
 			readMyDashboard('${userVO.userId}', '${userVO.nickname}');
 			myOverlayOff('#myMileOverlay');
@@ -308,7 +308,7 @@ function registMyIssue() {
 		type : 'POST',
 		data : formData,
 		success : function(data) {
-			alert("등록에 성공했습니다.");
+			alert("등록을 완료하였습니다.");
 			readMyDashboard('${userVO.userId}', '${userVO.nickname}');
 			myOverlayOff('#myMileOverlay');
 			
@@ -363,13 +363,13 @@ function registMyMilestone() {
 		data : JSON.stringify(mileVO),
 		contentType:'application/json;charset=UTF-8',
 		success : function(data) {
-			alert("등록에 성공했습니다.");
+			alert("등록을 완료하였습니다.");
 			document.getElementById('issue-tab').click();
 			myOverlayOff('#myMileOverlay');
 		}, // success
 		error : function(xhr, status) {
-			alert("fail");
-			alert(xhr + " : " + status);
+			/*alert("fail");
+			alert(xhr + " : " + status);*/
 		}
 	});
 }
@@ -416,13 +416,13 @@ function modifyMyMilestone() {
 		data       : JSON.stringify(mileVO),
 		contentType:'application/json;charset=UTF-8',
 		success    : function(data) {
-			alert("수정에 성공했습니다.");
+			alert("수정을 완료하였습니다.");
 			document.getElementById('issue-tab').click();
 			myOverlayOff('#myMileOverlay');
 		},
 		error      : function(xhr, status) {
-			alert("fail");
-			alert(xhr + " : " + status);
+			/*alert("fail");
+			alert(xhr + " : " + status);*/
 		}
 	});
 }
@@ -437,13 +437,13 @@ function removeMyMilestone(mileNo){
 			data    : {"mileNo" : mileNo},
 			success : function(data) {
 				if(data == "success"){
-					alert("삭제 성공했습니다.");
+					alert("삭제를 완료하였습니다.");
 				}
 				document.getElementById('issue-tab').click();
 			},
 			error   : function(xhr, status) {
-				alert("fail");
-				alert(xhr + " : " + status);
+				/*alert("fail");
+				alert(xhr + " : " + status);*/
 			}
 		});
 	}

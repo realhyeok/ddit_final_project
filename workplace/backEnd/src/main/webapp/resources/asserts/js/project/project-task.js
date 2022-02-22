@@ -87,7 +87,7 @@ const projList = $("#project-list").kendoGrid({
 	pageable: true,
 	toolbar: [
 		{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"projRegistFormTemplate\");'>프로젝트 등록</a>" }
-		,{ template: "<div class='k-spacer'>&nbsp;</div>"},"search","pdf"
+		,{ template: "<div class='k-spacer'>&nbsp;</div>"},"search"
 	],
 	messages: {
 	    commands: {

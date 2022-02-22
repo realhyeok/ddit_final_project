@@ -143,7 +143,7 @@
 						}
 					},
 					error : function(error) {
-						alert(error.status);
+						/* alert(error.status); */
 					}
 				});
 			});
@@ -190,7 +190,7 @@
 					type : 'POST',
 					data : formData,
 					success : function(data) {
-						alert("등록에 성공했습니다.");
+						alert("등록을 완료하였습니다.");
 						
 						myOverlayOff('#myTaskOverlay');
 						readMyDashboard('${userVO.userId}', '${userVO.nickname}');

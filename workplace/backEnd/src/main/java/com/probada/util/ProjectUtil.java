@@ -124,7 +124,7 @@ public class ProjectUtil {
 
 		List<UserVO> userList = new ArrayList<UserVO>();
 		try {
-
+			
 			for (ProjectVO projectVO : projectList) {
 				userList = userService.getUserByProjNo(projectVO.getProjNo());
 				if(userList != null) {

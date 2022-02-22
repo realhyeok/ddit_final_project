@@ -41,6 +41,7 @@ function deleteDocument(DOC_NO, path, taskNo){
 			success : function(data) {
 				alert("삭제가 완료되었습니다.");
 				getTaskTemplate('/app/collabo/getTaskDetailByTaskNo',taskNo,'collaboTaskDetailForm','collaboTaskDetailFormTarget')
+				collaboAlert(sessionNickname, cprojectTitle, targetTitle, crud, cprojectNumber, targetNickname);
 			}, // success
 			error : function(xhr, status) {
 				alert("삭제에 실패하였습니다.");
@@ -50,6 +51,12 @@ function deleteDocument(DOC_NO, path, taskNo){
 	} else {
 		return;
 	}
+}
+
+//콜라보 문서 다운로드
+function CollaboDocumentDownload(fileName, cprojTitle){
+	var path = '' + cprojTitle + '/중요첨부/'  + fileName;
+	location.href='/app/collabo/taskDownload?path=' + path;
 }
 
 

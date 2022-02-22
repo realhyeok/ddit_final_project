@@ -54,11 +54,9 @@ var ganttDataSource = new kendo.data.GanttDataSource({
 				],
 				views: [
 					"day",
-					{ type: "week",
-						selected: true
-					},
+					"week",
 					{ type: "month",
-
+						selected: true
 					}
 					],
 					columns: [

@@ -189,10 +189,22 @@ function readProjDashboard (){
 			},
 			{
 				field: "size",
-				title: "파일크기 (BYTE)",
+				title: "파일크기",
 				headerAttributes: { style: 'text-align:center;padding-top:3px;padding-bottom:3px;' },
 				attributes: { style: 'padding-top:3px;padding-bottom:3px;' },
-				template: "<span class='text-dark d-inline-block text-truncate' style='max-width:100px;'>#:size# BYTE</span>",
+				template: function(dataItem){
+
+					if(dataItem.size > 1024){
+						var size = Math.floor(dataItem.size / 1024);
+						var exten = "KB";
+							if (size > 1024){
+								size = Math.floor(size / 1024);
+								exten = "MB"
+							}
+					}
+
+					return "<span class='text-dark d-inline-block text-truncate' style='max-width:100px;'>"+ size + exten +"</span>";
+				},
 				width: 110
 			},
 			{

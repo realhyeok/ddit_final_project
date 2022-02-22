@@ -38,7 +38,7 @@
 					<input type="text" class="form-control form-control-sm form-control-view"
 					value="{{userId}}">
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-3">
 				<label class="control-label">중요도</label>
 				{{#ifCond important "==" "B101"}}
 					<div class="form-control form-control-sm form-control-view text-truncate">낮음</div>
@@ -48,6 +48,21 @@
 				{{/ifCond}}
 				{{#ifCond important "==" "B103"}}
 					<div class="form-control form-control-sm form-control-view text-truncate">높음</div>
+				{{/ifCond}}
+			</div>
+			<div class="col-sm-3">
+				<label class="control-label">상태</label>
+				{{#ifCond status "==" "B201"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">미배정</div>
+				{{/ifCond}}
+				{{#ifCond status "==" "B202"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">진행중</div>
+				{{/ifCond}}
+				{{#ifCond status "==" "B203"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">지연</div>
+				{{/ifCond}}
+				{{#ifCond status "==" "B204"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">완료</div>
 				{{/ifCond}}
 			</div>
 		</div>

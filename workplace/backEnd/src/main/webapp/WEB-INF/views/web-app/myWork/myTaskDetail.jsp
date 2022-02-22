@@ -30,7 +30,7 @@
 				<label>담당자</label>
 				<input type="text" class="form-control form-control-sm form-control-view" value="{{userId}}">
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-3">
 				<label class="control-label">중요도</label>
 				{{#ifCond important "==" "B101"}}
 					<div class="form-control form-control-sm form-control-view text-truncate">낮음</div>
@@ -40,6 +40,21 @@
 				{{/ifCond}}
 				{{#ifCond important "==" "B103"}}
 					<div class="form-control form-control-sm form-control-view text-truncate">높음</div>
+				{{/ifCond}}
+			</div>
+			<div class="col-sm-3">
+				<label class="control-label">상태</label>
+				{{#ifCond status "==" "B201"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">미배정</div>
+				{{/ifCond}}
+				{{#ifCond status "==" "B202"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">진행중</div>
+				{{/ifCond}}
+				{{#ifCond status "==" "B203"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">지연</div>
+				{{/ifCond}}
+				{{#ifCond status "==" "B204"}}
+					<div class="form-control form-control-sm form-control-view text-truncate">완료</div>
 				{{/ifCond}}
 			</div>
 		</div>
@@ -90,7 +105,7 @@
 			</div>
 		</div>
 	</script>
-	
+
 	<script>
 		window.addEventListener('load', function() {
 			Handlebars.registerHelper('formatTime', function (date, format) {
@@ -98,19 +113,19 @@
 			    return mmnt.format(format);
 			});
 		});
-		
+
 		function deleteMyTaskByTaskNo(taskNo){
 			var myTaskDeleteConfirm = confirm("삭제하시겠습니까?");
-			
+
 			if(myTaskDeleteConfirm){
 				location.href="<%=request.getContextPath()%>/app/myWork/deleteMyTaskByTaskNo?taskNo=" + taskNo;
 			}
 		}
-		
+
 		function returnMyTaskList(){
 			document.getElementById('task-tab').click();
 		}
-		
+
 		function deleteTaskDocument(DOC_NO, path, taskNo){
 			var projNo = $("#myTaskProjNo").val();
 			var fileVO = {
@@ -124,7 +139,7 @@
 					datatype : 'text',
 					data     : fileVO,
 					success  : function(data){
-						alert("삭제가 완료되었습니다.");
+						alert("삭제를 완료하였습니다.");
 						myTaskDetail(taskNo, projNo);
 						readMyDashboard('${userVO.userId}', '${userVO.nickname}');
 					},

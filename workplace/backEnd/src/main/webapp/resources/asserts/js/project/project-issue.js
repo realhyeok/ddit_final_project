@@ -51,7 +51,17 @@ function readIssue() {
 	             },  {
 	                 field: "title",
 	                 title: "이슈 제목",
-	                 template: "<a href=\"javascript:getIssueTemplate('/app/issue/getIssueByIssueNo','#:issueNo#','issueDetailForm','issueDetailFormTarget')\" class='text-dark d-inline-block text-truncate' style='max-width:240px;'>#:title#</a>",
+	                 template: function(dataItem){
+
+	                	 var addClass = ""
+	                	 var nowDate = new Date();
+	                	 var date = new Date(dataItem.updatedate);
+	                	 date.setSeconds(date.getSeconds() + 30);
+	                	 if(date > nowDate){
+	                		 addClass = "blinkFlag"
+	                	 }
+	                	 return "<a href=\"javascript:getIssueTemplate('/app/issue/getIssueByIssueNo','"+dataItem.issueNo+"','issueDetailForm','issueDetailFormTarget')\" class='text-dark d-inline-block text-truncate "+addClass+"' style='max-width:240px;'>"+ dataItem.title+"</a>";
+	                 },
 	                 headerAttributes: {style: 'text-align: center'},
 	                 width: 245,
 	                 encoded: false,

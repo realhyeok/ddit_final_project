@@ -39,6 +39,11 @@ const cprojList = $("#collabo-list").kendoGrid({
 		//{ template: "<a class='k-button' href='javascript:getOverlayTemplate(\"collaboRegistTypeTemplate\");'>콜라보 제안</a>" }
 		,{ template: "<div class='k-spacer'>&nbsp;</div>"},"search",
 	],
+	messages: {
+		commands: {
+			search: "검색"
+		}
+	},
     columns: [
     	{ field: "title", hidden:true},
     	{ field: "status",hidden:true },

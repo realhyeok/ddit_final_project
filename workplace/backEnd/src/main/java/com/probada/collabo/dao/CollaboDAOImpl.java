@@ -142,5 +142,24 @@ public class CollaboDAOImpl implements CollaboDAO {
 		return collaboList;
 	}
 
+	@Override
+	public int selectCprojectCountInCprojByUserId(String userId) throws SQLException {
+		int result = sqlSession.selectOne("Collabo-Mapper.selectProjectCountInCprojByUserId",userId);
+
+		return result;
+	}
+
+	@Override
+	public String selectUserRole(CollaboVO collaboVO) throws SQLException {
+		String role = sqlSession.selectOne("Collabo-Mapper.selectUserRole",collaboVO);
+		return role;
+	}
+
+	@Override
+	public void updateUserRole(CollaboVO collaboVO) throws SQLException {
+
+		sqlSession.update("Collabo-Mapper.updateUserRole",collaboVO);
+	}
+
 
 }

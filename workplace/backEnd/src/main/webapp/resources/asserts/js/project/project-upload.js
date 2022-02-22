@@ -117,3 +117,4 @@ function projectDocumentDownload(fileName, projTitle){
 	var path = '' + projTitle + '/중요첨부/'  + fileName;
 	location.href='/app/task/taskDownload?path=' + path;
 }
+

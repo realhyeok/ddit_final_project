@@ -37,7 +37,7 @@ public interface DocumentService {
 	public List<FileVO> getMyDocument(String userId) throws SQLException;
 
 	public List<FileVO> getProjectDocument(ProjectUserVO user) throws SQLException;
-
+	
 	public List<FileVO> getDocumentListByProjNo(ProjectUserVO user) throws SQLException;
 
 	public List<FileVO> getDocumentListForProjDetail(String projNo) throws SQLException;
@@ -49,4 +49,10 @@ public interface DocumentService {
 	public List<FileVO> getDocumentListByIssueTitleAndProjNo(IssueVO issueVO) throws SQLException;
 
 	public List<FileVO> getDocumentListBytaskTitleANDcprojNo(CollaboTaskVO collaboTaskVO) throws SQLException;
+	
+	//콜라보 문서관리
+	public List<FileVO> getDocumentListForCprojDetail(String cprojNo) throws SQLException;
+	
+	public List<FileVO> getDocumentListByCprojNo(String	cprojNo) throws SQLException;
+	
 }

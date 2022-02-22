@@ -14,11 +14,14 @@ public class UserVO {
 	private int likeCount;
 	private int authStatus;
 	private int userUploadUsage;
-
+	
 	private int taskCount;
 	private int projectCount;
+	private int collaboCount;
 
-//	업무 상태별 count
+	
+
+	//	업무 상태별 count
 	private int completeTaskCount;
 	private int delayTaskCount;
 	private int ongoingTaskCount;
@@ -29,18 +32,26 @@ public class UserVO {
 	private String cprojNo;
 
 	private String isDeleted;
-
+	
+	
 	@Override
 	public String toString() {
 		return "UserVO [nickname=" + nickname + ", privacy=" + privacy + ", picture=" + picture + ", intro=" + intro
 				+ ", authkey=" + authkey + ", regdate=" + regdate + ", userId=" + userId + ", pwd=" + pwd
 				+ ", likeCount=" + likeCount + ", authStatus=" + authStatus + ", userUploadUsage=" + userUploadUsage
-				+ ", taskCount=" + taskCount + ", projectCount=" + projectCount + ", completeTaskCount="
-				+ completeTaskCount + ", delayTaskCount=" + delayTaskCount + ", ongoingTaskCount=" + ongoingTaskCount
-				+ ", beforeTaskCount=" + beforeTaskCount + ", projNo=" + projNo + ", cprojNo=" + cprojNo
-				+ ", isDeleted=" + isDeleted + "]";
+				+ ", taskCount=" + taskCount + ", projectCount=" + projectCount + ", collaboCount=" + collaboCount
+				+ ", completeTaskCount=" + completeTaskCount + ", delayTaskCount=" + delayTaskCount
+				+ ", ongoingTaskCount=" + ongoingTaskCount + ", beforeTaskCount=" + beforeTaskCount + ", projNo="
+				+ projNo + ", cprojNo=" + cprojNo + ", isDeleted=" + isDeleted + "]";
 	}
 
+	public int getCollaboCount() {
+		return collaboCount;
+	}
+
+	public void setCollaboCount(int collaboCount) {
+		this.collaboCount = collaboCount;
+	}
 	public String getCprojNo() {
 		return cprojNo;
 	}

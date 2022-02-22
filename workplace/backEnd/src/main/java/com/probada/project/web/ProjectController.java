@@ -235,7 +235,6 @@ public class ProjectController {
 
 			documentUtil.projectDocumentUpload(files, request, response, resultVO);
 
-
 			entity = new ResponseEntity<HashMap<String, Object>>(hashMap,HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -272,7 +271,7 @@ public class ProjectController {
 	public ResponseEntity<List<UserVO>> getProjectMemberList(String projNo) throws Exception{
 
 		LOGGER.debug("[요청받음] => /getProjectMemberList => " + projNo);
-
+		
 		ResponseEntity<List<UserVO>> entity = null;
 
 		try {

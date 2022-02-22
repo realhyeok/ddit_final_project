@@ -79,6 +79,8 @@ function connectWs(){
 					alertData.content = `${serderNickName}님이 『${senderTarget}』프로젝트로 회원님을 ${senderWhatToDo}했습니다.`;
 				} else if(serderWhere === "프로젝트" && senderWhatToDo === "수락"){
 					alertData.content = `${serderNickName}님이 『${senderTarget}』프로젝트 초대를 ${senderWhatToDo}했습니다.`;
+				} else if(serderWhere === "콜라보" && senderWhatToDo === "수락"){
+					alertData.content = `${serderNickName}님이 콜라보 초대를 ${senderWhatToDo}했습니다.`;
 				}
 
 				// 모든 알림 끄기가 켜져있지 않으면 if문이 실행되어 알림을 보낸다!
@@ -506,7 +508,7 @@ function task_list_for_index_page(taskList) {
 			if(cnt >= 3){ 
 				return false;
 			}
-			if(e.status != "완료"){
+			if(e.status != "완료" && e.projNo != null){
 				tbody.innerHTML += `<tr>
 													<td scope="row" class="text-truncate" style="max-width: 150px;">${e.title}</td>
 													<td class="text-truncate" style="max-width: 60px;">${e.projNo}</td>
@@ -643,7 +645,7 @@ function projectList_for_profile() {
 							if(isNaN(achievementPercent)){
 								achievementPercent = 0;
 							}
-							tbody.innerHTML += `<tr style="cursor: pointer;" onclick="location.href='/app/project/main?projNo=${e.projNo}'">
+							tbody.innerHTML += `<tr style="cursor: pointer;" onclick="location.href='/app/project/main?projNo=${e.projNo}&from=search'">
 																		<td scope="row" class="text-truncate" style="max-width: 150px;">${e.title}</td>
 																		<td>${e.status}</td>
 																		<td>${projTaskCount}</td>
@@ -992,12 +994,14 @@ function requestPay(ppvo, userId) {
 							return false;
 						}
 						
-						tbody.innerHTML += `<tr>
-															<td scope="row" class="text-truncate" style="max-width: 150px;">${e.title}</td>
-															<td class="text-truncate" style="max-width: 60px;">${e.projNo}</td>
-															<td>${e.status}</td>
-														</tr>`;
-						cnt++;
+						if(e.projNo != null){
+							tbody.innerHTML += `<tr>
+																<td scope="row" class="text-truncate" style="max-width: 150px;">${e.title}</td>
+																<td class="text-truncate" style="max-width: 60px;">${e.projNo}</td>
+																<td>${e.status}</td>
+															</tr>`;
+							cnt++;
+						}
 					});
 				}
 			},
@@ -1087,7 +1091,7 @@ function requestPay(ppvo, userId) {
             {
                 field: "projectTitle",
                 title: "프로젝트 명",
-                template: "<a href='/app/project/main?projNo=#:projNo#'>#: projectTitle #</a>",
+                template: "<a href='/app/project/main?projNo=#:projNo#&from=search'>#: projectTitle #</a>",
                 width: 300
             }, {
                 field: "startDate",

@@ -247,7 +247,7 @@
 					datatype : 'text',
 					data : formData,
 					success : function(data) {
-						alert("수정에 성공했습니다.");
+						alert("수정을 완료하였습니다.");
 						myOverlayOff('#myTaskModifyOverlay');
 						myTaskDetail(data.taskNo, data.projNo);
 						/* document.getElementById('myTaskDetail-tab').click(); */

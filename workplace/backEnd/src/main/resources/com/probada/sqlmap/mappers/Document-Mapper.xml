@@ -12,6 +12,7 @@
 		<result column="ETC" property="etc" />
 		<result column="USER_ID" property="USER_ID" />
 		<result column="DOC_NO" property="DOC_NO" />
+		<result column="CPROJ_NO" property="CPROJ_NO" />
 		<result column="FILENAME" property="name" />
 		<result column="ISDIRECTORY" property="isDirectory"  />
 		<result column="HASDIRECTORY" property="hasDirectories" />
@@ -238,6 +239,28 @@
 		  FROM DOCUMENT
 		 WHERE PROJ_NO = #{projNo}
 		   AND UPLOADPATH LIKE '%'||'/이슈/'||#{title}||'/%'
+	</select>
+	
+	
+	<select id="selectDocumentListForCprojDetail" resultMap="DocResultMap" parameterType="String">
+		SELECT
+			*
+		FROM
+			DOCUMENT
+		WHERE
+			 CPROJ_NO = #{cprojNo}
+		AND
+			UPLOADPATH LIKE '%'||'중요첨부/'||'%'
+	</select>
+	
+	<select id="selectDocumentListByCprojNo" resultMap="DocResultMap" parameterType="String">
+		SELECT
+			*
+		FROM
+			DOCUMENT
+		WHERE
+			 CPROJ_NO = #{cprojNo}
+
 	</select>
 
 	<!-- <select id="selectMemberList" resultType="member">
