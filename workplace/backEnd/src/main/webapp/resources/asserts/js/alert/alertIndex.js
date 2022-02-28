@@ -21,6 +21,7 @@
 
 var socket = null;
 
+// 함수별 리펙토링 필요
 $(document).ready(function (){
 	connectWs();
 	updateAlertList(); // 실시간 알림 리스트 갱신
@@ -1034,6 +1035,8 @@ function requestPay(ppvo, userId) {
 		 let search = location.search
 		 let params = new URLSearchParams(search);
 		 let tagNo = params.get('tagNo');
+
+		 if(tagNo == null) return false;
 //		let tagNo = 2;
 //		console.log("tagNo = > " + tagNo);
 

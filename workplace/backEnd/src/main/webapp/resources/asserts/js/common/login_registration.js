@@ -1,15 +1,12 @@
 
-/*
-  form 태그를 바로 컨트롤러로 보내고 싶지 않은 경우
-  submit return false를 주고, 해당 form을 불러냄
 
-  
- */
-	window.onbeforeunload = function () { 
-		$('#loading').show(); 
-}  // 현재 페이지에서 다른 페이지로 넘어갈 때 표시해주는 기능
-	window.onload = function () {          // 페이지가 로드 되면 로딩 화면을 없애주는 것
-      $('#loading').hide();
+// 현재 페이지에서 다른 페이지로 넘어갈 때 표시해주는 기능
+window.onbeforeunload = function () { 
+	$('#loading').show(); 
+} 
+// 페이지가 로드 되면 로딩 화면을 없애주는 기능
+window.onload = function () {          
+  $('#loading').hide();
 };
         
 $(document).ready(function () {
